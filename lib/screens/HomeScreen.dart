@@ -112,7 +112,7 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
   Future<void> responseFromNativeCode() async {
     String response = "";
     try {
-      final String result = await platform.invokeMethod('helloFromNativeCode');
+      final String result = await platform.invokeMethod('helloFromNativeCode', "sdf");
       response = result;
     } on PlatformException catch (e) {
       response = "Failed to Invoke: '${e.message}'.";
