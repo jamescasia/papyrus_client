@@ -117,9 +117,9 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
     } on PlatformException catch (e) {
       response = "Failed to Invoke: '${e.message}'.";
     }
-    setState(() {
-      _responseFromNativeCode = response;
-    });
+    // setState(() {
+    //   _responseFromNativeCode = response;
+    // });
   }
 
   @override
@@ -308,7 +308,7 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                               BorderRadius.all(Radius.circular(15 * sizeMul)),
                           onTap: () {
                             print(responseFromNativeCode());
-                            print(result);
+                            // print(result);
                           },
                           splashColor: Colors.greenAccent,
                           highlightColor: Colors.green,

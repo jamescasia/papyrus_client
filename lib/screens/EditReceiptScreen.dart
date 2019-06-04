@@ -3,8 +3,10 @@ import 'HomeScreen.dart';
 import 'package:papyrus_client/helpers/ClipShadowPath.dart';
 import 'package:papyrus_client/helpers/CustomShapeClipper.dart';
 import 'package:papyrus_client/helpers/ReceiptCard.dart';
-import 'package:zoomable_image/zoomable_image.dart'; 
+import 'package:zoomable_image/zoomable_image.dart';
 import 'package:android_intent/android_intent.dart';
+import 'package:camera/camera.dart';
+import 'package:flutter/services.dart';
 
 class EditReceiptScreen extends StatefulWidget {
   @override
@@ -79,6 +81,14 @@ class EditReceiptScreenTopPart extends StatefulWidget {
 }
 
 class _EditReceiptScreenTopPartState extends State<EditReceiptScreenTopPart> {
+  static const platform = const MethodChannel('flutter.native/helper');
+  
+
+  void initializeCamera() async {   
+    final cameras = await availableCameras();
+    final firstCamera = cameras.first;
+  }
+
   @override
   Widget build(BuildContext context) {
     return FlexibleSpaceBar(
@@ -130,9 +140,7 @@ class _EditReceiptScreenTopPartState extends State<EditReceiptScreenTopPart> {
               splashColor: Colors.white.withAlpha(0),
               highlightColor: Colors.black.withOpacity(0.1),
               borderRadius: BorderRadius.all(Radius.circular(3000)),
-              onTap: () { 
-                  
-              },
+              onTap: () {},
               child: Icon(
                 Icons.camera_alt,
                 size: sizeMul * 40,
