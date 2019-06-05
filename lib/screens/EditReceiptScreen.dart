@@ -12,12 +12,8 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:papyrus_client/models/EditReceiptScreenModel.dart';
 import 'package:papyrus_client/data_models/Receipt.dart';
 
-class EditReceiptScreen extends StatefulWidget {
-  @override
-  _EditReceiptScreenState createState() => new _EditReceiptScreenState();
-}
-
-class _EditReceiptScreenState extends State<EditReceiptScreen> {
+class EditReceiptScreen extends StatelessWidget {
+  @override 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,13 +78,8 @@ class _EditReceiptScreenScrollPartState
   }
 }
 
-class EditReceiptScreenTopPart extends StatefulWidget {
-  @override
-  _EditReceiptScreenTopPartState createState() =>
-      new _EditReceiptScreenTopPartState();
-}
-
-class _EditReceiptScreenTopPartState extends State<EditReceiptScreenTopPart> {
+class EditReceiptScreenTopPart extends StatelessWidget {
+ 
   static const platform = const MethodChannel('flutter.native/helper');
 
   void initializeCamera() async {
@@ -164,18 +155,11 @@ class _EditReceiptScreenTopPartState extends State<EditReceiptScreenTopPart> {
   }
 }
 
-class EditReceiptScreenBottomPart extends StatefulWidget {
-  @override
-  _EditReceiptScreenBottomPartState createState() =>
-      new _EditReceiptScreenBottomPartState();
-}
-
-List<Widget> adf = [];
-
-class _EditReceiptScreenBottomPartState
-    extends State<EditReceiptScreenBottomPart> {
+class EditReceiptScreenBottomPart extends StatelessWidget {
+   
   @override
   Widget build(BuildContext context) {
+    // ScopedModelDescendant
     return ScopedModelDescendant<EditReceiptScreenModel>(
         builder: (context, child, model) {
       return new Container(
