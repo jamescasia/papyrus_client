@@ -11,7 +11,11 @@ class EditReceiptScreenModel extends Model {
   TextEditingController _controller = TextEditingController();
   TextEditingController get controller => _controller;
 
+  bool _changed = false;
   Receipt receipt = new Receipt() ;
+
+  set changed(bool c) => _changed = c;
+  bool get changed => _changed;
  
 
   set controller(TextEditingController controller){ 

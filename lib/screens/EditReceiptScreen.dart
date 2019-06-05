@@ -449,9 +449,17 @@ class _EditReceiptScreenBottomPartState
                     Column(
                       children: <Widget>[
                         Column(
-                            children: model.receipt.items
-                                .map((item) => AddReceiptItemLine(item))
-                                .toList()),
+                            // children: model.receipt.items
+                            //     .map((item) => AddReceiptItemLine(item))
+                            //     .toList()),
+                              children: model.receipt.items.map((item){
+                                print(item.name+",");
+                                return AddReceiptItemLine(item);
+
+
+                              }).toList()),
+
+
                         // AddReceiptItemLine(
                         //     "Detective Pikachudddddddddddddddddddasd", 3, 500),
                         // AddReceiptItemLine(
@@ -570,7 +578,7 @@ class _AddReceiptItemLineState extends State<AddReceiptItemLine> {
   TextEditingController name_controller = TextEditingController();
   TextEditingController price_controller = TextEditingController();
   TextEditingController qty_controller = TextEditingController();
-  ReceiptItem receiptItem;
+  ReceiptItem receiptItem = new ReceiptItem("",0,0);
   // FocusNode f = FocusNode();
 
   _AddReceiptItemLineState(this.receiptItem);
@@ -884,6 +892,7 @@ class _AddReceiptItemLineState extends State<AddReceiptItemLine> {
                                         Navigator.pop(context);
                                         model
                                             .removeItemFromReceipt(receiptItem);
+                                            model.receipt.removeReceiptItem(receiptItem);
                                       },
                                       splashColor: Colors.amber,
                                       highlightColor: Colors.redAccent,
@@ -951,7 +960,7 @@ class _AddReceiptItemLineState extends State<AddReceiptItemLine> {
                           height: 0,
                           color: Colors.red,
                           child: Icon(
-                            Icons.delete,
+                            Icons.radio,
                             color: Colors.white,
                           ),
                         ),
@@ -993,7 +1002,7 @@ Alert addItemAlert(BuildContext context, EditReceiptScreenModel model) {
   TextEditingController qty_controller = TextEditingController();
   TextEditingController price_controller = TextEditingController();
 
-  ReceiptItem receiptItem = ReceiptItem("", 0, 0);
+  ReceiptItem receiptItem = new ReceiptItem("", 0, 0);
 
   return Alert(
     context: context,
@@ -1231,12 +1240,19 @@ Alert addItemAlert(BuildContext context, EditReceiptScreenModel model) {
                     receiptItem.qty = int.parse(qty_controller.text);
                     receiptItem.price = double.parse(price_controller.text);
                     receiptItem.total = receiptItem.qty * receiptItem.price;
+                    model.changed = !model.changed;
 
                     model.addItemToReceipt(receiptItem);
+                    model.receipt.addReceiptItem(receiptItem);
+                    // model.notifyListeners();
 
                     // model.update();
                     Navigator.pop(context);
                     print('actually predafssed');
+
+                    Scaffold.of(context).showSnackBar(SnackBar(
+                      content: Text(model.receipt.items[model.receipt.items.length-1].name),
+                    ));
                   },
                   child: Container(
                     height: sizeMul * 50,
@@ -1277,7 +1293,7 @@ Alert addItemAlert(BuildContext context, EditReceiptScreenModel model) {
         height: 0,
         color: Colors.red,
         child: Icon(
-          Icons.delete,
+          Icons.recent_actors,
           color: Colors.white,
         ),
       ),

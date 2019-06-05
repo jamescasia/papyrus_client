@@ -8,12 +8,23 @@ class Receipt {
   String _category;
 
   List<ReceiptItem> _items = [
-    new ReceiptItem("Det Pikachu!", 2, 1500.0),
+    new ReceiptItem("Im Nayeon", 2, 1500.0),
 
-    new ReceiptItem("Endgame", 2, 1500.0),
+    new ReceiptItem("Yoo Jeongyeon", 2, 1500.0),
 
-    new ReceiptItem("LOTR", 2, 1500.0),
-    // new Receipt(_uid)
+    new ReceiptItem("Hirai Momo", 2, 1500.0),
+    
+    new ReceiptItem("Minatozaki Sana", 2, 1500.0),
+
+    new ReceiptItem("Park Jihyo", 2, 1500.0),
+
+    new ReceiptItem("Myoui Mina", 2, 1500.0),
+
+    new ReceiptItem("Kim Dahyun", 2, 1500.0),
+
+    new ReceiptItem("Son Chaeyoung", 2, 1500.0),
+
+    new ReceiptItem("Chou Tzuyu", 2, 1500.0),
   ];
 
   String get recpt_id => _recpt_id;
