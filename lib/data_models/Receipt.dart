@@ -43,7 +43,7 @@ class Receipt {
   set dateTime(String dt) => _dateTime = dt;
 
   void addReceiptItem(ReceiptItem recptItem) {
-    print("added");
+    print("added "+recptItem.name);
     _items.add(recptItem);
     displayItems();
   }

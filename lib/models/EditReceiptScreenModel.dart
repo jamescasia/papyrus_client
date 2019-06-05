@@ -12,7 +12,7 @@ class EditReceiptScreenModel extends Model {
   TextEditingController get controller => _controller;
 
   bool _changed = false;
-  Receipt receipt = new Receipt() ;
+  Receipt _receipt = Receipt() ;
 
   set changed(bool c) => _changed = c;
   bool get changed => _changed;
@@ -25,21 +25,24 @@ class EditReceiptScreenModel extends Model {
   }
 
   void addItemToReceipt(ReceiptItem item){
-    receipt.addReceiptItem(item);
+    _receipt.addReceiptItem(item);
     notifyListeners();
   }
 
   void removeItemFromReceipt(ReceiptItem item){
-    receipt.removeReceiptItem(item);
+    _receipt.removeReceiptItem(item);
     
     notifyListeners();
   }
 
   void update(){
-    receipt.displayItems();
+    _receipt.displayItems();
 
     notifyListeners();
   }
+
+
+  Receipt  get receipt=> _receipt;
 
  
 
