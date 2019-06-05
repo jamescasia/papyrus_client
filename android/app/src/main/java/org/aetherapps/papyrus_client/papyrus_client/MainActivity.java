@@ -52,13 +52,13 @@ public class MainActivity extends FlutterActivity {
     return "Hello from Native Android Code";
   }
 
-  private String takeReceiptPhoto(){
-    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-    Uri imageUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory(),"receipt_" +
-            String.valueOf(System.currentTimeMillis()) + ".jpg"));
-    intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, imageUri);
-    startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+  // private String takeReceiptPhoto(){
+  //   Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+  //   Uri imageUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory(),"receipt_" +
+  //           String.valueOf(System.currentTimeMillis()) + ".jpg"));
+  //   intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, imageUri);
+  //   startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
 
 
-  }
+  // }
 }

@@ -4,6 +4,9 @@ import 'package:papyrus_client/helpers/ClipShadowPath.dart';
 import 'package:papyrus_client/helpers/CustomShapeClipper.dart';
 import 'package:papyrus_client/helpers/LongButton.dart';
 
+import 'package:scoped_model/scoped_model.dart';
+import 'package:papyrus_client/models/AppModel.dart';
+
 class SettingScreen extends StatefulWidget {
   @override
   _SettingScreenState createState() => new _SettingScreenState();
@@ -200,91 +203,107 @@ class SettingScreenBottomPart extends StatefulWidget {
 class _SettingScreenBottomPartState extends State<SettingScreenBottomPart> {
   @override
   Widget build(BuildContext context) {
-    return new Container(
-      width: MediaQuery.of(context).size.width,
-      // margin: EdgeInsets.symmetric(horizontal: sizeMul*20),
-      child: Center(
-        child: Container(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              SizedBox(
-                height: sizeMul * 200,
-              ),
-              Container(
-                color: Colors.grey[200],
-                height: sizeMul * 65,
-                child: Padding(
-                  padding: EdgeInsets.all(18.0 * sizeMul),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        "Get notified of unique promos",
-                        style: TextStyle(
-                            fontSize: sizeMul * 17,
-                            fontWeight: FontWeight.w600),
-                      ),
-                      Switch(
-                        value: false,
-                        onChanged: null,
-                      )
-                    ],
+    return ScopedModelDescendant<AppModel>(builder: (context, child, model) {
+      return Container(
+        width: MediaQuery.of(context).size.width,
+        // margin: EdgeInsets.symmetric(horizontal: sizeMul*20),
+        child: Center(
+          child: Container(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(
+                  height: sizeMul * 200,
+                ),
+                Container(
+                  color: Colors.grey[200],
+                  height: sizeMul * 65,
+                  child: Padding(
+                    padding: EdgeInsets.all(18.0 * sizeMul),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          "Get notified of unique promos",
+                          style: TextStyle(
+                              fontSize: sizeMul * 17,
+                              fontWeight: FontWeight.w600),
+                        ),
+                        Container(
+                          width: sizeMul*60,
+                          height: sizeMul*60,
+                          child: Switch(
+                            value: true,
+                            onChanged: (bool value) {
+                              model.receiveUniquePromos = value;
+                            },
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              Container(
-                // color: Colors.grey[200],
-                height: sizeMul * 65,
-                child: Padding(
-                  padding: EdgeInsets.all(18.0 * sizeMul),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        "Get notified of open-to-all promos",
-                        overflow: TextOverflow.fade,
-                        style: TextStyle(
-                            fontSize: sizeMul * 17,
-                            fontWeight: FontWeight.w600),
-                      ),
-                      Switch(
-                        value: false,
-                        onChanged: null,
-                      )
-                    ],
+                Container(
+                  // color: Colors.grey[200],
+                  height: sizeMul * 65,
+                  child: Padding(
+                    padding: EdgeInsets.all(18.0 * sizeMul),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          "Get notified of open-to-all promos",
+                          overflow: TextOverflow.fade,
+                          style: TextStyle(
+                              fontSize: sizeMul * 17,
+                              fontWeight: FontWeight.w600),
+                        ),
+                        Container(
+                          height: sizeMul*60,
+                          width: sizeMul*60,
+                          child: Switch(
+                            
+                            
+                            value: true,
+                            onChanged: (bool value) {
+                              model.receiveOpenToAllPromos = value;
+                            },
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              Container(
-                color: Colors.grey[200],
-                height: sizeMul * 65,
-                child: Padding(
-                  padding: EdgeInsets.all(18.0 * sizeMul),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        "Delete Account",
-                        style: TextStyle(
-                            color: Colors.red,
-                            fontSize: sizeMul * 17,
-                            fontWeight: FontWeight.w600),
-                      ),
-                    ],
+                Container(
+                  color: Colors.grey[200],
+                  height: sizeMul * 65,
+                  child: Padding(
+                    padding: EdgeInsets.all(18.0 * sizeMul),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          "Delete Account",
+                          style: TextStyle(
+                              color: Colors.red,
+                              fontSize: sizeMul * 17,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 30 * sizeMul,
-              )
-            ],
+                SizedBox(
+                  height: 30 * sizeMul,
+                )
+              ],
+            ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

@@ -14,6 +14,8 @@ import 'SettingScreen.dart';
 import 'package:papyrus_client/helpers/LongButton.dart';
 import 'EditReceiptScreen.dart';
 import 'ShowQRScreen.dart';
+import 'package:scoped_model/scoped_model.dart';
+import 'package:papyrus_client/models/AppModel.dart';
 
 // void main() {
 //   return runApp(PapyrusCustomer());
@@ -44,26 +46,28 @@ LinearGradient BtnTeal = LinearGradient(
 class PapyrusCustomer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      builder: (context, child) {
-        return ScrollConfiguration(
-          behavior: CustomScrollBehaviour(),
-          child: child,
-        );
-      },
-      // initialRoute: '/',
+    return ScopedModel<AppModel>(
+        model: AppModel(),
+        child: MaterialApp(
+          builder: (context, child) {
+            return ScrollConfiguration(
+              behavior: CustomScrollBehaviour(),
+              child: child,
+            );
+          },
+          // initialRoute: '/',
 
-      debugShowCheckedModeBanner: false,
-      title: 'Papyrus - Expense Management',
-      theme: ThemeData(
-        fontFamily: 'Montserrat',
-        primarySwatch: Colors.blue,
-      ),
-      home: HomeScreen(),
-      // routes: <String, WidgetBuilder>{
-      //   '/': (context) =>HomeScreen(),
-      // },
-    );
+          debugShowCheckedModeBanner: false,
+          title: 'Papyrus - Expense Management',
+          theme: ThemeData(
+            fontFamily: 'Montserrat',
+            primarySwatch: Colors.blue,
+          ),
+          home: HomeScreen(),
+          // routes: <String, WidgetBuilder>{
+          //   '/': (context) =>HomeScreen(),
+          // },
+        ));
   }
 }
 
@@ -85,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
       statusBarColor: const Color(0xFF61C350),
       // #61C350
     ));
-    return new Scaffold(
+    return Scaffold(
       // bottomNavigationBar: CustomAppBar(),
       // appBar: AppBar(),
       // body: SingleChildScrollView(
@@ -112,7 +116,8 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
   Future<void> responseFromNativeCode() async {
     String response = "";
     try {
-      final String result = await platform.invokeMethod('helloFromNativeCode', "sdf");
+      final String result =
+          await platform.invokeMethod('helloFromNativeCode', "sdf");
       response = result;
     } on PlatformException catch (e) {
       response = "Failed to Invoke: '${e.message}'.";
@@ -134,52 +139,54 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
         fontWeight: FontWeight.bold,
         color: Colors.green[700]);
 
-    return Stack(
-      children: <Widget>[
-        ClipShadowPath(
-          shadow: Shadow(
-              blurRadius: 10 * sizeMul,
-              offset: Offset(0, sizeMul),
-              color: Colors.black38),
-          clipper: CustomShapeClipper(
-              sizeMul: sizeMul,
-              maxWidth: MediaQuery.of(context).size.width,
-              maxHeight: MediaQuery.of(context).size.width * 0.91),
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: 0.942 * MediaQuery.of(context).size.width,
-            child: Material(
-              color: Colors.white.withAlpha(0),
-              child: InkWell(
-                borderRadius: BorderRadius.all(Radius.circular(15 * sizeMul)),
-                onTap: () {},
-                splashColor: Colors.green,
-                highlightColor: greeny.colors[0],
-                child: Column(
-                  children: <Widget>[
-                    SizedBox(
-                      height: 82.28 * sizeMul,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        SizedBox(
-                          width: 20.57 * sizeMul,
-                        ),
-                        Material(
-                          color: Colors.white.withOpacity(0),
-                          child: InkWell(
+    return ScopedModelDescendant<AppModel>(builder: (context, child, model) {
+      return Stack(
+        children: <Widget>[
+          ClipShadowPath(
+            shadow: Shadow(
+                blurRadius: 10 * sizeMul,
+                offset: Offset(0, sizeMul),
+                color: Colors.black38),
+            clipper: CustomShapeClipper(
+                sizeMul: sizeMul,
+                maxWidth: MediaQuery.of(context).size.width,
+                maxHeight: MediaQuery.of(context).size.width * 0.91),
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: 0.942 * MediaQuery.of(context).size.width,
+              child: Material(
+                color: Colors.white.withAlpha(0),
+                child: InkWell(
+                  borderRadius: BorderRadius.all(Radius.circular(15 * sizeMul)),
+                  onTap: () {},
+                  splashColor: Colors.green,
+                  highlightColor: greeny.colors[0],
+                  child: Column(
+                    children: <Widget>[
+                      SizedBox(
+                        height: 82.28 * sizeMul,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          SizedBox(
+                            width: 20.57 * sizeMul,
+                          ),
+                          InkWell(
                             splashColor: Colors.white.withAlpha(0),
                             highlightColor: Colors.black.withOpacity(0.1),
-                            onTap: null,
+                            onTap: () {
+                              model.viewing_period = Period.MONTHLY;
+                            },
                             child: Container(
                               // color: Colors.white,
-                              padding: (false)
+                              padding: (model.viewing_period == Period.MONTHLY)
                                   ? EdgeInsets.symmetric(
                                       vertical: sizeMul * 2,
                                       horizontal: sizeMul * 8)
                                   : null,
-                              decoration: (false)
+                              decoration: (model.viewing_period ==
+                                      Period.MONTHLY)
                                   ? BoxDecoration(
                                       color: Colors.white,
                                       borderRadius:
@@ -187,182 +194,195 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                                   : null,
 
                               child: Text("MONTHLY",
-                                  style: (false)
+                                  style:
+                                      (model.viewing_period == Period.MONTHLY)
+                                          ? headerStyleSelected
+                                          : headerStyle),
+                            ),
+                          ),
+                          InkWell(
+                            splashColor: Colors.white.withAlpha(0),
+                            highlightColor: Colors.black.withOpacity(0.1),
+                            onTap: () {
+                              model.viewing_period = Period.WEEKLY;
+                            },
+                            child: Container(
+                              padding: (model.viewing_period == Period.WEEKLY)
+                                  ? EdgeInsets.symmetric(
+                                      vertical: sizeMul * 2,
+                                      horizontal: sizeMul * 8)
+                                  : null,
+                              decoration: (model.viewing_period ==
+                                      Period.WEEKLY)
+                                  ? BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius:
+                                          BorderRadius.circular(sizeMul * 300))
+                                  : null,
+                              child: InkWell(
+                                splashColor: Colors.white.withAlpha(0),
+                                highlightColor: Colors.black.withOpacity(0.1),
+                                child: Text(
+                                  "WEEKLY",
+                                  style: (model.viewing_period == Period.WEEKLY)
                                       ? headerStyleSelected
-                                      : headerStyle),
-                            ),
-                          ),
-                        ),
-                        InkWell(
-                          splashColor: Colors.white.withAlpha(0),
-                          highlightColor: Colors.black.withOpacity(0.1),
-                          child: Container(
-                            padding: (false)
-                                ? EdgeInsets.symmetric(
-                                    vertical: sizeMul * 2,
-                                    horizontal: sizeMul * 8)
-                                : null,
-                            decoration: (false)
-                                ? BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius:
-                                        BorderRadius.circular(sizeMul * 300))
-                                : null,
-                            child: InkWell(
-                              splashColor: Colors.white.withAlpha(0),
-                              highlightColor: Colors.black.withOpacity(0.1),
-                              child: Text(
-                                "WEEKLY",
-                                style:
-                                    (false) ? headerStyleSelected : headerStyle,
-                              ),
-                            ),
-                          ),
-                        ),
-                        InkWell(
-                          child: Container(
-                            padding: (true)
-                                ? EdgeInsets.symmetric(
-                                    vertical: sizeMul * 2,
-                                    horizontal: sizeMul * 8)
-                                : null,
-                            decoration: (true)
-                                ? BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius:
-                                        BorderRadius.circular(sizeMul * 300))
-                                : null,
-                            child: Text(
-                              "DAILY",
-                              style: (true) ? headerStyleSelected : headerStyle,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.05,
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.width * 0.07,
-                    ),
-                    Container(
-                      child: Column(
-                        children: <Widget>[
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Text(
-                                "TOTAL SPENT",
-                                style: TextStyle(
-                                    fontSize:
-                                        MediaQuery.of(context).size.width *
-                                            0.042,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.white),
-                              ),
-                              Material(
-                                color: Colors.white.withOpacity(0),
-                                child: InkWell(
-                                  splashColor: Colors.white.withAlpha(0),
-                                  highlightColor: Colors.black.withOpacity(0.1),
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        CupertinoPageRoute(
-                                            builder: (context) =>
-                                                ShowQRScreen()));
-                                  },
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(3000)),
-                                  child: Icon(
-                                    Icons.keyboard_arrow_down,
-                                    color: Colors.white,
-                                    size: MediaQuery.of(context).size.width *
-                                        0.08,
-                                  ),
+                                      : headerStyle,
                                 ),
                               ),
-                            ],
-                          )
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              model.viewing_period = Period.DAILY;
+                            },
+                            child: Container(
+                              padding: (model.viewing_period == Period.DAILY)
+                                  ? EdgeInsets.symmetric(
+                                      vertical: sizeMul * 2,
+                                      horizontal: sizeMul * 8)
+                                  : null,
+                              decoration: (model.viewing_period == Period.DAILY)
+                                  ? BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius:
+                                          BorderRadius.circular(sizeMul * 300))
+                                  : null,
+                              child: Text(
+                                "DAILY",
+                                style: (model.viewing_period == Period.DAILY)
+                                    ? headerStyleSelected
+                                    : headerStyle,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.05,
+                          ),
                         ],
                       ),
-                    ),
-                    SizedBox(
-                      height: 7 * sizeMul,
-                    ),
-                    ConstrainedBox(
-                      constraints: new BoxConstraints(
-                        // minHeight: 100*sizeMul,
-                        minWidth: 160 * sizeMul,
-
-                        // maxHeight: 30.0,
-                        // maxWidth: 30.0,
+                      SizedBox(
+                        height: MediaQuery.of(context).size.width * 0.07,
                       ),
-                      child: Material(
-                        // shape: CircleBorder(),
-                        color: Colors.white.withAlpha(0),
-                        child: InkWell(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(15 * sizeMul)),
-                          onTap: () {
-                            print(responseFromNativeCode());
-                            // print(result);
-                          },
-                          splashColor: Colors.greenAccent,
-                          highlightColor: Colors.green,
-                          child: Container(
-                            // height: sizeMul * 80,
-                            padding: EdgeInsets.all(
-                                MediaQuery.of(context).size.width * 0.042),
-                            child: Row(
+                      Container(
+                        child: Column(
+                          children: <Widget>[
+                            Row(
                               mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
-                                Text("${addCommas(4231)}.",
-                                    style: TextStyle(
-                                        fontSize:
-                                            MediaQuery.of(context).size.width *
-                                                0.09,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.white)),
+                                Text(
+                                  "TOTAL SPENT",
+                                  style: TextStyle(
+                                      fontSize:
+                                          MediaQuery.of(context).size.width *
+                                              0.042,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.white),
+                                ),
+                                Material(
+                                  color: Colors.white.withOpacity(0),
+                                  child: InkWell(
+                                    splashColor: Colors.white.withAlpha(0),
+                                    highlightColor:
+                                        Colors.black.withOpacity(0.1),
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          CupertinoPageRoute(
+                                              builder: (context) =>
+                                                  ShowQRScreen()));
+                                    },
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(3000)),
+                                    child: Icon(
+                                      Icons.keyboard_arrow_down,
+                                      color: Colors.white,
+                                      size: MediaQuery.of(context).size.width *
+                                          0.08,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 7 * sizeMul,
+                      ),
+                      ConstrainedBox(
+                        constraints: new BoxConstraints(
+                          // minHeight: 100*sizeMul,
+                          minWidth: 160 * sizeMul,
 
-                                Container(
-                                  padding: EdgeInsets.only(bottom: 4 * sizeMul),
-                                  child: Text("75 ",
+                          // maxHeight: 30.0,
+                          // maxWidth: 30.0,
+                        ),
+                        child: Material(
+                          // shape: CircleBorder(),
+                          color: Colors.white.withAlpha(0),
+                          child: InkWell(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(15 * sizeMul)),
+                            onTap: () {
+                              print(responseFromNativeCode());
+                              // print(result);
+                            },
+                            splashColor: Colors.greenAccent,
+                            highlightColor: Colors.green,
+                            child: Container(
+                              // height: sizeMul * 80,
+                              padding: EdgeInsets.all(
+                                  MediaQuery.of(context).size.width * 0.042),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Text("${addCommas(4231)}.",
                                       style: TextStyle(
                                           fontSize: MediaQuery.of(context)
                                                   .size
                                                   .width *
-                                              0.05,
-                                          fontWeight: FontWeight.bold,
+                                              0.09,
+                                          fontWeight: FontWeight.w600,
                                           color: Colors.white)),
-                                ),
-                                // ),
-                              ],
+
+                                  Container(
+                                    padding:
+                                        EdgeInsets.only(bottom: 4 * sizeMul),
+                                    child: Text("75 ",
+                                        style: TextStyle(
+                                            fontSize: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.05,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white)),
+                                  ),
+                                  // ),
+                                ],
+                              ),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(15 * sizeMul)),
+                                  border: Border.all(
+                                      color: Colors.white,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.005)),
                             ),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(
-                                    Radius.circular(15 * sizeMul)),
-                                border: Border.all(
-                                    color: Colors.white,
-                                    width: MediaQuery.of(context).size.width *
-                                        0.005)),
                           ),
                         ),
                       ),
-                    ),
 
-                    // Container(margin: EdgeIns,)
-                  ],
+                      // Container(margin: EdgeIns,)
+                    ],
+                  ),
                 ),
               ),
-            ),
-            decoration: BoxDecoration(
-              color: Colors.red,
-              gradient: greeny,
+              decoration: BoxDecoration(
+                color: Colors.red,
+                gradient: greeny,
 //                LinearGradient(
 //   begin: Alignment.topCenter,
 
@@ -374,210 +394,212 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
 //   ],
 //   tileMode: TileMode.repeated,
 // )
-              //  LinearGradient(
-              //   begin: Alignment.topCenter,
-              //   end: Alignment.bottomCenter,
-              //   colors: [
-              //     const Color(0xFF61C34F),
-              //     const Color(0xFF20AB50),
-              //     // const Color(0xFF61C350),
-              //     // // const Color(0x1BA9774),
-              //     // const Color.fromARGB(255, 27, 169, 119)
-              //   ],
-              //   tileMode: TileMode.repeated,
-              // ),
-            ),
+                //  LinearGradient(
+                //   begin: Alignment.topCenter,
+                //   end: Alignment.bottomCenter,
+                //   colors: [
+                //     const Color(0xFF61C34F),
+                //     const Color(0xFF20AB50),
+                //     // const Color(0xFF61C350),
+                //     // // const Color(0x1BA9774),
+                //     // const Color.fromARGB(255, 27, 169, 119)
+                //   ],
+                //   tileMode: TileMode.repeated,
+                // ),
+              ),
 
-            // color: Colors.red,
-          ),
-        ),
-        Positioned(
-          top: 22 * sizeMul,
-          right: 0,
-          left: 0,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    SizedBox(
-                      width: 20 * sizeMul,
-                    ),
-                    Material(
-                      color: Colors.white.withOpacity(0),
-                      borderRadius: BorderRadius.all(Radius.circular(3000)),
-                      child: InkWell(
-                        radius: sizeMul * 4,
-                        splashColor: Colors.white.withAlpha(0),
-                        highlightColor: Colors.black.withOpacity(0.1),
-                        borderRadius: BorderRadius.all(Radius.circular(3000)),
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                  builder: (context) => SettingScreen()));
-                        },
-                        child: Icon(
-                          Icons.more_horiz,
-                          size: MediaQuery.of(context).size.width * 0.12,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: <Widget>[
-                    Material(
-                      color: Colors.white.withOpacity(0),
-                      borderRadius: BorderRadius.all(Radius.circular(3000)),
-                      child: InkWell(
-                        splashColor: Colors.white.withAlpha(0),
-                        highlightColor: Colors.black.withOpacity(0.1),
-                        borderRadius: BorderRadius.all(Radius.circular(3000)),
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                  builder: (context) => PromoScreen()));
-                        },
-                        // highlightColor: Colors.black,
-                        child: Stack(
-                          children: <Widget>[
-                            Icon(
-                              Icons.notifications,
-                              size: MediaQuery.of(context).size.width * 0.11,
-                              color: Colors.white,
-                            ),
-                            // Positioned()
-                            // Container(
-                            //   margin: EdgeInsets.all(sizeMul*2),
-                            //   child: Image.asset(
-                            //     'assets/icons/3x/bell.png',
-                            //     height:
-                            //         MediaQuery.of(context).size.width * 0.1,
-                            //   ),
-                            // ),
-                            Positioned(
-                              top: 14 * sizeMul,
-                              right: 5 * sizeMul,
-                              child: Container(
-                                width: sizeMul * 18,
-                                height: sizeMul * 18,
-                                child: Center(
-                                  child: Text(
-                                    "12",
-                                    style: TextStyle(
-                                        fontSize: 12 * sizeMul,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w900),
-                                  ),
-                                ),
-                                decoration: BoxDecoration(
-                                    color: Colors.red,
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(3000))),
-                              ),
-                            )
-                          ],
-                        ),
-
-                        // Icon(
-                        //   Icons.notifications,
-                        //   size: MediaQuery.of(context).size.width * 0.10,
-                        //   color: Colors.white,
-                        // ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 20 * sizeMul,
-                    ),
-                  ],
-                ),
-              ],
+              // color: Colors.red,
             ),
           ),
-        ),
-        Positioned(
-          left: MediaQuery.of(context).size.width * 0.05,
-          bottom: MediaQuery.of(context).size.width * 0.13,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-            child: Container(
-              // width: MediaQuery.of(context).size.width * 0.2,
-              // height: MediaQuery.of(context).size.width * 0.2,
-              child: Material(
-                color: Colors.white.withOpacity(0),
-                borderRadius: BorderRadius.all(Radius.circular(3000)),
-                child: InkWell(
-                  radius: sizeMul * 20,
-                  splashColor: Colors.white.withAlpha(0),
-                  highlightColor: Colors.black.withOpacity(0.1),
-                  borderRadius: BorderRadius.all(Radius.circular(3000)),
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        CupertinoPageRoute(
-                            builder: (context) => ChartScreen()));
-                  },
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
+          Positioned(
+            top: 22 * sizeMul,
+            right: 0,
+            left: 0,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      Image.asset(
-                        'assets/icons/charts.png',
-                        height: MediaQuery.of(context).size.width * 0.098,
+                      SizedBox(
+                        width: 20 * sizeMul,
+                      ),
+                      Material(
+                        color: Colors.white.withOpacity(0),
+                        borderRadius: BorderRadius.all(Radius.circular(3000)),
+                        child: InkWell(
+                          radius: sizeMul * 4,
+                          splashColor: Colors.white.withAlpha(0),
+                          highlightColor: Colors.black.withOpacity(0.1),
+                          borderRadius: BorderRadius.all(Radius.circular(3000)),
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                CupertinoPageRoute(
+                                    builder: (context) => SettingScreen()));
+                          },
+                          child: Icon(
+                            Icons.more_horiz,
+                            size: MediaQuery.of(context).size.width * 0.12,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Material(
+                        color: Colors.white.withOpacity(0),
+                        borderRadius: BorderRadius.all(Radius.circular(3000)),
+                        child: InkWell(
+                          splashColor: Colors.white.withAlpha(0),
+                          highlightColor: Colors.black.withOpacity(0.1),
+                          borderRadius: BorderRadius.all(Radius.circular(3000)),
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                CupertinoPageRoute(
+                                    builder: (context) => PromoScreen()));
+                          },
+                          // highlightColor: Colors.black,
+                          child: Stack(
+                            children: <Widget>[
+                              Icon(
+                                Icons.notifications,
+                                size: MediaQuery.of(context).size.width * 0.11,
+                                color: Colors.white,
+                              ),
+                              // Positioned()
+                              // Container(
+                              //   margin: EdgeInsets.all(sizeMul*2),
+                              //   child: Image.asset(
+                              //     'assets/icons/3x/bell.png',
+                              //     height:
+                              //         MediaQuery.of(context).size.width * 0.1,
+                              //   ),
+                              // ),
+                              Positioned(
+                                top: 14 * sizeMul,
+                                right: 5 * sizeMul,
+                                child: Container(
+                                  width: sizeMul * 18,
+                                  height: sizeMul * 18,
+                                  child: Center(
+                                    child: Text(
+                                      "12",
+                                      style: TextStyle(
+                                          fontSize: 12 * sizeMul,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w900),
+                                    ),
+                                  ),
+                                  decoration: BoxDecoration(
+                                      color: Colors.red,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(3000))),
+                                ),
+                              )
+                            ],
+                          ),
+
+                          // Icon(
+                          //   Icons.notifications,
+                          //   size: MediaQuery.of(context).size.width * 0.10,
+                          //   color: Colors.white,
+                          // ),
+                        ),
                       ),
                       SizedBox(
-                        height: MediaQuery.of(context).size.width * 0.015,
+                        width: 20 * sizeMul,
                       ),
-                      Text(
-                        "Charts",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: MediaQuery.of(context).size.width * 0.04,
-                            fontWeight: FontWeight.w700),
-                      )
                     ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Positioned(
+            left: MediaQuery.of(context).size.width * 0.05,
+            bottom: MediaQuery.of(context).size.width * 0.13,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+              child: Container(
+                // width: MediaQuery.of(context).size.width * 0.2,
+                // height: MediaQuery.of(context).size.width * 0.2,
+                child: Material(
+                  color: Colors.white.withOpacity(0),
+                  borderRadius: BorderRadius.all(Radius.circular(3000)),
+                  child: InkWell(
+                    radius: sizeMul * 20,
+                    splashColor: Colors.white.withAlpha(0),
+                    highlightColor: Colors.black.withOpacity(0.1),
+                    borderRadius: BorderRadius.all(Radius.circular(3000)),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                              builder: (context) => ChartScreen()));
+                    },
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: <Widget>[
+                        Image.asset(
+                          'assets/icons/charts.png',
+                          height: MediaQuery.of(context).size.width * 0.098,
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.width * 0.015,
+                        ),
+                        Text(
+                          "Charts",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.04,
+                              fontWeight: FontWeight.w700),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
           ),
-        ),
-        // SliverAppBar(
+          // SliverAppBar(
 
-        // )
-        Positioned(
-          bottom: MediaQuery.of(context).size.width * 0,
-          right: 12 * sizeMul * sizeMul,
-          child: RaisedButton(
-              splashColor: greeny.colors[0],
-              animationDuration: Duration(milliseconds: 100),
-              shape: CircleBorder(),
-              elevation: 5,
-              color: greeny.colors[1],
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    CupertinoPageRoute(
-                        builder: (context) => EditReceiptScreen()));
-              },
-              child: Container(
-                width: sizeMul * 74.052,
-                height: sizeMul * 74.052,
-                child: Icon(
-                  // print(size);
-                  Icons.add,
-                  size: sizeMul * 41.14,
-                  color: Colors.white,
-                ),
-              )),
-        )
-      ],
-    );
+          // )
+          Positioned(
+            bottom: MediaQuery.of(context).size.width * 0,
+            right: 12 * sizeMul * sizeMul,
+            child: RaisedButton(
+                splashColor: greeny.colors[0],
+                animationDuration: Duration(milliseconds: 100),
+                shape: CircleBorder(),
+                elevation: 5,
+                color: greeny.colors[1],
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                          builder: (context) => EditReceiptScreen()));
+                },
+                child: Container(
+                  width: sizeMul * 74.052,
+                  height: sizeMul * 74.052,
+                  child: Icon(
+                    // print(size);
+                    Icons.add,
+                    size: sizeMul * 41.14,
+                    color: Colors.white,
+                  ),
+                )),
+          )
+        ],
+      );
+    });
   }
 }
 
