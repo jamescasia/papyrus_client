@@ -2,7 +2,7 @@ class Receipt {
   String _recpt_id;
   String _uid;
   String _time_stamp;
-  double _total;
+  double _total=0;
   String _merchant;
   String _dateTime;
   String _category;
