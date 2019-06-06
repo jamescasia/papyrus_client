@@ -2,7 +2,7 @@ class Receipt {
   String _recpt_id;
   String _uid;
   String _time_stamp;
-  double _total=0;
+  double _total = 0;
   String _merchant;
   String _dateTime;
   String _category;
@@ -21,9 +21,7 @@ class Receipt {
     // new ReceiptItem("Chou Tzuyu", 2, 1500.0),
   ];
 
-
-
-  // Receipt(this._recpt_id, this._uid, this._time_stamp, this._merchant, this._category, this._dateTime,this._isPapyrus,this._items ){  
+  // Receipt(this._recpt_id, this._uid, this._time_stamp, this._merchant, this._category, this._dateTime,this._isPapyrus,this._items ){
   //   updateReceipt();
   // }
 
@@ -58,9 +56,9 @@ class Receipt {
 
   void updateReceipt() {
     double tot = 0;
-    
-    for(var i  = 0; i< _items.length ; i++){
-      tot+=_items[i].total;
+
+    for (var i = 0; i < _items.length; i++) {
+      tot += _items[i].total;
     }
 
     _total = tot;
@@ -77,6 +75,19 @@ class Receipt {
       // print("item: "+i.name +" " + i.price.toString() + " " + i.total.toString());
     });
   }
+
+  toJson() => {
+        'recpt_id': _recpt_id,
+        'uid': _uid,
+        'time_stamp': _time_stamp,
+        "total": _total,
+        "merchant": _merchant,
+        "dateTime": _dateTime,
+        "category": _category,
+        "isPapyrus": _isPapyrus,
+        "imagePath": _imagePath,
+        "items": _items
+      };
 }
 
 class ReceiptItem {
@@ -88,6 +99,13 @@ class ReceiptItem {
     // print('what'+name);
     this._total = this._price * this._qty;
   }
+
+  toJson() => {
+        "name": _name,
+        "qty": _qty,
+        "price": _price,
+        "total": _total,
+      };
 
   // List<ReceiptItem> get items => _items;
   // set recpt_id(String id) => _recpt_id = id;

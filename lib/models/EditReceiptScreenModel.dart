@@ -1,9 +1,11 @@
 import 'package:scoped_model/scoped_model.dart';
+import 'dart:core';
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:papyrus_client/data_models/Receipt.dart';
+import 'dart:convert';
 
 class EditReceiptScreenModel extends Model {
   TextEditingController _controller = TextEditingController();
@@ -15,13 +17,18 @@ class EditReceiptScreenModel extends Model {
 
   EditReceiptScreenModel() {
     _changed = false;
-    _receipt = Receipt();
+    _receipt = Receipt()
+      ..dateTime = DateTime.now().toIso8601String()
+      ..time_stamp = DateTime.now().millisecondsSinceEpoch.toString();
   }
 
-  void newReceiptFromOCR(){
-
-    
+  void saveReceiptToJson() {
+    // _receipt.
+    print("saving");
+    print(jsonEncode(_receipt.toJson()));
   }
+
+  void newReceiptFromOCR() {}
 
   set changed(bool c) => _changed = c;
   bool get changed => _changed;

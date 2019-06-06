@@ -27,7 +27,7 @@ dependencies:
   camera: ^0.5.2+1
   path: ^1.6.2
   scoped_model:
-  rflutter_alert: ^1.0.2
+  rflutter_alert: ^1.0.2 
   # firebase_core: 
   # firebase_auth: 
   # firebase_database:

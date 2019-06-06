@@ -12,42 +12,56 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:papyrus_client/models/EditReceiptScreenModel.dart';
 import 'package:papyrus_client/data_models/Receipt.dart';
 import 'dart:core';
+import 'package:papyrus_client/models/AppModel.dart';
+// import ''
 // import 'dart:core';
 
+EditReceiptScreenModel edrsm ;
 class EditReceiptScreen extends StatelessWidget {
   @override
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Container(
-            // color: Colors.white,
-            // child: SingleChildScrollView(
-            child: EditReceiptScreenScrollPart()
+    return Scaffold(body: Container(
+        // color: Colors.white,
+        // child: SingleChildScrollView(
+        child: ScopedModelDescendant<AppModel>(
+            builder: (context, child, appModel) {
 
-            // Column(
-            //   children: <Widget>[
-            //     EditReceiptScreenTopPart()
-            //     // , EditReceiptScreenBottomPart()
-            //   ],
-            //   // ),
-            // ),
+              edrsm = appModel.editReceiptScreenModel;
+      return EditReceiptScreenScrollPart(appModel);
+    })
 
-            ));
+        // Column(
+        //   children: <Widget>[
+        //     EditReceiptScreenTopPart()
+        //     // , EditReceiptScreenBottomPart()
+        //   ],
+        //   // ),
+        // ),
+
+        ));
   }
 }
 
 class EditReceiptScreenScrollPart extends StatefulWidget {
+  final AppModel appModel;
+
+  EditReceiptScreenScrollPart(this.appModel);
   @override
   _EditReceiptScreenScrollPartState createState() =>
-      new _EditReceiptScreenScrollPartState();
+      new _EditReceiptScreenScrollPartState(appModel);
 }
 
 BuildContext ctx;
 
 class _EditReceiptScreenScrollPartState
     extends State<EditReceiptScreenScrollPart> {
+  AppModel appModel;
+  _EditReceiptScreenScrollPartState(this.appModel);
+
   @override
   Widget build(BuildContext context) {
+    
     ctx = context;
     return Container(
       width: MediaQuery.of(context).size.width,
@@ -73,7 +87,7 @@ class _EditReceiptScreenScrollPartState
             // SliverChildListDelegate(children)
           ];
         },
-        body: EditReceiptScreenBottomPart(),
+        body: EditReceiptScreenBottomPart(appModel),
       ),
     );
   }
@@ -113,6 +127,7 @@ class EditReceiptScreenTopPart extends StatelessWidget {
             highlightColor: Colors.black.withOpacity(0.1),
             // ,
             onTap: () {
+              edrsm = EditReceiptScreenModel();
               Navigator.pop(context);
             },
             child: Container(
@@ -156,9 +171,11 @@ class EditReceiptScreenTopPart extends StatelessWidget {
   }
 }
 
-EditReceiptScreenModel edrsm = EditReceiptScreenModel();
 
 class EditReceiptScreenBottomPart extends StatelessWidget {
+
+  AppModel appModel;
+  EditReceiptScreenBottomPart(this.appModel);
   @override
   Widget build(BuildContext context) {
     // ScopedModelDescendant
@@ -169,12 +186,13 @@ class EditReceiptScreenBottomPart extends StatelessWidget {
     date_controller.text = edrsm.receipt.dateTime;
     FocusNode m_focus = FocusNode();
     FocusNode d_focus = FocusNode();
-    // FocusNode 
+    // FocusNode
     return ScopedModel<EditReceiptScreenModel>(
         model: edrsm,
         child: ScopedModelDescendant<EditReceiptScreenModel>(
             rebuildOnChange: true,
             builder: (context, child, model) {
+              
               ctx = context;
               return new Container(
                 width: MediaQuery.of(context).size.width,
@@ -250,7 +268,7 @@ class EditReceiptScreenBottomPart extends StatelessWidget {
                                 Padding(
                                   padding: EdgeInsets.only(left: sizeMul * 8.0),
                                   child: Text(
-                                    "DATE",
+                                    "DATE & TIME",
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.w900,
@@ -306,55 +324,52 @@ class EditReceiptScreenBottomPart extends StatelessWidget {
                             ),
                             SizedBox(height: sizeMul * 4),
                             Container(
-                              width: sizeMul * 270,
-                              height: sizeMul * 35,
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: sizeMul * 15),
-                              decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(3000)),
-                                  border: Border.all(
-                                      color: Colors.white, width: sizeMul * 2)),
-                              // child: Center(
-                                  child: DropdownButtonFormField(
-                                    // value:model.receipt.category,
+                                width: sizeMul * 270,
+                                height: sizeMul * 35,
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: sizeMul * 15),
+                                decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(3000)),
+                                    border: Border.all(
+                                        color: Colors.white,
+                                        width: sizeMul * 2)),
+                                // child: Center(
+                                child: DropdownButtonFormField(
+                                  // value:model.receipt.category,
 
-                                items: [
-                                  new DropdownMenuItem(
-                                    child: Text("Entertainment"),
-                                    value: 50,
-                                  ),
-                                  new DropdownMenuItem(
-                                    value: 75,
-                                    child: Text("Food"),
-                                  ),
-                                  new DropdownMenuItem(
-                                    value: 100,
-                                    child: Text("Fuel"),
-                                  ),
-                                  new DropdownMenuItem(
-                                    value: 200,
-                                    child: Text("Transportation"),
-                                  ),
-                                  new DropdownMenuItem(
-                                    value: 500,
-                                    child: Text("Necessities"),
-                                  ),
-                                  new DropdownMenuItem(
-                                    value: 1000,
-                                    child: Text("Misc."),
-                                  ),
-                                ],
-                                onChanged: (choice){
-
-                                  model.receipt.category = choice.toString();
-                                  
-                                  
-
-                                },
-                              ) 
-                                  // ),
-                            )
+                                  items: [
+                                    new DropdownMenuItem(
+                                      child: Text("Entertainment"),
+                                      value: 50,
+                                    ),
+                                    new DropdownMenuItem(
+                                      value: 75,
+                                      child: Text("Food"),
+                                    ),
+                                    new DropdownMenuItem(
+                                      value: 100,
+                                      child: Text("Fuel"),
+                                    ),
+                                    new DropdownMenuItem(
+                                      value: 200,
+                                      child: Text("Transportation"),
+                                    ),
+                                    new DropdownMenuItem(
+                                      value: 500,
+                                      child: Text("Necessities"),
+                                    ),
+                                    new DropdownMenuItem(
+                                      value: 1000,
+                                      child: Text("Misc."),
+                                    ),
+                                  ],
+                                  onChanged: (choice) {
+                                    model.receipt.category = choice.toString();
+                                  },
+                                )
+                                // ),
+                                )
                           ],
                         )),
                         Container(
@@ -454,8 +469,6 @@ class EditReceiptScreenBottomPart extends StatelessWidget {
                                     children: model.receipt.items.map((item) {
                                   return ReceiptItemLine(item, model);
                                 }).toList()),
-
-                          
                                 Container(
                                   width: MediaQuery.of(context).size.width,
                                   padding: EdgeInsets.symmetric(
@@ -503,7 +516,6 @@ class EditReceiptScreenBottomPart extends StatelessWidget {
                                             return EditItem(context,
                                                 ReceiptItem("", 0, 0), true);
                                           });
- 
                                     },
                                   ),
                                 ),
@@ -535,6 +547,8 @@ class EditReceiptScreenBottomPart extends StatelessWidget {
                                   padding: EdgeInsets.only(top: sizeMul * 40),
                                   child: InkWell(
                                     onTap: () {
+                                      edrsm.saveReceiptToJson();
+                                      edrsm = EditReceiptScreenModel();
                                       Navigator.pop(context);
                                     },
                                     child: Row(
@@ -682,7 +696,7 @@ class _EditItemState extends State<EditItem> {
   BuildContext context;
   ReceiptItem receiptItem;
   bool add;
-  FocusNode fa= FocusNode();
+  FocusNode fa = FocusNode();
   FocusNode fb = FocusNode();
   FocusNode fc = FocusNode();
   _EditItemState(this.context, this.receiptItem, this.add);
@@ -902,7 +916,7 @@ class _EditItemState extends State<EditItem> {
                 //   width: sizeMul * 27,
                 // ),
                 Container(
-                  width: sizeMul*120,
+                  width: sizeMul * 120,
                   child: Text(
                       "${(double.parse(price_controller.text) * int.parse(qty_controller.text)).toStringAsFixed(2)}",
                       overflow: TextOverflow.fade,
