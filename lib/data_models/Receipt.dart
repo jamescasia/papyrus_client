@@ -3,9 +3,10 @@ class Receipt {
   String _uid;
   String _time_stamp;
 
-  String _merchant;
-  String _dateTime;
+  String _merchant = "Jollibee";
+  String _dateTime = "12/1/99";
   String _category;
+  bool _isPapyrus = false;
 
   List<ReceiptItem> _items = [
     new ReceiptItem("Im Nayeon", 2, 1500.0),
@@ -28,6 +29,7 @@ class Receipt {
   ];
 
   String get recpt_id => _recpt_id;
+  bool get isPapyrus => _isPapyrus;
   String get uid => _uid;
   String get time_stamp => _time_stamp;
   String get merchant => _merchant;
@@ -36,6 +38,7 @@ class Receipt {
   List<ReceiptItem> get items => _items;
 
   set recpt_id(String id) => _recpt_id = id;
+  set isPapyrus(bool val) => _isPapyrus = val;
   set uid(String id) => _uid = id;
   set time_stamp(String ts) => _time_stamp = ts;
   set merchant(String mer) => _merchant = mer;
