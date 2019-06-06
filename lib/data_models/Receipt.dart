@@ -45,12 +45,12 @@ class Receipt {
   void addReceiptItem(ReceiptItem recptItem) {
     print("added "+recptItem.name);
     _items.add(recptItem);
-    displayItems();
+    // displayItems();
   }
 
   void removeReceiptItem(ReceiptItem recptItem) {
     _items.remove(recptItem);
-    displayItems();
+    // displayItems();
     
   }
 
@@ -63,7 +63,7 @@ class Receipt {
   void displayItems(){
     print("displaying"+_items.length.toString());
     _items.map((i) { 
-      print("item: "+i.name +" " + i.price.toString() + " " + i.total.toString());
+      // print("item: "+i.name +" " + i.price.toString() + " " + i.total.toString());
     });
 
   }

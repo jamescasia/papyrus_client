@@ -10,7 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:papyrus_client/models/EditReceiptScreenModel.dart';
-import 'package:papyrus_client/data_models/Receipt.dart';
+// import 'package:papyrus_client/data_models/Receipt.dart';
 
 class EditReceiptScreen extends StatelessWidget {
   @override
@@ -149,16 +149,17 @@ class EditReceiptScreenTopPart extends StatelessWidget {
     ));
   }
 }
-
+EditReceiptScreenModel edrsm = EditReceiptScreenModel();
 class EditReceiptScreenBottomPart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // ScopedModelDescendant
     return ScopedModel<EditReceiptScreenModel>(
-        model: EditReceiptScreenModel(),
+        model: edrsm,
         child: ScopedModelDescendant<EditReceiptScreenModel>(
             rebuildOnChange: true,
             builder: (context, child, model) {
+              ctx = context;
               return new Container(
                 width: MediaQuery.of(context).size.width,
                 // padding: EdgeInsets.only(top:sizeMul*10),
@@ -432,6 +433,7 @@ class EditReceiptScreenBottomPart extends StatelessWidget {
                             Column(
                               children: <Widget>[
                                 Column(
+
                                     // children: model.receipt.items
                                     //     .map((item) => ReceiptItemLine(item))
                                     //     .toList()),
@@ -482,15 +484,21 @@ class EditReceiptScreenBottomPart extends StatelessWidget {
                                     highlightElevation: 5,
                                     clipBehavior: Clip.none,
                                     onPressed: () {
-                                      print(model
-                                              .receipt
-                                              .items[
-                                                  model.receipt.items.length -
-                                                      1]
-                                              .name
-                                              .toString() +
-                                          "from bottom");
-                                      addItemAlert(context, model).show();
+                                      // ReceiptItem receiptItem =
+                                      //     ReceiptItem("Im Mina", 1999, 2018);
+
+                                      //     model.addItemToReceipt(receiptItem);
+
+                                      // print(model
+                                      //         .receipt
+                                      //         .items[
+                                      //             model.receipt.items.length -
+                                      //                 1]
+                                      //         .name
+                                      //         .toString() +
+                                      //     "from bottom");
+                                      // addItemAlert(ctx, model);
+                                      _showDialog(ctx, model);
 
 // TextEditingController name_controller = TextEditingController();
 //   TextEditingController qty_controller = TextEditingController();
@@ -1292,16 +1300,16 @@ class ReceiptItemLine extends StatelessWidget {
   }
 }
 
-Alert addItemAlert(BuildContext context, EditReceiptScreenModel model) {
+void addItemAlert(BuildContext context, EditReceiptScreenModel model) {
   print(model.receipt.items[model.receipt.items.length - 1].name.toString() +
       "from additemalert");
   TextEditingController name_controller = TextEditingController();
   TextEditingController qty_controller = TextEditingController();
   TextEditingController price_controller = TextEditingController();
 
-  ReceiptItem receiptItem = new ReceiptItem("", 0, 0);
+  ReceiptItem receiptItem = ReceiptItem("", 0, 0);
 
-  return Alert(
+  Alert(
     context: context,
     type: AlertType.none,
     title: "",
@@ -1537,13 +1545,8 @@ Alert addItemAlert(BuildContext context, EditReceiptScreenModel model) {
                     receiptItem.qty = int.parse(qty_controller.text);
                     receiptItem.price = double.parse(price_controller.text);
                     receiptItem.total = receiptItem.qty * receiptItem.price;
-                    model.changed = !model.changed;
+                    // model.changed = !model.changed;
 
-                    model.addItemToReceipt(receiptItem);
-                    model.addItemToReceipt(receiptItem);
-                    model.addItemToReceipt(receiptItem);
-                    model.addItemToReceipt(receiptItem);
-                    model.addItemToReceipt(receiptItem);
                     model.addItemToReceipt(receiptItem);
                     // ScopedModelDescendant.
                     // model.receipt.addReceiptItem(receiptItem);
@@ -1557,7 +1560,7 @@ Alert addItemAlert(BuildContext context, EditReceiptScreenModel model) {
                     Navigator.pop(context);
                     print('actually predafssed');
 
-                    Scaffold.of(ctx).showSnackBar(SnackBar(
+                    Scaffold.of(context).showSnackBar(SnackBar(
                       content: Text(model
                           .receipt.items[model.receipt.items.length - 1].name),
                     ));
@@ -1621,5 +1624,317 @@ Alert addItemAlert(BuildContext context, EditReceiptScreenModel model) {
       //   width: 120,
       // )
     ],
-  );
+  ).show();
+}
+
+void _showDialog(BuildContext context, EditReceiptScreenModel model) {
+  showDialog(
+
+      context: context,
+      builder: (BuildContext context) {
+        TextEditingController name_controller = TextEditingController();
+        TextEditingController qty_controller = TextEditingController();
+        TextEditingController price_controller = TextEditingController();
+
+        ReceiptItem receiptItem = ReceiptItem("", 0, 0);
+        return AlertDialog(
+          
+          content: Container(
+            width: MediaQuery.of(context).size.width * 0.88,
+            // height: sizeMul * 300,
+            // color: Colors.red,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(left: sizeMul * 8.0),
+                      child: Text(
+                        "Name",
+                        style: TextStyle(
+                            color: Colors.grey[800],
+                            fontWeight: FontWeight.w900,
+                            fontSize: sizeMul * 14),
+                      ),
+                    ),
+                    SizedBox(height: sizeMul * 4),
+                    Container(
+                      // width: sizeMul * 130,
+                      // color: Colors.green,
+                      height: sizeMul * 35,
+                      padding: EdgeInsets.symmetric(horizontal: sizeMul * 15),
+                      decoration: BoxDecoration(
+                        color: Colors.green,
+                        borderRadius: BorderRadius.all(Radius.circular(3000)),
+                        // border: Border.all(
+                        //     color: Colors.white,
+                        //     width: sizeMul * 2)
+                      ),
+                      child: Center(
+                        child: EditableText(
+                          onChanged: (text) {
+                            receiptItem.name = name_controller.text;
+                            receiptItem.qty = int.parse(qty_controller.text);
+                            receiptItem.price =
+                                double.parse(price_controller.text);
+                            receiptItem.total =
+                                receiptItem.qty * receiptItem.price;
+
+                            model.update();
+                          },
+                          selectionColor: Colors.green,
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                              color: Colors.white, fontSize: sizeMul * 17),
+                          backgroundCursorColor: Colors.red,
+                          cursorColor: Colors.pinkAccent,
+                          focusNode: FocusNode(),
+                          controller: name_controller,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                Flex(
+                  mainAxisSize: MainAxisSize.max,
+                  direction: Axis.horizontal,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 6,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.max,
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.only(left: sizeMul * 8.0),
+                            child: Text(
+                              "Price",
+                              style: TextStyle(
+                                  color: Colors.grey[800],
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: sizeMul * 14),
+                            ),
+                          ),
+                          SizedBox(height: sizeMul * 4),
+                          Container(
+                            // width: sizeMul * 130,
+                            // color: Colors.green,
+                            height: sizeMul * 35,
+                            padding:
+                                EdgeInsets.symmetric(horizontal: sizeMul * 15),
+                            decoration: BoxDecoration(
+                              color: Colors.green,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(3000)),
+                              // border: Border.all(
+                              //     color: Colors.white,
+                              //     width: sizeMul * 2)
+                            ),
+                            child: Center(
+                              child: EditableText(
+                                onChanged: (text) {
+                                  receiptItem.name = name_controller.text;
+                                  receiptItem.qty =
+                                      int.parse(qty_controller.text);
+                                  receiptItem.price =
+                                      double.parse(price_controller.text);
+                                  receiptItem.total =
+                                      receiptItem.qty * receiptItem.price;
+
+                                  model.update();
+                                },
+                                selectionColor: Colors.green,
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: sizeMul * 17),
+                                backgroundCursorColor: Colors.red,
+                                cursorColor: Colors.pinkAccent,
+                                focusNode: FocusNode(),
+                                controller: price_controller,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      width: sizeMul * 10,
+                    ),
+                    Expanded(
+                      flex: 3,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.max,
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.only(left: sizeMul * 8.0),
+                            child: Text(
+                              "Qty",
+                              style: TextStyle(
+                                  color: Colors.grey[800],
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: sizeMul * 14),
+                            ),
+                          ),
+                          SizedBox(height: sizeMul * 4),
+                          Container(
+                            // width: sizeMul * 130,
+                            // color: Colors.green,
+                            height: sizeMul * 35,
+                            padding:
+                                EdgeInsets.symmetric(horizontal: sizeMul * 15),
+                            decoration: BoxDecoration(
+                              color: Colors.green,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(3000)),
+                              // border: Border.all(
+                              //     color: Colors.white,
+                              //     width: sizeMul * 2)
+                            ),
+                            child: Center(
+                              child: EditableText(
+                                onChanged: (text) {
+                                  receiptItem.name = name_controller.text;
+                                  receiptItem.qty =
+                                      int.parse(qty_controller.text);
+                                  receiptItem.price =
+                                      double.parse(price_controller.text);
+                                  receiptItem.total =
+                                      receiptItem.qty * receiptItem.price;
+
+                                  model.update();
+                                },
+                                selectionColor: Colors.green,
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: sizeMul * 17),
+                                backgroundCursorColor: Colors.red,
+                                cursorColor: Colors.pinkAccent,
+                                focusNode: FocusNode(),
+                                controller: qty_controller,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: sizeMul * 8,
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text("Total",
+                        style: TextStyle(
+                          color: Colors.grey[800],
+                          fontSize: sizeMul * 18,
+                          fontWeight: FontWeight.bold,
+                        )),
+                    SizedBox(
+                      width: sizeMul * 27,
+                    ),
+
+                    Text("${receiptItem.total}",
+                        style: TextStyle(
+                            color: Colors.grey[800],
+                            fontSize: sizeMul * 18,
+                            fontWeight: FontWeight.bold)),
+                    SizedBox(
+                      height: sizeMul * 50,
+                    ),
+                    Material(
+                      child: Container(
+                        height: sizeMul * 50,
+                        width: sizeMul * 50,
+                        decoration: BoxDecoration(
+                            color: Colors.red,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(sizeMul * 8))),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.pop(context);
+                            model.removeItemFromReceipt(receiptItem);
+                          },
+                          splashColor: Colors.amber,
+                          highlightColor: Colors.redAccent,
+                          child: Icon(Icons.delete,
+                              color: Colors.white, size: sizeMul * 30),
+                        ),
+                      ),
+                    ),
+                    Material(
+                      child: InkWell(
+                        splashColor: Colors.lightGreenAccent,
+                        highlightColor: Colors.green,
+                        onTap: () {
+                          receiptItem.name = name_controller.text;
+                          receiptItem.qty = int.parse(qty_controller.text);
+                          receiptItem.price =
+                              double.parse(price_controller.text);
+                          receiptItem.total =
+                              receiptItem.qty * receiptItem.price;
+                          // model.changed = !model.changed;
+
+                          edrsm.addItemToReceipt(receiptItem);
+                          // ScopedModelDescendant.
+                          // model.receipt.addReceiptItem(receiptItem);
+                          // model.notifyListeners();
+
+                          print(model.receipt
+                                  .items[model.receipt.items.length - 1].name
+                                  .toString() +
+                              "from somewhere");
+                          // model.update();
+                          Navigator.pop(context);
+                          print('actually predafssed');
+
+                          Scaffold.of(context).showSnackBar(SnackBar(
+                            content: Text(model.receipt
+                                .items[model.receipt.items.length - 1].name),
+                          ));
+                        },
+                        child: Container(
+                          height: sizeMul * 50,
+                          width: sizeMul * 50,
+                          decoration: BoxDecoration(
+                              color: Colors.lightGreen,
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(sizeMul * 8))),
+                          child: Icon(Icons.check,
+                              color: Colors.white, size: sizeMul * 30),
+                        ),
+                      ),
+                    ),
+                    // IconButton(
+                    //   iconSize: sizeMul*40,
+                    //   icon: Icon(
+                    //     Icons.delete,
+                    //     color: Colors.white,
+                    //     size: sizeMul * 50,
+                    //   ),
+                    //   color: Colors.red,
+                    //   onPressed: (){},
+                    // ),
+                    // IconButton(
+                    //     icon: Icon(Icons.check,
+                    //         color: Colors.white, size: sizeMul * 50),
+                    //     color: Colors.lightGreen,
+                    //     onPressed:  (){}),
+                  ],
+                ),
+                // Text("hey show up iddiot"),
+              ],
+            ),
+          ),
+        );
+      });
 }
