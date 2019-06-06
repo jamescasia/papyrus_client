@@ -16,6 +16,7 @@ import 'EditReceiptScreen.dart';
 import 'ShowQRScreen.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:papyrus_client/models/AppModel.dart';
+import 'package:papyrus_client/screens/LogInScreen.dart';
 
 // void main() {
 //   return runApp(PapyrusCustomer());
@@ -63,7 +64,10 @@ class PapyrusCustomer extends StatelessWidget {
             fontFamily: 'Montserrat',
             primarySwatch: Colors.blue,
           ),
-          home: HomeScreen(),
+          home: ScopedModelDescendant<AppModel>(
+              builder: (context, child, appModel) {
+            return (appModel.user != null) ? HomeScreen() : LogInScreen();
+          }),
           // routes: <String, WidgetBuilder>{
           //   '/': (context) =>HomeScreen(),
           // },
@@ -177,6 +181,10 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                             highlightColor: Colors.black.withOpacity(0.1),
                             onTap: () {
                               model.viewing_period = Period.MONTHLY;
+                              Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                      builder: (context) => LogInScreen()));
                             },
                             child: Container(
                               // color: Colors.white,
@@ -573,7 +581,8 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
           // )
           Positioned(
             bottom: MediaQuery.of(context).size.width * 0,
-            right: 12 * sizeMul * sizeMul,
+            right: MediaQuery.of(context).size.width * 0.035,
+            // right: 12 * sizeMul * sizeMul,
             child: RaisedButton(
                 splashColor: greeny.colors[0],
                 animationDuration: Duration(milliseconds: 100),
@@ -584,7 +593,8 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                   Navigator.push(
                       context,
                       CupertinoPageRoute(
-                          builder: (context) => EditReceiptScreen(model.editReceiptScreenModel)));
+                          builder: (context) =>
+                              EditReceiptScreen(model.editReceiptScreenModel)));
                 },
                 child: Container(
                   width: sizeMul * 74.052,

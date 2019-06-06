@@ -64,7 +64,10 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                               children: <Widget>[
                                 Positioned(
                                   // right: sizeMul*-28*sizeMul,
-                                  left: sizeMul * 250,
+                                  // left: sizeMul * 250,
+                                  // right:
+                                  left:
+                                      MediaQuery.of(context).size.width * 0.61,
                                   top: sizeMul * 30,
                                   // top:
                                   // bottom: sizeMul * -15,
