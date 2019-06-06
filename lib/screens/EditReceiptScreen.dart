@@ -498,7 +498,7 @@ class EditReceiptScreenBottomPart extends StatelessWidget {
                                       //         .toString() +
                                       //     "from bottom");
                                       // addItemAlert(ctx, model);
-                                      _showDialog(ctx, model);
+                                      _showDialog(ctx, model, ReceiptItem("", 0, 0));
 
 // TextEditingController name_controller = TextEditingController();
 //   TextEditingController qty_controller = TextEditingController();
@@ -955,335 +955,337 @@ class ReceiptItemLine extends StatelessWidget {
               color: Colors.white.withAlpha(0),
               child: InkWell(
                 onTap: () {
-                  Alert(
-                    context: context,
-                    type: AlertType.none,
-                    title: "",
-                    // desc: "Flutter is more awesome with RFlutter Alert.",
-                    content: Container(
-                      width: MediaQuery.of(context).size.width * 0.88,
-                      // height: sizeMul * 300,
-                      // color: Colors.red,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: <Widget>[
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                              Padding(
-                                padding: EdgeInsets.only(left: sizeMul * 8.0),
-                                child: Text(
-                                  "Name",
-                                  style: TextStyle(
-                                      color: Colors.grey[800],
-                                      fontWeight: FontWeight.w900,
-                                      fontSize: sizeMul * 14),
-                                ),
-                              ),
-                              SizedBox(height: sizeMul * 4),
-                              Container(
-                                // width: sizeMul * 130,
-                                // color: Colors.green,
-                                height: sizeMul * 35,
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: sizeMul * 15),
-                                decoration: BoxDecoration(
-                                  color: Colors.green,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(3000)),
-                                  // border: Border.all(
-                                  //     color: Colors.white,
-                                  //     width: sizeMul * 2)
-                                ),
-                                child: Center(
-                                  child: EditableText(
-                                    onChanged: (text) {
-                                      receiptItem.name = name_controller.text;
-                                      receiptItem.qty =
-                                          int.parse(qty_controller.text);
-                                      receiptItem.price =
-                                          double.parse(price_controller.text);
-                                      receiptItem.total =
-                                          receiptItem.qty * receiptItem.price;
 
-                                      model.update();
-                                    },
-                                    selectionColor: Colors.green,
-                                    textAlign: TextAlign.start,
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: sizeMul * 17),
-                                    backgroundCursorColor: Colors.red,
-                                    cursorColor: Colors.pinkAccent,
-                                    focusNode: FocusNode(),
-                                    controller: name_controller,
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                          Flex(
-                            mainAxisSize: MainAxisSize.max,
-                            direction: Axis.horizontal,
-                            children: <Widget>[
-                              Expanded(
-                                flex: 6,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding:
-                                          EdgeInsets.only(left: sizeMul * 8.0),
-                                      child: Text(
-                                        "Price",
-                                        style: TextStyle(
-                                            color: Colors.grey[800],
-                                            fontWeight: FontWeight.w900,
-                                            fontSize: sizeMul * 14),
-                                      ),
-                                    ),
-                                    SizedBox(height: sizeMul * 4),
-                                    Container(
-                                      // width: sizeMul * 130,
-                                      // color: Colors.green,
-                                      height: sizeMul * 35,
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: sizeMul * 15),
-                                      decoration: BoxDecoration(
-                                        color: Colors.green,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(3000)),
-                                        // border: Border.all(
-                                        //     color: Colors.white,
-                                        //     width: sizeMul * 2)
-                                      ),
-                                      child: Center(
-                                        child: EditableText(
-                                          onChanged: (text) {
-                                            receiptItem.name =
-                                                name_controller.text;
-                                            receiptItem.qty =
-                                                int.parse(qty_controller.text);
-                                            receiptItem.price = double.parse(
-                                                price_controller.text);
-                                            receiptItem.total =
-                                                receiptItem.qty *
-                                                    receiptItem.price;
+                  _showDialog(context, model, receiptItem);
+                  // Alert(
+                  //   context: context,
+                  //   type: AlertType.none,
+                  //   title: "",
+                  //   // desc: "Flutter is more awesome with RFlutter Alert.",
+                  //   content: Container(
+                  //     width: MediaQuery.of(context).size.width * 0.88,
+                  //     // height: sizeMul * 300,
+                  //     // color: Colors.red,
+                  //     child: Column(
+                  //       mainAxisSize: MainAxisSize.max,
+                  //       children: <Widget>[
+                  //         Column(
+                  //           crossAxisAlignment: CrossAxisAlignment.start,
+                  //           mainAxisSize: MainAxisSize.max,
+                  //           children: <Widget>[
+                  //             Padding(
+                  //               padding: EdgeInsets.only(left: sizeMul * 8.0),
+                  //               child: Text(
+                  //                 "Name",
+                  //                 style: TextStyle(
+                  //                     color: Colors.grey[800],
+                  //                     fontWeight: FontWeight.w900,
+                  //                     fontSize: sizeMul * 14),
+                  //               ),
+                  //             ),
+                  //             SizedBox(height: sizeMul * 4),
+                  //             Container(
+                  //               // width: sizeMul * 130,
+                  //               // color: Colors.green,
+                  //               height: sizeMul * 35,
+                  //               padding: EdgeInsets.symmetric(
+                  //                   horizontal: sizeMul * 15),
+                  //               decoration: BoxDecoration(
+                  //                 color: Colors.green,
+                  //                 borderRadius:
+                  //                     BorderRadius.all(Radius.circular(3000)),
+                  //                 // border: Border.all(
+                  //                 //     color: Colors.white,
+                  //                 //     width: sizeMul * 2)
+                  //               ),
+                  //               child: Center(
+                  //                 child: EditableText(
+                  //                   onChanged: (text) {
+                  //                     receiptItem.name = name_controller.text;
+                  //                     receiptItem.qty =
+                  //                         int.parse(qty_controller.text);
+                  //                     receiptItem.price =
+                  //                         double.parse(price_controller.text);
+                  //                     receiptItem.total =
+                  //                         receiptItem.qty * receiptItem.price;
 
-                                            model.update();
-                                          },
-                                          selectionColor: Colors.green,
-                                          textAlign: TextAlign.start,
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: sizeMul * 17),
-                                          backgroundCursorColor: Colors.red,
-                                          cursorColor: Colors.pinkAccent,
-                                          focusNode: FocusNode(),
-                                          controller: price_controller,
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                width: sizeMul * 10,
-                              ),
-                              Expanded(
-                                flex: 3,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding:
-                                          EdgeInsets.only(left: sizeMul * 8.0),
-                                      child: Text(
-                                        "Qty",
-                                        style: TextStyle(
-                                            color: Colors.grey[800],
-                                            fontWeight: FontWeight.w900,
-                                            fontSize: sizeMul * 14),
-                                      ),
-                                    ),
-                                    SizedBox(height: sizeMul * 4),
-                                    Container(
-                                      // width: sizeMul * 130,
-                                      // color: Colors.green,
-                                      height: sizeMul * 35,
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: sizeMul * 15),
-                                      decoration: BoxDecoration(
-                                        color: Colors.green,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(3000)),
-                                        // border: Border.all(
-                                        //     color: Colors.white,
-                                        //     width: sizeMul * 2)
-                                      ),
-                                      child: Center(
-                                        child: EditableText(
-                                          onChanged: (text) {
-                                            receiptItem.name =
-                                                name_controller.text;
-                                            receiptItem.qty =
-                                                int.parse(qty_controller.text);
-                                            receiptItem.price = double.parse(
-                                                price_controller.text);
-                                            receiptItem.total =
-                                                receiptItem.qty *
-                                                    receiptItem.price;
+                  //                     model.update();
+                  //                   },
+                  //                   selectionColor: Colors.green,
+                  //                   textAlign: TextAlign.start,
+                  //                   style: TextStyle(
+                  //                       color: Colors.white,
+                  //                       fontSize: sizeMul * 17),
+                  //                   backgroundCursorColor: Colors.red,
+                  //                   cursorColor: Colors.pinkAccent,
+                  //                   focusNode: FocusNode(),
+                  //                   controller: name_controller,
+                  //                 ),
+                  //               ),
+                  //             )
+                  //           ],
+                  //         ),
+                  //         Flex(
+                  //           mainAxisSize: MainAxisSize.max,
+                  //           direction: Axis.horizontal,
+                  //           children: <Widget>[
+                  //             Expanded(
+                  //               flex: 6,
+                  //               child: Column(
+                  //                 crossAxisAlignment: CrossAxisAlignment.start,
+                  //                 mainAxisSize: MainAxisSize.max,
+                  //                 children: <Widget>[
+                  //                   Padding(
+                  //                     padding:
+                  //                         EdgeInsets.only(left: sizeMul * 8.0),
+                  //                     child: Text(
+                  //                       "Price",
+                  //                       style: TextStyle(
+                  //                           color: Colors.grey[800],
+                  //                           fontWeight: FontWeight.w900,
+                  //                           fontSize: sizeMul * 14),
+                  //                     ),
+                  //                   ),
+                  //                   SizedBox(height: sizeMul * 4),
+                  //                   Container(
+                  //                     // width: sizeMul * 130,
+                  //                     // color: Colors.green,
+                  //                     height: sizeMul * 35,
+                  //                     padding: EdgeInsets.symmetric(
+                  //                         horizontal: sizeMul * 15),
+                  //                     decoration: BoxDecoration(
+                  //                       color: Colors.green,
+                  //                       borderRadius: BorderRadius.all(
+                  //                           Radius.circular(3000)),
+                  //                       // border: Border.all(
+                  //                       //     color: Colors.white,
+                  //                       //     width: sizeMul * 2)
+                  //                     ),
+                  //                     child: Center(
+                  //                       child: EditableText(
+                  //                         onChanged: (text) {
+                  //                           receiptItem.name =
+                  //                               name_controller.text;
+                  //                           receiptItem.qty =
+                  //                               int.parse(qty_controller.text);
+                  //                           receiptItem.price = double.parse(
+                  //                               price_controller.text);
+                  //                           receiptItem.total =
+                  //                               receiptItem.qty *
+                  //                                   receiptItem.price;
 
-                                            model.update();
-                                          },
-                                          selectionColor: Colors.green,
-                                          textAlign: TextAlign.start,
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: sizeMul * 17),
-                                          backgroundCursorColor: Colors.red,
-                                          cursorColor: Colors.pinkAccent,
-                                          focusNode: FocusNode(),
-                                          controller: qty_controller,
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: sizeMul * 8,
-                          ),
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Text("Total",
-                                  style: TextStyle(
-                                    color: Colors.grey[800],
-                                    fontSize: sizeMul * 18,
-                                    fontWeight: FontWeight.bold,
-                                  )),
-                              SizedBox(
-                                width: sizeMul * 27,
-                              ),
+                  //                           model.update();
+                  //                         },
+                  //                         selectionColor: Colors.green,
+                  //                         textAlign: TextAlign.start,
+                  //                         style: TextStyle(
+                  //                             color: Colors.white,
+                  //                             fontSize: sizeMul * 17),
+                  //                         backgroundCursorColor: Colors.red,
+                  //                         cursorColor: Colors.pinkAccent,
+                  //                         focusNode: FocusNode(),
+                  //                         controller: price_controller,
+                  //                       ),
+                  //                     ),
+                  //                   )
+                  //                 ],
+                  //               ),
+                  //             ),
+                  //             SizedBox(
+                  //               width: sizeMul * 10,
+                  //             ),
+                  //             Expanded(
+                  //               flex: 3,
+                  //               child: Column(
+                  //                 crossAxisAlignment: CrossAxisAlignment.start,
+                  //                 mainAxisSize: MainAxisSize.max,
+                  //                 children: <Widget>[
+                  //                   Padding(
+                  //                     padding:
+                  //                         EdgeInsets.only(left: sizeMul * 8.0),
+                  //                     child: Text(
+                  //                       "Qty",
+                  //                       style: TextStyle(
+                  //                           color: Colors.grey[800],
+                  //                           fontWeight: FontWeight.w900,
+                  //                           fontSize: sizeMul * 14),
+                  //                     ),
+                  //                   ),
+                  //                   SizedBox(height: sizeMul * 4),
+                  //                   Container(
+                  //                     // width: sizeMul * 130,
+                  //                     // color: Colors.green,
+                  //                     height: sizeMul * 35,
+                  //                     padding: EdgeInsets.symmetric(
+                  //                         horizontal: sizeMul * 15),
+                  //                     decoration: BoxDecoration(
+                  //                       color: Colors.green,
+                  //                       borderRadius: BorderRadius.all(
+                  //                           Radius.circular(3000)),
+                  //                       // border: Border.all(
+                  //                       //     color: Colors.white,
+                  //                       //     width: sizeMul * 2)
+                  //                     ),
+                  //                     child: Center(
+                  //                       child: EditableText(
+                  //                         onChanged: (text) {
+                  //                           receiptItem.name =
+                  //                               name_controller.text;
+                  //                           receiptItem.qty =
+                  //                               int.parse(qty_controller.text);
+                  //                           receiptItem.price = double.parse(
+                  //                               price_controller.text);
+                  //                           receiptItem.total =
+                  //                               receiptItem.qty *
+                  //                                   receiptItem.price;
 
-                              Text("${receiptItem.total}",
-                                  style: TextStyle(
-                                      color: Colors.grey[800],
-                                      fontSize: sizeMul * 18,
-                                      fontWeight: FontWeight.bold)),
-                              SizedBox(
-                                height: sizeMul * 50,
-                              ),
-                              Material(
-                                child: Container(
-                                  height: sizeMul * 50,
-                                  width: sizeMul * 50,
-                                  decoration: BoxDecoration(
-                                      color: Colors.red,
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(sizeMul * 8))),
-                                  child: InkWell(
-                                    onTap: () {
-                                      Navigator.pop(context);
-                                      model.removeItemFromReceipt(receiptItem);
-                                      // model.receipt
-                                      //     .removeReceiptItem(receiptItem);
-                                    },
-                                    splashColor: Colors.amber,
-                                    highlightColor: Colors.redAccent,
-                                    child: Icon(Icons.delete,
-                                        color: Colors.white,
-                                        size: sizeMul * 30),
-                                  ),
-                                ),
-                              ),
-                              Material(
-                                child: InkWell(
-                                  splashColor: Colors.lightGreenAccent,
-                                  highlightColor: Colors.green,
-                                  onTap: () {
-                                    print("hello");
-                                    receiptItem.name = name_controller.text;
-                                    receiptItem.qty =
-                                        int.parse(qty_controller.text);
-                                    receiptItem.price =
-                                        double.parse(price_controller.text);
-                                    receiptItem.total =
-                                        receiptItem.qty * receiptItem.price;
+                  //                           model.update();
+                  //                         },
+                  //                         selectionColor: Colors.green,
+                  //                         textAlign: TextAlign.start,
+                  //                         style: TextStyle(
+                  //                             color: Colors.white,
+                  //                             fontSize: sizeMul * 17),
+                  //                         backgroundCursorColor: Colors.red,
+                  //                         cursorColor: Colors.pinkAccent,
+                  //                         focusNode: FocusNode(),
+                  //                         controller: qty_controller,
+                  //                       ),
+                  //                     ),
+                  //                   )
+                  //                 ],
+                  //               ),
+                  //             ),
+                  //           ],
+                  //         ),
+                  //         SizedBox(
+                  //           height: sizeMul * 8,
+                  //         ),
+                  //         Row(
+                  //           mainAxisSize: MainAxisSize.max,
+                  //           crossAxisAlignment: CrossAxisAlignment.center,
+                  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //           children: <Widget>[
+                  //             Text("Total",
+                  //                 style: TextStyle(
+                  //                   color: Colors.grey[800],
+                  //                   fontSize: sizeMul * 18,
+                  //                   fontWeight: FontWeight.bold,
+                  //                 )),
+                  //             SizedBox(
+                  //               width: sizeMul * 27,
+                  //             ),
 
-                                    model.update();
+                  //             Text("${receiptItem.total}",
+                  //                 style: TextStyle(
+                  //                     color: Colors.grey[800],
+                  //                     fontSize: sizeMul * 18,
+                  //                     fontWeight: FontWeight.bold)),
+                  //             SizedBox(
+                  //               height: sizeMul * 50,
+                  //             ),
+                  //             Material(
+                  //               child: Container(
+                  //                 height: sizeMul * 50,
+                  //                 width: sizeMul * 50,
+                  //                 decoration: BoxDecoration(
+                  //                     color: Colors.red,
+                  //                     borderRadius: BorderRadius.all(
+                  //                         Radius.circular(sizeMul * 8))),
+                  //                 child: InkWell(
+                  //                   onTap: () {
+                  //                     Navigator.pop(context);
+                  //                     model.removeItemFromReceipt(receiptItem);
+                  //                     // model.receipt
+                  //                     //     .removeReceiptItem(receiptItem);
+                  //                   },
+                  //                   splashColor: Colors.amber,
+                  //                   highlightColor: Colors.redAccent,
+                  //                   child: Icon(Icons.delete,
+                  //                       color: Colors.white,
+                  //                       size: sizeMul * 30),
+                  //                 ),
+                  //               ),
+                  //             ),
+                  //             Material(
+                  //               child: InkWell(
+                  //                 splashColor: Colors.lightGreenAccent,
+                  //                 highlightColor: Colors.green,
+                  //                 onTap: () {
+                  //                   print("hello");
+                  //                   receiptItem.name = name_controller.text;
+                  //                   receiptItem.qty =
+                  //                       int.parse(qty_controller.text);
+                  //                   receiptItem.price =
+                  //                       double.parse(price_controller.text);
+                  //                   receiptItem.total =
+                  //                       receiptItem.qty * receiptItem.price;
 
-                                    Navigator.pop(context);
-                                  },
-                                  child: Container(
-                                    height: sizeMul * 50,
-                                    width: sizeMul * 50,
-                                    decoration: BoxDecoration(
-                                        color: Colors.lightGreen,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(sizeMul * 8))),
-                                    child: Icon(Icons.check,
-                                        color: Colors.white,
-                                        size: sizeMul * 30),
-                                  ),
-                                ),
-                              ),
-                              // IconButton(
-                              //   iconSize: sizeMul*40,
-                              //   icon: Icon(
-                              //     Icons.delete,
-                              //     color: Colors.white,
-                              //     size: sizeMul * 50,
-                              //   ),
-                              //   color: Colors.red,
-                              //   onPressed: (){},
-                              // ),
-                              // IconButton(
-                              //     icon: Icon(Icons.check,
-                              //         color: Colors.white, size: sizeMul * 50),
-                              //     color: Colors.lightGreen,
-                              //     onPressed:  (){}),
-                            ],
-                          ),
-                          // Text("hey show up iddiot"),
-                        ],
-                      ),
-                    ),
-                    buttons: [
-                      DialogButton(
-                        width: 0,
-                        height: 0,
-                        color: Colors.red,
-                        child: Icon(
-                          Icons.radio,
-                          color: Colors.white,
-                        ),
-                      ),
-                      // DialogButton(
-                      //   child: Text(
-                      //     "DONE",
-                      //     style: TextStyle(color: Colors.white, fontSize: 20),
-                      //   ),
-                      //   onPressed: () {
-                      //     Navigator.pop(context);
-                      //     name = name_controller.text;
-                      //     qty = int.parse(qty_controller.text);
-                      //     price = double.parse(price_controller.text);
-                      //     total = qty * price;
-                      //     setState(() {});
-                      //   },
-                      //   width: 120,
-                      // )
-                    ],
-                  ).show();
+                  //                   model.update();
+
+                  //                   Navigator.pop(context);
+                  //                 },
+                  //                 child: Container(
+                  //                   height: sizeMul * 50,
+                  //                   width: sizeMul * 50,
+                  //                   decoration: BoxDecoration(
+                  //                       color: Colors.lightGreen,
+                  //                       borderRadius: BorderRadius.all(
+                  //                           Radius.circular(sizeMul * 8))),
+                  //                   child: Icon(Icons.check,
+                  //                       color: Colors.white,
+                  //                       size: sizeMul * 30),
+                  //                 ),
+                  //               ),
+                  //             ),
+                  //             // IconButton(
+                  //             //   iconSize: sizeMul*40,
+                  //             //   icon: Icon(
+                  //             //     Icons.delete,
+                  //             //     color: Colors.white,
+                  //             //     size: sizeMul * 50,
+                  //             //   ),
+                  //             //   color: Colors.red,
+                  //             //   onPressed: (){},
+                  //             // ),
+                  //             // IconButton(
+                  //             //     icon: Icon(Icons.check,
+                  //             //         color: Colors.white, size: sizeMul * 50),
+                  //             //     color: Colors.lightGreen,
+                  //             //     onPressed:  (){}),
+                  //           ],
+                  //         ),
+                  //         // Text("hey show up iddiot"),
+                  //       ],
+                  //     ),
+                  //   ),
+                  //   buttons: [
+                  //     DialogButton(
+                  //       width: 0,
+                  //       height: 0,
+                  //       color: Colors.red,
+                  //       child: Icon(
+                  //         Icons.radio,
+                  //         color: Colors.white,
+                  //       ),
+                  //     ),
+                  //     // DialogButton(
+                  //     //   child: Text(
+                  //     //     "DONE",
+                  //     //     style: TextStyle(color: Colors.white, fontSize: 20),
+                  //     //   ),
+                  //     //   onPressed: () {
+                  //     //     Navigator.pop(context);
+                  //     //     name = name_controller.text;
+                  //     //     qty = int.parse(qty_controller.text);
+                  //     //     price = double.parse(price_controller.text);
+                  //     //     total = qty * price;
+                  //     //     setState(() {});
+                  //     //   },
+                  //     //   width: 120,
+                  //     // )
+                  //   ],
+                  // ).show();
                 },
                 splashColor: Colors.white54,
                 highlightColor: Colors.red,
@@ -1299,335 +1301,11 @@ class ReceiptItemLine extends StatelessWidget {
     ;
   }
 }
+ 
 
-void addItemAlert(BuildContext context, EditReceiptScreenModel model) {
-  print(model.receipt.items[model.receipt.items.length - 1].name.toString() +
-      "from additemalert");
-  TextEditingController name_controller = TextEditingController();
-  TextEditingController qty_controller = TextEditingController();
-  TextEditingController price_controller = TextEditingController();
+void _showDialog(BuildContext context, EditReceiptScreenModel model, ReceiptItem receiptItem) {
 
-  ReceiptItem receiptItem = ReceiptItem("", 0, 0);
 
-  Alert(
-    context: context,
-    type: AlertType.none,
-    title: "",
-    // desc: "Flutter is more awesome with RFlutter Alert.",
-    content: Container(
-      width: MediaQuery.of(context).size.width * 0.88,
-      // height: sizeMul * 300,
-      // color: Colors.red,
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(left: sizeMul * 8.0),
-                child: Text(
-                  "Name",
-                  style: TextStyle(
-                      color: Colors.grey[800],
-                      fontWeight: FontWeight.w900,
-                      fontSize: sizeMul * 14),
-                ),
-              ),
-              SizedBox(height: sizeMul * 4),
-              Container(
-                // width: sizeMul * 130,
-                // color: Colors.green,
-                height: sizeMul * 35,
-                padding: EdgeInsets.symmetric(horizontal: sizeMul * 15),
-                decoration: BoxDecoration(
-                  color: Colors.green,
-                  borderRadius: BorderRadius.all(Radius.circular(3000)),
-                  // border: Border.all(
-                  //     color: Colors.white,
-                  //     width: sizeMul * 2)
-                ),
-                child: Center(
-                  child: EditableText(
-                    onChanged: (text) {
-                      receiptItem.name = name_controller.text;
-                      receiptItem.qty = int.parse(qty_controller.text);
-                      receiptItem.price = double.parse(price_controller.text);
-                      receiptItem.total = receiptItem.qty * receiptItem.price;
-
-                      model.update();
-                    },
-                    selectionColor: Colors.green,
-                    textAlign: TextAlign.start,
-                    style:
-                        TextStyle(color: Colors.white, fontSize: sizeMul * 17),
-                    backgroundCursorColor: Colors.red,
-                    cursorColor: Colors.pinkAccent,
-                    focusNode: FocusNode(),
-                    controller: name_controller,
-                  ),
-                ),
-              )
-            ],
-          ),
-          Flex(
-            mainAxisSize: MainAxisSize.max,
-            direction: Axis.horizontal,
-            children: <Widget>[
-              Expanded(
-                flex: 6,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.max,
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(left: sizeMul * 8.0),
-                      child: Text(
-                        "Price",
-                        style: TextStyle(
-                            color: Colors.grey[800],
-                            fontWeight: FontWeight.w900,
-                            fontSize: sizeMul * 14),
-                      ),
-                    ),
-                    SizedBox(height: sizeMul * 4),
-                    Container(
-                      // width: sizeMul * 130,
-                      // color: Colors.green,
-                      height: sizeMul * 35,
-                      padding: EdgeInsets.symmetric(horizontal: sizeMul * 15),
-                      decoration: BoxDecoration(
-                        color: Colors.green,
-                        borderRadius: BorderRadius.all(Radius.circular(3000)),
-                        // border: Border.all(
-                        //     color: Colors.white,
-                        //     width: sizeMul * 2)
-                      ),
-                      child: Center(
-                        child: EditableText(
-                          onChanged: (text) {
-                            receiptItem.name = name_controller.text;
-                            receiptItem.qty = int.parse(qty_controller.text);
-                            receiptItem.price =
-                                double.parse(price_controller.text);
-                            receiptItem.total =
-                                receiptItem.qty * receiptItem.price;
-
-                            model.update();
-                          },
-                          selectionColor: Colors.green,
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                              color: Colors.white, fontSize: sizeMul * 17),
-                          backgroundCursorColor: Colors.red,
-                          cursorColor: Colors.pinkAccent,
-                          focusNode: FocusNode(),
-                          controller: price_controller,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              SizedBox(
-                width: sizeMul * 10,
-              ),
-              Expanded(
-                flex: 3,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.max,
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(left: sizeMul * 8.0),
-                      child: Text(
-                        "Qty",
-                        style: TextStyle(
-                            color: Colors.grey[800],
-                            fontWeight: FontWeight.w900,
-                            fontSize: sizeMul * 14),
-                      ),
-                    ),
-                    SizedBox(height: sizeMul * 4),
-                    Container(
-                      // width: sizeMul * 130,
-                      // color: Colors.green,
-                      height: sizeMul * 35,
-                      padding: EdgeInsets.symmetric(horizontal: sizeMul * 15),
-                      decoration: BoxDecoration(
-                        color: Colors.green,
-                        borderRadius: BorderRadius.all(Radius.circular(3000)),
-                        // border: Border.all(
-                        //     color: Colors.white,
-                        //     width: sizeMul * 2)
-                      ),
-                      child: Center(
-                        child: EditableText(
-                          onChanged: (text) {
-                            receiptItem.name = name_controller.text;
-                            receiptItem.qty = int.parse(qty_controller.text);
-                            receiptItem.price =
-                                double.parse(price_controller.text);
-                            receiptItem.total =
-                                receiptItem.qty * receiptItem.price;
-
-                            model.update();
-                          },
-                          selectionColor: Colors.green,
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                              color: Colors.white, fontSize: sizeMul * 17),
-                          backgroundCursorColor: Colors.red,
-                          cursorColor: Colors.pinkAccent,
-                          focusNode: FocusNode(),
-                          controller: qty_controller,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: sizeMul * 8,
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text("Total",
-                  style: TextStyle(
-                    color: Colors.grey[800],
-                    fontSize: sizeMul * 18,
-                    fontWeight: FontWeight.bold,
-                  )),
-              SizedBox(
-                width: sizeMul * 27,
-              ),
-
-              Text("${receiptItem.total}",
-                  style: TextStyle(
-                      color: Colors.grey[800],
-                      fontSize: sizeMul * 18,
-                      fontWeight: FontWeight.bold)),
-              SizedBox(
-                height: sizeMul * 50,
-              ),
-              Material(
-                child: Container(
-                  height: sizeMul * 50,
-                  width: sizeMul * 50,
-                  decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius:
-                          BorderRadius.all(Radius.circular(sizeMul * 8))),
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                      model.removeItemFromReceipt(receiptItem);
-                    },
-                    splashColor: Colors.amber,
-                    highlightColor: Colors.redAccent,
-                    child: Icon(Icons.delete,
-                        color: Colors.white, size: sizeMul * 30),
-                  ),
-                ),
-              ),
-              Material(
-                child: InkWell(
-                  splashColor: Colors.lightGreenAccent,
-                  highlightColor: Colors.green,
-                  onTap: () {
-                    receiptItem.name = name_controller.text;
-                    receiptItem.qty = int.parse(qty_controller.text);
-                    receiptItem.price = double.parse(price_controller.text);
-                    receiptItem.total = receiptItem.qty * receiptItem.price;
-                    // model.changed = !model.changed;
-
-                    model.addItemToReceipt(receiptItem);
-                    // ScopedModelDescendant.
-                    // model.receipt.addReceiptItem(receiptItem);
-                    // model.notifyListeners();
-
-                    print(model
-                            .receipt.items[model.receipt.items.length - 1].name
-                            .toString() +
-                        "from somewhere");
-                    // model.update();
-                    Navigator.pop(context);
-                    print('actually predafssed');
-
-                    Scaffold.of(context).showSnackBar(SnackBar(
-                      content: Text(model
-                          .receipt.items[model.receipt.items.length - 1].name),
-                    ));
-                  },
-                  child: Container(
-                    height: sizeMul * 50,
-                    width: sizeMul * 50,
-                    decoration: BoxDecoration(
-                        color: Colors.lightGreen,
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(sizeMul * 8))),
-                    child: Icon(Icons.check,
-                        color: Colors.white, size: sizeMul * 30),
-                  ),
-                ),
-              ),
-              // IconButton(
-              //   iconSize: sizeMul*40,
-              //   icon: Icon(
-              //     Icons.delete,
-              //     color: Colors.white,
-              //     size: sizeMul * 50,
-              //   ),
-              //   color: Colors.red,
-              //   onPressed: (){},
-              // ),
-              // IconButton(
-              //     icon: Icon(Icons.check,
-              //         color: Colors.white, size: sizeMul * 50),
-              //     color: Colors.lightGreen,
-              //     onPressed:  (){}),
-            ],
-          ),
-          // Text("hey show up iddiot"),
-        ],
-      ),
-    ),
-    buttons: [
-      DialogButton(
-        width: 0,
-        height: 0,
-        color: Colors.red,
-        child: Icon(
-          Icons.recent_actors,
-          color: Colors.white,
-        ),
-      ),
-      // DialogButton(
-      //   child: Text(
-      //     "DONE",
-      //     style: TextStyle(color: Colors.white, fontSize: 20),
-      //   ),
-      //   onPressed: () {
-      //     Navigator.pop(context);
-      //     name = name_controller.text;
-      //     qty = int.parse(qty_controller.text);
-      //     price = double.parse(price_controller.text);
-      //     total = qty * price;
-      //     setState(() {});
-      //   },
-      //   width: 120,
-      // )
-    ],
-  ).show();
-}
-
-void _showDialog(BuildContext context, EditReceiptScreenModel model) {
   showDialog(
 
       context: context,
@@ -1636,7 +1314,12 @@ void _showDialog(BuildContext context, EditReceiptScreenModel model) {
         TextEditingController qty_controller = TextEditingController();
         TextEditingController price_controller = TextEditingController();
 
-        ReceiptItem receiptItem = ReceiptItem("", 0, 0);
+        name_controller.text = receiptItem.name;
+        qty_controller.text = receiptItem.qty.toString();
+        price_controller.text = receiptItem.price.toString();
+
+
+        // ReceiptItem receiptItem = ReceiptItem("", 0, 0);
         return AlertDialog(
           
           content: Container(
