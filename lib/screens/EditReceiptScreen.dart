@@ -11,6 +11,8 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:papyrus_client/models/EditReceiptScreenModel.dart';
 import 'package:papyrus_client/data_models/Receipt.dart';
+import 'dart:core';
+// import 'dart:core';
 
 class EditReceiptScreen extends StatelessWidget {
   @override
@@ -450,8 +452,7 @@ class EditReceiptScreenBottomPart extends StatelessWidget {
                                     // children: model.receipt.items
                                     //     .map((item) => ReceiptItemLine(item))
                                     //     .toList()),
-                                    children: model.receipt.items.map((item) {
-                                  print(item.name + ",");
+                                    children: model.receipt.items.map((item) { 
                                   return ReceiptItemLine(item, model);
                                 }).toList()),
 
@@ -851,7 +852,7 @@ class EditReceiptScreenBottomPart extends StatelessWidget {
                                             fontWeight: FontWeight.bold),
                                       ),
                                       Text(
-                                        "${addCommas(3000)}",
+                                        "${ ( (edrsm.receipt.total))}" ,
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 20 * sizeMul,
