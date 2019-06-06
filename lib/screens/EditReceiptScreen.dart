@@ -16,8 +16,9 @@ import 'package:papyrus_client/models/AppModel.dart';
 // import ''
 // import 'dart:core';
 
-EditReceiptScreenModel edrsm ;
 class EditReceiptScreen extends StatelessWidget {
+  final EditReceiptScreenModel editReceiptScreenModel;
+  EditReceiptScreen(this.editReceiptScreenModel);
   @override
   @override
   Widget build(BuildContext context) {
@@ -26,9 +27,8 @@ class EditReceiptScreen extends StatelessWidget {
         // child: SingleChildScrollView(
         child: ScopedModelDescendant<AppModel>(
             builder: (context, child, appModel) {
-
-              edrsm = appModel.editReceiptScreenModel;
-      return EditReceiptScreenScrollPart(appModel);
+      // editReceiptScreenModel = appModel.editReceiptScreenModel;
+      return EditReceiptScreenScrollPart(appModel, editReceiptScreenModel);
     })
 
         // Column(
@@ -45,23 +45,25 @@ class EditReceiptScreen extends StatelessWidget {
 
 class EditReceiptScreenScrollPart extends StatefulWidget {
   final AppModel appModel;
+final EditReceiptScreenModel editReceiptScreenModel;
 
-  EditReceiptScreenScrollPart(this.appModel);
+  EditReceiptScreenScrollPart(this.appModel, this.editReceiptScreenModel);
   @override
   _EditReceiptScreenScrollPartState createState() =>
-      new _EditReceiptScreenScrollPartState(appModel);
+      new _EditReceiptScreenScrollPartState(appModel, editReceiptScreenModel);
 }
 
 BuildContext ctx;
 
 class _EditReceiptScreenScrollPartState
     extends State<EditReceiptScreenScrollPart> {
+      
+final EditReceiptScreenModel editReceiptScreenModel;
   AppModel appModel;
-  _EditReceiptScreenScrollPartState(this.appModel);
+  _EditReceiptScreenScrollPartState(this.appModel, this.editReceiptScreenModel);
 
   @override
   Widget build(BuildContext context) {
-    
     ctx = context;
     return Container(
       width: MediaQuery.of(context).size.width,
@@ -87,7 +89,7 @@ class _EditReceiptScreenScrollPartState
             // SliverChildListDelegate(children)
           ];
         },
-        body: EditReceiptScreenBottomPart(appModel),
+        body: EditReceiptScreenBottomPart(appModel, editReceiptScreenModel),
       ),
     );
   }
@@ -127,7 +129,7 @@ class EditReceiptScreenTopPart extends StatelessWidget {
             highlightColor: Colors.black.withOpacity(0.1),
             // ,
             onTap: () {
-              edrsm = EditReceiptScreenModel();
+              // editReceiptScreenModel = EditReceiptScreenModel();
               Navigator.pop(context);
             },
             child: Container(
@@ -154,9 +156,9 @@ class EditReceiptScreenTopPart extends StatelessWidget {
               highlightColor: Colors.black.withOpacity(0.1),
               borderRadius: BorderRadius.all(Radius.circular(3000)),
               onTap: () {
-                // edrsm = EditReceiptScreenModel();
-                // edrsm.changed=!edrsm.changed;
-                // edrsm.update();
+                // editReceiptScreenModel = EditReceiptScreenModel();
+                // editReceiptScreenModel.changed=!editReceiptScreenModel.changed;
+                // editReceiptScreenModel.update();
               },
               child: Icon(
                 Icons.camera_alt,
@@ -171,28 +173,27 @@ class EditReceiptScreenTopPart extends StatelessWidget {
   }
 }
 
-
 class EditReceiptScreenBottomPart extends StatelessWidget {
-
   AppModel appModel;
-  EditReceiptScreenBottomPart(this.appModel);
+  
+  EditReceiptScreenModel editReceiptScreenModel;
+  EditReceiptScreenBottomPart(this.appModel, this.editReceiptScreenModel);
   @override
   Widget build(BuildContext context) {
     // ScopedModelDescendant
 
     TextEditingController merchant_controller = TextEditingController();
     TextEditingController date_controller = TextEditingController();
-    merchant_controller.text = edrsm.receipt.merchant;
-    date_controller.text = edrsm.receipt.dateTime;
+    merchant_controller.text = editReceiptScreenModel.receipt.merchant;
+    date_controller.text = editReceiptScreenModel.receipt.dateTime;
     FocusNode m_focus = FocusNode();
     FocusNode d_focus = FocusNode();
     // FocusNode
     return ScopedModel<EditReceiptScreenModel>(
-        model: edrsm,
+        model: editReceiptScreenModel,
         child: ScopedModelDescendant<EditReceiptScreenModel>(
             rebuildOnChange: true,
             builder: (context, child, model) {
-              
               ctx = context;
               return new Container(
                 width: MediaQuery.of(context).size.width,
@@ -514,7 +515,7 @@ class EditReceiptScreenBottomPart extends StatelessWidget {
                                           context: context,
                                           builder: (BuildContext context) {
                                             return EditItem(context,
-                                                ReceiptItem("", 0, 0), true);
+                                                ReceiptItem("", 0, 0), true, editReceiptScreenModel);
                                           });
                                     },
                                   ),
@@ -547,8 +548,8 @@ class EditReceiptScreenBottomPart extends StatelessWidget {
                                   padding: EdgeInsets.only(top: sizeMul * 40),
                                   child: InkWell(
                                     onTap: () {
-                                      edrsm.saveReceiptToJson();
-                                      edrsm = EditReceiptScreenModel();
+                                      editReceiptScreenModel.saveReceiptToJson();
+                                      appModel.editReceiptScreenModel = EditReceiptScreenModel();
                                       Navigator.pop(context);
                                     },
                                     child: Row(
@@ -590,11 +591,11 @@ class ReceiptItemLine extends StatelessWidget {
   TextEditingController price_controller = TextEditingController();
   TextEditingController qty_controller = TextEditingController();
   ReceiptItem receiptItem = new ReceiptItem("", 0, 0);
-  EditReceiptScreenModel model;
+  EditReceiptScreenModel editReceiptScreenModel;
 
   // FocusNode f = FocusNode();
 
-  ReceiptItemLine(this.receiptItem, this.model);
+  ReceiptItemLine(this.receiptItem, this.editReceiptScreenModel );
 
   @override
   Widget build(BuildContext context) {
@@ -664,7 +665,7 @@ class ReceiptItemLine extends StatelessWidget {
                   showDialog(
                       context: context,
                       builder: (BuildContext context) {
-                        return EditItem(context, receiptItem, false);
+                        return EditItem(context, receiptItem, false,editReceiptScreenModel );
                       });
                 },
                 splashColor: Colors.white54,
@@ -686,20 +687,24 @@ class EditItem extends StatefulWidget {
   final BuildContext context;
   final ReceiptItem receiptItem;
   final bool add;
-  EditItem(this.context, this.receiptItem, this.add);
+  final EditReceiptScreenModel editReceiptScreenModel;
+
+
+  EditItem(this.context, this.receiptItem, this.add, this.editReceiptScreenModel);
   @override
   _EditItemState createState() =>
-      new _EditItemState(this.context, this.receiptItem, this.add);
+      new _EditItemState(this.context, this.receiptItem, this.add, this.editReceiptScreenModel);
 }
 
 class _EditItemState extends State<EditItem> {
   BuildContext context;
   ReceiptItem receiptItem;
+  final EditReceiptScreenModel editReceiptScreenModel;
   bool add;
   FocusNode fa = FocusNode();
   FocusNode fb = FocusNode();
   FocusNode fc = FocusNode();
-  _EditItemState(this.context, this.receiptItem, this.add);
+  _EditItemState(this.context, this.receiptItem, this.add, this.editReceiptScreenModel);
   @override
   Widget build(BuildContext context) {
     TextEditingController name_controller = TextEditingController();
@@ -754,9 +759,9 @@ class _EditItemState extends State<EditItem> {
                               double.parse(price_controller.text);
                           receiptItem.total =
                               receiptItem.qty * receiptItem.price;
-                          edrsm.changed = !edrsm.changed;
+                          editReceiptScreenModel.changed = !editReceiptScreenModel.changed;
 
-                          edrsm.update();
+                          editReceiptScreenModel.update();
                         });
                       },
                       selectionColor: Colors.green,
@@ -817,8 +822,8 @@ class _EditItemState extends State<EditItem> {
                                 receiptItem.total =
                                     receiptItem.qty * receiptItem.price;
 
-                                edrsm.changed = !edrsm.changed;
-                                edrsm.update();
+                                editReceiptScreenModel.changed = !editReceiptScreenModel.changed;
+                                editReceiptScreenModel.update();
                               });
                             },
                             selectionColor: Colors.green,
@@ -878,8 +883,8 @@ class _EditItemState extends State<EditItem> {
                                     double.parse(price_controller.text);
                                 receiptItem.total =
                                     receiptItem.qty * receiptItem.price;
-                                edrsm.changed = !edrsm.changed;
-                                edrsm.update();
+                                editReceiptScreenModel.changed = !editReceiptScreenModel.changed;
+                                editReceiptScreenModel.update();
                               });
                             },
                             selectionColor: Colors.green,
@@ -942,7 +947,7 @@ class _EditItemState extends State<EditItem> {
                           BorderRadius.all(Radius.circular(sizeMul * 8)),
                       onTap: () {
                         Navigator.pop(context);
-                        edrsm.removeItemFromReceipt(receiptItem);
+                        editReceiptScreenModel.removeItemFromReceipt(receiptItem);
                       },
                       splashColor: Colors.amber,
                       highlightColor: Colors.redAccent,
@@ -967,7 +972,7 @@ class _EditItemState extends State<EditItem> {
                         receiptItem.total = receiptItem.qty * receiptItem.price;
 
                         if (add) {
-                          edrsm.addItemToReceipt(receiptItem);
+                          editReceiptScreenModel.addItemToReceipt(receiptItem);
                         }
                         Navigator.pop(context);
 
@@ -1079,9 +1084,9 @@ class _EditItemState extends State<EditItem> {
 //                                 double.parse(price_controller.text);
 //                             receiptItem.total =
 //                                 receiptItem.qty * receiptItem.price;
-//                             edrsm.changed = !edrsm.changed;
+//                             editReceiptScreenModel.changed = !editReceiptScreenModel.changed;
 
-//                             edrsm.update();
+//                             editReceiptScreenModel.update();
 //                           },
 //                           selectionColor: Colors.green,
 //                           textAlign: TextAlign.start,
@@ -1142,8 +1147,8 @@ class _EditItemState extends State<EditItem> {
 //                                   receiptItem.total =
 //                                       receiptItem.qty * receiptItem.price;
 
-//                                   edrsm.changed = !edrsm.changed;
-//                                   edrsm.update();
+//                                   editReceiptScreenModel.changed = !editReceiptScreenModel.changed;
+//                                   editReceiptScreenModel.update();
 //                                 },
 //                                 selectionColor: Colors.green,
 //                                 textAlign: TextAlign.start,
@@ -1204,8 +1209,8 @@ class _EditItemState extends State<EditItem> {
 //                                       double.parse(price_controller.text);
 //                                   receiptItem.total =
 //                                       receiptItem.qty * receiptItem.price;
-//                                   edrsm.changed = !edrsm.changed;
-//                                   edrsm.update();
+//                                   editReceiptScreenModel.changed = !editReceiptScreenModel.changed;
+//                                   editReceiptScreenModel.update();
 //                                 },
 //                                 selectionColor: Colors.green,
 //                                 textAlign: TextAlign.start,
@@ -1263,7 +1268,7 @@ class _EditItemState extends State<EditItem> {
 //                               BorderRadius.all(Radius.circular(sizeMul * 8)),
 //                           onTap: () {
 //                             Navigator.pop(context);
-//                             edrsm.removeItemFromReceipt(receiptItem);
+//                             editReceiptScreenModel.removeItemFromReceipt(receiptItem);
 //                           },
 //                           splashColor: Colors.amber,
 //                           highlightColor: Colors.redAccent,
@@ -1290,7 +1295,7 @@ class _EditItemState extends State<EditItem> {
 //                                 receiptItem.qty * receiptItem.price;
 
 //                             if (add) {
-//                               edrsm.addItemToReceipt(receiptItem);
+//                               editReceiptScreenModel.addItemToReceipt(receiptItem);
 //                             }
 //                             Navigator.pop(context);
 

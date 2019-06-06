@@ -584,7 +584,7 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                   Navigator.push(
                       context,
                       CupertinoPageRoute(
-                          builder: (context) => EditReceiptScreen()));
+                          builder: (context) => EditReceiptScreen(model.editReceiptScreenModel)));
                 },
                 child: Container(
                   width: sizeMul * 74.052,

@@ -2,17 +2,16 @@ import 'package:scoped_model/scoped_model.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:async';
+import 'EditReceiptScreenModel.dart';
 
-enum Period { MONTHLY, WEEKLY, DAILY }
+
+enum Period { MONTHLY, WEEKLY, DAILY } 
 
 class AppModel extends Model {
 
-  // AppModel.fromJson(Map json){
-
-
-
-
-  // }
+ 
   User _user;
   Period _viewing_period = Period.DAILY;
   bool _alsoReceivePromosThruEmail;
@@ -26,13 +25,24 @@ class AppModel extends Model {
   bool get receiveUniquePromos => _receiveUniquePromos;
   bool get receiveOpenToAllPromos => _receiveOpenToAllPromos;
 
+
+  
+  String directoryPath;
+  EditReceiptScreenModel editReceiptScreenModel = EditReceiptScreenModel(); 
+  // ChartScreenModel chartScreenModel;
+  
+
+
+  AppModel(){
+    init(); 
+  }
+
   set user(User user) {
     _user = user;
     notifyListeners();
   }
 
-  set receiveUniquePromos(bool value){
-
+  set receiveUniquePromos(bool value){ 
     _receiveUniquePromos = value;
     notifyListeners();
   }
@@ -51,6 +61,30 @@ class AppModel extends Model {
     _viewing_period = period; 
     notifyListeners();
   }
+
+  
+
+  void init() async {
+    
+    print("The local path is !! : "+_localPath.toString());
+
+    // directoryPath =  
+
+
+
+  }
+
+  Future<String> get _localPath async {
+  final directory = await getApplicationDocumentsDirectory();
+
+  return directory.path;
+}
+
+
+
+
+
+
 }
 
 class User {
@@ -58,22 +92,4 @@ class User {
   String uid;
 }
 
-class Receipt {
-  // identifiers
-  String recptid;
-  BigInt timestamp;
-  String uid;
-
-  // content
-  String retailer;
-  String retailer_address;
-  BigInt total;
-  String date_time;
-  List<ReceiptItem> items;
-}
-
-class ReceiptItem {
-  String name;
-  int qty;
-  int total;
-}
+ 
