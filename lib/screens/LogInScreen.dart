@@ -34,15 +34,21 @@ class _LogInScreenStackState extends State<LogInScreenStack> {
   TextEditingController pass_controller = TextEditingController();
   FocusNode email_focus = FocusNode();
   FocusNode pass_focus = FocusNode();
+  bool isLoading = false;
   StreamSubscription sub;
   @override
   Widget build(BuildContext context) {
+
+    
     return ScopedModelDescendant<AppModel>(
         // stream: null,
         builder: (context, child, appModel) {
       return WillPopScope(
         onWillPop: () {
           sub.cancel();
+          setState(() {
+            isLoading = false;
+          });
         },
         child: new Container(
           width: MediaQuery.of(context).size.width,
@@ -180,15 +186,19 @@ class _LogInScreenStackState extends State<LogInScreenStack> {
                             // _showDialog(context);
 
                             // CancelableOperation
+                            setState(() {
+                              isLoading = true;
+                            });
 
                             sub = appModel
                                 .login("user@user.com", "useruser")
                                 .asStream()
                                 .listen((data) {
-                              Navigator.push(
-                                  context,
-                                  CupertinoPageRoute(
-                                      builder: (context) => HomeScreen()));
+                              Navigator.push(context,
+                                  CupertinoPageRoute(builder: (context) {
+                                isLoading = false;
+                                return HomeScreen();
+                              }));
                             });
                             //     .then((user) {
                             //   if (user.uid != null) {
@@ -228,6 +238,11 @@ class _LogInScreenStackState extends State<LogInScreenStack> {
                   ),
                 ),
               ),
+              (isLoading)
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : SizedBox(width: 1)
             ],
           ),
         ),
