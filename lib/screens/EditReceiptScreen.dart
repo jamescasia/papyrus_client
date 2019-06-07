@@ -494,23 +494,7 @@ class EditReceiptScreenBottomPart extends StatelessWidget {
                                     highlightElevation: 5,
                                     clipBehavior: Clip.none,
                                     onPressed: () {
-                                      // ReceiptItem receiptItem =
-                                      //     ReceiptItem("Im Mina", 1999, 2018);
-
-                                      //     model.addItemToReceipt(receiptItem);
-
-                                      // print(model
-                                      //         .receipt
-                                      //         .items[
-                                      //             model.receipt.items.length -
-                                      //                 1]
-                                      //         .name
-                                      //         .toString() +
-                                      //     "from bottom");
-                                      // addItemAlert(ctx, model);
-                                      // _showDialog(
-                                      //     ctx, ReceiptItem("", 0, 0), true);
-
+                                      
                                       showDialog(
                                           context: context,
                                           builder: (BuildContext context) {
