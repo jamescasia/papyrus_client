@@ -26,13 +26,24 @@ class EditReceiptScreenModel extends Model {
       ..time_stamp = DateTime.now().millisecondsSinceEpoch.toString();
   }
 
-  void saveReceiptToJson() {
-    print("locals" + appModel.directoryPath);
+  void saveReceiptToJsonAndToFile() {
+    print("locals" + appModel.rootFilePath);
     print("saving");
-    // getExternal
-    
-    File file = new File('${appModel.directoryPath}/ReceiptsJson/${_receipt.time_stamp}.json');
+
+    File file = new File(
+        '${appModel.rootFilePath}/ReceiptsJson/${_receipt.time_stamp}.json');
     file.writeAsString(jsonEncode(_receipt.toJson()));
+
+    readReceiptFromJsonFile(file.path);
+
+
+  }
+
+  Future<String> readReceiptFromJsonFile(String path) async {
+    String content = await File(path).readAsString();
+
+    print("content of receipt" + content);
+    return content;
   }
 
   void newReceiptFromOCR() {}

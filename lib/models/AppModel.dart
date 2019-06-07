@@ -19,10 +19,14 @@ class AppModel extends Model {
   bool _receiveOpenToAllPromos;
   List<String> _receipts_json_paths;
   FirebaseAuth mAuth;
-  String directoryPath;
+  String rootFilePath;
   EditReceiptScreenModel editReceiptScreenModel;
-  FirebaseUser user;
-  // User get user => _user;
+  FirebaseUser user; 
+  Directory rootDir;
+
+
+
+  // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   bool get alsoReceivePromosThruEmail => _alsoReceivePromosThruEmail;
   Period get viewing_period => _viewing_period;
   bool get receiveUniquePromos => _receiveUniquePromos;
@@ -32,15 +36,15 @@ class AppModel extends Model {
     init();
   }
 
-  void init() {
+  void init()async {
     editReceiptScreenModel = EditReceiptScreenModel(this);
     mAuth = FirebaseAuth.instance;
-    determineLocalPath();
-    print("The path is: ${directoryPath}");
-    if (FileSystemEntity.typeSync("$directoryPath/ReceiptsJson") ==
+   await determineLocalPath();
+    print("The path is: ${rootDir.path}");
+    if (FileSystemEntity.typeSync("${rootDir.path}/ReceiptsJson") ==
         FileSystemEntityType.notFound) {
       print("not found so created");
-      new Directory("$directoryPath/ReceiptsJson/").create(recursive: true);
+      new Directory("${rootDir.path}/ReceiptsJson/").create(recursive: true);
     } else {
       print('exists');
     }
@@ -50,22 +54,14 @@ class AppModel extends Model {
     user = await mAuth.signInWithEmailAndPassword(
         email: email, password: password);
     print("The user is ${user.toString()}");
-    init();
-// dart
+    init(); 
     return user;
   }
-
-  req() async {
-    // SimplePermissions s = SimplePermissions();
-    // s.erq
-    // // requestPer
-
-    // requestPermission(Permission.WriteExternalStorage);
-  }
-
+ 
   determineLocalPath() async {
     final directory = await getApplicationDocumentsDirectory();
-    directoryPath = directory.path;
+    rootDir = directory;
+    rootFilePath = directory.path;
   }
 
   logOut() {

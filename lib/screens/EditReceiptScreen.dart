@@ -530,7 +530,7 @@ class EditReceiptScreenBottomPart extends StatelessWidget {
                                   padding: EdgeInsets.only(top: sizeMul * 40),
                                   child: InkWell(
                                     onTap: () {
-                                      editReceiptScreenModel.saveReceiptToJson();
+                                      editReceiptScreenModel.saveReceiptToJsonAndToFile();
                                       appModel.editReceiptScreenModel = EditReceiptScreenModel(appModel);
                                       Navigator.pop(context);
                                     },
