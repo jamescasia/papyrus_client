@@ -17,6 +17,7 @@ import 'ShowQRScreen.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:papyrus_client/models/AppModel.dart';
 import 'package:papyrus_client/screens/LogInScreen.dart';
+import 'SplashScreen.dart';
 
 // void main() {
 //   return runApp(PapyrusCustomer());
@@ -64,37 +65,35 @@ class PapyrusCustomer extends StatelessWidget {
             fontFamily: 'Montserrat',
             primarySwatch: Colors.blue,
           ),
-          home: ScopedModelDescendant<AppModel>(
-              builder: (context, child, appModel) {
-            // appModel.context = context;
-            return FutureBuilder(
-                future: appModel.mAuth.currentUser(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    if (snapshot.data != null)
-                      return HomeScreen();
-                    else
-                      return LogInScreen();
-                  } else
-                    return Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height,
-                        color: Colors.red,
-                        child: Stack(
-                          children: <Widget>[
-                            LogInScreen(),
-                            Container(
-                              color: Colors.black12,
-                              width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.height,
-                              child: Center(
-                                child: CircularProgressIndicator(),
-                              ),
-                            )
-                          ],
-                        ));
-                });
-          }),
+          home:  SplashScreen(),
+            // FutureBuilder(
+            //     future: appModel.mAuth.currentUser(),
+            //     builder: (context, snapshot) {
+            //       if (snapshot.connectionState == ConnectionState.done) {
+            //         if (snapshot.data != null)
+            //           return HomeScreen();
+            //         else
+            //           return LogInScreen();
+            //       } else
+            //         return Container(
+            //             width: MediaQuery.of(context).size.width,
+            //             height: MediaQuery.of(context).size.height,
+            //             color: Colors.red,
+            //             child: Stack(
+            //               children: <Widget>[
+            //                 LogInScreen(),
+            //                 Container(
+            //                   color: Colors.black12,
+            //                   width: MediaQuery.of(context).size.width,
+            //                   height: MediaQuery.of(context).size.height,
+            //                   child: Center(
+            //                     child: CircularProgressIndicator(),
+            //                   ),
+            //                 )
+            //               ],
+            //             ));
+            //     });
+          // }),
           // routes: <String, WidgetBuilder>{
           //   '/': (context) =>HomeScreen(),
           // },
@@ -142,11 +141,7 @@ class HomeScreenTopPart extends StatefulWidget {
   _HomeScreenTopPartState createState() => new _HomeScreenTopPartState();
 }
 
-class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
-  // int MONTHLY = 2;
-  // int WEEKLY = 1;
-  // int DAILY = 0;
-  // int period_state  = 0;
+class _HomeScreenTopPartState extends State<HomeScreenTopPart> { 
   static const platform = const MethodChannel('flutter.native/helper');
   String _responseFromNativeCode = 'Waiting for Response...';
   Future<void> responseFromNativeCode() async {
@@ -212,11 +207,7 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                             splashColor: Colors.white.withAlpha(0),
                             highlightColor: Colors.black.withOpacity(0.1),
                             onTap: () {
-                              model.viewing_period = Period.MONTHLY;
-                              Navigator.push(
-                                  context,
-                                  CupertinoPageRoute(
-                                      builder: (context) => LogInScreen()));
+                              model.viewing_period = Period.MONTHLY; 
                             },
                             child: Container(
                               // color: Colors.white,

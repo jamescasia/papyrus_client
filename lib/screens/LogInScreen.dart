@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:papyrus_client/models/AppModel.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'dart:async';
+import 'package:flutter/services.dart';
 
 class LogInScreen extends StatefulWidget {
   @override
@@ -38,17 +39,19 @@ class _LogInScreenStackState extends State<LogInScreenStack> {
   StreamSubscription sub;
   @override
   Widget build(BuildContext context) {
-
-    
     return ScopedModelDescendant<AppModel>(
         // stream: null,
         builder: (context, child, appModel) {
       return WillPopScope(
         onWillPop: () {
-          sub.cancel();
-          setState(() {
-            isLoading = false;
-          });
+          if (isLoading) {
+            sub.cancel();
+            setState(() {
+              isLoading = false;
+            });
+          }
+
+          else _showDialog(context);
         },
         child: new Container(
           width: MediaQuery.of(context).size.width,
@@ -194,7 +197,7 @@ class _LogInScreenStackState extends State<LogInScreenStack> {
                                 .login("user@user.com", "useruser")
                                 .asStream()
                                 .listen((data) {
-                              Navigator.push(context,
+                              Navigator.pushReplacement(context,
                                   CupertinoPageRoute(builder: (context) {
                                 isLoading = false;
                                 return HomeScreen();
@@ -254,27 +257,30 @@ class _LogInScreenStackState extends State<LogInScreenStack> {
 void _showDialog(BuildContext context) {
   // flutter defined function
   showDialog(
-    barrierDismissible: false,
+    barrierDismissible: true,
     context: context,
-    builder: (BuildContext context) {
-      // return object of type Dialog
+    builder: (BuildContext context) { 
       return AlertDialog(
-        elevation: 0,
-        backgroundColor: Colors.green.withAlpha(0),
+        // elevation: 0,
+        // backgroundColor: Colors.green.withAlpha(0),
 
         // title: new Text("Alert Dialog title"),
-        content: SizedBox(
-            width: sizeMul * 70,
-            child: Center(child: CircularProgressIndicator())),
-        // actions: <Widget>[
-        //   // usually buttons at the bottom of the dialog
-        //   new FlatButton(
-        //     child: new Text("Close"),
-        //     onPressed: () {
-        //       Navigator.of(context).pop();
-        //     },
-        //   ),
-        // ],
+        content: Text("Really want to close ?"),
+        actions: <Widget>[
+          // usually buttons at the bottom of the dialog
+          new FlatButton(
+            child: new Text("Yes"),
+            onPressed: () {
+              SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+            },
+          ),
+           new FlatButton(
+            child: new Text("No"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
       );
     },
   );
