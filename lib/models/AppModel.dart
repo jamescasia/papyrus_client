@@ -5,8 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:async';
 import 'EditReceiptScreenModel.dart';
-import 'package:firebase_auth/firebase_auth.dart'; 
-
+import 'package:firebase_auth/firebase_auth.dart';
 
 enum Period { MONTHLY, WEEKLY, DAILY }
 
@@ -34,23 +33,29 @@ class AppModel extends Model {
     init();
   }
 
-  void init() { 
-
+  void init() {
     mAuth = FirebaseAuth.instance;
- 
   }
 
-   login(String email , String password)async { 
-
-       mAuth.signInWithEmailAndPassword(email: email, password:  password );
-       print("Signed in: " + mAuth.currentUser().toString());
-
-
-      // user.fbUser = await _handleSignIn();
-
+  login(String email, String password) async {
+    FirebaseUser a =   await mAuth.signInWithEmailAndPassword(email: email, password: password);  
+    print("The user is ${a.toString()}");
+     
+    // user.fbUser = await _handleSignIn();
+  }
+  
+  logOut(){ 
+    mAuth.signOut();
   }
 
+  // void f() async {
+  //   String a = await getUser().toString();
+  //   print("Signed in: " + a);
+  // }
 
+  // Future<FirebaseUser> getUser() async {
+  //   return mAuth.currentUser();
+  // }
 
 //   Future<FirebaseUser> _handleSignIn() async {
 //   final GoogleSignInAccount googleUser = await googleSignIn.signIn();
@@ -101,5 +106,5 @@ class AppModel extends Model {
 class User {
   String username;
   String uid;
-  // FirebaseUser fbUser;
+  // FirebaseUser fbUser = FirebaseUser.instance;
 }
