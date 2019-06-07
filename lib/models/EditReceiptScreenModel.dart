@@ -27,11 +27,11 @@ class EditReceiptScreenModel extends Model {
   }
 
   void saveReceiptToJsonAndToFile() {
-    print("locals" + appModel.rootFilePath);
+    print("locals" + appModel.rootDir.path);
     print("saving");
 
     File file = new File(
-        '${appModel.rootFilePath}/ReceiptsJson/${_receipt.time_stamp}.json');
+        '${appModel.rootDir.path}/ReceiptsJson/${_receipt.time_stamp}.json');
     file.writeAsString(jsonEncode(_receipt.toJson()));
 
     readReceiptFromJsonFile(file.path);

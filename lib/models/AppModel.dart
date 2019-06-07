@@ -7,8 +7,7 @@ import 'dart:async';
 import 'EditReceiptScreenModel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:simple_permissions/simple_permissions.dart';
-import 'dart:io';
-
+import 'dart:io'; 
 enum Period { MONTHLY, WEEKLY, DAILY }
 
 class AppModel extends Model {
@@ -19,12 +18,12 @@ class AppModel extends Model {
   bool _receiveOpenToAllPromos;
   List<String> _receipts_json_paths;
   FirebaseAuth mAuth;
-  String rootFilePath;
+  // String rootFilePath;
   EditReceiptScreenModel editReceiptScreenModel;
-  FirebaseUser user; 
+  FirebaseUser user;
   Directory rootDir;
-
-
+  List<String> dirList = ["/ReceiptsJson", "/ReceiptsImages", "/Settings"];
+  // BuildContext context;
 
   // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   bool get alsoReceivePromosThruEmail => _alsoReceivePromosThruEmail;
@@ -36,17 +35,23 @@ class AppModel extends Model {
     init();
   }
 
-  void init()async {
-    editReceiptScreenModel = EditReceiptScreenModel(this);
+  void init() async {
     mAuth = FirebaseAuth.instance;
-   await determineLocalPath();
-    print("The path is: ${rootDir.path}");
-    if (FileSystemEntity.typeSync("${rootDir.path}/ReceiptsJson") ==
-        FileSystemEntityType.notFound) {
-      print("not found so created");
-      new Directory("${rootDir.path}/ReceiptsJson/").create(recursive: true);
-    } else {
-      print('exists');
+    user = await mAuth.currentUser(); 
+    editReceiptScreenModel = EditReceiptScreenModel(this);
+    rootDir = await getApplicationDocumentsDirectory(); 
+    checkOrGenerateDirectories();
+  }
+
+  void checkOrGenerateDirectories() {
+    for (int i = 0; i < dirList.length; i++) {
+      if (FileSystemEntity.typeSync("${rootDir.path}/${dirList[i]}/") ==
+          FileSystemEntityType.notFound) {
+        print("${dirList[i]} not found so created folder");
+        new Directory("${rootDir.path}/${dirList[i]}/").create(recursive: true);
+      } else {
+        print('exists');
+      }
     }
   }
 
@@ -54,14 +59,8 @@ class AppModel extends Model {
     user = await mAuth.signInWithEmailAndPassword(
         email: email, password: password);
     print("The user is ${user.toString()}");
-    init(); 
+    init();
     return user;
-  }
- 
-  determineLocalPath() async {
-    final directory = await getApplicationDocumentsDirectory();
-    rootDir = directory;
-    rootFilePath = directory.path;
   }
 
   logOut() {

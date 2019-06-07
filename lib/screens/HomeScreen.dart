@@ -66,7 +66,34 @@ class PapyrusCustomer extends StatelessWidget {
           ),
           home: ScopedModelDescendant<AppModel>(
               builder: (context, child, appModel) {
-            return (appModel.user != null) ? HomeScreen() : LogInScreen();
+            // appModel.context = context;
+            return FutureBuilder(
+                future: appModel.mAuth.currentUser(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    if (snapshot.data != null)
+                      return HomeScreen();
+                    else
+                      return LogInScreen();
+                  } else
+                    return Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height,
+                        color: Colors.red,
+                        child: Stack(
+                          children: <Widget>[
+                            LogInScreen(),
+                            Container(
+                              color: Colors.black12,
+                              width: MediaQuery.of(context).size.width,
+                              height: MediaQuery.of(context).size.height,
+                              child: Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                            )
+                          ],
+                        ));
+                });
           }),
           // routes: <String, WidgetBuilder>{
           //   '/': (context) =>HomeScreen(),
@@ -74,6 +101,11 @@ class PapyrusCustomer extends StatelessWidget {
         ));
   }
 }
+
+// loadUser()async{
+//   await appModel.user;
+
+// }
 
 class HomeScreen extends StatefulWidget {
   @override
