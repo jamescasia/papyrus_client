@@ -6,74 +6,70 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:async';
 import 'EditReceiptScreenModel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:simple_permissions/simple_permissions.dart';
+import 'dart:io';
 
 enum Period { MONTHLY, WEEKLY, DAILY }
 
 class AppModel extends Model {
-  User _user;
+  // User _user;
   Period _viewing_period = Period.DAILY;
   bool _alsoReceivePromosThruEmail;
   bool _receiveUniquePromos;
   bool _receiveOpenToAllPromos;
   List<String> _receipts_json_paths;
-  // final GoogleSignIn googleSignIn = GoogleSignIn();
   FirebaseAuth mAuth;
-
-  User get user => _user;
+  String directoryPath;
+  EditReceiptScreenModel editReceiptScreenModel;
+  FirebaseUser user;
+  // User get user => _user;
   bool get alsoReceivePromosThruEmail => _alsoReceivePromosThruEmail;
   Period get viewing_period => _viewing_period;
   bool get receiveUniquePromos => _receiveUniquePromos;
   bool get receiveOpenToAllPromos => _receiveOpenToAllPromos;
-
-  String directoryPath;
-  EditReceiptScreenModel editReceiptScreenModel = EditReceiptScreenModel();
-  // ChartScreenModel chartScreenModel;
 
   AppModel() {
     init();
   }
 
   void init() {
+    editReceiptScreenModel = EditReceiptScreenModel(this);
     mAuth = FirebaseAuth.instance;
+    determineLocalPath();
+    print("The path is: ${directoryPath}");
+    if (FileSystemEntity.typeSync("$directoryPath/ReceiptsJson") ==
+        FileSystemEntityType.notFound) {
+      print("not found so created");
+      new Directory("$directoryPath/ReceiptsJson/").create(recursive: true);
+    } else {
+      print('exists');
+    }
   }
 
-  login(String email, String password) async {
-    FirebaseUser a =   await mAuth.signInWithEmailAndPassword(email: email, password: password);  
-    print("The user is ${a.toString()}");
-     
-    // user.fbUser = await _handleSignIn();
+  Future<FirebaseUser> login(String email, String password) async {
+    user = await mAuth.signInWithEmailAndPassword(
+        email: email, password: password);
+    print("The user is ${user.toString()}");
+    init();
+// dart
+    return user;
   }
-  
-  logOut(){ 
+
+  req() async {
+    // SimplePermissions s = SimplePermissions();
+    // s.erq
+    // // requestPer
+
+    // requestPermission(Permission.WriteExternalStorage);
+  }
+
+  determineLocalPath() async {
+    final directory = await getApplicationDocumentsDirectory();
+    directoryPath = directory.path;
+  }
+
+  logOut() {
     mAuth.signOut();
-  }
-
-  // void f() async {
-  //   String a = await getUser().toString();
-  //   print("Signed in: " + a);
-  // }
-
-  // Future<FirebaseUser> getUser() async {
-  //   return mAuth.currentUser();
-  // }
-
-//   Future<FirebaseUser> _handleSignIn() async {
-//   final GoogleSignInAccount googleUser = await googleSignIn.signIn();
-//   final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-
-//   final AuthCredential credential = GoogleAuthProvider.getCredential(
-//     accessToken: googleAuth.accessToken,
-//     idToken: googleAuth.idToken,
-//   );
-
-//   final FirebaseUser user = await mAuth.signInWithCredential(credential);
-//   print("signed in " + user.displayName);
-//   return user;
-// }
-
-  set user(User user) {
-    _user = user;
-    notifyListeners();
   }
 
   set receiveUniquePromos(bool value) {
@@ -95,16 +91,10 @@ class AppModel extends Model {
     _viewing_period = period;
     notifyListeners();
   }
-
-  Future<String> get _localPath async {
-    final directory = await getApplicationDocumentsDirectory();
-
-    return directory.path;
-  }
 }
 
 class User {
   String username;
   String uid;
-  // FirebaseUser fbUser = FirebaseUser.instance;
+  FirebaseUser fbUser;
 }

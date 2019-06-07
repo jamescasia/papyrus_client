@@ -6,16 +6,20 @@ import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:papyrus_client/data_models/Receipt.dart';
 import 'dart:convert';
+import 'AppModel.dart';
+import 'dart:io';
 
 class EditReceiptScreenModel extends Model {
   TextEditingController _controller = TextEditingController();
   TextEditingController get controller => _controller;
   Receipt _receipt;
   bool _changed;
+  AppModel appModel;
   // ReceiptItem _currentReceiptItem = ReceiptItem("", 0, 0);
   // set currentReceiptItem(ReceiptItem item ) => _currentReceiptItem = item;
 
-  EditReceiptScreenModel() {
+  EditReceiptScreenModel(this.appModel) {
+    // appModel = appModel;
     _changed = false;
     _receipt = Receipt()
       ..dateTime = DateTime.now().toIso8601String()
@@ -23,9 +27,12 @@ class EditReceiptScreenModel extends Model {
   }
 
   void saveReceiptToJson() {
-    // _receipt.
+    print("locals" + appModel.directoryPath);
     print("saving");
-    print(jsonEncode(_receipt.toJson()));
+    // getExternal
+    
+    File file = new File('${appModel.directoryPath}/ReceiptsJson/${_receipt.time_stamp}.json');
+    file.writeAsString(jsonEncode(_receipt.toJson()));
   }
 
   void newReceiptFromOCR() {}

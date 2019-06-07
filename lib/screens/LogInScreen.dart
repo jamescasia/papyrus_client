@@ -168,15 +168,12 @@ class _LogInScreenStackState extends State<LogInScreenStack> {
                         highlightElevation: 5,
                         clipBehavior: Clip.none,
                         onPressed: () {
-                          appModel.login("user@user.com", "useruser");
-
-                          // Navigator.push(
-                          //     context,
-                          //     CupertinoPageRoute(
-                          //         builder: (context) => HomeScreen()));
-                          // showDialog(
-                          //     context: context,
-                          //     builder: (BuildContext context) {});
+                          appModel.login("user@user.com", "useruser").then((d) {
+                            Navigator.push(
+                                context,
+                                CupertinoPageRoute(
+                                    builder: (context) => HomeScreen()));
+                          });
                         },
                       ),
                     ),

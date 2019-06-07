@@ -531,7 +531,7 @@ class EditReceiptScreenBottomPart extends StatelessWidget {
                                   child: InkWell(
                                     onTap: () {
                                       editReceiptScreenModel.saveReceiptToJson();
-                                      appModel.editReceiptScreenModel = EditReceiptScreenModel();
+                                      appModel.editReceiptScreenModel = EditReceiptScreenModel(appModel);
                                       Navigator.pop(context);
                                     },
                                     child: Row(
