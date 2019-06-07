@@ -5,8 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:async';
 import 'EditReceiptScreenModel.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:google_sign_in/google_sign_in.dart';
+import 'package:firebase_auth/firebase_auth.dart'; 
+
 
 enum Period { MONTHLY, WEEKLY, DAILY }
 
@@ -18,7 +18,7 @@ class AppModel extends Model {
   bool _receiveOpenToAllPromos;
   List<String> _receipts_json_paths;
   // final GoogleSignIn googleSignIn = GoogleSignIn();
-  // FirebaseAuth mAuth;
+  FirebaseAuth mAuth;
 
   User get user => _user;
   bool get alsoReceivePromosThruEmail => _alsoReceivePromosThruEmail;
@@ -36,14 +36,14 @@ class AppModel extends Model {
 
   void init() { 
 
-    // mAuth = FirebaseAuth.instance;
+    mAuth = FirebaseAuth.instance;
  
   }
 
    login(String email , String password)async { 
 
-      //  mAuth.signInWithEmailAndPassword(email: email, password:  password );
-      //  print("Signed in: " + mAuth.currentUser().toString());
+       mAuth.signInWithEmailAndPassword(email: email, password:  password );
+       print("Signed in: " + mAuth.currentUser().toString());
 
 
       // user.fbUser = await _handleSignIn();
