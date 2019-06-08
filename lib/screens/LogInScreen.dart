@@ -183,11 +183,7 @@ class _LogInScreenStackState extends State<LogInScreenStack> {
                           splashColor: Colors.greenAccent,
                           highlightElevation: 5,
                           clipBehavior: Clip.none,
-                          onPressed: () {
-                            // appModel.login("user@user.com", "useruser").then((d) {
-                            // _showDialog(context);
-
-                            // CancelableOperation
+                          onPressed: () { 
                             setState(() {
                               isLoading = true;
                             });

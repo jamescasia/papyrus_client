@@ -18,7 +18,7 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:papyrus_client/models/AppModel.dart';
 import 'package:papyrus_client/screens/LogInScreen.dart';
 import 'SplashScreen.dart';
-
+import 'CameraCaptureScreen.dart';
 // void main() {
 //   return runApp(PapyrusCustomer());
 // }
@@ -617,7 +617,9 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                       context,
                       CupertinoPageRoute(
                           builder: (context) =>
-                              EditReceiptScreen(model.editReceiptScreenModel)));
+                              // EditReceiptScreen(model.editReceiptScreenModel)
+                              CameraCaptureScreen()
+                              ));
                 },
                 child: Container(
                   width: sizeMul * 74.052,
