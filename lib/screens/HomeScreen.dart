@@ -116,10 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     sizeMul = MediaQuery.of(context).size.width / 411.4;
-    recptCardHeight = 72 * sizeMul;
-    print(MediaQuery.of(context).size);
-    print(sizeMul);
-    print(sizeMul * 12);
+    recptCardHeight = 72 * sizeMul; 
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
       statusBarColor: const Color(0xFF61C350),
       // #61C350
@@ -355,8 +352,7 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                           child: InkWell(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(15 * sizeMul)),
-                            onTap: () {
-                              print(responseFromNativeCode());
+                            onTap: () { 
                               // print(result);
                             },
                             splashColor: Colors.greenAccent,

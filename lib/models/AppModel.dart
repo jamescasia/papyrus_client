@@ -56,6 +56,18 @@ class AppModel extends Model {
         print('exists');
       }
     }
+
+
+    List<FileSystemEntity> files ;
+    print("here are the files");
+    files = rootDir.listSync(recursive: true, followLinks: false);
+    for(int i = 0 ; i< files.length; i++){
+
+      // print(files[i].path);
+    }
+     
+    // print("the size of files is" + files.length.toString());
+    
   }
 
   Future<FirebaseUser> login(String email, String password) async {

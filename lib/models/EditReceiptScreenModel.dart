@@ -15,6 +15,7 @@ class EditReceiptScreenModel extends Model {
   Receipt _receipt;
   bool _changed;
   AppModel appModel;
+  String currentImagePath;
   // ReceiptItem _currentReceiptItem = ReceiptItem("", 0, 0);
   // set currentReceiptItem(ReceiptItem item ) => _currentReceiptItem = item;
 
@@ -25,6 +26,19 @@ class EditReceiptScreenModel extends Model {
       ..dateTime = DateTime.now().toIso8601String()
       ..time_stamp = DateTime.now().millisecondsSinceEpoch.toString();
   }
+
+  createReceipt(){
+
+    
+  }
+
+
+  setCurrentImagePath(String path){
+    currentImagePath = path;
+    _receipt.imagePath = currentImagePath;
+    notifyListeners();
+  }
+   
 
   void saveReceiptToJsonAndToFile() {
     print("locals" + appModel.rootDir.path);

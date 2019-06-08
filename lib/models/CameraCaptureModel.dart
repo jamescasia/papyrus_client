@@ -3,6 +3,7 @@ import 'package:papyrus_client/screens/CameraCaptureScreen.dart';
 import 'package:camera/camera.dart';
 import 'AppModel.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
+import 'dart:io';
 
 class CameraCaptureModel extends Model {
   CameraScreenState cameraScreenState;
@@ -12,17 +13,20 @@ class CameraCaptureModel extends Model {
   CameraCaptureModel(this.appModel);
 
 
-  Future<bool> capturePhoto() async {
+    capturePhoto() async {
 
-    imagePath =  "${appModel.rootDir.path}/ReceiptsImages/${DateTime.now()}.png";
+    imagePath =  "${appModel.rootDir.path}/ReceiptsImages/${DateTime.now().millisecondsSinceEpoch}.png";
     print("take");
     try{
-      cameraScreenState.controller.takePicture(  imagePath);
-    return true;
+      
+      appModel.editReceiptScreenModel.setCurrentImagePath(imagePath);
+     await cameraScreenState.controller.takePicture(  imagePath);
+      // print(await File(imagePath).readAsString());
+    // return true;
     }
     catch(a){
       print(a.toString());
-      return false;
+      // return false;
     }
 
   }

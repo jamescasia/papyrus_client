@@ -34,6 +34,9 @@ class Receipt {
   String get category => _category;
   List<ReceiptItem> get items => _items;
   double get total => _total;
+
+  String get imagePath => _imagePath;
+  set imagePath(String path) => _imagePath = path;
   set total(double tot) => _total = tot;
   set recpt_id(String id) => _recpt_id = id;
   set isPapyrus(bool val) => _isPapyrus = val;
