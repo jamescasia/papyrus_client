@@ -99,6 +99,10 @@ class EditReceiptScreenModel extends Model {
         }
       }
     } 
+
+    _receipt.merchant = "Jollibee";
+    _receipt.total = 123;
+    // 
   }
 
   void newReceiptFromOCR() {}

@@ -126,8 +126,8 @@ class EditReceiptScreenTopPart extends StatelessWidget {
                   maxWidth: MediaQuery.of(context).size.width,
                   maxHeight: MediaQuery.of(context).size.width * 0.91),
               child: ZoomableImage(
-                // FileImage(File(editReceiptScreenModel.receipt.imagePath)),
-                AssetImage("assets/pictures/receipt-sample.jpg"),
+                FileImage(File(editReceiptScreenModel.receipt.imagePath)),
+                // AssetImage("assets/pictures/receipt-sample.jpg"),
                 // yawa
 
                 backgroundColor: Colors.grey[700],
@@ -160,7 +160,7 @@ class EditReceiptScreenTopPart extends StatelessWidget {
           Positioned(
             bottom: sizeMul * 15,
             // right: 48 * sizeMul * sizeMul,
-            left:homeButtonDist+40*sizeMul,
+            left: homeButtonDist + 40 * sizeMul,
             child: Material(
               color: Colors.white.withOpacity(0),
               borderRadius: BorderRadius.all(Radius.circular(3000)),
@@ -235,10 +235,10 @@ class EditReceiptScreenBottomPart extends StatelessWidget {
                     children: <Widget>[
                       Flex(
                         direction: Axis.horizontal,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Expanded(
-                            flex: 2,
+                            flex: 60,
                             child: Container(
                                 child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -257,8 +257,8 @@ class EditReceiptScreenBottomPart extends StatelessWidget {
                                 ),
                                 SizedBox(height: sizeMul * 4),
                                 Container(
-                                  width: sizeMul * 200,
-                                  height: sizeMul * 35,
+                                  // width: sizeMul * 200,
+                                  height: sizeMul * 40,
                                   padding: EdgeInsets.symmetric(
                                       horizontal: sizeMul * 15),
                                   decoration: BoxDecoration(
@@ -269,26 +269,49 @@ class EditReceiptScreenBottomPart extends StatelessWidget {
                                           color: Colors.white,
                                           width: sizeMul * 2)),
                                   child: Center(
-                                    child: EditableText(
-                                      textAlign: TextAlign.start,
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: sizeMul * 20),
-                                      backgroundCursorColor: Colors.red,
-                                      cursorColor: Colors.pinkAccent,
-                                      focusNode: m_focus,
-                                      controller: merchant_controller,
-                                    ),
-                                  ),
+                                      child: TextFormField(
+                                        initialValue: editReceiptScreenModel.receipt.merchant,
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: sizeMul * 20),
+
+                                        onSaved: (input) => editReceiptScreenModel.receipt.merchant = input, 
+                                        // controller: merchant_controller,
+                                    // decoration: InputDecoration(
+                                    //   hintText: "Merchant",
+                                    //   fillColor: Colors.white,
+                                    //   // labelStyle:
+                                    //   // labelText: "Haha"
+                                    // ),
+                                  )
+
+                                      //  EditableText(
+                                      //   textAlign: TextAlign.start,
+                                      //   style: TextStyle(
+                                      //       color: Colors.black,
+                                      //       fontSize: sizeMul * 20),
+                                      //   backgroundCursorColor: Colors.red,
+                                      //   cursorColor: Colors.pinkAccent,
+                                      //   focusNode: m_focus,
+                                      //   controller: merchant_controller,
+                                      // ),
+                                      ),
                                 )
                               ],
                             )),
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: SizedBox(
+                              width: 1,
+                            ),
                           ),
                           // SizedBox(
                           //   width: sizeMul * 20,
                           // ),
                           Expanded(
-                            flex: 1,
+                            flex: 35,
                             child: Container(
                                 child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -299,6 +322,7 @@ class EditReceiptScreenBottomPart extends StatelessWidget {
                                   padding: EdgeInsets.only(left: sizeMul * 8.0),
                                   child: Text(
                                     "DATE & TIME",
+                                    // maxLines: 1,
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.w900,
@@ -307,27 +331,44 @@ class EditReceiptScreenBottomPart extends StatelessWidget {
                                 ),
                                 SizedBox(height: sizeMul * 4),
                                 Container(
-                                  width: sizeMul * 130,
-                                  height: sizeMul * 35,
+                                  // width: sizeMul * 130,
+                                  height: sizeMul * 40,
                                   padding: EdgeInsets.symmetric(
                                       horizontal: sizeMul * 15),
                                   decoration: BoxDecoration(
+                                      color: Colors.white,
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(3000)),
                                       border: Border.all(
                                           color: Colors.white,
                                           width: sizeMul * 2)),
                                   child: Center(
-                                    child: EditableText(
-                                        textAlign: TextAlign.start,
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: sizeMul * 17),
-                                        backgroundCursorColor: Colors.red,
-                                        cursorColor: Colors.pinkAccent,
-                                        focusNode: d_focus,
-                                        controller: date_controller),
-                                  ),
+                                      child: 
+                                      TextFormField(
+                                        maxLines: 1,
+
+                                        initialValue: editReceiptScreenModel.receipt.dateTime,
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: sizeMul * 20),
+                                        
+                                        onSaved: (input) => editReceiptScreenModel.receipt.dateTime = input, 
+                                 
+                                  )
+
+                                      //  EditableText(
+                                      //     textAlign: TextAlign.start,
+                                      //     style: TextStyle(
+                                      //       color: Colors.black,
+                                      //       fontSize: sizeMul * 20,
+                                      //     ),
+                                      //     backgroundCursorColor: Colors.red,
+                                      //     cursorColor: Colors.pinkAccent,
+                                      //     focusNode: d_focus,
+                                      //     controller: date_controller),
+
+                                      ),
                                 )
                               ],
                             )),
@@ -355,52 +396,88 @@ class EditReceiptScreenBottomPart extends StatelessWidget {
                           ),
                           SizedBox(height: sizeMul * 4),
                           Container(
-                              width: sizeMul * 270,
-                              height: sizeMul * 35,
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: sizeMul * 15),
-                              decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(3000)),
-                                  border: Border.all(
-                                      color: Colors.white, width: sizeMul * 2)),
-                              // child: Center(
-                              child: DropdownButtonFormField(
-                                // value:model.receipt.category,
+                            width: sizeMul * 270,
+                            height: sizeMul * 40,
+                            padding:
+                                EdgeInsets.symmetric(horizontal: sizeMul * 15),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(3000)),
+                                border: Border.all(
+                                    color: Colors.white, width: sizeMul * 2)),
+                            child: Center(
+                                child: DropdownButtonFormField<String>(
+                              value: "Food",
+                              // (editReceiptScreenModel.receipt.category!=null)?editReceiptScreenModel.receipt.category:"Food",
+                              decoration: InputDecoration(
+                                labelText: "Category",
+                                labelStyle: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: sizeMul * 27,
+                                ),
+                              ),
+                              // value:model.receipt.category,
 
-                                items: [
-                                  new DropdownMenuItem(
-                                    child: Text("Entertainment"),
-                                    value: 50,
+                              items: [
+                                new DropdownMenuItem(
+                                  child: Text(
+                                    "Entertainment",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: sizeMul * 20,
+                                    ),
                                   ),
-                                  new DropdownMenuItem(
-                                    value: 75,
-                                    child: Text("Food"),
+                                  value: "Entertainment",
+                                ),
+                                new DropdownMenuItem(
+                                  value: "Food",
+                                  child: Text(
+                                    "Food",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: sizeMul * 20,
+                                    ),
                                   ),
-                                  new DropdownMenuItem(
-                                    value: 100,
-                                    child: Text("Fuel"),
+                                ),
+                                new DropdownMenuItem(
+                                  value: "Transportation",
+                                  child: Text(
+                                    "Transportation",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: sizeMul * 20,
+                                    ),
                                   ),
-                                  new DropdownMenuItem(
-                                    value: 200,
-                                    child: Text("Transportation"),
+                                ),
+                                new DropdownMenuItem(
+                                  value: "Necessities",
+                                  child: Text(
+                                    "Necessities",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: sizeMul * 20,
+                                    ),
                                   ),
-                                  new DropdownMenuItem(
-                                    value: 500,
-                                    child: Text("Necessities"),
+                                ),
+                                new DropdownMenuItem(
+                                  value: "Miscellaneous",
+                                  child: Text(
+                                    "Miscellaneous",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: sizeMul * 20,
+                                    ),
                                   ),
-                                  new DropdownMenuItem(
-                                    value: 1000,
-                                    child: Text("Misc."),
-                                  ),
-                                ],
-                                onChanged: (choice) {
-                                  editReceiptScreenModel.receipt.category =
-                                      choice.toString();
-                                },
-                              )
-                              // ),
-                              )
+                                ),
+                              ],
+
+                              onChanged: (choice) {
+                                editReceiptScreenModel.receipt.category =
+                                    choice.toString();
+                              },
+                            )),
+                          )
                         ],
                       )),
                       Container(
@@ -449,17 +526,27 @@ class EditReceiptScreenBottomPart extends StatelessWidget {
                                   // SizedBox(
                                   //   width: sizeMul * 140,
                                   // ),
-                                  Expanded(
-                                    flex: 1,
-                                    child: Text(
-                                      "QTY",
-                                      overflow: TextOverflow.fade,
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w900,
-                                          fontSize: sizeMul * 17),
-                                    ),
+                                  Text(
+                                    "QTY",
+                                    overflow: TextOverflow.fade,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w900,
+                                        fontSize: sizeMul * 17),
                                   ),
+                                  // Expanded(
+                                  //   flex: 1,
+                                  //   child: widget(
+                                  //                                         child: Text(
+                                  //       "QTY",
+                                  //       overflow: TextOverflow.fade,
+                                  //       style: TextStyle(
+                                  //           color: Colors.white,
+                                  //           fontWeight: FontWeight.w900,
+                                  //           fontSize: sizeMul * 17),
+                                  //     ),
+                                  //   ),
+                                  // ),
                                   // SizedBox(
                                   //   width: sizeMul * 15,
                                   // ),
@@ -493,20 +580,15 @@ class EditReceiptScreenBottomPart extends StatelessWidget {
                           Column(
                             children: <Widget>[
                               Column(
-                                children:[],
+                                // children: [],
                                 // yawa
-                                  // children: (editReceiptScreenModel
-                                  //             .receipt.items.length >
-                                  //         0)
-                                  //     ? editReceiptScreenModel.receipt.items
-                                  //         .map((item) {
-                                  //         return ReceiptItemLine(
-                                  //             item, editReceiptScreenModel);
-                                  //       }).toList()
-                                  //     : [
-                                  //         SizedBox(height: 1),
-                                  //       ]
-                                        ),
+                                children:   editReceiptScreenModel.receipt.items
+                                        .map((item) {
+                                        return ReceiptItemLine(
+                                            item, editReceiptScreenModel);
+                                      }).toList()
+                                    
+                              ),
                               Container(
                                 width: MediaQuery.of(context).size.width,
                                 padding: EdgeInsets.symmetric(
@@ -557,9 +639,9 @@ class EditReceiptScreenBottomPart extends StatelessWidget {
                                           fontWeight: FontWeight.bold),
                                     ),
                                     Text(
-                                      "3123131",
+                                      // "3123131",
                                       // yawa
-                                      // "${((editReceiptScreenModel.receipt.total.toStringAsFixed(2)))}",
+                                      "${((editReceiptScreenModel.receipt.total.toStringAsFixed(2)))}",
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 20 * sizeMul,
@@ -1058,326 +1140,3 @@ class _EditItemState extends State<EditItem> {
     );
   }
 }
-
-// void _showDialog(BuildContext context, ReceiptItem receiptItem, bool add) {
-//   showDialog(
-//       context: context,
-//       builder: (BuildContext context) {
-//         TextEditingController name_controller = TextEditingController();
-//         TextEditingController qty_controller = TextEditingController();
-//         TextEditingController price_controller = TextEditingController();
-
-//         name_controller.text = receiptItem.name;
-//         qty_controller.text = receiptItem.qty.toString();
-//         price_controller.text = receiptItem.price.toString();
-
-//         // ReceiptItem receiptItem = ReceiptItem("", 0, 0);
-//         return AlertDialog(
-//           content: Container(
-//             width: MediaQuery.of(context).size.width * 0.88,
-//             // height: sizeMul * 300,
-//             // color: Colors.red,
-//             child: Column(
-//               mainAxisSize: MainAxisSize.min,
-//               children: <Widget>[
-//                 Column(
-//                   crossAxisAlignment: CrossAxisAlignment.start,
-//                   mainAxisSize: MainAxisSize.max,
-//                   children: <Widget>[
-//                     Padding(
-//                       padding: EdgeInsets.only(left: sizeMul * 8.0),
-//                       child: Text(
-//                         "Name",
-//                         style: TextStyle(
-//                             color: Colors.grey[800],
-//                             fontWeight: FontWeight.w900,
-//                             fontSize: sizeMul * 14),
-//                       ),
-//                     ),
-//                     SizedBox(height: sizeMul * 4),
-//                     Container(
-//                       // width: sizeMul * 130,
-//                       // color: Colors.green,
-//                       height: sizeMul * 35,
-//                       padding: EdgeInsets.symmetric(horizontal: sizeMul * 15),
-//                       decoration: BoxDecoration(
-//                         color: Colors.green,
-//                         borderRadius: BorderRadius.all(Radius.circular(3000)),
-//                         // border: Border.all(
-//                         //     color: Colors.white,
-//                         //     width: sizeMul * 2)
-//                       ),
-//                       child: Center(
-//                         child: EditableText(
-//                           onChanged: (text) {
-//                             receiptItem.name = name_controller.text;
-//                             receiptItem.qty = int.parse(qty_controller.text);
-//                             receiptItem.price =
-//                                 double.parse(price_controller.text);
-//                             receiptItem.total =
-//                                 receiptItem.qty * receiptItem.price;
-//                             editReceiptScreenModel.changed = !editReceiptScreenModel.changed;
-
-//                             editReceiptScreenModel.update();
-//                           },
-//                           selectionColor: Colors.green,
-//                           textAlign: TextAlign.start,
-//                           style: TextStyle(
-//                               color: Colors.white, fontSize: sizeMul * 17),
-//                           backgroundCursorColor: Colors.red,
-//                           cursorColor: Colors.pinkAccent,
-//                           focusNode: FocusNode(),
-//                           controller: name_controller,
-//                         ),
-//                       ),
-//                     )
-//                   ],
-//                 ),
-//                 Flex(
-//                   mainAxisSize: MainAxisSize.max,
-//                   direction: Axis.horizontal,
-//                   children: <Widget>[
-//                     Expanded(
-//                       flex: 6,
-//                       child: Column(
-//                         crossAxisAlignment: CrossAxisAlignment.start,
-//                         mainAxisSize: MainAxisSize.max,
-//                         children: <Widget>[
-//                           Padding(
-//                             padding: EdgeInsets.only(left: sizeMul * 8.0),
-//                             child: Text(
-//                               "Price",
-//                               style: TextStyle(
-//                                   color: Colors.grey[800],
-//                                   fontWeight: FontWeight.w900,
-//                                   fontSize: sizeMul * 14),
-//                             ),
-//                           ),
-//                           SizedBox(height: sizeMul * 4),
-//                           Container(
-//                             // width: sizeMul * 130,
-//                             // color: Colors.green,
-//                             height: sizeMul * 35,
-//                             padding:
-//                                 EdgeInsets.symmetric(horizontal: sizeMul * 15),
-//                             decoration: BoxDecoration(
-//                               color: Colors.green,
-//                               borderRadius:
-//                                   BorderRadius.all(Radius.circular(3000)),
-//                               // border: Border.all(
-//                               //     color: Colors.white,
-//                               //     width: sizeMul * 2)
-//                             ),
-//                             child: Center(
-//                               child: EditableText(
-//                                 onChanged: (text) {
-//                                   receiptItem.name = name_controller.text;
-//                                   receiptItem.qty =
-//                                       int.parse(qty_controller.text);
-//                                   receiptItem.price =
-//                                       double.parse(price_controller.text);
-//                                   receiptItem.total =
-//                                       receiptItem.qty * receiptItem.price;
-
-//                                   editReceiptScreenModel.changed = !editReceiptScreenModel.changed;
-//                                   editReceiptScreenModel.update();
-//                                 },
-//                                 selectionColor: Colors.green,
-//                                 textAlign: TextAlign.start,
-//                                 style: TextStyle(
-//                                     color: Colors.white,
-//                                     fontSize: sizeMul * 17),
-//                                 backgroundCursorColor: Colors.red,
-//                                 cursorColor: Colors.pinkAccent,
-//                                 focusNode: FocusNode(),
-//                                 controller: price_controller,
-//                               ),
-//                             ),
-//                           )
-//                         ],
-//                       ),
-//                     ),
-//                     SizedBox(
-//                       width: sizeMul * 10,
-//                     ),
-//                     Expanded(
-//                       flex: 3,
-//                       child: Column(
-//                         crossAxisAlignment: CrossAxisAlignment.start,
-//                         mainAxisSize: MainAxisSize.max,
-//                         children: <Widget>[
-//                           Padding(
-//                             padding: EdgeInsets.only(left: sizeMul * 8.0),
-//                             child: Text(
-//                               "Qty",
-//                               style: TextStyle(
-//                                   color: Colors.grey[800],
-//                                   fontWeight: FontWeight.w900,
-//                                   fontSize: sizeMul * 14),
-//                             ),
-//                           ),
-//                           SizedBox(height: sizeMul * 4),
-//                           Container(
-//                             // width: sizeMul * 130,
-//                             // color: Colors.green,
-//                             height: sizeMul * 35,
-//                             padding:
-//                                 EdgeInsets.symmetric(horizontal: sizeMul * 15),
-//                             decoration: BoxDecoration(
-//                               color: Colors.green,
-//                               borderRadius:
-//                                   BorderRadius.all(Radius.circular(3000)),
-//                               // border: Border.all(
-//                               //     color: Colors.white,
-//                               //     width: sizeMul * 2)
-//                             ),
-//                             child: Center(
-//                               child: EditableText(
-//                                 onChanged: (text) {
-//                                   receiptItem.name = name_controller.text;
-//                                   receiptItem.qty =
-//                                       int.parse(qty_controller.text);
-//                                   receiptItem.price =
-//                                       double.parse(price_controller.text);
-//                                   receiptItem.total =
-//                                       receiptItem.qty * receiptItem.price;
-//                                   editReceiptScreenModel.changed = !editReceiptScreenModel.changed;
-//                                   editReceiptScreenModel.update();
-//                                 },
-//                                 selectionColor: Colors.green,
-//                                 textAlign: TextAlign.start,
-//                                 style: TextStyle(
-//                                     color: Colors.white,
-//                                     fontSize: sizeMul * 17),
-//                                 backgroundCursorColor: Colors.red,
-//                                 cursorColor: Colors.pinkAccent,
-//                                 focusNode: FocusNode(),
-//                                 controller: qty_controller,
-//                               ),
-//                             ),
-//                           )
-//                         ],
-//                       ),
-//                     ),
-//                   ],
-//                 ),
-//                 SizedBox(
-//                   height: sizeMul * 8,
-//                 ),
-//                 Row(
-//                   mainAxisSize: MainAxisSize.max,
-//                   crossAxisAlignment: CrossAxisAlignment.center,
-//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                   children: <Widget>[
-//                     Text("Total",
-//                         style: TextStyle(
-//                           color: Colors.grey[800],
-//                           fontSize: sizeMul * 18,
-//                           fontWeight: FontWeight.bold,
-//                         )),
-//                     SizedBox(
-//                       width: sizeMul * 27,
-//                     ),
-//                     Text(
-//                         "${double.parse(price_controller.text) * int.parse(qty_controller.text)}",
-//                         style: TextStyle(
-//                             color: Colors.grey[800],
-//                             fontSize: sizeMul * 18,
-//                             fontWeight: FontWeight.bold)),
-//                     SizedBox(
-//                       height: sizeMul * 50,
-//                     ),
-//                     Material(
-//                       child: Container(
-//                         height: sizeMul * 50,
-//                         width: sizeMul * 50,
-//                         decoration: BoxDecoration(
-//                             color: Colors.red,
-//                             borderRadius:
-//                                 BorderRadius.all(Radius.circular(sizeMul * 8))),
-//                         child: InkWell(
-//                           borderRadius:
-//                               BorderRadius.all(Radius.circular(sizeMul * 8)),
-//                           onTap: () {
-//                             Navigator.pop(context);
-//                             editReceiptScreenModel.removeItemFromReceipt(receiptItem);
-//                           },
-//                           splashColor: Colors.amber,
-//                           highlightColor: Colors.redAccent,
-//                           child: Icon(Icons.delete,
-//                               color: Colors.white, size: sizeMul * 30),
-//                         ),
-//                       ),
-//                     ),
-//                     Material(
-//                       child: InkWell(
-//                         borderRadius:
-//                             BorderRadius.all(Radius.circular(sizeMul * 8)),
-//                         splashColor: Colors.lightGreenAccent,
-//                         highlightColor: Colors.green,
-//                         onTap: () {
-//                           if (name_controller.text != "" &&
-//                               int.parse(qty_controller.text) > 0 &&
-//                               double.parse(price_controller.text) > 0) {
-//                             receiptItem.name = name_controller.text;
-//                             receiptItem.qty = int.parse(qty_controller.text);
-//                             receiptItem.price =
-//                                 double.parse(price_controller.text);
-//                             receiptItem.total =
-//                                 receiptItem.qty * receiptItem.price;
-
-//                             if (add) {
-//                               editReceiptScreenModel.addItemToReceipt(receiptItem);
-//                             }
-//                             Navigator.pop(context);
-
-//                             Scaffold.of(ctx).showSnackBar(SnackBar(
-//                               content: Row(
-//                                   mainAxisSize: MainAxisSize.max,
-//                                   mainAxisAlignment: MainAxisAlignment.start,
-//                                   children: <Widget>[
-//                                     Text(
-//                                       "Name: ${receiptItem.name} ",
-//                                       overflow: TextOverflow.ellipsis,
-//                                       style: TextStyle(fontSize: sizeMul * 15),
-//                                     ),
-//                                     Text(
-//                                       "Qty: ${receiptItem.qty} ",
-//                                       overflow: TextOverflow.ellipsis,
-//                                       style: TextStyle(fontSize: sizeMul * 15),
-//                                     ),
-//                                     Text(
-//                                       "Price: ${receiptItem.price} ",
-//                                       overflow: TextOverflow.ellipsis,
-//                                       style: TextStyle(fontSize: sizeMul * 15),
-//                                     ),
-//                                     Text(
-//                                       "Total: ${receiptItem.total} ",
-//                                       style: TextStyle(fontSize: sizeMul * 15),
-//                                       overflow: TextOverflow.ellipsis,
-//                                     ),
-//                                   ]),
-//                             ));
-//                           }
-//                         },
-//                         child: Container(
-//                           height: sizeMul * 50,
-//                           width: sizeMul * 50,
-//                           decoration: BoxDecoration(
-//                               color: Colors.lightGreen,
-//                               borderRadius: BorderRadius.all(
-//                                   Radius.circular(sizeMul * 8))),
-//                           child: Icon(Icons.check,
-//                               color: Colors.white, size: sizeMul * 30),
-//                         ),
-//                       ),
-//                     ),
-//                   ],
-//                 ),
-//                 // Text("hey show up iddiot"),
-//               ],
-//             ),
-//           ),
-//         );
-//       });
-// }

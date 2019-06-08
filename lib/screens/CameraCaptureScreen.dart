@@ -177,8 +177,66 @@ class _CameraCaptureScreenState extends State<CameraCaptureScreen> {
                                         ),
                                       );
                               } else
-                                return Center(
-                                    child: CircularProgressIndicator());
+                                return AspectRatio(
+                                        aspectRatio:
+                                            snapshot.data.value.aspectRatio,
+                                        child: Stack(
+                                          children: <Widget>[
+                                            // CameraPreview(snapshot.data),
+                                            Positioned(
+                                              left: sizeMul * 1,
+                                              top: sizeMul * 24,
+                                              child: Material(
+                                                color:
+                                                    Colors.white.withAlpha(0),
+                                                child: InkWell(
+                                                  splashColor:
+                                                      Colors.white.withAlpha(0),
+                                                  highlightColor: Colors.black
+                                                      .withOpacity(0.1),
+                                                  // ,
+                                                  onTap: () {
+                                                    // editReceiptScreenModel = EditReceiptScreenModel();
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: Container(
+                                                    width: sizeMul * 40,
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            vertical:
+                                                                10 * sizeMul),
+                                                    // height: sizeMul*40,
+                                                    // color: Colors.red,
+                                                    child: Image.asset(
+                                                      'assets/icons/3x/back.png',
+                                                      height:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.075,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Positioned(
+                                              bottom: 0,
+                                              child: Container(
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                height: sizeMul * 60,
+                                                color: Colors.black
+                                                    .withOpacity(0.3),
+                                                child: RaisedButton(
+                                                  onPressed: () { 
+                                                  },
+                                                  shape: CircleBorder(),
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        ));
                             });
                       }));
             }),

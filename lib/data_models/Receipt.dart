@@ -1,13 +1,13 @@
 class Receipt {
-  String _recpt_id;
-  String _uid;
-  String _time_stamp;
+  String _recpt_id = "";
+  String _uid = "";
+  String _time_stamp = "";
   double _total = 0;
-  String _merchant;
-  String _dateTime;
-  String _category;
-  bool _isPapyrus;
-  String _imagePath;
+  String _merchant = "";
+  String _dateTime ="";
+  String _category ="";
+  bool _isPapyrus = false;
+  String _imagePath = "";
 
   List<ReceiptItem> _items = [
     // new ReceiptItem("Im Nayeon", 2, 1500.0),

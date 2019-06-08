@@ -600,7 +600,7 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
 
           // )
           Positioned(
-            bottom: MediaQuery.of(context).size.width * 0,
+            bottom: 3,
             // right: MediaQuery.of(context).size.width * 0.035,
             // left: ( MediaQuery.of(context).size.height/ MediaQuery.of(context).size.width)*102,
             // left:128,
@@ -663,6 +663,7 @@ class _HomeScreenBottomPartState extends State<HomeScreenBottomPart> {
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height -
           0.942 * MediaQuery.of(context).size.width,
+          color: Colors.white.withAlpha(0),
       padding: EdgeInsets.symmetric(horizontal: sizeMul * 35),
       child: Center(
         // mainAxisAlignment: MainAxisAlignment.center,
