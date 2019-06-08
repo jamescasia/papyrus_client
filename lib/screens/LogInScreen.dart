@@ -49,9 +49,8 @@ class _LogInScreenStackState extends State<LogInScreenStack> {
             setState(() {
               isLoading = false;
             });
-          }
-
-          else _showDialog(context);
+          } else
+            _showDialog(context);
         },
         child: new Container(
           width: MediaQuery.of(context).size.width,
@@ -192,17 +191,26 @@ class _LogInScreenStackState extends State<LogInScreenStack> {
                             setState(() {
                               isLoading = true;
                             });
+                            try {
+                              sub = appModel
+                                  .login("user@user.com", "useruser")
+                                  .asStream()
+                                  .listen((data) {
+                                if (data.email != null) {
+                                  Navigator.pushReplacement(context,
+                                      CupertinoPageRoute(builder: (context) {
+                                    isLoading = false;
+                                    return HomeScreen();
+                                  }));
+                                }
+                              });
+                            } catch (a) {
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                content:
+                                    Text("Failed to login ${a.toString()}"),
+                              ));
+                            }
 
-                            sub = appModel
-                                .login("user@user.com", "useruser")
-                                .asStream()
-                                .listen((data) {
-                              Navigator.pushReplacement(context,
-                                  CupertinoPageRoute(builder: (context) {
-                                isLoading = false;
-                                return HomeScreen();
-                              }));
-                            });
                             //     .then((user) {
                             //   if (user.uid != null) {
                             //     // Navigator.
@@ -259,7 +267,7 @@ void _showDialog(BuildContext context) {
   showDialog(
     barrierDismissible: true,
     context: context,
-    builder: (BuildContext context) { 
+    builder: (BuildContext context) {
       return AlertDialog(
         // elevation: 0,
         // backgroundColor: Colors.green.withAlpha(0),
@@ -274,7 +282,7 @@ void _showDialog(BuildContext context) {
               SystemChannels.platform.invokeMethod('SystemNavigator.pop');
             },
           ),
-           new FlatButton(
+          new FlatButton(
             child: new Text("No"),
             onPressed: () {
               Navigator.of(context).pop();
