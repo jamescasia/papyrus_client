@@ -8,6 +8,7 @@ import 'EditReceiptScreenModel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:simple_permissions/simple_permissions.dart';
 import 'dart:io'; 
+import 'CameraCaptureModel.dart';
 enum Period { MONTHLY, WEEKLY, DAILY }
 
 class AppModel extends Model {
@@ -20,6 +21,7 @@ class AppModel extends Model {
   FirebaseAuth mAuth;
   // String rootFilePath;
   EditReceiptScreenModel editReceiptScreenModel;
+  CameraCaptureModel cameraCaptureModel;
   FirebaseUser user;
   Directory rootDir;
   List<String> dirList = ["/ReceiptsJson", "/ReceiptsImages", "/Settings"];
@@ -39,6 +41,7 @@ class AppModel extends Model {
     mAuth = FirebaseAuth.instance;
     user = await mAuth.currentUser(); 
     editReceiptScreenModel = EditReceiptScreenModel(this);
+    cameraCaptureModel = CameraCaptureModel(this);
     rootDir = await getApplicationDocumentsDirectory(); 
     checkOrGenerateDirectories();
   }
