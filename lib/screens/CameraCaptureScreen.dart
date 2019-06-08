@@ -84,163 +84,103 @@ class _CameraCaptureScreenState extends State<CameraCaptureScreen> {
                       // stream: null,
                       rebuildOnChange: false,
                       builder: (context, child, ccModel) {
-                        return FutureBuilder(
-                            future: getController(cs, this),
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.done) {
-                                ccModel.setCameraScreenState(cs);
-
-                                return (cs.controllerInitSuccesful)
-                                    ? AspectRatio(
-                                        aspectRatio:
-                                            snapshot.data.value.aspectRatio,
-                                        child: Stack(
-                                          children: <Widget>[
-                                            CameraPreview(snapshot.data),
-                                            Positioned(
-                                              left: sizeMul * 1,
-                                              top: sizeMul * 24,
-                                              child: Material(
-                                                color:
-                                                    Colors.white.withAlpha(0),
-                                                child: InkWell(
-                                                  splashColor:
-                                                      Colors.white.withAlpha(0),
-                                                  highlightColor: Colors.black
-                                                      .withOpacity(0.1),
-                                                  // ,
-                                                  onTap: () {
-                                                    // editReceiptScreenModel = EditReceiptScreenModel();
-                                                    Navigator.pop(context);
-                                                  },
-                                                  child: Container(
-                                                    width: sizeMul * 40,
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            vertical:
-                                                                10 * sizeMul),
-                                                    // height: sizeMul*40,
-                                                    // color: Colors.red,
-                                                    child: Image.asset(
-                                                      'assets/icons/3x/back.png',
-                                                      height:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.075,
-                                                    ),
-                                                  ),
+                        return Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height,
+                            // aspectRatio:
+                            //     snapshot.data.value.aspectRatio,
+                            child: Stack(
+                              children: <Widget>[
+                                FutureBuilder(
+                                    future: getController(cs, this),
+                                    builder: (context, snapshot) {
+                                      if (snapshot.connectionState ==
+                                          ConnectionState.done) {
+                                        return (cs.controllerInitSuccesful)
+                                            ? CameraPreview(snapshot.data)
+                                            : Center(
+                                                child: Text(
+                                                "Camera cannot be accessed.\nDid you accept permissions?",
+                                                style: TextStyle(
+                                                  fontSize: sizeMul * 23,
+                                                  fontWeight: FontWeight.bold,
                                                 ),
-                                              ),
-                                            ),
-                                            Positioned(
-                                              bottom: 0,
-                                              child: Container(
-                                                width: MediaQuery.of(context)
-                                                    .size
-                                                    .width,
-                                                height: sizeMul * 60,
-                                                color: Colors.black
-                                                    .withOpacity(0.3),
-                                                child: RaisedButton(
-                                                  onPressed: () {
-                                                    // cs.controller.
-                                                    ccModel
-                                                        .capturePhoto()
-                                                        .then((_) {
-                                                      cs.controller.dispose();
-                                                      Navigator.pushReplacement(
-                                                          context,
-                                                          CupertinoPageRoute(
-                                                              builder:
-                                                                  (context) {
-                                                        return EditReceiptScreen(
-                                                            appModel
-                                                                .editReceiptScreenModel);
-                                                      }));
-                                                      // }
-                                                    });
-                                                  },
-                                                  shape: CircleBorder(),
-                                                ),
-                                              ),
-                                            )
-                                          ],
-                                        ))
-                                    : Center(
-                                        child: Text(
-                                          "Getting camera failed. Did you reject permission?",
-                                          style: TextStyle(
-                                              fontSize: sizeMul * 19,
-                                              color: Colors.black),
+                                              ));
+                                      } else
+                                        return Center(
+                                          child: CircularProgressIndicator(),
+                                        );
+                                    }),
+                                Positioned(
+                                  left: sizeMul * 1,
+                                  top: sizeMul * 24,
+                                  child: Material(
+                                    color: Colors.white.withAlpha(0),
+                                    child: InkWell(
+                                      splashColor: Colors.white.withAlpha(0),
+                                      highlightColor:
+                                          Colors.black.withOpacity(0.1),
+                                      // ,
+                                      onTap: () {
+                                        // editReceiptScreenModel = EditReceiptScreenModel();
+                                        Navigator.pop(context);
+                                      },
+                                      child: Container(
+                                        width: sizeMul * 40,
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 10 * sizeMul),
+                                        // height: sizeMul*40,
+                                        // color: Colors.red,
+                                        child: Image.asset(
+                                          'assets/icons/3x/back.png',
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.075,
                                         ),
-                                      );
-                              } else
-                                return AspectRatio(
-                                        aspectRatio:
-                                            snapshot.data.value.aspectRatio,
-                                        child: Stack(
-                                          children: <Widget>[
-                                            // CameraPreview(snapshot.data),
-                                            Positioned(
-                                              left: sizeMul * 1,
-                                              top: sizeMul * 24,
-                                              child: Material(
-                                                color:
-                                                    Colors.white.withAlpha(0),
-                                                child: InkWell(
-                                                  splashColor:
-                                                      Colors.white.withAlpha(0),
-                                                  highlightColor: Colors.black
-                                                      .withOpacity(0.1),
-                                                  // ,
-                                                  onTap: () {
-                                                    // editReceiptScreenModel = EditReceiptScreenModel();
-                                                    Navigator.pop(context);
-                                                  },
-                                                  child: Container(
-                                                    width: sizeMul * 40,
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            vertical:
-                                                                10 * sizeMul),
-                                                    // height: sizeMul*40,
-                                                    // color: Colors.red,
-                                                    child: Image.asset(
-                                                      'assets/icons/3x/back.png',
-                                                      height:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.075,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            Positioned(
-                                              bottom: 0,
-                                              child: Container(
-                                                width: MediaQuery.of(context)
-                                                    .size
-                                                    .width,
-                                                height: sizeMul * 60,
-                                                color: Colors.black
-                                                    .withOpacity(0.3),
-                                                child: RaisedButton(
-                                                  onPressed: () { 
-                                                  },
-                                                  shape: CircleBorder(),
-                                                ),
-                                              ),
-                                            )
-                                          ],
-                                        ));
-                            });
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  bottom: 0,
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    height: sizeMul * 60,
+                                    color: Colors.black.withOpacity(0.3),
+                                    child: RaisedButton(
+                                      onPressed: () {
+                                        // cs.controller.
+                                        ccModel.capturePhoto().then((_) {
+                                          cs.controller.dispose();
+                                          Navigator.pushReplacement(context,
+                                              CupertinoPageRoute(
+                                                  builder: (context) {
+                                            return EditReceiptScreen(appModel
+                                                .editReceiptScreenModel);
+                                          }));
+                                          // }
+                                        });
+                                      },
+                                      shape: CircleBorder(),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ));
                       }));
             }),
       ),
     );
   }
 }
+
+// FutureBuilder(
+//                             future: getController(cs, this),
+//                             builder: (context, snapshot) {
+//                               if (snapshot.connectionState ==
+//                                   ConnectionState.done) {
+//                                 ccModel.setCameraScreenState(cs);
+
+//                                 return (cs.controllerInitSuccesful)
+//                                     ?
