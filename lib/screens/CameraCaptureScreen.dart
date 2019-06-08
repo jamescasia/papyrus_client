@@ -21,9 +21,19 @@ class CameraCaptureScreen extends StatefulWidget {
 
 Future<CameraController> getController(
     CameraScreenState cs, _CameraCaptureScreenState c) async {
+  CameraDescription cam;
   cs.cameras = await availableCameras();
-  cs.controller = CameraController(
-      cs.cameras[cs.cameras.length - 1], ResolutionPreset.medium);
+  print("the available cameras");
+  for (int i = 0; i < cs.cameras.length; i++) {
+    print(cs.cameras[i].lensDirection);
+
+    if (cs.cameras[i].lensDirection == CameraLensDirection.back) {
+      cam = cs.cameras[i];
+      break;
+    }
+  }
+
+  cs.controller = CameraController(cam, ResolutionPreset.high);
   try {
     await cs.controller.initialize();
     cs.controllerInitSuccesful = true;
@@ -143,10 +153,12 @@ class _CameraCaptureScreenState extends State<CameraCaptureScreen> {
                                                       Navigator.pushReplacement(
                                                           context,
                                                           CupertinoPageRoute(
-                                                              builder: (context) =>
-                                                                  EditReceiptScreen(
-                                                                      appModel
-                                                                          .editReceiptScreenModel)));
+                                                              builder:
+                                                                  (context) {
+                                                        return EditReceiptScreen(
+                                                            appModel
+                                                                .editReceiptScreenModel);
+                                                      }));
                                                       // }
                                                     });
                                                   },

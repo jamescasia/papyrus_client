@@ -8,6 +8,7 @@ import 'package:papyrus_client/data_models/Receipt.dart';
 import 'dart:convert';
 import 'AppModel.dart';
 import 'dart:io';
+import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 
 class EditReceiptScreenModel extends Model {
   TextEditingController _controller = TextEditingController();
@@ -15,30 +16,47 @@ class EditReceiptScreenModel extends Model {
   Receipt _receipt;
   bool _changed;
   AppModel appModel;
-  String currentImagePath;
   // ReceiptItem _currentReceiptItem = ReceiptItem("", 0, 0);
   // set currentReceiptItem(ReceiptItem item ) => _currentReceiptItem = item;
 
   EditReceiptScreenModel(this.appModel) {
     // appModel = appModel;
     _changed = false;
+  }
+
+  deleteReceiptImage() {
+    try {
+      File(_receipt.imagePath).delete();
+      print("succeeded");
+    } catch (a) {
+      print("deleted");
+    }
+  }
+
+  launch(){
+
+    scanText(_receipt.imagePath);
+
+
+
+
+  }
+
+
+
+
+  createReceipt() {
+    String time = DateTime.now().millisecondsSinceEpoch.toString();
     _receipt = Receipt()
       ..dateTime = DateTime.now().toIso8601String()
-      ..time_stamp = DateTime.now().millisecondsSinceEpoch.toString();
+      ..time_stamp = time
+      ..imagePath = "${appModel.rootDir.path}/ReceiptsImages/${time}.png";
   }
 
-  createReceipt(){
-
-    
-  }
-
-
-  setCurrentImagePath(String path){
-    currentImagePath = path;
-    _receipt.imagePath = currentImagePath;
-    notifyListeners();
-  }
-   
+  // setCurrentImagePath(String path){
+  //   _receipt.imagePath = path;
+  //   notifyListeners();
+  // }
 
   void saveReceiptToJsonAndToFile() {
     print("locals" + appModel.rootDir.path);
@@ -49,8 +67,6 @@ class EditReceiptScreenModel extends Model {
     file.writeAsString(jsonEncode(_receipt.toJson()));
 
     readReceiptFromJsonFile(file.path);
-
-
   }
 
   Future<String> readReceiptFromJsonFile(String path) async {
@@ -58,6 +74,31 @@ class EditReceiptScreenModel extends Model {
 
     print("content of receipt" + content);
     return content;
+  }
+
+    void scanText(String filePath) async {
+      print("scanning images");
+    final FirebaseVisionImage visionImage =
+        FirebaseVisionImage.fromFilePath(filePath);
+    final TextRecognizer textRecognizer =
+        FirebaseVision.instance.textRecognizer();
+    final VisionText visionText =
+        await textRecognizer.processImage(visionImage);
+    String text = visionText.text;
+    for (TextBlock block in visionText.blocks) {
+      // final Rect boundingBox = block.boundingBox;
+      // final List<Offset> cornerPoints = block.cornerPoints;
+      final String text = block.text;
+      // final List<RecognizedLanguage> languages = block.recognizedLanguages;
+
+      for (TextLine line in block.lines) {
+        // Same getters as TextBlock
+        for (TextElement element in line.elements) {
+          print(element.text.toString());
+          // Same getters as TextBlock
+        }
+      }
+    } 
   }
 
   void newReceiptFromOCR() {}

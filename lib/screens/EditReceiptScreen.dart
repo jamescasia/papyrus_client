@@ -21,6 +21,8 @@ class EditReceiptScreen extends StatelessWidget {
   @override
   @override
   Widget build(BuildContext context) {
+
+    editReceiptScreenModel.launch();
     return Scaffold(body: Container(
         // color: Colors.white,
         // child: SingleChildScrollView(
@@ -125,7 +127,7 @@ class EditReceiptScreenTopPart extends StatelessWidget {
                     maxWidth: MediaQuery.of(context).size.width,
                     maxHeight: MediaQuery.of(context).size.width * 0.91),
                 child: ZoomableImage(
-                   FileImage(File(editReceiptScreenModel.currentImagePath)),
+                   FileImage(File(editReceiptScreenModel.receipt.imagePath)),
                   backgroundColor: Colors.grey[700],
                 )),
             Positioned(
@@ -137,7 +139,9 @@ class EditReceiptScreenTopPart extends StatelessWidget {
                 // ,
                 onTap: () {
                   // editReceiptScreenModel = EditReceiptScreenModel();
+
                   Navigator.pop(context);
+                  editReceiptScreenModel.deleteReceiptImage();
                 },
                 child: Container(
                   width: sizeMul * 40,
