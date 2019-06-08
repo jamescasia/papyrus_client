@@ -84,7 +84,8 @@ class _LogInScreenStackState extends State<LogInScreenStack> {
               ),
               Positioned(
                 top: sizeMul * 226,
-                right: MediaQuery.of(context).size.width * 0.073,
+                // right: MediaQuery.of(context).size.width * 0.073,
+                left: homeButtonDist,
                 child: Material(
                   color: Colors.white.withAlpha(0),
                   child: InkWell(

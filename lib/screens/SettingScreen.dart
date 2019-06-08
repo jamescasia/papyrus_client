@@ -37,7 +37,6 @@ class SettingScreenTopPart extends StatefulWidget {
 }
 
 class _SettingScreenTopPartState extends State<SettingScreenTopPart> {
-
   bool isLoading = false;
   @override
   Widget build(BuildContext context) {
@@ -77,10 +76,9 @@ class _SettingScreenTopPartState extends State<SettingScreenTopPart> {
                     Colors.red[800],
                     sizeMul * 9,
                     () {
-
                       setState(() {
-                                              isLoading = true;
-                                            });
+                        isLoading = true;
+                      });
                       appModel.mAuth.signOut().then((a) {
                         Navigator.push(
                             context,
@@ -175,7 +173,8 @@ class _SettingScreenTopPartState extends State<SettingScreenTopPart> {
                 Positioned(
                     // right: sizeMul * sizeMul * 12,
 
-                    right: MediaQuery.of(context).size.width * 0.035,
+                    // right: MediaQuery.of(context).size.width * 0.035,
+                    left: homeButtonDist,
                     bottom: 0,
                     // top:100,
                     child: Tooltip(
@@ -207,11 +206,13 @@ class _SettingScreenTopPartState extends State<SettingScreenTopPart> {
               ],
             ),
           ),
-           (isLoading)
-                  ? Center(
-                      child: CircularProgressIndicator(backgroundColor: Colors.red,),
-                    )
-                  : SizedBox(width: 1)
+          (isLoading)
+              ? Center(
+                  child: CircularProgressIndicator(
+                    backgroundColor: Colors.red,
+                  ),
+                )
+              : SizedBox(width: 1)
         ]),
       );
     });

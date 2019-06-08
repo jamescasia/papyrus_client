@@ -105,7 +105,7 @@ class PapyrusCustomer extends StatelessWidget {
 //   await appModel.user;
 
 // }
-
+double homeButtonDist;
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => new _HomeScreenState();
@@ -117,6 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     sizeMul = MediaQuery.of(context).size.width / 411.4;
     recptCardHeight = 72 * sizeMul; 
+    homeButtonDist = -0.0002*(MediaQuery.of(context).size.width*MediaQuery.of(context).size.width) + 0.9471*(MediaQuery.of(context).size.width) - 56.372- ((MediaQuery.of(context).size.width.floor()==411)?8*sizeMul:0);
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
       statusBarColor: const Color(0xFF61C350),
       // #61C350
@@ -439,7 +440,7 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
             ),
           ),
           Positioned(
-            top: 22 * sizeMul,
+            top: 20,
             right: 0,
             left: 0,
             child: Padding(
@@ -600,8 +601,12 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
           // )
           Positioned(
             bottom: MediaQuery.of(context).size.width * 0,
-            right: MediaQuery.of(context).size.width * 0.035,
-            // right: 12 * sizeMul * sizeMul,
+            // right: MediaQuery.of(context).size.width * 0.035,
+            // left: ( MediaQuery.of(context).size.height/ MediaQuery.of(context).size.width)*102,
+            // left:128,
+            left:homeButtonDist ,
+            // left: -0.0002*(MediaQuery.of(context).size.width*MediaQuery.of(context).size.width) + 0.8991*(MediaQuery.of(context).size.width) - 49.764,
+            // left: 0.776*MediaQuery.of(context).size.width - 30.378,
             child: RaisedButton(
                 splashColor: greeny.colors[0],
                 animationDuration: Duration(milliseconds: 100),
@@ -609,6 +614,7 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                 elevation: 5,
                 color: greeny.colors[1],
                 onPressed: () {
+                  print("SIIZE" + MediaQuery.of(context).size.toString());
                   Navigator.push(
                       context,
                       CupertinoPageRoute(

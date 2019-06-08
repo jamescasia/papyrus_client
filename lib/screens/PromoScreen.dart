@@ -113,7 +113,8 @@ class _PromoScreenTopPartState extends State<PromoScreenTopPart> {
                         ],
                       ))),
               Positioned(
-                  right: MediaQuery.of(context).size.width * 0.035,
+                  // right: MediaQuery.of(context).size.width * 0.035,
+                   left: homeButtonDist,
                   bottom: 0,
                   // top:100,
                   child: RaisedButton(
