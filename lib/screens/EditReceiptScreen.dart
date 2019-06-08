@@ -3,15 +3,17 @@ import 'HomeScreen.dart';
 import 'package:papyrus_client/helpers/ClipShadowPath.dart';
 import 'package:papyrus_client/helpers/CustomShapeClipper.dart';
 import 'package:papyrus_client/helpers/ReceiptCard.dart';
-import 'package:zoomable_image/zoomable_image.dart'; 
+import 'package:zoomable_image/zoomable_image.dart';
 import 'package:camera/camera.dart';
-import 'package:flutter/services.dart'; 
+import 'package:flutter/services.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:papyrus_client/models/EditReceiptScreenModel.dart';
 import 'package:papyrus_client/data_models/Receipt.dart';
 import 'dart:core';
 import 'package:papyrus_client/models/AppModel.dart';
 import 'dart:io';
+import 'CameraCaptureScreen.dart';
+import 'package:flutter/cupertino.dart';
 // import ''
 // import 'dart:core';
 
@@ -21,7 +23,6 @@ class EditReceiptScreen extends StatelessWidget {
   @override
   @override
   Widget build(BuildContext context) {
-
     editReceiptScreenModel.launch();
     return Scaffold(body: Container(
         // color: Colors.white,
@@ -30,22 +31,21 @@ class EditReceiptScreen extends StatelessWidget {
             builder: (context, child, appModel) {
       // editReceiptScreenModel = appModel.editReceiptScreenModel;
       return ScopedModel<EditReceiptScreenModel>(
-        model: appModel.editReceiptScreenModel,
-        // stream: null,
-        child: EditReceiptScreenScrollPart( )
-        
-      );}
-    // })
+          model: appModel.editReceiptScreenModel,
+          // stream: null,
+          child: EditReceiptScreenScrollPart());
+    }
+            // })
 
-        // Column(
-        //   children: <Widget>[
-        //     EditReceiptScreenTopPart()
-        //     // , EditReceiptScreenBottomPart()
-        //   ],
-        //   // ),
-        // ),
+            // Column(
+            //   children: <Widget>[
+            //     EditReceiptScreenTopPart()
+            //     // , EditReceiptScreenBottomPart()
+            //   ],
+            //   // ),
+            // ),
 
-        )));
+            )));
   }
 }
 
@@ -63,7 +63,6 @@ BuildContext ctx;
 
 class _EditReceiptScreenScrollPartState
     extends State<EditReceiptScreenScrollPart> {
-      
 // final EditReceiptScreenModel editReceiptScreenModel;
 //   AppModel appModel;
 //   _EditReceiptScreenScrollPartState(this.appModel, this.editReceiptScreenModel);
@@ -113,82 +112,87 @@ class EditReceiptScreenTopPart extends StatelessWidget {
   Widget build(BuildContext context) {
     return FlexibleSpaceBar(
         background: ScopedModelDescendant<EditReceiptScreenModel>(
-          // stream: null,
-          builder: (context, child, editReceiptScreenModel) {
-            return Stack(
-      children: <Widget>[
-            ClipShadowPath(
-                shadow: Shadow(
-                    blurRadius: 10 * sizeMul,
-                    offset: Offset(0, sizeMul),
-                    color: Colors.black38.withAlpha(0)),
-                clipper: CustomShapeClipper(
-                    sizeMul: sizeMul,
-                    maxWidth: MediaQuery.of(context).size.width,
-                    maxHeight: MediaQuery.of(context).size.width * 0.91),
-                child: ZoomableImage(
-                   FileImage(File(editReceiptScreenModel.receipt.imagePath)),
-                  backgroundColor: Colors.grey[700],
-                )),
-            Positioned(
-              left: sizeMul * 1,
-              top: sizeMul * 24,
-              child: InkWell(
-                splashColor: Colors.white.withAlpha(0),
-                highlightColor: Colors.black.withOpacity(0.1),
-                // ,
-                onTap: () {
-                  // editReceiptScreenModel = EditReceiptScreenModel();
+            // stream: null,
+            builder: (context, child, editReceiptScreenModel) {
+      return Stack(
+        children: <Widget>[
+          ClipShadowPath(
+              shadow: Shadow(
+                  blurRadius: 10 * sizeMul,
+                  offset: Offset(0, sizeMul),
+                  color: Colors.black38.withAlpha(0)),
+              clipper: CustomShapeClipper(
+                  sizeMul: sizeMul,
+                  maxWidth: MediaQuery.of(context).size.width,
+                  maxHeight: MediaQuery.of(context).size.width * 0.91),
+              child: ZoomableImage(
+                FileImage(File(editReceiptScreenModel.receipt.imagePath)),
+                backgroundColor: Colors.grey[700],
+              )),
+          Positioned(
+            left: sizeMul * 1,
+            top: sizeMul * 24,
+            child: InkWell(
+              splashColor: Colors.white.withAlpha(0),
+              highlightColor: Colors.black.withOpacity(0.1),
+              // ,
+              onTap: () {
+                // editReceiptScreenModel = EditReceiptScreenModel();
 
-                  Navigator.pop(context);
-                  editReceiptScreenModel.deleteReceiptImage();
-                },
-                child: Container(
-                  width: sizeMul * 40,
-                  padding: EdgeInsets.symmetric(vertical: 10 * sizeMul),
-                  // height: sizeMul*40,
-                  // color: Colors.red,
-                  child: Image.asset(
-                    'assets/icons/3x/back.png',
-                    height: MediaQuery.of(context).size.width * 0.075,
-                  ),
+                Navigator.pop(context);
+                editReceiptScreenModel.deleteReceiptImage();
+              },
+              child: Container(
+                width: sizeMul * 40,
+                padding: EdgeInsets.symmetric(vertical: 10 * sizeMul),
+                // height: sizeMul*40,
+                // color: Colors.red,
+                child: Image.asset(
+                  'assets/icons/3x/back.png',
+                  height: MediaQuery.of(context).size.width * 0.075,
                 ),
               ),
             ),
-            Positioned(
-              bottom: sizeMul * 15,
-              right: 48 * sizeMul * sizeMul,
-              child: Material(
-                color: Colors.white.withOpacity(0),
+          ),
+          Positioned(
+            bottom: sizeMul * 15,
+            right: 48 * sizeMul * sizeMul,
+            child: Material(
+              color: Colors.white.withOpacity(0),
+              borderRadius: BorderRadius.all(Radius.circular(3000)),
+              child: InkWell(
+                radius: sizeMul * 24,
+                splashColor: Colors.white.withAlpha(0),
+                highlightColor: Colors.black.withOpacity(0.1),
                 borderRadius: BorderRadius.all(Radius.circular(3000)),
-                child: InkWell(
-                  radius: sizeMul * 24,
-                  splashColor: Colors.white.withAlpha(0),
-                  highlightColor: Colors.black.withOpacity(0.1),
-                  borderRadius: BorderRadius.all(Radius.circular(3000)),
-                  onTap: () {
-                    // editReceiptScreenModel = EditReceiptScreenModel();
-                    // editReceiptScreenModel.changed=!editReceiptScreenModel.changed;
-                    // editReceiptScreenModel.update();
-                  },
-                  child: Icon(
-                    Icons.camera_alt,
-                    size: sizeMul * 40,
-                    color: Colors.white,
-                  ),
+                onTap: () {
+                  editReceiptScreenModel.deleteReceiptImage();
+                  Navigator.pushReplacement(context,
+                      CupertinoPageRoute(builder: (context) {
+                    return CameraCaptureScreen();
+                  }));
+
+                  // editReceiptScreenModel = EditReceiptScreenModel();
+                  // editReceiptScreenModel.changed=!editReceiptScreenModel.changed;
+                  // editReceiptScreenModel.update();
+                },
+                child: Icon(
+                  Icons.camera_alt,
+                  size: sizeMul * 40,
+                  color: Colors.white,
                 ),
               ),
-            )
-      ],
-    );
-          }
-        ));
+            ),
+          )
+        ],
+      );
+    }));
   }
 }
 
 class EditReceiptScreenBottomPart extends StatelessWidget {
   // AppModel appModel;
-  
+
   // EditReceiptScreenModel editReceiptScreenModel;
   // EditReceiptScreenBottomPart(this.appModel, this.editReceiptScreenModel);
   @override
@@ -200,389 +204,391 @@ class EditReceiptScreenBottomPart extends StatelessWidget {
     FocusNode m_focus = FocusNode();
     FocusNode d_focus = FocusNode();
     // FocusNode
-    return  ScopedModelDescendant<EditReceiptScreenModel>(
-            rebuildOnChange: true,
-            builder: (context, child, editReceiptScreenModel) {
-              
-    merchant_controller.text = editReceiptScreenModel.receipt.merchant;
-    date_controller.text = editReceiptScreenModel.receipt.dateTime;
-              ctx = context;
-              return ScopedModelDescendant<AppModel>(
-                // stream: null,
-                builder: (context, child, appModel) {
-                  return new Container(
-                    width: MediaQuery.of(context).size.width,
-                    // padding: EdgeInsets.only(top:sizeMul*10),
-                    // height: MediaQuery.of(context).size.height,
-                    decoration: BoxDecoration(
-                      gradient: greeny,
-                    ),
-                    // height: MediaQuery.of(context).size.height,
-                    // margin: EdgeInsets.symmetric(horizontal: sizeMul*20),
-                    child: SingleChildScrollView(
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: sizeMul * 15, vertical: sizeMul * 20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: <Widget>[
-                                Container(
-                                    child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  // mainAxisAlignment: MainAxisAlignment.start,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: EdgeInsets.only(left: sizeMul * 8.0),
-                                      child: Text(
-                                        "MERCHANT",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w900,
-                                            fontSize: sizeMul * 14),
-                                      ),
-                                    ),
-                                    SizedBox(height: sizeMul * 4),
-                                    Container(
-                                      width: sizeMul * 200,
-                                      height: sizeMul * 35,
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: sizeMul * 15),
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(3000)),
-                                          border: Border.all(
-                                              color: Colors.white,
-                                              width: sizeMul * 2)),
-                                      child: Center(
-                                        child: EditableText(
-                                          textAlign: TextAlign.start,
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: sizeMul * 17),
-                                          backgroundCursorColor: Colors.red,
-                                          cursorColor: Colors.pinkAccent,
-                                          focusNode: m_focus,
-                                          controller: merchant_controller,
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                )),
-                                SizedBox(
-                                  width: sizeMul * 20,
+    return ScopedModelDescendant<EditReceiptScreenModel>(
+        rebuildOnChange: true,
+        builder: (context, child, editReceiptScreenModel) {
+          merchant_controller.text = editReceiptScreenModel.receipt.merchant;
+          date_controller.text = editReceiptScreenModel.receipt.dateTime;
+          ctx = context;
+          return ScopedModelDescendant<AppModel>(
+              // stream: null,
+              builder: (context, child, appModel) {
+            return new Container(
+              width: MediaQuery.of(context).size.width,
+              // padding: EdgeInsets.only(top:sizeMul*10),
+              // height: MediaQuery.of(context).size.height,
+              decoration: BoxDecoration(
+                gradient: greeny,
+              ),
+              // height: MediaQuery.of(context).size.height,
+              // margin: EdgeInsets.symmetric(horizontal: sizeMul*20),
+              child: SingleChildScrollView(
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: sizeMul * 15, vertical: sizeMul * 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                              child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            // mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Padding(
+                                padding: EdgeInsets.only(left: sizeMul * 8.0),
+                                child: Text(
+                                  "MERCHANT",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w900,
+                                      fontSize: sizeMul * 14),
                                 ),
-                                Container(
-                                    child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  // mainAxisAlignment: MainAxisAlignment.start,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: EdgeInsets.only(left: sizeMul * 8.0),
-                                      child: Text(
-                                        "DATE & TIME",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w900,
-                                            fontSize: sizeMul * 14),
-                                      ),
-                                    ),
-                                    SizedBox(height: sizeMul * 4),
-                                    Container(
-                                      width: sizeMul * 130,
-                                      height: sizeMul * 35,
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: sizeMul * 15),
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(3000)),
-                                          border: Border.all(
-                                              color: Colors.white,
-                                              width: sizeMul * 2)),
-                                      child: Center(
-                                        child: EditableText(
-                                            textAlign: TextAlign.start,
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: sizeMul * 17),
-                                            backgroundCursorColor: Colors.red,
-                                            cursorColor: Colors.pinkAccent,
-                                            focusNode: d_focus,
-                                            controller: date_controller),
-                                      ),
-                                    )
-                                  ],
-                                ))
-                              ],
-                            ),
-                            SizedBox(
-                              height: sizeMul * 12,
-                            ),
-                            Container(
-                                child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              // mainAxisAlignment: MainAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                Padding(
-                                  padding: EdgeInsets.only(left: sizeMul * 8.0),
-                                  child: Text(
-                                    "CATEGORY",
+                              ),
+                              SizedBox(height: sizeMul * 4),
+                              Container(
+                                width: sizeMul * 200,
+                                height: sizeMul * 35,
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: sizeMul * 15),
+                                decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(3000)),
+                                    border: Border.all(
+                                        color: Colors.white,
+                                        width: sizeMul * 2)),
+                                child: Center(
+                                  child: EditableText(
+                                    textAlign: TextAlign.start,
                                     style: TextStyle(
                                         color: Colors.white,
-                                        fontWeight: FontWeight.w900,
-                                        fontSize: sizeMul * 14),
+                                        fontSize: sizeMul * 17),
+                                    backgroundCursorColor: Colors.red,
+                                    cursorColor: Colors.pinkAccent,
+                                    focusNode: m_focus,
+                                    controller: merchant_controller,
                                   ),
                                 ),
-                                SizedBox(height: sizeMul * 4),
-                                Container(
-                                    width: sizeMul * 270,
-                                    height: sizeMul * 35,
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: sizeMul * 15),
-                                    decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.all(Radius.circular(3000)),
-                                        border: Border.all(
-                                            color: Colors.white,
-                                            width: sizeMul * 2)),
-                                    // child: Center(
-                                    child: DropdownButtonFormField(
-                                      // value:model.receipt.category,
-
-                                      items: [
-                                        new DropdownMenuItem(
-                                          child: Text("Entertainment"),
-                                          value: 50,
-                                        ),
-                                        new DropdownMenuItem(
-                                          value: 75,
-                                          child: Text("Food"),
-                                        ),
-                                        new DropdownMenuItem(
-                                          value: 100,
-                                          child: Text("Fuel"),
-                                        ),
-                                        new DropdownMenuItem(
-                                          value: 200,
-                                          child: Text("Transportation"),
-                                        ),
-                                        new DropdownMenuItem(
-                                          value: 500,
-                                          child: Text("Necessities"),
-                                        ),
-                                        new DropdownMenuItem(
-                                          value: 1000,
-                                          child: Text("Misc."),
-                                        ),
-                                      ],
-                                      onChanged: (choice) {
-                                        editReceiptScreenModel.receipt.category = choice.toString();
-                                      },
-                                    )
-                                    // ),
-                                    )
-                              ],
-                            )),
-                            Container(
-                                child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              // mainAxisAlignment: MainAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                SizedBox(
-                                  height: sizeMul * 35,
+                              )
+                            ],
+                          )),
+                          SizedBox(
+                            width: sizeMul * 20,
+                          ),
+                          Container(
+                              child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            // mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Padding(
+                                padding: EdgeInsets.only(left: sizeMul * 8.0),
+                                child: Text(
+                                  "DATE & TIME",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w900,
+                                      fontSize: sizeMul * 14),
                                 ),
-                                Padding(
-                                  padding: EdgeInsets.only(left: sizeMul * 17),
-                                  child: Text(
-                                    "ITEMS",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
+                              ),
+                              SizedBox(height: sizeMul * 4),
+                              Container(
+                                width: sizeMul * 130,
+                                height: sizeMul * 35,
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: sizeMul * 15),
+                                decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(3000)),
+                                    border: Border.all(
                                         color: Colors.white,
-                                        fontWeight: FontWeight.w900,
-                                        fontSize: sizeMul * 20),
-                                  ),
+                                        width: sizeMul * 2)),
+                                child: Center(
+                                  child: EditableText(
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: sizeMul * 17),
+                                      backgroundCursorColor: Colors.red,
+                                      cursorColor: Colors.pinkAccent,
+                                      focusNode: d_focus,
+                                      controller: date_controller),
                                 ),
-                                SizedBox(
-                                  height: sizeMul * 22,
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                    bottom: sizeMul * 18,
-                                  ),
-                                  child: Container(
-                                    width: MediaQuery.of(context).size.width * 0.87,
-                                    child: Flex(
-                                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      direction: Axis.horizontal,
-                                      children: <Widget>[
-                                        Expanded(
-                                          flex: 5,
-                                          child: Text(
-                                            "NAME",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w900,
-                                                fontSize: sizeMul * 17),
-                                          ),
-                                        ),
-                                        // SizedBox(
-                                        //   width: sizeMul * 140,
-                                        // ),
-                                        Expanded(
-                                          flex: 1,
-                                          child: Text(
-                                            "QTY",
-                                            overflow: TextOverflow.fade,
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w900,
-                                                fontSize: sizeMul * 17),
-                                          ),
-                                        ),
-                                        // SizedBox(
-                                        //   width: sizeMul * 15,
-                                        // ),
-                                        Expanded(
-                                          flex: 2,
-                                          child: Text(
-                                            " PRICE",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w900,
-                                                fontSize: sizeMul * 17),
-                                          ),
-                                        ),
-                                        // SizedBox(
-                                        //   width: sizeMul * 15,
-                                        // ),
-                                        Expanded(
-                                          flex: 2,
-                                          child: Text(
-                                            "TOTAL",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w900,
-                                                fontSize: sizeMul * 17),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                Column(
-                                  children: <Widget>[
-                                    Column(
-
-                                        // children: model.receipt.items
-                                        //     .map((item) => ReceiptItemLine(item))
-                                        //     .toList()),
-                                        children: editReceiptScreenModel.receipt.items.map((item) {
-                                      return ReceiptItemLine(item, editReceiptScreenModel);
-                                    }).toList()),
-                                    Container(
-                                      width: MediaQuery.of(context).size.width,
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: sizeMul * 14),
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(sizeMul * 35))),
-                                      child: OutlineButton(
-                                        highlightedBorderColor: Colors.white,
-                                        highlightColor: Colors.green,
-                                        textColor: Colors.white,
-                                        disabledBorderColor: Colors.white,
-                                        color: Colors.white,
-                                        borderSide: BorderSide(
-                                            color: Colors.white,
-                                            width: sizeMul * 2),
-                                        child: Text(
-                                          "+ADD",
-                                          style: TextStyle(fontSize: sizeMul * 19),
-                                        ),
-                                        splashColor: Colors.greenAccent,
-                                        highlightElevation: 5,
-                                        clipBehavior: Clip.none,
-                                        onPressed: () {
-                                          
-                                          showDialog(
-                                              context: context,
-                                              builder: (BuildContext context) {
-                                                return EditItem(context,
-                                                    ReceiptItem("", 0, 0), true, editReceiptScreenModel);
-                                              });
-                                        },
-                                      ),
-                                    ),
-                                    Container(
-                                      padding: EdgeInsets.only(top: sizeMul * 20),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: <Widget>[
-                                          Text(
-                                            "TOTAL",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 20 * sizeMul,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          Text(
-                                            "${((editReceiptScreenModel.receipt.total.toStringAsFixed(2)))}",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 20 * sizeMul,
-                                                fontWeight: FontWeight.w400),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Container(
-                                      padding: EdgeInsets.only(top: sizeMul * 40),
-                                      child: InkWell(
-                                        onTap: () {
-                                          editReceiptScreenModel.saveReceiptToJsonAndToFile();
-                                          appModel.editReceiptScreenModel = EditReceiptScreenModel(appModel);
-                                          Navigator.pop(context);
-                                        },
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: <Widget>[
-                                            Text(
-                                              "CONTINUE",
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 22 * sizeMul,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            SizedBox(width: sizeMul * 12),
-                                            Icon(Icons.chevron_right,
-                                                size: sizeMul * 30,
-                                                color: Colors.white),
-                                          ],
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                )
-                              ],
-                            ))
-                          ],
-                        ),
+                              )
+                            ],
+                          ))
+                        ],
                       ),
-                    ),
-                  );
-                }
-              );
-            });
+                      SizedBox(
+                        height: sizeMul * 12,
+                      ),
+                      Container(
+                          child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        // mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.only(left: sizeMul * 8.0),
+                            child: Text(
+                              "CATEGORY",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: sizeMul * 14),
+                            ),
+                          ),
+                          SizedBox(height: sizeMul * 4),
+                          Container(
+                              width: sizeMul * 270,
+                              height: sizeMul * 35,
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: sizeMul * 15),
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(3000)),
+                                  border: Border.all(
+                                      color: Colors.white, width: sizeMul * 2)),
+                              // child: Center(
+                              child: DropdownButtonFormField(
+                                // value:model.receipt.category,
+
+                                items: [
+                                  new DropdownMenuItem(
+                                    child: Text("Entertainment"),
+                                    value: 50,
+                                  ),
+                                  new DropdownMenuItem(
+                                    value: 75,
+                                    child: Text("Food"),
+                                  ),
+                                  new DropdownMenuItem(
+                                    value: 100,
+                                    child: Text("Fuel"),
+                                  ),
+                                  new DropdownMenuItem(
+                                    value: 200,
+                                    child: Text("Transportation"),
+                                  ),
+                                  new DropdownMenuItem(
+                                    value: 500,
+                                    child: Text("Necessities"),
+                                  ),
+                                  new DropdownMenuItem(
+                                    value: 1000,
+                                    child: Text("Misc."),
+                                  ),
+                                ],
+                                onChanged: (choice) {
+                                  editReceiptScreenModel.receipt.category =
+                                      choice.toString();
+                                },
+                              )
+                              // ),
+                              )
+                        ],
+                      )),
+                      Container(
+                          child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        // mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          SizedBox(
+                            height: sizeMul * 35,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: sizeMul * 17),
+                            child: Text(
+                              "ITEMS",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: sizeMul * 20),
+                            ),
+                          ),
+                          SizedBox(
+                            height: sizeMul * 22,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                              bottom: sizeMul * 18,
+                            ),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.87,
+                              child: Flex(
+                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                direction: Axis.horizontal,
+                                children: <Widget>[
+                                  Expanded(
+                                    flex: 5,
+                                    child: Text(
+                                      "NAME",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w900,
+                                          fontSize: sizeMul * 17),
+                                    ),
+                                  ),
+                                  // SizedBox(
+                                  //   width: sizeMul * 140,
+                                  // ),
+                                  Expanded(
+                                    flex: 1,
+                                    child: Text(
+                                      "QTY",
+                                      overflow: TextOverflow.fade,
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w900,
+                                          fontSize: sizeMul * 17),
+                                    ),
+                                  ),
+                                  // SizedBox(
+                                  //   width: sizeMul * 15,
+                                  // ),
+                                  Expanded(
+                                    flex: 2,
+                                    child: Text(
+                                      " PRICE",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w900,
+                                          fontSize: sizeMul * 17),
+                                    ),
+                                  ),
+                                  // SizedBox(
+                                  //   width: sizeMul * 15,
+                                  // ),
+                                  Expanded(
+                                    flex: 2,
+                                    child: Text(
+                                      "TOTAL",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w900,
+                                          fontSize: sizeMul * 17),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          Column(
+                            children: <Widget>[
+                              Column(
+
+                                  // children: model.receipt.items
+                                  //     .map((item) => ReceiptItemLine(item))
+                                  //     .toList()),
+                                  children: editReceiptScreenModel.receipt.items
+                                      .map((item) {
+                                return ReceiptItemLine(
+                                    item, editReceiptScreenModel);
+                              }).toList()),
+                              Container(
+                                width: MediaQuery.of(context).size.width,
+                                padding: EdgeInsets.symmetric(
+                                    vertical: sizeMul * 14),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(sizeMul * 35))),
+                                child: OutlineButton(
+                                  highlightedBorderColor: Colors.white,
+                                  highlightColor: Colors.green,
+                                  textColor: Colors.white,
+                                  disabledBorderColor: Colors.white,
+                                  color: Colors.white,
+                                  borderSide: BorderSide(
+                                      color: Colors.white, width: sizeMul * 2),
+                                  child: Text(
+                                    "+ADD",
+                                    style: TextStyle(fontSize: sizeMul * 19),
+                                  ),
+                                  splashColor: Colors.greenAccent,
+                                  highlightElevation: 5,
+                                  clipBehavior: Clip.none,
+                                  onPressed: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return EditItem(
+                                              context,
+                                              ReceiptItem("", 0, 0),
+                                              true,
+                                              editReceiptScreenModel);
+                                        });
+                                  },
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.only(top: sizeMul * 20),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: <Widget>[
+                                    Text(
+                                      "TOTAL",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 20 * sizeMul,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      "${((editReceiptScreenModel.receipt.total.toStringAsFixed(2)))}",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 20 * sizeMul,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.only(top: sizeMul * 40),
+                                child: InkWell(
+                                  onTap: () {
+                                    editReceiptScreenModel
+                                        .saveReceiptToJsonAndToFile();
+                                    appModel.editReceiptScreenModel =
+                                        EditReceiptScreenModel(appModel);
+                                    Navigator.pop(context);
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: <Widget>[
+                                      Text(
+                                        "CONTINUE",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 22 * sizeMul,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      SizedBox(width: sizeMul * 12),
+                                      Icon(Icons.chevron_right,
+                                          size: sizeMul * 30,
+                                          color: Colors.white),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            ],
+                          )
+                        ],
+                      ))
+                    ],
+                  ),
+                ),
+              ),
+            );
+          });
+        });
   }
 }
 
@@ -596,7 +602,7 @@ class ReceiptItemLine extends StatelessWidget {
 
   // FocusNode f = FocusNode();
 
-  ReceiptItemLine(this.receiptItem, this.editReceiptScreenModel );
+  ReceiptItemLine(this.receiptItem, this.editReceiptScreenModel);
 
   @override
   Widget build(BuildContext context) {
@@ -666,7 +672,8 @@ class ReceiptItemLine extends StatelessWidget {
                   showDialog(
                       context: context,
                       builder: (BuildContext context) {
-                        return EditItem(context, receiptItem, false,editReceiptScreenModel );
+                        return EditItem(context, receiptItem, false,
+                            editReceiptScreenModel);
                       });
                 },
                 splashColor: Colors.white54,
@@ -690,11 +697,11 @@ class EditItem extends StatefulWidget {
   final bool add;
   final EditReceiptScreenModel editReceiptScreenModel;
 
-
-  EditItem(this.context, this.receiptItem, this.add, this.editReceiptScreenModel);
+  EditItem(
+      this.context, this.receiptItem, this.add, this.editReceiptScreenModel);
   @override
-  _EditItemState createState() =>
-      new _EditItemState(this.context, this.receiptItem, this.add, this.editReceiptScreenModel);
+  _EditItemState createState() => new _EditItemState(
+      this.context, this.receiptItem, this.add, this.editReceiptScreenModel);
 }
 
 class _EditItemState extends State<EditItem> {
@@ -705,7 +712,8 @@ class _EditItemState extends State<EditItem> {
   FocusNode fa = FocusNode();
   FocusNode fb = FocusNode();
   FocusNode fc = FocusNode();
-  _EditItemState(this.context, this.receiptItem, this.add, this.editReceiptScreenModel);
+  _EditItemState(
+      this.context, this.receiptItem, this.add, this.editReceiptScreenModel);
   @override
   Widget build(BuildContext context) {
     TextEditingController name_controller = TextEditingController();
@@ -760,7 +768,8 @@ class _EditItemState extends State<EditItem> {
                               double.parse(price_controller.text);
                           receiptItem.total =
                               receiptItem.qty * receiptItem.price;
-                          editReceiptScreenModel.changed = !editReceiptScreenModel.changed;
+                          editReceiptScreenModel.changed =
+                              !editReceiptScreenModel.changed;
 
                           editReceiptScreenModel.update();
                         });
@@ -823,7 +832,8 @@ class _EditItemState extends State<EditItem> {
                                 receiptItem.total =
                                     receiptItem.qty * receiptItem.price;
 
-                                editReceiptScreenModel.changed = !editReceiptScreenModel.changed;
+                                editReceiptScreenModel.changed =
+                                    !editReceiptScreenModel.changed;
                                 editReceiptScreenModel.update();
                               });
                             },
@@ -884,7 +894,8 @@ class _EditItemState extends State<EditItem> {
                                     double.parse(price_controller.text);
                                 receiptItem.total =
                                     receiptItem.qty * receiptItem.price;
-                                editReceiptScreenModel.changed = !editReceiptScreenModel.changed;
+                                editReceiptScreenModel.changed =
+                                    !editReceiptScreenModel.changed;
                                 editReceiptScreenModel.update();
                               });
                             },
@@ -948,7 +959,8 @@ class _EditItemState extends State<EditItem> {
                           BorderRadius.all(Radius.circular(sizeMul * 8)),
                       onTap: () {
                         Navigator.pop(context);
-                        editReceiptScreenModel.removeItemFromReceipt(receiptItem);
+                        editReceiptScreenModel
+                            .removeItemFromReceipt(receiptItem);
                       },
                       splashColor: Colors.amber,
                       highlightColor: Colors.redAccent,
