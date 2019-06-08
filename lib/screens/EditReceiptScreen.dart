@@ -23,7 +23,7 @@ class EditReceiptScreen extends StatelessWidget {
   @override
   @override
   Widget build(BuildContext context) {
-    // editReceiptScreenModel.launch();
+    editReceiptScreenModel.launch();
     return Scaffold(body: Container(
         // color: Colors.white,
         // child: SingleChildScrollView(
@@ -194,19 +194,25 @@ class EditReceiptScreenTopPart extends StatelessWidget {
   }
 }
 
-class EditReceiptScreenBottomPart extends StatelessWidget {
-  // AppModel appModel;
-
-  // EditReceiptScreenModel editReceiptScreenModel;
-  // EditReceiptScreenBottomPart(this.appModel, this.editReceiptScreenModel);
+class EditReceiptScreenBottomPart extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    // ScopedModelDescendant
+  _EditReceiptScreenBottomPartState createState() =>
+      new _EditReceiptScreenBottomPartState();
+}
+
+class _EditReceiptScreenBottomPartState
+    extends State<EditReceiptScreenBottomPart> {
+
+
 
     TextEditingController merchant_controller = TextEditingController();
     TextEditingController date_controller = TextEditingController();
     FocusNode m_focus = FocusNode();
     FocusNode d_focus = FocusNode();
+
+  @override
+  Widget build(BuildContext context) {
+    // ScopedModelDescendant
     // FocusNode
     return ScopedModelDescendant<EditReceiptScreenModel>(
         rebuildOnChange: false,
@@ -269,34 +275,48 @@ class EditReceiptScreenBottomPart extends StatelessWidget {
                                           color: Colors.white,
                                           width: sizeMul * 2)),
                                   child: Center(
-                                      child: TextFormField(
-                                        initialValue: editReceiptScreenModel.receipt.merchant,
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: sizeMul * 20),
+                                    child:
+                                        //     TextFormField(
+                                        //       initialValue: editReceiptScreenModel.receipt.merchant,
+                                        //   style: TextStyle(
+                                        //       color: Colors.black,
+                                        //       fontWeight: FontWeight.bold,
+                                        //       fontSize: sizeMul * 20),
 
-                                        onSaved: (input) => editReceiptScreenModel.receipt.merchant = input, 
-                                        // controller: merchant_controller,
-                                    // decoration: InputDecoration(
-                                    //   hintText: "Merchant",
-                                    //   fillColor: Colors.white,
-                                    //   // labelStyle:
-                                    //   // labelText: "Haha"
-                                    // ),
-                                  )
+                                        //       onSaved: (input) => editReceiptScreenModel.receipt.merchant = input,
+                                        //       // controller: merchant_controller,
+                                        //   // decoration: InputDecoration(
+                                        //   //   hintText: "Merchant",
+                                        //   //   fillColor: Colors.white,
+                                        //   //   // labelStyle:
+                                        //   //   // labelText: "Haha"
+                                        //   // ),
+                                        // )
 
-                                      //  EditableText(
-                                      //   textAlign: TextAlign.start,
-                                      //   style: TextStyle(
-                                      //       color: Colors.black,
-                                      //       fontSize: sizeMul * 20),
-                                      //   backgroundCursorColor: Colors.red,
-                                      //   cursorColor: Colors.pinkAccent,
-                                      //   focusNode: m_focus,
-                                      //   controller: merchant_controller,
-                                      // ),
-                                      ),
+                                        EditableText(
+                                          
+                                          
+                                      autofocus: false,
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: sizeMul * 20),
+                                      backgroundCursorColor: Colors.red,
+                                      cursorColor: Colors.pinkAccent,
+                                      focusNode: m_focus,
+                                      controller: merchant_controller,
+                                      onSubmitted: (a){
+                                        merchant_controller.text =a;
+
+                                      },
+                                      onSelectionChanged: (a, b) {
+                                        // m_focus.unfocus();
+                                        // m_focus.consumeKeyboardToken();
+                                        // m_focus.dispose();
+                                      },
+                                    ),
+                                    
+                                  ),
                                 )
                               ],
                             )),
@@ -343,32 +363,45 @@ class EditReceiptScreenBottomPart extends StatelessWidget {
                                           color: Colors.white,
                                           width: sizeMul * 2)),
                                   child: Center(
-                                      child: 
-                                      TextFormField(
-                                        maxLines: 1,
+                                    child:
+                                        //     TextFormField(
+                                        //       // expands: true,
 
-                                        initialValue: editReceiptScreenModel.receipt.dateTime,
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: sizeMul * 20),
-                                        
-                                        onSaved: (input) => editReceiptScreenModel.receipt.dateTime = input, 
-                                 
-                                  )
+                                        //       maxLines: 1,
 
-                                      //  EditableText(
-                                      //     textAlign: TextAlign.start,
-                                      //     style: TextStyle(
-                                      //       color: Colors.black,
-                                      //       fontSize: sizeMul * 20,
-                                      //     ),
-                                      //     backgroundCursorColor: Colors.red,
-                                      //     cursorColor: Colors.pinkAccent,
-                                      //     focusNode: d_focus,
-                                      //     controller: date_controller),
+                                        //       initialValue: editReceiptScreenModel.receipt.dateTime,
+                                        //   style: TextStyle(
+                                        //       color: Colors.black,
+                                        //       fontWeight: FontWeight.bold,
+                                        //       fontSize: sizeMul * 20),
 
-                                      ),
+                                        //       onSaved: (input) => editReceiptScreenModel.receipt.dateTime = input,
+
+                                        // )
+
+                                        EditableText(
+                                            autofocus: false,
+                                            //  cur
+                                            textAlign: TextAlign.start,
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: sizeMul * 20,
+                                            ),
+                                            backgroundCursorColor: Colors.red,
+                                            cursorColor: Colors.pinkAccent,
+                                            focusNode: d_focus,
+
+                                            onSubmitted: (a){
+                                              date_controller.text = a;
+                                              // d_focus.
+                                            },
+                                            onSelectionChanged: (a, b) {
+                                              // d_focus.unfocus();
+                                              // d_focus.consumeKeyboardToken();
+                                              // d_focus.dispose();
+                                            },
+                                            controller: date_controller),
+                                  ),
                                 )
                               ],
                             )),
@@ -396,7 +429,7 @@ class EditReceiptScreenBottomPart extends StatelessWidget {
                           ),
                           SizedBox(height: sizeMul * 4),
                           Container(
-                            width: sizeMul * 270,
+                            // width: sizeMul * 270,
                             height: sizeMul * 40,
                             padding:
                                 EdgeInsets.symmetric(horizontal: sizeMul * 15),
@@ -406,19 +439,10 @@ class EditReceiptScreenBottomPart extends StatelessWidget {
                                     BorderRadius.all(Radius.circular(3000)),
                                 border: Border.all(
                                     color: Colors.white, width: sizeMul * 2)),
-                            child: Center(
-                                child: DropdownButtonFormField<String>(
-                              value: "Food",
-                              // (editReceiptScreenModel.receipt.category!=null)?editReceiptScreenModel.receipt.category:"Food",
-                              decoration: InputDecoration(
-                                labelText: "Category",
-                                labelStyle: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: sizeMul * 27,
-                                ),
-                              ),
-                              // value:model.receipt.category,
-
+                            // child: Center(
+                                child: DropdownButton <String>(
+                                  
+                              value: "Food", 
                               items: [
                                 new DropdownMenuItem(
                                   child: Text(
@@ -476,7 +500,8 @@ class EditReceiptScreenBottomPart extends StatelessWidget {
                                 editReceiptScreenModel.receipt.category =
                                     choice.toString();
                               },
-                            )),
+                            )
+                            // ),
                           )
                         ],
                       )),
@@ -580,15 +605,13 @@ class EditReceiptScreenBottomPart extends StatelessWidget {
                           Column(
                             children: <Widget>[
                               Column(
-                                // children: [],
-                                // yawa
-                                children:   editReceiptScreenModel.receipt.items
-                                        .map((item) {
-                                        return ReceiptItemLine(
-                                            item, editReceiptScreenModel);
-                                      }).toList()
-                                    
-                              ),
+                                  // children: [],
+                                  // yawa
+                                  children: editReceiptScreenModel.receipt.items
+                                      .map((item) {
+                                return ReceiptItemLine(
+                                    item, editReceiptScreenModel);
+                              }).toList()),
                               Container(
                                 width: MediaQuery.of(context).size.width,
                                 padding: EdgeInsets.symmetric(
@@ -691,7 +714,7 @@ class EditReceiptScreenBottomPart extends StatelessWidget {
           });
         });
   }
-}
+} 
 
 class ReceiptItemLine extends StatelessWidget {
   // double price;
@@ -826,7 +849,7 @@ class _EditItemState extends State<EditItem> {
 
     return AlertDialog(
       content: Container(
-        width: MediaQuery.of(context).size.width * 0.88,
+        width: MediaQuery.of(context).size.width * 0.9,
         // height: sizeMul * 300,
         // color: Colors.red,
         child: Column(
@@ -837,7 +860,7 @@ class _EditItemState extends State<EditItem> {
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.only(left: sizeMul * 8.0),
+                  padding: EdgeInsets.only(left: sizeMul * 4.0),
                   child: Text(
                     "Name",
                     style: TextStyle(
@@ -863,6 +886,7 @@ class _EditItemState extends State<EditItem> {
                     child: EditableText(
                       onChanged: (text) {
                         setState(() {
+                          name_controller.text = text;
                           receiptItem.name = name_controller.text;
                           receiptItem.qty = int.parse(qty_controller.text);
                           receiptItem.price =
@@ -876,13 +900,18 @@ class _EditItemState extends State<EditItem> {
                         });
                       },
                       selectionColor: Colors.green,
-                      textAlign: TextAlign.start,
+                      // textAlign: TextAlign.start,
                       style: TextStyle(
                           color: Colors.white, fontSize: sizeMul * 17),
                       backgroundCursorColor: Colors.red,
                       cursorColor: Colors.pinkAccent,
                       focusNode: fa,
                       controller: name_controller,
+                      onSelectionChanged: (a, b) {
+                        // fa.unfocus();
+                        // fa.consumeKeyboardToken();
+                        // fa.dispose();
+                      },
                     ),
                   ),
                 )
@@ -926,6 +955,7 @@ class _EditItemState extends State<EditItem> {
                             onChanged: (text) {
                               setState(() {
                                 receiptItem.name = name_controller.text;
+                                price_controller.text =text;
                                 receiptItem.qty =
                                     int.parse(qty_controller.text);
                                 receiptItem.price =
@@ -946,6 +976,11 @@ class _EditItemState extends State<EditItem> {
                             cursorColor: Colors.pinkAccent,
                             focusNode: fb,
                             controller: price_controller,
+                            onSelectionChanged: (a, b) {
+                              // fb.unfocus();
+                              // fb.consumeKeyboardToken();
+                              // fb.dispose();
+                            },
                           ),
                         ),
                       )
@@ -988,6 +1023,7 @@ class _EditItemState extends State<EditItem> {
                           child: EditableText(
                             onChanged: (text) {
                               setState(() {
+                                qty_controller.text = text;
                                 receiptItem.name = name_controller.text;
                                 receiptItem.qty =
                                     int.parse(qty_controller.text);
@@ -1019,34 +1055,42 @@ class _EditItemState extends State<EditItem> {
             SizedBox(
               height: sizeMul * 8,
             ),
-            Row(
+            Flex(
+              direction: Axis.horizontal,
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                Text("Total: ",
-                    style: TextStyle(
-                      color: Colors.grey[800],
-                      fontSize: sizeMul * 18,
-                      fontWeight: FontWeight.bold,
-                    )),
+                Expanded(
+                  flex: 1,
+                                  child: Text("Total: ",
+                      style: TextStyle(
+                        color: Colors.grey[800],
+                        fontSize: sizeMul * 18,
+                        fontWeight: FontWeight.bold,
+                      )),
+                ),
                 // SizedBox(
                 //   width: sizeMul * 27,
-                // ),
-                Container(
-                  width: sizeMul * 120,
-                  child: Text(
+                // ), 
+                 Text(
                       "${(double.parse(price_controller.text) * int.parse(qty_controller.text)).toStringAsFixed(2)}",
                       overflow: TextOverflow.fade,
                       textAlign: TextAlign.left,
                       style: TextStyle(
                           color: Colors.grey[800],
                           fontSize: sizeMul * 18,
-                          fontWeight: FontWeight.bold)),
-                ),
+                          fontWeight: FontWeight.bold)), 
                 // SizedBox(
                 //   height: sizeMul * 50,
                 // ),
+                
+              ],
+            ),
+            SizedBox(height: sizeMul*8,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
                 Material(
                   child: Container(
                     height: sizeMul * 50,
@@ -1070,6 +1114,7 @@ class _EditItemState extends State<EditItem> {
                     ),
                   ),
                 ),
+                SizedBox(width: sizeMul*10,),
                 Material(
                   child: InkWell(
                     borderRadius:
@@ -1132,7 +1177,7 @@ class _EditItemState extends State<EditItem> {
                   ),
                 ),
               ],
-            ),
+            )
             // Text("hey show up iddiot"),
           ],
         ),

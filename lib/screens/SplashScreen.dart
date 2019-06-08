@@ -32,7 +32,8 @@ class SplashScreen extends StatelessWidget {
                 return HomeScreen();
               else
                 return LogInScreen();
-            } else
+            } else if(snapshot.connectionState == ConnectionState.active || snapshot.connectionState == ConnectionState.waiting)
+                                       
               return SplashFrame();
           });
     });

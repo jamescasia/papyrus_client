@@ -37,8 +37,7 @@ class EditReceiptScreenModel extends Model {
 
     scanText(_receipt.imagePath);
 
-
-
+ 
 
   }
 

@@ -94,6 +94,7 @@ class _CameraCaptureScreenState extends State<CameraCaptureScreen> {
                                 FutureBuilder(
                                     future: getController(cs, this),
                                     builder: (context, snapshot) {
+                                      ccModel.setCameraScreenState(cs);
                                       if (snapshot.connectionState ==
                                           ConnectionState.done) {
                                         return (cs.controllerInitSuccesful)
@@ -106,7 +107,7 @@ class _CameraCaptureScreenState extends State<CameraCaptureScreen> {
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ));
-                                      } else
+                                      } else if(snapshot.connectionState == ConnectionState.active || snapshot.connectionState == ConnectionState.waiting)
                                         return Center(
                                           child: CircularProgressIndicator(),
                                         );
