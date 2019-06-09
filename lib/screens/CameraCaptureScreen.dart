@@ -113,8 +113,8 @@ class _CameraCaptureScreenState extends State<CameraCaptureScreen> {
                                         );
                                     }),
                                 Positioned(
-                                  left: sizeMul * 1,
-                                  top: sizeMul * 24,
+                                  left: 2,
+                                  top: 24,
                                   child: Material(
                                     color: Colors.white.withAlpha(0),
                                     child: InkWell(

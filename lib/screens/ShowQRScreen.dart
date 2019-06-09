@@ -97,8 +97,8 @@ class _ShowQRScreenStackState extends State<ShowQRScreenStack> {
             ],
           ),
           Positioned(
-            left: sizeMul * 9,
-            top: sizeMul * 24,
+            left:2,
+            top:   24,
             child: InkWell(
               splashColor: Colors.white.withAlpha(0),
               highlightColor: Colors.black.withOpacity(0.1),
@@ -250,8 +250,8 @@ class _ShowQRScreenTopPartState extends State<ShowQRScreenTopPart> {
                       child: Stack(
                         children: <Widget>[
                           Positioned(
-                            left: sizeMul * 9,
-                            top: sizeMul * 24,
+                            left: 2,
+                            top:   24,
                             child: InkWell(
                               splashColor: Colors.white.withAlpha(0),
                               highlightColor: Colors.black.withOpacity(0.1),

@@ -165,8 +165,8 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                 child: Stack(
                                   children: <Widget>[
                                     Positioned(
-                                      left: sizeMul * 1,
-                                      top: sizeMul * 24,
+                                      left: 2,
+                                      top: 24,
                                       child: InkWell(
                                         splashColor: Colors.white.withAlpha(0),
                                         highlightColor:

@@ -77,8 +77,8 @@ class _PromoScreenTopPartState extends State<PromoScreenTopPart> {
                       child: Stack(
                         children: <Widget>[
                           Positioned(
-                            left: sizeMul * 9,
-                            top: sizeMul * 24,
+                            left:2,
+                            top:  24,
                             child: InkWell(
                               splashColor: Colors.white.withAlpha(0),
                               highlightColor: Colors.black.withOpacity(0.1),
