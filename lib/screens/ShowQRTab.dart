@@ -4,26 +4,26 @@ import 'package:papyrus_client/helpers/ClipShadowPath.dart';
 import 'package:papyrus_client/helpers/CustomShapeClipper.dart';
 import 'package:papyrus_client/helpers/LongButton.dart';
 
-class ShowQRScreen extends StatefulWidget {
+class ShowQRTab extends StatefulWidget {
   @override
-  _ShowQRScreenState createState() => new _ShowQRScreenState();
+  _ShowQRTabState createState() => new _ShowQRTabState();
 }
 
-class _ShowQRScreenState extends State<ShowQRScreen> {
+class _ShowQRTabState extends State<ShowQRTab> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ShowQRScreenStack(),
+      body: ShowQRTabStack(),
     );
   }
 }
 
-class ShowQRScreenStack extends StatefulWidget {
+class ShowQRTabStack extends StatefulWidget {
   @override
-  _ShowQRScreenStackState createState() => new _ShowQRScreenStackState();
+  _ShowQRTabStackState createState() => new _ShowQRTabStackState();
 }
 
-class _ShowQRScreenStackState extends State<ShowQRScreenStack> {
+class _ShowQRTabStackState extends State<ShowQRTabStack> {
   @override
   Widget build(BuildContext context) {
     return new Container(
@@ -47,7 +47,7 @@ class _ShowQRScreenStackState extends State<ShowQRScreenStack> {
               child: Container(
                 color: Colors.white,
                 width: MediaQuery.of(context).size.width,
-                height: double.infinity,
+                // height: double.infinity,
               )),
           Column(
             mainAxisSize: MainAxisSize.max,
@@ -55,7 +55,7 @@ class _ShowQRScreenStackState extends State<ShowQRScreenStack> {
             children: <Widget>[
               SizedBox(
                 width: MediaQuery.of(context).size.width,
-                height: sizeMul * 90,
+                height: sizeMul * 130,
               ),
               Text(
                 "PAPYRUS",
@@ -78,47 +78,10 @@ class _ShowQRScreenStackState extends State<ShowQRScreenStack> {
                   ),
                 ),
               ),
-              SizedBox(height: sizeMul * 10),
-              Text(
-                "SCAN ME!",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: sizeMul * 60,
-                    fontWeight: FontWeight.w900),
-              ),
-              Text(
-                "TO RECEIVE RECEIPT\nWITH ACCOUNT",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: sizeMul * 18,
-                    fontWeight: FontWeight.w600),
-              ),
+               
             ],
           ),
-          Positioned(
-            left:2,
-            top:   24,
-            child: InkWell(
-              splashColor: Colors.white.withAlpha(0),
-              highlightColor: Colors.black.withOpacity(0.1),
-              // ,
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Container(
-                width: sizeMul * 40,
-                padding: EdgeInsets.symmetric(vertical: 10 * sizeMul),
-                // height: sizeMul*40,
-                // color: Colors.red,
-                child: Image.asset(
-                  'assets/icons/3x/back.png',
-                  color: Colors.black,
-                  height: MediaQuery.of(context).size.width * 0.075,
-                ),
-              ),
-            ),
-          ),
+           
           Positioned(
             bottom: sizeMul * 40,
             child: Container(
@@ -160,12 +123,12 @@ class _ShowQRScreenStackState extends State<ShowQRScreenStack> {
   }
 }
 
-class ShowQRScreenTopPart extends StatefulWidget {
+class ShowQRTabTopPart extends StatefulWidget {
   @override
-  _ShowQRScreenTopPartState createState() => new _ShowQRScreenTopPartState();
+  _ShowQRTabTopPartState createState() => new _ShowQRTabTopPartState();
 }
 
-class _ShowQRScreenTopPartState extends State<ShowQRScreenTopPart> {
+class _ShowQRTabTopPartState extends State<ShowQRTabTopPart> {
   @override
   Widget build(BuildContext context) {
     TextStyle headerStyle = TextStyle(
@@ -184,7 +147,7 @@ class _ShowQRScreenTopPartState extends State<ShowQRScreenTopPart> {
         SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              ShowQRScreenBottomPart(),
+              ShowQRTabBottomPart(),
             ],
           ),
         ),
@@ -323,13 +286,13 @@ class _ShowQRScreenTopPartState extends State<ShowQRScreenTopPart> {
   }
 }
 
-class ShowQRScreenBottomPart extends StatefulWidget {
+class ShowQRTabBottomPart extends StatefulWidget {
   @override
-  _ShowQRScreenBottomPartState createState() =>
-      new _ShowQRScreenBottomPartState();
+  _ShowQRTabBottomPartState createState() =>
+      new _ShowQRTabBottomPartState();
 }
 
-class _ShowQRScreenBottomPartState extends State<ShowQRScreenBottomPart> {
+class _ShowQRTabBottomPartState extends State<ShowQRTabBottomPart> {
   @override
   Widget build(BuildContext context) {
     return new Container(

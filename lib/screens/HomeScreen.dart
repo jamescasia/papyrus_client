@@ -19,6 +19,7 @@ import 'package:papyrus_client/models/AppModel.dart';
 import 'package:papyrus_client/screens/LogInScreen.dart';
 import 'SplashScreen.dart';
 import 'CameraCaptureScreen.dart';
+import 'GetReceiptScreen.dart';
 // void main() {
 //   return runApp(PapyrusCustomer());
 // }
@@ -168,7 +169,7 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
         fontWeight: FontWeight.bold,
         color: Colors.green[700]);
 
-    return ScopedModelDescendant<AppModel>(builder: (context, child, model) {
+    return ScopedModelDescendant<AppModel>(builder: (context, child, appModel) {
       return Stack(
         children: <Widget>[
           ClipShadowPath(
@@ -205,16 +206,16 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                             splashColor: Colors.white.withAlpha(0),
                             highlightColor: Colors.black.withOpacity(0.1),
                             onTap: () {
-                              model.viewing_period = Period.MONTHLY; 
+                              appModel.viewing_period = Period.MONTHLY; 
                             },
                             child: Container(
                               // color: Colors.white,
-                              padding: (model.viewing_period == Period.MONTHLY)
+                              padding: (appModel.viewing_period == Period.MONTHLY)
                                   ? EdgeInsets.symmetric(
                                       vertical: sizeMul * 2,
                                       horizontal: sizeMul * 8)
                                   : null,
-                              decoration: (model.viewing_period ==
+                              decoration: (appModel.viewing_period ==
                                       Period.MONTHLY)
                                   ? BoxDecoration(
                                       color: Colors.white,
@@ -224,7 +225,7 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
 
                               child: Text("MONTHLY",
                                   style:
-                                      (model.viewing_period == Period.MONTHLY)
+                                      (appModel.viewing_period == Period.MONTHLY)
                                           ? headerStyleSelected
                                           : headerStyle),
                             ),
@@ -233,15 +234,15 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                             splashColor: Colors.white.withAlpha(0),
                             highlightColor: Colors.black.withOpacity(0.1),
                             onTap: () {
-                              model.viewing_period = Period.WEEKLY;
+                              appModel.viewing_period = Period.WEEKLY;
                             },
                             child: Container(
-                              padding: (model.viewing_period == Period.WEEKLY)
+                              padding: (appModel.viewing_period == Period.WEEKLY)
                                   ? EdgeInsets.symmetric(
                                       vertical: sizeMul * 2,
                                       horizontal: sizeMul * 8)
                                   : null,
-                              decoration: (model.viewing_period ==
+                              decoration: (appModel.viewing_period ==
                                       Period.WEEKLY)
                                   ? BoxDecoration(
                                       color: Colors.white,
@@ -253,7 +254,7 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                                 highlightColor: Colors.black.withOpacity(0.1),
                                 child: Text(
                                   "WEEKLY",
-                                  style: (model.viewing_period == Period.WEEKLY)
+                                  style: (appModel.viewing_period == Period.WEEKLY)
                                       ? headerStyleSelected
                                       : headerStyle,
                                 ),
@@ -262,15 +263,15 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                           ),
                           InkWell(
                             onTap: () {
-                              model.viewing_period = Period.DAILY;
+                              appModel.viewing_period = Period.DAILY;
                             },
                             child: Container(
-                              padding: (model.viewing_period == Period.DAILY)
+                              padding: (appModel.viewing_period == Period.DAILY)
                                   ? EdgeInsets.symmetric(
                                       vertical: sizeMul * 2,
                                       horizontal: sizeMul * 8)
                                   : null,
-                              decoration: (model.viewing_period == Period.DAILY)
+                              decoration: (appModel.viewing_period == Period.DAILY)
                                   ? BoxDecoration(
                                       color: Colors.white,
                                       borderRadius:
@@ -278,7 +279,7 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                                   : null,
                               child: Text(
                                 "DAILY",
-                                style: (model.viewing_period == Period.DAILY)
+                                style: (appModel.viewing_period == Period.DAILY)
                                     ? headerStyleSelected
                                     : headerStyle,
                               ),
@@ -618,9 +619,12 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                   Navigator.push(
                       context,
                       CupertinoPageRoute(
-                          builder: (context) =>
-                              // EditReceiptScreen(model.editReceiptScreenModel)
-                              CameraCaptureScreen()
+                          builder: (context) { 
+                            appModel.cameraCaptureModel.launch();
+                            return
+                              // EditReceiptScreen(appModel.editReceiptScreenModel)
+                              // CameraCaptureScreen()
+                              GetReceiptScreen();}
                               ));
                 },
                 child: Container(
