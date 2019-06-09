@@ -129,7 +129,8 @@ class EditReceiptScreenModel extends Model {
 
   void update() {
     _receipt.displayItems();
+    print('dfafad');
 
-    notifyListeners();
+    // notifyListeners();
   }
 }
