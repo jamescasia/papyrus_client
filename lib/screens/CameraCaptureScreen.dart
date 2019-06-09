@@ -22,8 +22,10 @@ class _CameraCaptureScreenState extends State<CameraCaptureScreen> {
 
   @override
   void initState() {
-    super.initState();
+    
     // initializeCameras(cs, this);
+
+    super.initState();
   }
 
   @override
@@ -111,17 +113,19 @@ class _CameraCaptureScreenState extends State<CameraCaptureScreen> {
                                 Positioned(
                                   bottom: 0,
                                   child: Container(
+                                    padding: EdgeInsets.all(sizeMul*8),
                                     width: MediaQuery.of(context).size.width,
                                     height: sizeMul * 60,
                                     color: Colors.green,
                                     // color: Colors.black.withOpacity(0.3),
                                     child: RaisedButton(
+                                      
                                       onPressed: () {
                                         // cs.controller.
                                         ccModel.capturePhoto().then((_) {
                                           ccModel.cameraScreenState.controller
                                               .dispose();
-                                          Navigator.pushReplacement(context,
+                                          Navigator.push(context,
                                               CupertinoPageRoute(
                                                   builder: (context) {
                                             return EditReceiptScreen(appModel

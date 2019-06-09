@@ -6,7 +6,8 @@ import 'ShowQRScreen.dart';
 import 'ShowQRTab.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:papyrus_client/models/AppModel.dart';
-
+import 'CameraQRScanTab.dart';
+import 'CameraCaptureScreen.dart';
 
 class GetReceiptScreen extends StatefulWidget {
   @override
@@ -82,8 +83,8 @@ class _GetReceiptScreenState extends State<GetReceiptScreen>
                   child: TabBarView(
                     controller: tabController,
                     children: <Widget>[
+                      CameraQRScanTab(),
                       CameraCaptureScreen(),
-                      ShowQRTab(),
                       ShowQRTab(),
                     ],
                   ),
@@ -96,7 +97,9 @@ class _GetReceiptScreenState extends State<GetReceiptScreen>
                     highlightColor: Colors.black.withOpacity(0.1),
                     // ,
                     onTap: () {
+
                       globalController.dispose();
+
                       Navigator.pop(context);
                     },
                     child: Container(

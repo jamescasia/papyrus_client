@@ -78,45 +78,26 @@ class _ShowQRTabStackState extends State<ShowQRTabStack> {
                   ),
                 ),
               ),
+              Text(
+                "SCAN ME!",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: sizeMul * 60,
+                    fontWeight: FontWeight.w900),
+              ),
+              Text(
+                "TO RECEIVE RECEIPT\nWITH ACCOUNT",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: sizeMul * 18,
+                    fontWeight: FontWeight.w600),
+              ),
                
             ],
           ),
            
-          Positioned(
-            bottom: sizeMul * 40,
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.only(top: sizeMul * 40),
-              child: Material(
-                color: Colors.white.withAlpha(0),
-                child: InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  splashColor: Colors.red,
-                  highlightColor: Colors.green,
-                  child: Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Text(
-                          "CONTINUE",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 22 * sizeMul,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(width: sizeMul * 12),
-                        Icon(Icons.chevron_right,
-                            size: sizeMul * 30, color: Colors.white),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          )
+        
         ],
       ),
     );
