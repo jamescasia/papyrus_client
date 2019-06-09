@@ -31,6 +31,8 @@ dependencies:
   google_sign_in: ^3.2.4
   firebase_ml_vision: ^0.2.1
   curved_navigation_bar: ^0.2.1 #latest version
+  font_awesome_flutter: 
+  ef_qrcode: ^0.1.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

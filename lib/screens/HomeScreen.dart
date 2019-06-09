@@ -20,6 +20,7 @@ import 'package:papyrus_client/screens/LogInScreen.dart';
 import 'SplashScreen.dart';
 import 'CameraCaptureScreen.dart';
 import 'GetReceiptScreen.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 // void main() {
 //   return runApp(PapyrusCustomer());
 // }

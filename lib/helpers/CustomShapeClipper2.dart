@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class CustomShapeClipper2 extends CustomClipper<Path>{
+class CustomShapeClipper extends CustomClipper<Path>{
   double maxWidth;
   double maxHeight;
   double sizeMul;
   
                 // maxWidth: MediaQuery.of(context).size.width,
                 // maxHeight: MediaQuery.of(context).size.width * 0.91),
-  CustomShapeClipper2({ 
+  CustomShapeClipper({ 
     @required this.maxWidth, 
     @required this.maxHeight,
     @required this.sizeMul
@@ -19,13 +19,17 @@ class CustomShapeClipper2 extends CustomClipper<Path>{
   getClip(Size size) { 
     final Path path = Path();  
     path.lineTo(0, 0);
-    path.lineTo(0, maxHeight-( 29.94991999999998*sizeMul)); 
-    Offset p0 = Offset(0.43*maxWidth, maxHeight+13.735782059999957*sizeMul); 
+    // path.lineTo(0, maxHeight-( 29.94991999999998*sizeMul)); 
+    path.lineTo(0, maxHeight); 
+    path.lineTo(maxWidth*0.6, maxHeight);
+    Offset p0 = Offset(0.6*maxWidth, maxHeight+13.735782059999957*sizeMul);
+    // path.lineTo(p0.dx, p0.dy) ;
     Offset p1 = Offset(maxWidth*0.7, maxHeight-sizeMul*65.77751179999998); 
     path.quadraticBezierTo(p0.dx, p0.dy, p1.dx, p1.dy); 
+    // path.lineTo(p1.dx, p1.dy);
 
-    Offset p2 = Offset(maxWidth*0.86, maxHeight-sizeMul*108.56846); 
-    Offset p3 = Offset(maxWidth, maxHeight-sizeMul*56.1561);
+    Offset p2 = Offset(maxWidth*0.86, maxHeight-sizeMul*60); 
+    Offset p3 = Offset(maxWidth, maxHeight );
     
     path.quadraticBezierTo(p2.dx, p2.dy, p3.dx, p3.dy); 
     path.lineTo(size.width, 0);

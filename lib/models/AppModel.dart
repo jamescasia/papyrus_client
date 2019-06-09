@@ -9,6 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:simple_permissions/simple_permissions.dart';
 import 'dart:io'; 
 import 'CameraCaptureModel.dart';
+import 'package:ef_qrcode/ef_qrcode.dart';
 enum Period { MONTHLY, WEEKLY, DAILY }
 
 class AppModel extends Model {
@@ -24,7 +25,8 @@ class AppModel extends Model {
   CameraCaptureModel cameraCaptureModel;
   FirebaseUser user;
   Directory rootDir;
-  List<String> dirList = ["/ReceiptsJson", "/ReceiptsImages", "/Settings"];
+  List<String> dirList = ["/ReceiptsJson", "/ReceiptsImages", "/UserData"];
+  String userQRPath;
   // BuildContext context;
 
   // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -43,7 +45,10 @@ class AppModel extends Model {
     editReceiptScreenModel = EditReceiptScreenModel(this);
     cameraCaptureModel = CameraCaptureModel(this);
     rootDir = await getApplicationDocumentsDirectory(); 
+    print("THE ROOT DERR" + rootDir.path);
     checkOrGenerateDirectories();
+    generateImage();
+
   }
 
   void checkOrGenerateDirectories() {
@@ -69,6 +74,22 @@ class AppModel extends Model {
     // print("the size of files is" + files.length.toString());
     
   }
+
+  void generateImage() async {
+   try {
+      var imageFile = await EfQrcode.generate(user.email, "#ffffff", "#000000"); 
+      userQRPath =  "${rootDir.path}/UserData/${user.email}.png";
+      imageFile.copy(userQRPath);
+      print('done file');
+      // imageFile.pat
+    // await imageFile.rename( userQRPath);
+    //  file.writeAsBytes(imageFile);
+
+   }
+   catch (e) {
+      print(e);
+   }
+}
 
   Future<FirebaseUser> login(String email, String password) async {
     user = await mAuth.signInWithEmailAndPassword(
