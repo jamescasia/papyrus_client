@@ -13,6 +13,7 @@ import 'package:papyrus_client/helpers/CustomShapeClipper.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:papyrus_client/models/CameraCaptureModel.dart';
 
+
 // CameraController globalController;
 
 class CameraQRScanTab extends StatefulWidget {
@@ -182,6 +183,16 @@ class _CameraQRScanTabState extends State<CameraQRScanTab> {
                                   child: Material(
                                     shape: CircleBorder(),
                                     child: InkWell(
+                                      
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(3000)),
+                                          splashColor: Colors.red,
+                                          highlightColor: Colors.amber,
+
+                                      onTap:(){
+
+                                        appModel.connectToWifi();
+                                      },
                                       child: Container(
                                           width: sizeMul * 74.052,
                                           height: sizeMul * 74.052,

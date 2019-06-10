@@ -4,6 +4,8 @@ import 'package:camera/camera.dart';
 import 'AppModel.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'dart:io';
+import 'dart:async';
+import 'package:flutter/services.dart';
 
 class CameraScreenState {
   List<CameraDescription> cameras;
