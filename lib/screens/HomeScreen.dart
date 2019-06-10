@@ -620,12 +620,11 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                   Navigator.push(
                       context,
                       CupertinoPageRoute(
-                          builder: (context) { 
-                            appModel.cameraCaptureModel.launch();
+                          builder: (context) {  
                             return
                               // EditReceiptScreen(appModel.editReceiptScreenModel)
                               // CameraCaptureScreen()
-                              GetReceiptScreen();}
+                              GetReceiptScreen(appModel.cameraCaptureModel);}
                               ));
                 },
                 child: Container(

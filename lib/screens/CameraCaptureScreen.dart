@@ -174,6 +174,23 @@ class _CameraCaptureScreenState extends State<CameraCaptureScreen> {
                                   child: Material(
                                     shape: CircleBorder(),
                                     child: InkWell(
+                                      borderRadius: BorderRadius.all(Radius.circular(3000)),
+                                      splashColor: Colors.grey,
+                                      highlightColor: Colors.amber,
+                                      onTap: (){
+                                         // cs.controller.
+                                        ccModel.capturePhoto().then((_) {
+                                          ccModel.cameraScreenState.controller
+                                              .dispose();
+                                          Navigator.pushReplacement(context,
+                                              CupertinoPageRoute(
+                                                  builder: (context) {
+                                            return EditReceiptScreen(appModel
+                                                .editReceiptScreenModel);
+                                          }));
+                                          // }
+                                        });
+                                      },
                                       child: Container(
                                           width: sizeMul * 74.052,
                                           height: sizeMul * 74.052,

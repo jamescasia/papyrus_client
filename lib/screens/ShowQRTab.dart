@@ -79,7 +79,7 @@ class _ShowQRTabStackState extends State<ShowQRTabStack> {
                           BorderRadius.all(Radius.circular(sizeMul * 30))),
                   child: ClipRRect(
                     borderRadius:
-                        BorderRadius.all(Radius.circular(sizeMul * 35)),
+                        BorderRadius.all(Radius.circular(sizeMul * 55)),
                     child: Image.file(File(appModel.userQRPath)),
 
                     // Image.asset(

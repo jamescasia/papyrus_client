@@ -78,7 +78,7 @@ class AppModel extends Model {
   void generateImage() async {
    try {
       var imageFile = await EfQrcode.generate(user.email, "#ffffff", "#000000"); 
-      userQRPath =  "${rootDir.path}/UserData/${user.email}.png";
+      userQRPath =  "${rootDir.path}/UserData/${user.email}.jpg";
       imageFile.copy(userQRPath);
       print('done file');
       // imageFile.pat

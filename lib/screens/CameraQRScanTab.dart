@@ -11,28 +11,39 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:papyrus_client/helpers/ClipShadowPath.dart';
 import 'package:papyrus_client/helpers/CustomShapeClipper.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:papyrus_client/models/CameraCaptureModel.dart';
 
 // CameraController globalController;
 
 class CameraQRScanTab extends StatefulWidget {
+  CameraCaptureModel ccModel;
+  CameraQRScanTab(this.ccModel);
   @override
-  _CameraQRScanTabState createState() => _CameraQRScanTabState();
+  _CameraQRScanTabState createState() => _CameraQRScanTabState(ccModel);
 }
 
 class _CameraQRScanTabState extends State<CameraQRScanTab> {
+    CameraCaptureModel ccModel;
   // CameraScreenState cs = CameraScreenState();
   // CameraController controller;
 
+  _CameraQRScanTabState(this.ccModel);
+
   @override
   void initState() {
+    print("HHHHHHHHHHHHHHHHHHHHHHHHHHHHAAAAAAAAAAAAAAwhen is initstate called?");
+    ccModel.launchQRScan();
     // initializeCameras(cs, this);
+
 
     super.initState();
   }
 
   @override
   void dispose() {
+    ccModel.startCapturingFrames();
     // globalController?.dispose();
+
     super.dispose();
   }
 

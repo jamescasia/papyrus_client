@@ -94,13 +94,15 @@ class EditReceiptScreenModel extends Model {
         // Same getters as TextBlock
         for (TextElement element in line.elements) {
           print(element.text.toString());
+          
+    _receipt.merchant = element.text.toString();
+    addItemToReceipt(ReceiptItem(element.text.toString(), 0, 0.0 ));
+    // _receipt.total = 123;
           // Same getters as TextBlock
         }
       }
     } 
 
-    _receipt.merchant = "Jollibee";
-    _receipt.total = 123;
     // 
   }
 

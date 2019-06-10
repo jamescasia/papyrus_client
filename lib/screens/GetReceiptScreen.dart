@@ -9,21 +9,27 @@ import 'package:papyrus_client/models/AppModel.dart';
 import 'CameraQRScanTab.dart';
 import 'CameraCaptureScreen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:papyrus_client/models/CameraCaptureModel.dart';
 
 class GetReceiptScreen extends StatefulWidget {
+
+  CameraCaptureModel ccModel;
+  GetReceiptScreen(this.ccModel);
   @override
-  _GetReceiptScreenState createState() => new _GetReceiptScreenState();
+  _GetReceiptScreenState createState() => new _GetReceiptScreenState(ccModel);
 }
 
 class _GetReceiptScreenState extends State<GetReceiptScreen>
     with SingleTickerProviderStateMixin {
   // with TickerProvider;
+  CameraCaptureModel ccModel;
   TabController tabController;
   int currIndex = 0;
-
+_GetReceiptScreenState(this.ccModel);
   @override
   void initState() {
     // TODO: implement initState
+    ccModel.launch();
     tabController = TabController(
       length: 3,
       vsync: this,
@@ -97,7 +103,7 @@ class _GetReceiptScreenState extends State<GetReceiptScreen>
                 child: TabBarView(
                   controller: tabController,
                   children: <Widget>[
-                    CameraQRScanTab(),
+                    CameraQRScanTab(ccModel),
                     CameraCaptureScreen(),
                     ShowQRTab(),
                   ],
