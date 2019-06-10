@@ -25,9 +25,8 @@ import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugins.GeneratedPluginRegistrant;
 
-public class MainActivity extends FlutterActivity {
-  private static final String CHANNEL = "flutter.native/helper";
-  private static final String CONNECT_WIFI_CHANNEL = "papyrus_client/";
+public class MainActivity extends FlutterActivity { 
+  private static final String CHANNEL = "papyrus_client/";
   protected static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1;
 
     Client client;
@@ -43,7 +42,7 @@ public class MainActivity extends FlutterActivity {
     GeneratedPluginRegistrant.registerWith(this);
 
 
-    new MethodChannel(getFlutterView(), CONNECT_WIFI_CHANNEL).setMethodCallHandler(
+    new MethodChannel(getFlutterView(), CHANNEL).setMethodCallHandler(
             new MethodChannel.MethodCallHandler() {
               @Override
               public void onMethodCall(MethodCall call, MethodChannel.Result result) {
