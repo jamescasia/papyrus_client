@@ -193,15 +193,15 @@ public class MainActivity extends FlutterActivity {
 //                ssid  = info.getSSID();
 //                System.out.println("ssid battle" + ssid +" "+ scanned_hotspotSSID);
             }
-
+              // this.
             return null;
         }
 
 
         @Override
         protected void onPostExecute(Void aVoid) {
+            System.out.println("connected to wifi from native idiots");
             super.onPostExecute(aVoid);
-            System.out.print("connected to wifi from native idiots");
             // dialog.hide();
             // Toast.makeText(this, "connected to wifi", Toast.LENGTH_SHORT).show();
 //            startClient(scanned_device_ip);
@@ -213,6 +213,7 @@ public class MainActivity extends FlutterActivity {
         private boolean isConnectedViaWifi() {
             ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo mWifi = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            System.out.println("Connected?: "+ mWifi.isConnected());
             return mWifi.isConnected();
         }
 
