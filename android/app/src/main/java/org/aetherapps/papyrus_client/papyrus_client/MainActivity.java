@@ -25,7 +25,7 @@ import io.flutter.plugins.GeneratedPluginRegistrant;
 
 public class MainActivity extends FlutterActivity {
   private static final String CHANNEL = "flutter.native/helper";
-  private static final String CONNECT_WIFI_CHANNEL = "papyrus_client/connectWifi";
+  private static final String CONNECT_WIFI_CHANNEL = "papyrus_client/";
   protected static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1;
 
     Client client;

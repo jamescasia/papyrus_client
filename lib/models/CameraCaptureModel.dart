@@ -5,7 +5,7 @@ import 'AppModel.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'dart:io';
 import 'dart:async';
-import 'package:flutter/services.dart';
+import 'package:flutter/services.dart'; 
 
 class CameraScreenState {
   List<CameraDescription> cameras;
@@ -51,6 +51,21 @@ class CameraCaptureModel extends Model {
     }
   }
 
+  Future <void> connectToWifi() async {
+
+    try{
+      print('tryn to connect');
+
+      await  appModel.platform.invokeMethod("initializeConnection");
+      print('successful');
+    }
+    catch(e){
+
+      print(e);
+
+
+    }
+  }
   Future<CameraController> getController() async {
     CameraDescription cam;
     cameraScreenState.cameras = await availableCameras();

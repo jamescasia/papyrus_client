@@ -14,7 +14,7 @@ enum Period { MONTHLY, WEEKLY, DAILY }
 
 class AppModel extends Model {
   // User _user;
-  static const platform = const MethodChannel('papyrus_client/connectWifi');
+  MethodChannel platform = const MethodChannel('papyrus_client/');
   Period _viewing_period = Period.DAILY;
   bool _alsoReceivePromosThruEmail;
   bool _receiveUniquePromos;
@@ -76,21 +76,7 @@ class AppModel extends Model {
     
   }
 
-  Future <void> connectToWifi() async {
 
-    try{
-      print('tryn to connect');
-
-      await platform.invokeMethod("initializeConnection");
-      print('successful');
-    }
-    catch(e){
-
-      print(e);
-
-
-    }
-  }
 
   void generateImage() async {
    try {
