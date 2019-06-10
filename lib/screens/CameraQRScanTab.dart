@@ -42,11 +42,13 @@ class _CameraQRScanTabState extends State<CameraQRScanTab> {
 
   @override
   void dispose() {
-    ccModel.startCapturingFrames();
+    ccModel.stopCapturingFrames();
     // globalController?.dispose();
 
     super.dispose();
   }
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -191,7 +193,7 @@ class _CameraQRScanTabState extends State<CameraQRScanTab> {
 
                                       onTap:(){
 
-                                        appModel.connectToWifi();
+                                        ccModel.connectToWifi();
                                       },
                                       child: Container(
                                           width: sizeMul * 74.052,

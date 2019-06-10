@@ -28,6 +28,8 @@ class ShowQRTabStack extends StatefulWidget {
 }
 
 class _ShowQRTabStackState extends State<ShowQRTabStack> {
+
+  
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant<AppModel>(

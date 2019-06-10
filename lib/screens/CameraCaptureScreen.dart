@@ -151,9 +151,11 @@ class _CameraCaptureScreenState extends State<CameraCaptureScreen> {
                                                   height: MediaQuery.of(context)
                                                       .size
                                                       .height,
-                                                  decoration: BoxDecoration(
-                                                      // gradient: greeny
-                                                      color: Colors.red),
+                                                  // decoration: BoxDecoration(
+                                                  //     // gradient: greeny
+                                                  //     // color: Colors.red
+                                                      
+                                                  //     ),
                                                   child:   CameraPreview(ccModel.cameraScreenState.controller)
                                                 ))
                                             : Center(

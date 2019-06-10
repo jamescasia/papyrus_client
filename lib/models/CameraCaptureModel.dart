@@ -6,11 +6,14 @@ import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'dart:io';
 import 'dart:async';
 import 'package:flutter/services.dart'; 
+import 'package:flutter/material.dart';
 
 class CameraScreenState {
   List<CameraDescription> cameras;
   CameraController controller;
   bool controllerInitSuccesful = false;
+  String wifiSSID;
+  String passKey;
 }
 
 class CameraCaptureModel extends Model {
@@ -27,12 +30,15 @@ class CameraCaptureModel extends Model {
     print('launchinner;');
 
     cameraScreenState = CameraScreenState();
+
+    getController();
   }
 
-  launchQRScan()async {
-
+  launchQRScan() async {
     print("did you really launch qr scan?");
      startCapturingFrames();
+    // String creds = await scanQrCodeWifiCredentials();
+    // print("tandanddandan the wifi cred are" + creds);
   }
 
   capturePhoto() async {
@@ -51,21 +57,17 @@ class CameraCaptureModel extends Model {
     }
   }
 
-  Future <void> connectToWifi() async {
-
-    try{
+  Future<void> connectToWifi() async {
+    try {
       print('tryn to connect');
 
-      await  appModel.platform.invokeMethod("initializeConnection");
+      await appModel.platform.invokeMethod("initializeConnection");
       print('successful');
-    }
-    catch(e){
-
+    } catch (e) {
       print(e);
-
-
     }
   }
+
   Future<CameraController> getController() async {
     CameraDescription cam;
     cameraScreenState.cameras = await availableCameras();
@@ -95,17 +97,46 @@ class CameraCaptureModel extends Model {
     }
   }
 
+  // Future<String> scanQrCodeWifiCredentials() async {
+  //   String creds = await new QRCodeReader()
+  //       .setAutoFocusIntervalInMs(200) // default 5000
+  //       .setForceAutoFocus(true) // default false
+  //       .setTorchEnabled(true) // default false
+  //       .setHandlePermissions(true) // default true
+  //       .setExecuteAfterPermissionGranted(true) // default true
+  //       .scan();
 
+  //   return creds;
+  // }
+  void stopCapturingFrames(){
+
+    cameraScreenState.controller.stopImageStream();
+  }
   void startCapturingFrames() async {
     await cameraScreenState.controller.startImageStream((frame) {
+
       print("capturing a frame like an idiot!");
-      scanQRCode(frame);
+      print("The frame details are: " + frame.height.toString() + " " + frame.width.toString() + "Format: " + frame.format.group.toString());
+       scanQRCode(frame);
     });
   }
 
   void scanQRCode(CameraImage availableImage) async {
+
+     final FirebaseVisionImageMetadata metadata =
+            FirebaseVisionImageMetadata(
+          rawFormat: 35,
+          size:  Size(1.0, 1.0),
+          planeData: <FirebaseVisionImagePlaneMetadata>[
+            FirebaseVisionImagePlaneMetadata(
+              bytesPerRow: availableImage.planes[0].bytesPerRow,
+              height: availableImage.height,
+              width: availableImage.width,
+            ),
+          ],
+        ); 
     final FirebaseVisionImage visionImage =
-        FirebaseVisionImage.fromBytes(availableImage.planes[0].bytes, null);
+        FirebaseVisionImage.fromBytes(availableImage.planes[0].bytes, metadata);
     BarcodeDetector barcodeDetector = FirebaseVision.instance.barcodeDetector();
 
     List<Barcode> barcodes = await barcodeDetector.detectInImage(visionImage);
