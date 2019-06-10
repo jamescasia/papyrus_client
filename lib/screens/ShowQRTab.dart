@@ -64,7 +64,7 @@ class _ShowQRTabStackState extends State<ShowQRTabStack> {
               children: <Widget>[
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
-                  height: sizeMul * 130,
+                  height: sizeMul * 125,
                 ),
                 Text(
                   "PAPYRUS",
@@ -82,7 +82,7 @@ class _ShowQRTabStackState extends State<ShowQRTabStack> {
                   child: ClipRRect(
                     borderRadius:
                         BorderRadius.all(Radius.circular(sizeMul * 55)),
-                    child: Image.file(File(appModel.userQRPath)),
+                    child: Image.file(File(appModel.userQRPath), scale: 1.05,),
 
                     // Image.asset(
                     //   'assets/pictures/sampleqrcode.png',
@@ -102,7 +102,7 @@ class _ShowQRTabStackState extends State<ShowQRTabStack> {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: Colors.white,
-                      fontSize: sizeMul * 18,
+                      fontSize: sizeMul * 19,
                       fontWeight: FontWeight.w600),
                 ),
               ],

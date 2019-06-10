@@ -26,6 +26,7 @@ class AppModel extends Model {
   CameraCaptureModel cameraCaptureModel;
   FirebaseUser user;
   Directory rootDir;
+  Directory tempDir;
   List<String> dirList = ["/ReceiptsJson", "/ReceiptsImages", "/UserData"];
   String userQRPath;
   // BuildContext context;
@@ -46,6 +47,7 @@ class AppModel extends Model {
     editReceiptScreenModel = EditReceiptScreenModel(this);
     cameraCaptureModel = CameraCaptureModel(this);
     rootDir = await getApplicationDocumentsDirectory(); 
+    tempDir = await getTemporaryDirectory();
     print("THE ROOT DERR" + rootDir.path);
     checkOrGenerateDirectories();
     generateImage();

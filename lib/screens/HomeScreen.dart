@@ -119,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     sizeMul = MediaQuery.of(context).size.width / 411.4;
     recptCardHeight = 72 * sizeMul; 
-    homeButtonDist = -0.0002*(MediaQuery.of(context).size.width*MediaQuery.of(context).size.width) + 0.9471*(MediaQuery.of(context).size.width) - 56.372- ((MediaQuery.of(context).size.width.floor()==411)?8*sizeMul:0);
+    homeButtonDist = -0.00023*(MediaQuery.of(context).size.width*MediaQuery.of(context).size.width) + 0.9466*(MediaQuery.of(context).size.width) - 56.372 ;
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
       statusBarColor: const Color(0xFF61C350),
       // #61C350

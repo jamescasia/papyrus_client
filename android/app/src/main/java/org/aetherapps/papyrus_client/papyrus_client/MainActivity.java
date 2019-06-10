@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.lang.reflect.Method;
+import java.util.Map;
+
 
 import io.flutter.app.FlutterActivity;
 import io.flutter.plugin.common.MethodCall;
@@ -50,10 +52,12 @@ public class MainActivity extends FlutterActivity {
                 //   result.success(greetings);
                 // }
 
+                final Map<String, String> arguments = call.arguments();
+
                 if(call.method.equals("initializeConnection")){
                   System.out.print("good wifi is good");
 
-                  initializeConnection("AndroidWifi", "");
+                  initializeConnection(arguments.get("ssid"),arguments.get("passkey") );
 
                 }
  

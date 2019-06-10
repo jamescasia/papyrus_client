@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:papyrus_client/data_models/Receipt.dart';
 import 'dart:convert';
 import 'AppModel.dart';
-import 'dart:io';
-import 'package:firebase_ml_vision/firebase_ml_vision.dart';
+import 'dart:io'; 
+import 'package:mlkit/mlkit.dart';
 
 class EditReceiptScreenModel extends Model {
   TextEditingController _controller = TextEditingController();
@@ -76,32 +76,7 @@ class EditReceiptScreenModel extends Model {
   }
 
     void scanText(String filePath) async {
-      print("scanning images");
-    final FirebaseVisionImage visionImage =
-        FirebaseVisionImage.fromFilePath(filePath);
-    final TextRecognizer textRecognizer =
-        FirebaseVision.instance.textRecognizer();
-    final VisionText visionText =
-        await textRecognizer.processImage(visionImage);
-    String text = visionText.text;
-    for (TextBlock block in visionText.blocks) {
-      // final Rect boundingBox = block.boundingBox;
-      // final List<Offset> cornerPoints = block.cornerPoints;
-      final String text = block.text;
-      // final List<RecognizedLanguage> languages = block.recognizedLanguages;
-
-      for (TextLine line in block.lines) {
-        // Same getters as TextBlock
-        for (TextElement element in line.elements) {
-          print(element.text.toString());
-          
-    _receipt.merchant = element.text.toString();
-    addItemToReceipt(ReceiptItem(element.text.toString(), 0, 0.0 ));
-    // _receipt.total = 123;
-          // Same getters as TextBlock
-        }
-      }
-    } 
+     
 
     // 
   }

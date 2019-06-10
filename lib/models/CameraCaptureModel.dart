@@ -2,7 +2,7 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:papyrus_client/screens/CameraCaptureScreen.dart';
 import 'package:camera/camera.dart';
 import 'AppModel.dart';
-import 'package:firebase_ml_vision/firebase_ml_vision.dart';
+import 'package:mlkit/mlkit.dart';
 import 'dart:io';
 import 'dart:async';
 import 'package:flutter/services.dart'; 
@@ -12,8 +12,6 @@ class CameraScreenState {
   List<CameraDescription> cameras;
   CameraController controller;
   bool controllerInitSuccesful = false;
-  String wifiSSID;
-  String passKey;
 }
 
 class CameraCaptureModel extends Model {
@@ -21,6 +19,8 @@ class CameraCaptureModel extends Model {
 
   AppModel appModel;
   String imagePath;
+  String wifiSSID;
+  String passKey;
 
   CameraCaptureModel(this.appModel) {
     cameraScreenState = CameraScreenState();
@@ -36,7 +36,7 @@ class CameraCaptureModel extends Model {
 
   launchQRScan() async {
     print("did you really launch qr scan?");
-     startCapturingFrames();
+    //  startCapturingFrames();
     // String creds = await scanQrCodeWifiCredentials();
     // print("tandanddandan the wifi cred are" + creds);
   }
@@ -57,11 +57,20 @@ class CameraCaptureModel extends Model {
     }
   }
 
-  Future<void> connectToWifi() async {
+
+
+  Future<void> connectToWifi(String ssid, String passkey) async {
     try {
+      print("WIFI creds be like " + ssid + passkey);
       print('tryn to connect');
 
-      await appModel.platform.invokeMethod("initializeConnection");
+      var creds = <String, String> {
+
+        "ssid": ssid,
+        "passkey":passkey, 
+      };
+
+      await appModel.platform.invokeMethod("initializeConnection", creds);
       print('successful');
     } catch (e) {
       print(e);
@@ -112,41 +121,62 @@ class CameraCaptureModel extends Model {
 
     cameraScreenState.controller.stopImageStream();
   }
-  void startCapturingFrames() async {
-    await cameraScreenState.controller.startImageStream((frame) {
+  // void startCapturingFrames() async {
+  //   await cameraScreenState.controller.startImageStream((frame) {
 
-      print("capturing a frame like an idiot!");
-      print("The frame details are: " + frame.height.toString() + " " + frame.width.toString() + "Format: " + frame.format.group.toString());
-       scanQRCode(frame);
-    });
+  //     print("capturing a frame like an idiot!");
+  //     print("The frame details are: " + frame.height.toString() + " " + frame.width.toString() + "Format: " + frame.format.group.toString());
+  //      scanQRCode(frame);
+  //   });
+  // }
+
+   captureQRPhoto() async { 
+     String tempImagePath =  "${appModel.tempDir.path}/${DateTime.now().millisecondsSinceEpoch.toString()}.png" ;
+    try { 
+      await cameraScreenState.controller
+          .takePicture(  tempImagePath ).then((_){
+            scanQRCode(tempImagePath); 
+          });
+        
+      // print(await File(imagePath).readAsString());
+      // return true;
+    } catch (a) {
+      print("failed");
+      print(a.toString());
+      // return false;
+    }
+
   }
 
-  void scanQRCode(CameraImage availableImage) async {
+  void scanQRCode(String imagePath) async {
 
-     final FirebaseVisionImageMetadata metadata =
-            FirebaseVisionImageMetadata(
-          rawFormat: 35,
-          size:  Size(1.0, 1.0),
-          planeData: <FirebaseVisionImagePlaneMetadata>[
-            FirebaseVisionImagePlaneMetadata(
-              bytesPerRow: availableImage.planes[0].bytesPerRow,
-              height: availableImage.height,
-              width: availableImage.width,
-            ),
-          ],
-        ); 
-    final FirebaseVisionImage visionImage =
-        FirebaseVisionImage.fromBytes(availableImage.planes[0].bytes, metadata);
-    BarcodeDetector barcodeDetector = FirebaseVision.instance.barcodeDetector();
-
-    List<Barcode> barcodes = await barcodeDetector.detectInImage(visionImage);
-
-    for (Barcode b in barcodes) {
-      if (b.displayValue.contains("PapyrusWifi")) {
-        print("papyrus wifi found! " + b.displayValue);
-        cameraScreenState.controller.stopImageStream();
+    FirebaseVisionBarcodeDetector barcodeDetector = FirebaseVisionBarcodeDetector.instance;
+    List <VisionBarcode> barcodes = await barcodeDetector.detectFromPath(imagePath); 
+    String rawValueCreds;
+    for(VisionBarcode b in barcodes){
+// "PapyrusWifi:ssid:passkey"
+      if(  (b.rawValue).contains("PapyrusWifi")){
+        rawValueCreds =b.rawValue;
         break;
       }
+
+
     }
+    print("The raw value :o $rawValueCreds");
+    var creds = parseWifiCreds(rawValueCreds);
+    connectToWifi(creds[0], creds[1]);
+    
+    await File(imagePath)?.delete();
+
+    
+  
   }
+
+  List<String> parseWifiCreds(String raw){
+ 
+    wifiSSID = raw;
+    passKey = raw;
+
+    return raw.split(":").sublist(1);
+  } 
 }
