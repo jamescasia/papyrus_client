@@ -11,7 +11,8 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:papyrus_client/helpers/ClipShadowPath.dart';
 import 'package:papyrus_client/helpers/CustomShapeClipper.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:papyrus_client/models/CameraCaptureModel.dart';
+import 'package:papyrus_client/models/CameraCaptureModel.dart'; 
+import 'ReceiveReceiptScreen.dart';
 
 
 // CameraController globalController;
@@ -24,7 +25,7 @@ class CameraQRScanTab extends StatefulWidget {
 }
 
 class _CameraQRScanTabState extends State<CameraQRScanTab> {
-    CameraCaptureModel ccModel;
+  CameraCaptureModel ccModel;
   // CameraScreenState cs = CameraScreenState();
   // CameraController controller;
 
@@ -32,10 +33,10 @@ class _CameraQRScanTabState extends State<CameraQRScanTab> {
 
   @override
   void initState() {
-    print("HHHHHHHHHHHHHHHHHHHHHHHHHHHHAAAAAAAAAAAAAAwhen is initstate called?");
+    print(
+        "HHHHHHHHHHHHHHHHHHHHHHHHHHHHAAAAAAAAAAAAAAwhen is initstate called?");
     ccModel.launchQRScan();
     // initializeCameras(cs, this);
-
 
     super.initState();
   }
@@ -47,8 +48,6 @@ class _CameraQRScanTabState extends State<CameraQRScanTab> {
 
     super.dispose();
   }
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -185,16 +184,46 @@ class _CameraQRScanTabState extends State<CameraQRScanTab> {
                                   child: Material(
                                     shape: CircleBorder(),
                                     child: InkWell(
-                                      
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(3000)),
-                                          splashColor: Colors.red,
-                                          highlightColor: Colors.amber,
-
-                                      onTap:(){
-
+                                      splashColor: Colors.red,
+                                      highlightColor: Colors.amber,
+                                      onTap: () {
                                         // ccModel.connectToWifi();
-                                        ccModel.captureQRPhoto();
+                                        ccModel
+                                            .captureQRPhoto()
+                                            .then((successful) {
+                                          print("Was it worth it in the end?" +
+                                              successful.toString());
+                                          if (!successful) {
+                                            showDialog(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return AlertDialog(
+                                                      content: Text(
+                                                    "QR code is unreadable. Please scan again.",
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                    ),
+                                                  ));
+                                                });
+                                          }
+                                          else {
+                                            
+                      Navigator.pushReplacement(
+                          context,
+                          CupertinoPageRoute(
+                              builder: (context) => ReceiveReceiptScreen(appModel.receiveReceiptModel)));
+
+
+
+
+
+                                          }
+                                        });
                                       },
                                       child: Container(
                                           width: sizeMul * 74.052,
@@ -301,7 +330,7 @@ _showDialog(BuildContext context) {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               SizedBox(
-                height:   15,
+                height: 15,
               ),
               Icon(
                 FontAwesomeIcons.info,
@@ -309,7 +338,7 @@ _showDialog(BuildContext context) {
                 size: 30,
               ),
               SizedBox(
-                height:  15,
+                height: 15,
               ),
               Text(
                 "Scan QR code shown on Papyrus dock to high-speed transfer through Wi-fi",

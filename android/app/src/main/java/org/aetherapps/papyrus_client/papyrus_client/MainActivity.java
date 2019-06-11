@@ -13,21 +13,21 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.os.Handler;
 import android.widget.Toast;
 
 import java.io.File;
 import java.lang.reflect.Method;
 import java.util.Map;
 
-
 import io.flutter.app.FlutterActivity;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugins.GeneratedPluginRegistrant;
 
-public class MainActivity extends FlutterActivity { 
-  private static final String CHANNEL = "papyrus_client/";
-  protected static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1;
+public class MainActivity extends FlutterActivity {
+    private static final String CHANNEL = "papyrus_client/";
+    protected static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1;
 
     Client client;
 
@@ -36,54 +36,70 @@ public class MainActivity extends FlutterActivity {
     private String scanned_device_ip;
     private WifiManager wifiManager;
     private WifiConfiguration wifiConfiguration;
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    GeneratedPluginRegistrant.registerWith(this);
+    private MethodChannel.Result CONNECT_TO_WIFI_RESULT;
+    boolean CONNECT_SUCCESS = false;
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        GeneratedPluginRegistrant.registerWith(this);
 
-    new MethodChannel(getFlutterView(), CHANNEL).setMethodCallHandler(
-            new MethodChannel.MethodCallHandler() {
-              @Override
-              public void onMethodCall(MethodCall call, MethodChannel.Result result) {
+        new MethodChannel(getFlutterView(), CHANNEL).setMethodCallHandler(new MethodChannel.MethodCallHandler() {
+            @Override
+            public void onMethodCall(MethodCall call, MethodChannel.Result result) {
                 // if (call.method.equals("helloFromNativeCode")) {
-                //   String greetings = helloFromNativeCode();
-                //   result.success(greetings);
+                // String greetings = helloFromNativeCode();
+                // result.success(greetings);
                 // }
 
                 final Map<String, String> arguments = call.arguments();
 
-                if(call.method.equals("initializeConnection")){
-                  System.out.print("good wifi is good");
+                if (call.method.equals("initializeConnection")) {
+                    CONNECT_TO_WIFI_RESULT = result;
+                    System.out.print("good wifi is good");
 
-                  initializeConnection(arguments.get("ssid"),arguments.get("passkey") );
+                    scanned_hotspotSSID = arguments.get("ssid");
+                    scanned_hotspotPSK = arguments.get("passkey");
+
+                    initializeConnection(arguments.get("ssid"), arguments.get("passkey"));
+                    // Handler timer = new Handler();
+                    // final int delay = 7000; // milliseconds
+                    // Runnable timeout = new Runnable() {
+                    //     public void run() {
+                    //         if (!CONNECT_SUCCESS) {
+                    //             CONNECT_TO_WIFI_RESULT.success(false);
+                    //         }
+
+                    //     }
+                    // };
+
+                    // timer.postDelayed(timeout, delay);
 
                 }
- 
 
-
-
-              }});
-  }
+            }
+        });
+    }
 
     private void initializeWifi() {
         wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         wifiConfiguration = new WifiConfiguration();
 
     }
-  private void initializeConnection(String SSID, String passkey){
 
-      initializeWifi();
-      connectToHotSpot(SSID , passkey);
+    private void initializeConnection(String SSID, String passkey) {
 
+        initializeWifi();
+        connectToHotSpot(SSID, passkey);
 
+    }
 
-  }
     private Boolean changeStateWifiAp(boolean activated) {
         Method method;
         try {
 
-            method = wifiManager.getClass().getDeclaredMethod("setWifiApEnabled", WifiConfiguration.class, Boolean.TYPE);
+            method = wifiManager.getClass().getDeclaredMethod("setWifiApEnabled", WifiConfiguration.class,
+                    Boolean.TYPE);
             method.invoke(wifiManager, wifiConfiguration, activated);
             return true;
         } catch (Exception e) {
@@ -91,11 +107,12 @@ public class MainActivity extends FlutterActivity {
             return false;
         }
     }
+
     private void prepareBeforeConnect() {
 
-//        if (!wifiManager.isWifiEnabled()) {
+        // if (!wifiManager.isWifiEnabled()) {
         wifiManager.setWifiEnabled(true);
-//        }
+        // }
         try {
             Method method = wifiManager.getClass().getDeclaredMethod("getWifiApState");
             method.setAccessible(true);
@@ -114,28 +131,26 @@ public class MainActivity extends FlutterActivity {
         prepareBeforeConnect();
         ConnectHotspotAsync cn = new ConnectHotspotAsync(wifiManager, SSID, passKey);
         cn.execute();
-//        MainActivity.ConnectHotspotThread cn = new MainActivity.ConnectHotspotThread(wifiManager, SSID, passKey);
-//        cn.start();
-//      new ConnectHotspotTask().execute();
-
+        // MainActivity.ConnectHotspotThread cn = new
+        // MainActivity.ConnectHotspotThread(wifiManager, SSID, passKey);
+        // cn.start();
+        // new ConnectHotspotTask().execute();
 
     }
-  private String helloFromNativeCode() {
-//    Toast.makeText(getApplicationContext(), "hello", Toast.LENGTH_LONG);
-    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-    if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-      startActivityForResult(takePictureIntent, 1);
-    }
-    return "Hello from Native Android Code";
-  }
 
+    private String helloFromNativeCode() {
+        // Toast.makeText(getApplicationContext(), "hello", Toast.LENGTH_LONG);
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, 1);
+        }
+        return "Hello from Native Android Code";
+    }
 
     private void startClient(String ip) {
 
-//        client = new Client(ip, 5050, this, invoicesPath);
+        // client = new Client(ip, 5050, this, invoicesPath);
         client.start();
-
-
 
     }
 
@@ -158,18 +173,17 @@ public class MainActivity extends FlutterActivity {
 
             wifiConfig = new WifiConfiguration();
             wifiConfig.SSID = String.format("\"%s\"", SSID);
-            // wifiConfig.preSharedKey = String.format("\"%s\"", passKey);
-            // wifiConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
-            wifiConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
+            wifiConfig.preSharedKey = String.format("\"%s\"", passKey);
+            wifiConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
+            // wifiConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
 
-//        dialog = new ProgressDialog(MainActivity.this);
-//        dialog.setMessage("Connecting");
-//        dialog.setIndeterminate(false);
-//        dialog.setCancelable(false);
-//        dialog.show();
+            // dialog = new ProgressDialog(MainActivity.this);
+            // dialog.setMessage("Connecting");
+            // dialog.setIndeterminate(false);
+            // dialog.setCancelable(false);
+            // dialog.show();
 
         }
-
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -178,9 +192,9 @@ public class MainActivity extends FlutterActivity {
             while (netId == -1) {
                 wifiConfig = new WifiConfiguration();
                 wifiConfig.SSID = String.format("\"%s\"", SSID);
-                // wifiConfig.preSharedKey = String.format("\"%s\"", passKey);
-                // wifiConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
-                wifiConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
+                wifiConfig.preSharedKey = String.format("\"%s\"", passKey);
+                wifiConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
+                // wifiConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
 
                 System.out.println("SSID:" + SSID + " PSK:" + passKey);
                 netId = wifiManager.addNetwork(wifiConfig);
@@ -192,46 +206,43 @@ public class MainActivity extends FlutterActivity {
             Boolean connected = isConnectedViaWifi();
             while (!connected) {
                 connected = isConnectedViaWifi();
-//                info = wifiManager.getConnectionInfo ();
-//                ssid  = info.getSSID();
-//                System.out.println("ssid battle" + ssid +" "+ scanned_hotspotSSID);
+                // info = wifiManager.getConnectionInfo ();
+                // ssid = info.getSSID();
+                // System.out.println("ssid battle" + ssid +" "+ scanned_hotspotSSID);
             }
-              // this.
+            // this.
             return null;
         }
-
 
         @Override
         protected void onPostExecute(Void aVoid) {
             System.out.println("connected to wifi from native idiots");
+            CONNECT_SUCCESS = (wifiManager.getConnectionInfo().getSSID() + "").equals(scanned_hotspotSSID)
+                    || (wifiManager.getConnectionInfo().getSSID() + "").contains(scanned_hotspotSSID);
+            CONNECT_TO_WIFI_RESULT.success(CONNECT_SUCCESS);
             super.onPostExecute(aVoid);
             // dialog.hide();
             // Toast.makeText(this, "connected to wifi", Toast.LENGTH_SHORT).show();
-//            startClient(scanned_device_ip);
+            // startClient(scanned_device_ip);
 
-
-        }
-
-
-        private boolean isConnectedViaWifi() {
-            ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo mWifi = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-            System.out.println("Connected?: "+ mWifi.isConnected());
-            return mWifi.isConnected();
         }
 
     }
 
-
+    private boolean isConnectedViaWifi() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo mWifi = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        System.out.println("Connected?: " + mWifi.isConnected());
+        return mWifi.isConnected();
+    }
 
     // private String takeReceiptPhoto(){
-  //   Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-  //   Uri imageUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory(),"receipt_" +
-  //           String.valueOf(System.currentTimeMillis()) + ".jpg"));
-  //   intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, imageUri);
-  //   startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+    // Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+    // Uri imageUri = Uri.fromFile(new
+    // File(Environment.getExternalStorageDirectory(),"receipt_" +
+    // String.valueOf(System.currentTimeMillis()) + ".jpg"));
+    // intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, imageUri);
+    // startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
 
-
-  // }
+    // }
 }
-

@@ -12,7 +12,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:papyrus_client/models/CameraCaptureModel.dart';
 
 class GetReceiptScreen extends StatefulWidget {
-
   CameraCaptureModel ccModel;
   GetReceiptScreen(this.ccModel);
   @override
@@ -25,7 +24,7 @@ class _GetReceiptScreenState extends State<GetReceiptScreen>
   CameraCaptureModel ccModel;
   TabController tabController;
   int currIndex = 0;
-_GetReceiptScreenState(this.ccModel);
+  _GetReceiptScreenState(this.ccModel);
   @override
   void initState() {
     // TODO: implement initState
@@ -43,6 +42,13 @@ _GetReceiptScreenState(this.ccModel);
     setState(() {
       currIndex = tabController.index;
     });
+  }
+
+  @override
+  void dispose() {
+    globalController.dispose();
+    // TODO: implement dispose
+    super.dispose();
   }
 
   @override

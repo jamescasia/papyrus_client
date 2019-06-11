@@ -10,6 +10,7 @@ import 'package:simple_permissions/simple_permissions.dart';
 import 'dart:io'; 
 import 'CameraCaptureModel.dart';
 import 'package:ef_qrcode/ef_qrcode.dart';
+import 'ReceiveReceiptModel.dart';
 enum Period { MONTHLY, WEEKLY, DAILY }
 
 class AppModel extends Model {
@@ -24,6 +25,7 @@ class AppModel extends Model {
   // String rootFilePath;
   EditReceiptScreenModel editReceiptScreenModel;
   CameraCaptureModel cameraCaptureModel;
+  ReceiveReceiptModel receiveReceiptModel; 
   FirebaseUser user;
   Directory rootDir;
   Directory tempDir;
@@ -46,6 +48,7 @@ class AppModel extends Model {
     user = await mAuth.currentUser(); 
     editReceiptScreenModel = EditReceiptScreenModel(this);
     cameraCaptureModel = CameraCaptureModel(this);
+    receiveReceiptModel = ReceiveReceiptModel(this);
     rootDir = await getApplicationDocumentsDirectory(); 
     tempDir = await getTemporaryDirectory();
     print("THE ROOT DERR" + rootDir.path);

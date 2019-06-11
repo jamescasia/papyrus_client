@@ -67,34 +67,34 @@ class PapyrusCustomer extends StatelessWidget {
             fontFamily: 'Montserrat',
             primarySwatch: Colors.blue,
           ),
-          home:  SplashScreen(),
-            // FutureBuilder(
-            //     future: appModel.mAuth.currentUser(),
-            //     builder: (context, snapshot) {
-            //       if (snapshot.connectionState == ConnectionState.done) {
-            //         if (snapshot.data != null)
-            //           return HomeScreen();
-            //         else
-            //           return LogInScreen();
-            //       } else
-            //         return Container(
-            //             width: MediaQuery.of(context).size.width,
-            //             height: MediaQuery.of(context).size.height,
-            //             color: Colors.red,
-            //             child: Stack(
-            //               children: <Widget>[
-            //                 LogInScreen(),
-            //                 Container(
-            //                   color: Colors.black12,
-            //                   width: MediaQuery.of(context).size.width,
-            //                   height: MediaQuery.of(context).size.height,
-            //                   child: Center(
-            //                     child: CircularProgressIndicator(),
-            //                   ),
-            //                 )
-            //               ],
-            //             ));
-            //     });
+          home: SplashScreen(),
+          // FutureBuilder(
+          //     future: appModel.mAuth.currentUser(),
+          //     builder: (context, snapshot) {
+          //       if (snapshot.connectionState == ConnectionState.done) {
+          //         if (snapshot.data != null)
+          //           return HomeScreen();
+          //         else
+          //           return LogInScreen();
+          //       } else
+          //         return Container(
+          //             width: MediaQuery.of(context).size.width,
+          //             height: MediaQuery.of(context).size.height,
+          //             color: Colors.red,
+          //             child: Stack(
+          //               children: <Widget>[
+          //                 LogInScreen(),
+          //                 Container(
+          //                   color: Colors.black12,
+          //                   width: MediaQuery.of(context).size.width,
+          //                   height: MediaQuery.of(context).size.height,
+          //                   child: Center(
+          //                     child: CircularProgressIndicator(),
+          //                   ),
+          //                 )
+          //               ],
+          //             ));
+          //     });
           // }),
           // routes: <String, WidgetBuilder>{
           //   '/': (context) =>HomeScreen(),
@@ -108,6 +108,7 @@ class PapyrusCustomer extends StatelessWidget {
 
 // }
 double homeButtonDist;
+
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => new _HomeScreenState();
@@ -118,8 +119,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     sizeMul = MediaQuery.of(context).size.width / 411.4;
-    recptCardHeight = 72 * sizeMul; 
-    homeButtonDist = -0.00023*(MediaQuery.of(context).size.width*MediaQuery.of(context).size.width) + 0.9466*(MediaQuery.of(context).size.width) - 56.372 ;
+    recptCardHeight = 72 * sizeMul;
+    homeButtonDist = -0.00023 *
+            (MediaQuery.of(context).size.width *
+                MediaQuery.of(context).size.width) +
+        0.9466 * (MediaQuery.of(context).size.width) -
+        56.372;
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
       statusBarColor: const Color(0xFF61C350),
       // #61C350
@@ -141,7 +146,7 @@ class HomeScreenTopPart extends StatefulWidget {
   _HomeScreenTopPartState createState() => new _HomeScreenTopPartState();
 }
 
-class _HomeScreenTopPartState extends State<HomeScreenTopPart> { 
+class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
   static const platform = const MethodChannel('flutter.native/helper');
   String _responseFromNativeCode = 'Waiting for Response...';
   Future<void> responseFromNativeCode() async {
@@ -207,15 +212,16 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                             splashColor: Colors.white.withAlpha(0),
                             highlightColor: Colors.black.withOpacity(0.1),
                             onTap: () {
-                              appModel.viewing_period = Period.MONTHLY; 
+                              appModel.viewing_period = Period.MONTHLY;
                             },
                             child: Container(
                               // color: Colors.white,
-                              padding: (appModel.viewing_period == Period.MONTHLY)
-                                  ? EdgeInsets.symmetric(
-                                      vertical: sizeMul * 2,
-                                      horizontal: sizeMul * 8)
-                                  : null,
+                              padding:
+                                  (appModel.viewing_period == Period.MONTHLY)
+                                      ? EdgeInsets.symmetric(
+                                          vertical: sizeMul * 2,
+                                          horizontal: sizeMul * 8)
+                                      : null,
                               decoration: (appModel.viewing_period ==
                                       Period.MONTHLY)
                                   ? BoxDecoration(
@@ -225,10 +231,10 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                                   : null,
 
                               child: Text("MONTHLY",
-                                  style:
-                                      (appModel.viewing_period == Period.MONTHLY)
-                                          ? headerStyleSelected
-                                          : headerStyle),
+                                  style: (appModel.viewing_period ==
+                                          Period.MONTHLY)
+                                      ? headerStyleSelected
+                                      : headerStyle),
                             ),
                           ),
                           InkWell(
@@ -238,11 +244,12 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                               appModel.viewing_period = Period.WEEKLY;
                             },
                             child: Container(
-                              padding: (appModel.viewing_period == Period.WEEKLY)
-                                  ? EdgeInsets.symmetric(
-                                      vertical: sizeMul * 2,
-                                      horizontal: sizeMul * 8)
-                                  : null,
+                              padding:
+                                  (appModel.viewing_period == Period.WEEKLY)
+                                      ? EdgeInsets.symmetric(
+                                          vertical: sizeMul * 2,
+                                          horizontal: sizeMul * 8)
+                                      : null,
                               decoration: (appModel.viewing_period ==
                                       Period.WEEKLY)
                                   ? BoxDecoration(
@@ -255,9 +262,10 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                                 highlightColor: Colors.black.withOpacity(0.1),
                                 child: Text(
                                   "WEEKLY",
-                                  style: (appModel.viewing_period == Period.WEEKLY)
-                                      ? headerStyleSelected
-                                      : headerStyle,
+                                  style:
+                                      (appModel.viewing_period == Period.WEEKLY)
+                                          ? headerStyleSelected
+                                          : headerStyle,
                                 ),
                               ),
                             ),
@@ -272,7 +280,8 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                                       vertical: sizeMul * 2,
                                       horizontal: sizeMul * 8)
                                   : null,
-                              decoration: (appModel.viewing_period == Period.DAILY)
+                              decoration: (appModel.viewing_period ==
+                                      Period.DAILY)
                                   ? BoxDecoration(
                                       color: Colors.white,
                                       borderRadius:
@@ -355,7 +364,7 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                           child: InkWell(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(15 * sizeMul)),
-                            onTap: () { 
+                            onTap: () {
                               // print(result);
                             },
                             splashColor: Colors.greenAccent,
@@ -606,7 +615,7 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
             // right: MediaQuery.of(context).size.width * 0.035,
             // left: ( MediaQuery.of(context).size.height/ MediaQuery.of(context).size.width)*102,
             // left:128,
-            left:homeButtonDist ,
+            left: homeButtonDist,
             // left: -0.0002*(MediaQuery.of(context).size.width*MediaQuery.of(context).size.width) + 0.8991*(MediaQuery.of(context).size.width) - 49.764,
             // left: 0.776*MediaQuery.of(context).size.width - 30.378,
             child: RaisedButton(
@@ -617,15 +626,13 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                 color: greeny.colors[1],
                 onPressed: () {
                   print("SIIZE" + MediaQuery.of(context).size.toString());
-                  Navigator.push(
-                      context,
-                      CupertinoPageRoute(
-                          builder: (context) {  
-                            return
-                              // EditReceiptScreen(appModel.editReceiptScreenModel)
-                              // CameraCaptureScreen()
-                              GetReceiptScreen(appModel.cameraCaptureModel);}
-                              ));
+                  Navigator.push(context,
+                      CupertinoPageRoute(builder: (context) {
+                    return
+                        // EditReceiptScreen(appModel.editReceiptScreenModel)
+                        // CameraCaptureScreen()
+                        GetReceiptScreen(appModel.cameraCaptureModel);
+                  }));
                 },
                 child: Container(
                   width: sizeMul * 74.052,
@@ -667,7 +674,7 @@ class _HomeScreenBottomPartState extends State<HomeScreenBottomPart> {
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height -
           0.942 * MediaQuery.of(context).size.width,
-          color: Colors.white.withAlpha(0),
+      color: Colors.white.withAlpha(0),
       padding: EdgeInsets.symmetric(horizontal: sizeMul * 35),
       child: Center(
         // mainAxisAlignment: MainAxisAlignment.center,
