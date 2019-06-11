@@ -91,23 +91,23 @@ class Receipt {
         "category": _category,
         "isPapyrus": _isPapyrus,
         "imagePath": _imagePath,
-        "items": _items
+        "items": _items.map((f)=>f.toJson() ).toList(),
       };
   factory Receipt.fromJson(Map<String, dynamic> json) {
     var r = Receipt()
-      .._recpt_id = json['recpt_id']
-      .._uid = json['uid']
-      .._time_stamp = json['time_stamp']
-      .._total = json['total']
-      .._merchant = json['merchant']
-      .._dateTime = json['dateTime']
-      .._category = json['category']
-      .._isPapyrus = json['isPapyrus']
-      .._imagePath = json['imagePath'];
+      ..recpt_id = json['recpt_id']
+      ..uid = json['uid']
+      ..time_stamp = json['time_stamp']
+      ..total = json['total']
+      ..merchant = json['merchant']
+      ..dateTime = json['dateTime']
+      ..category = json['category']
+      ..isPapyrus = json['isPapyrus']
+      ..imagePath = json['imagePath'];
     var list = json['items'] as List;
     if (list.length > 0) {
       List<ReceiptItem> rList =
-          list.map((i) => ReceiptItem.fromJson(json)).toList();
+          list.map((i) => ReceiptItem.fromJson(i)).toList();
           r.items = rList;
     }
     else r.items = <ReceiptItem> [] ;

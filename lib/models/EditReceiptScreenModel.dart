@@ -16,6 +16,7 @@ class EditReceiptScreenModel extends Model {
   Receipt _receipt;
   bool _changed;
   AppModel appModel;
+  bool formIsValid = false;
   // ReceiptItem _currentReceiptItem = ReceiptItem("", 0, 0);
   // set currentReceiptItem(ReceiptItem item ) => _currentReceiptItem = item;
 

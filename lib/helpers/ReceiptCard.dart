@@ -2,22 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:papyrus_client/screens/HomeScreen.dart';
 import 'package:papyrus_client/screens/ShowReceiptScreen.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:papyrus_client/data_models/Receipt.dart';
 
 class ReceiptCard extends StatelessWidget {
-  final String date;
-  final double total;
-  final String mainItem;
-  final String imagePath;
-  final double margin;
-  final BuildContext context;
+ final Receipt receipt;
+  final double margin = 6;
+  final int index;
 
-  ReceiptCard(this.context, 
-      this.date, this.total, this.mainItem, this.imagePath, this.margin);
+  ReceiptCard(this.receipt, this.index);
   @override
   Widget build(BuildContext context) {
+
+    // print("" + receipt.merchant );
+    // print(receipt.dateTime);
+    // print(receipt.category);
+    // print(receipt.items[0].name);
+
     return Container(
-      margin: EdgeInsets.symmetric(
-          horizontal: sizeMul * 0, vertical: sizeMul * margin),
+      
+      margin: EdgeInsets.only(top: sizeMul * ((index!=0)?margin:130), bottom:sizeMul*margin),
       width: 333 * sizeMul,
       height: 72 * sizeMul,
       decoration: BoxDecoration(
@@ -49,7 +52,7 @@ class ReceiptCard extends StatelessWidget {
               Navigator.push(
                   context,
                   CupertinoPageRoute(
-                      builder: (context) => ShowReceiptScreen()));
+                      builder: (context) => ShowReceiptScreen(receipt)));
             },
             splashColor: Colors.amber,
             highlightColor: Colors.black.withOpacity(0.1),
@@ -57,20 +60,30 @@ class ReceiptCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                Image.asset(
-                  imagePath,
-                  height: MediaQuery.of(context).size.width * 0.12,
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(Icons.image,
+                        size: MediaQuery.of(context).size.width * 0.1),
+                    Text(
+                      receipt.merchant,
+                      overflow: TextOverflow.fade,
+                      style: TextStyle(
+                          fontSize: 11 * sizeMul, fontWeight: FontWeight.w600),
+                    ),
+                  ],
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(
-                      mainItem,
+                      receipt.items[0].name,
                       style: TextStyle(
                           fontSize: 16 * sizeMul, fontWeight: FontWeight.w600),
                     ),
                     Text(
-                      date,
+                      DateTime.parse(receipt.dateTime).month.toString().substring(1,4) +" " + DateTime.parse(receipt.dateTime).day.toString() +", "+  DateTime.parse(receipt.dateTime).year.toString(),
                       style: TextStyle(fontSize: 11 * sizeMul),
                     )
                   ],
@@ -79,17 +92,17 @@ class ReceiptCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: <Widget>[
                     Text(
-                      "${addCommas((total.floor()))}.",
+                      "${addCommas((receipt.total.floor()))}.",
                       style: TextStyle(
                           color: Colors.red,
                           fontWeight: FontWeight.bold,
                           fontSize: 17 * sizeMul),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(bottom: sizeMul),
+                      padding: EdgeInsets.only(bottom: sizeMul*1.5),
                       child: Text(
-                        (total.toString().split(".")[1] != "0")
-                            ? "${total.toString().split(".")[1]}"
+                        (receipt.total.toString().split(".")[1] != "0")
+                            ? "${receipt.total.toString().split(".")[1]}"
                             : "00",
                         style: TextStyle(
                             color: Colors.red,

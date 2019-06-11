@@ -184,19 +184,17 @@ class _ReceiptScreenBottomPartState extends State<ReceiptScreenBottomPart> {
             return Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
-              margin: EdgeInsets.symmetric(horizontal: sizeMul * 20),
-              child: (appModel.receiptHeadersAreReady)?   ListView.builder(
-                      itemCount: appModel.receiptHeaders.length,
+              margin: EdgeInsets.symmetric(horizontal: sizeMul * 50),
+              child: (appModel.receiptsAreReady)
+                  ? ListView.builder(
+                      itemCount: appModel.receipts.length-1,
                       itemBuilder: (BuildContext context, int index) {
-                        return new ReceiptCard(
-                            context,
-                            appModel.receiptHeaders[index].date,
-                            appModel.receiptHeaders[index].total,
-                            appModel.receiptHeaders[index].firstItemName,
-                            "assets/icons/3x/seven.png",
-                            6);
+                        // return  ReceiptCard(appModel.receipts[index], index);
+                        return Text("hello$index");
                       },
-                    ):Center(child:CircularProgressIndicator()),
+                    )
+                  : Center(child: CircularProgressIndicator()),
+                  // replace with shimmer
               // child: FutureBuilder(
               //     future: rsModel.fetchReceiptHeaders(),
               //     builder: (context, snapshot) {

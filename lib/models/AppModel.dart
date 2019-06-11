@@ -24,11 +24,11 @@ class AppModel extends Model {
   bool _alsoReceivePromosThruEmail;
   bool _receiveUniquePromos;
   bool _receiveOpenToAllPromos;
-  List<String> _receipts_json_paths = [];
-  List<ReceiptHeader> receiptHeaders= [];
+  List<String> _receipts_json_paths = []; 
+  List<Receipt> receipts = [];
   FirebaseAuth mAuth;
   String platformVersion;
-  bool receiptHeadersAreReady = false;
+  bool receiptsAreReady = false;
   // String rootFilePath;
   EditReceiptScreenModel editReceiptScreenModel;
   CameraCaptureModel cameraCaptureModel;
@@ -42,7 +42,7 @@ class AppModel extends Model {
 
   Map<String, String> dirMap = {
     "Receipts": "null",
-    "ReceiptsImages": "null", 
+    "ReceiptsImages": "null",
     "UserData": "null",
   };
   String userQRPath;
@@ -88,12 +88,26 @@ class AppModel extends Model {
     receiptsScreenModel = ReceiptsScreenModel(this);
     rootDir = await getApplicationDocumentsDirectory();
     await checkOrGenerateDirectories();
-    listFileNamesOfReceiptsFoundInStorage();
-     generateReceiptHeaders();
-
+    // await deleteAllReceiptFiles();
+    await listFileNamesOfReceiptsFoundInStorageAndGenerateReceipts(); 
 
     tempDir = await getTemporaryDirectory();
     generateImage();
+  }
+
+  void deleteAllReceiptFiles()async{
+
+    List<FileSystemEntity> files;
+    print("here are the files");
+    files = Directory(dirMap['Receipts'])
+        .listSync(recursive: true, followLinks: false);
+    for (int i = 0; i < files.length; i++) { 
+      File rJSON = File(files[i].path);   
+      await rJSON.delete();
+      print('ouyst');
+    }
+
+
   }
 
 // void saveReceiptToJsonAndToFile() {
@@ -106,47 +120,50 @@ class AppModel extends Model {
 
 //     readReceiptFromJsonFile(file.path);
 //   }
- 
+
   void addReceiptandSaveToStorage(Receipt r) {
     String path = '${dirMap['Receipts']}/${r.time_stamp}.json';
     File file = new File(path);
     file.writeAsString(jsonEncode(r.toJson()));
+    print("The encodedd is tadaa" + jsonEncode(r.toJson()) ) ;
     _receipts_json_paths.add(path);
 
-    var rh = new ReceiptHeader(
-        r.dateTime, r.merchant, r.total, r.items[0].name, null);
-    receiptHeaders.add(rh);
 
-    // notifyListeners();
+    notifyListeners();
   }
 
-  void listFileNamesOfReceiptsFoundInStorage() {
+  void listFileNamesOfReceiptsFoundInStorageAndGenerateReceipts() async {
     List<FileSystemEntity> files;
     print("here are the files");
     files = Directory(dirMap['Receipts'])
         .listSync(recursive: true, followLinks: false);
     for (int i = 0; i < files.length; i++) {
       _receipts_json_paths.add(files[i].path);
-      // receiptsScreenModel.rec
-      // print(files[i].path);
-    }
-  }
-
-    generateReceiptHeaders() async {
-    for (String rpath in _receipts_json_paths) {
-      File rJSON = File(rpath);
+      File rJSON = File(files[i].path);
       Map map = jsonDecode(await rJSON.readAsString());
-      Receipt r = new Receipt.fromJson(map);
-      var rh = new ReceiptHeader(
-          r.dateTime, r.merchant, r.total, r.items[0].name, null);
-      receiptHeaders.add(rh); 
+      var r = Receipt.fromJson(map);
+      receipts.add(r);
+      print("The receipts are: "+ files[i].path.toString());
+      print("the encoded value " + r.merchant);
+      print("the encoded value " + (r.items[0].name.toString()));
+      print("hey the value" + await rJSON.readAsString());
+      // await rJSON.delete();
+      // print('ouyst');
     }
-    receiptHeadersAreReady =  true;
-
-    print("DONE LOOOADIINNNNGG");
-    print(receiptHeaders.length);
+    receiptsAreReady = true;
+    print("all the recpts nibbas");
+    for(Receipt r in receipts){
+      
+      print(r.merchant);
+      print(r.items[0].name);
+      print(r.items[0].price);
+      print("next");
+    }
+    print(receipts.length);
     notifyListeners();
   }
+
+ 
 
   checkOrGenerateDirectories() async {
     for (String i in dirMap.keys) {
@@ -223,13 +240,4 @@ class UserPreferences {
   // String
 
 }
-
-class ReceiptHeader {
-  String date;
-  String merchant;
-  double total;
-  String firstItemName;
-  String imagePath;
-  ReceiptHeader(
-      this.date, this.merchant, this.total, this.firstItemName, this.imagePath);
-}
+ 

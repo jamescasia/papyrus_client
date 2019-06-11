@@ -13,7 +13,8 @@ import 'dart:core';
 import 'package:papyrus_client/models/AppModel.dart';
 import 'dart:io';
 import 'CameraCaptureScreen.dart';
-import 'package:flutter/cupertino.dart'; 
+import 'package:flutter/cupertino.dart';
+import 'ShowReceiptScreen.dart';
 // import ''
 // import 'dart:core';
 
@@ -137,8 +138,8 @@ class EditReceiptScreenTopPart extends StatelessWidget {
                 backgroundColor: Colors.grey[700],
               )),
           Positioned(
-            left:2,
-            top:  24,
+            left: 2,
+            top: 24,
             child: InkWell(
               splashColor: Colors.white.withAlpha(0),
               highlightColor: Colors.black.withOpacity(0.1),
@@ -175,10 +176,8 @@ class EditReceiptScreenTopPart extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(3000)),
                 onTap: () {
                   editReceiptScreenModel.deleteReceiptImage();
-                  Navigator.pushReplacement(context,
-                      CupertinoPageRoute(builder: (context) {
-                    return CameraCaptureScreen();
-                  }));
+                  
+                    Navigator.of(context).pop();
 
                   // editReceiptScreenModel = EditReceiptScreenModel();
                   // editReceiptScreenModel.changed=!editReceiptScreenModel.changed;
@@ -215,6 +214,7 @@ class _EditReceiptScreenBottomPartState
   TextEditingController date_controller = TextEditingController();
   FocusNode m_focus = FocusNode();
   FocusNode d_focus = FocusNode();
+  String catChoice = "Food";
   @override
   void initState() {
     merchant_controller.text = editReceiptScreenModel.receipt.merchant;
@@ -227,13 +227,15 @@ class _EditReceiptScreenBottomPartState
     // ScopedModelDescendant
     // FocusNode
     return ScopedModelDescendant<EditReceiptScreenModel>(
-        rebuildOnChange: false,
-        builder: (context, child, editReceiptScreenModel) {
+        rebuildOnChange: true,
+        builder: (context, child, erModel) {
           ctx = context;
 
           return ScopedModelDescendant<AppModel>(
               // stream: null,
               builder: (context, child, appModel) {
+                
+          erModel.receipt.category = catChoice;
             return new Container(
               width: MediaQuery.of(context).size.width,
               // padding: EdgeInsets.only(top:sizeMul*10),
@@ -286,25 +288,7 @@ class _EditReceiptScreenBottomPartState
                                           color: Colors.white,
                                           width: sizeMul * 2)),
                                   child: Center(
-                                    child:
-                                        //     TextFormField(
-                                        //       initialValue: editReceiptScreenModel.receipt.merchant,
-                                        //   style: TextStyle(
-                                        //       color: Colors.black,
-                                        //       fontWeight: FontWeight.bold,
-                                        //       fontSize: sizeMul * 20),
-
-                                        //       onSaved: (input) => editReceiptScreenModel.receipt.merchant = input,
-                                        //       // controller: merchant_controller,
-                                        //   // decoration: InputDecoration(
-                                        //   //   hintText: "Merchant",
-                                        //   //   fillColor: Colors.white,
-                                        //   //   // labelStyle:
-                                        //   //   // labelText: "Haha"
-                                        //   // ),
-                                        // )
-
-                                        EditableText(
+                                    child: EditableText(
                                       autofocus: false,
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
@@ -314,13 +298,10 @@ class _EditReceiptScreenBottomPartState
                                       cursorColor: Colors.pinkAccent,
                                       focusNode: m_focus,
                                       controller: merchant_controller,
-                                      onSubmitted: (a) {
-                                        merchant_controller.text = a;
-                                      },
-                                      onSelectionChanged: (a, b) {
-                                        // m_focus.unfocus();
-                                        // m_focus.consumeKeyboardToken();
-                                        // m_focus.dispose();
+                                      onChanged: (merchant) {
+                                        erModel.receipt.merchant = merchant;
+
+                                        erModel.update();
                                       },
                                     ),
                                   ),
@@ -447,7 +428,7 @@ class _EditReceiptScreenBottomPartState
                                       color: Colors.white, width: sizeMul * 2)),
                               // child: Center(
                               child: DropdownButton<String>(
-                                value: "Food",
+                                value: catChoice,
                                 items: [
                                   new DropdownMenuItem(
                                     child: Text(
@@ -501,8 +482,13 @@ class _EditReceiptScreenBottomPartState
                                   ),
                                 ],
                                 onChanged: (choice) {
-                                  editReceiptScreenModel.receipt.category =
-                                      choice.toString();
+                                  erModel.receipt.category = choice.toString();
+
+                                  setState(() {
+                                    catChoice = choice;
+                                  });
+
+                                  editReceiptScreenModel.update();
                                 },
                               )
                               // ),
@@ -609,8 +595,7 @@ class _EditReceiptScreenBottomPartState
                           Column(
                             children: <Widget>[
                               Column(
-                                  children: editReceiptScreenModel.receipt.items
-                                      .map((item) {
+                                  children: erModel.receipt.items.map((item) {
                                 return ReceiptItemLine(
                                     item, editReceiptScreenModel);
                               }).toList()),
@@ -664,7 +649,7 @@ class _EditReceiptScreenBottomPartState
                                           fontWeight: FontWeight.bold),
                                     ),
                                     Text(
-                                      "${((editReceiptScreenModel.receipt.total.toStringAsFixed(2)))}",
+                                      "${((erModel.receipt.total.toStringAsFixed(2)))}",
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 20 * sizeMul,
@@ -677,11 +662,39 @@ class _EditReceiptScreenBottomPartState
                                 padding: EdgeInsets.only(top: sizeMul * 40),
                                 child: InkWell(
                                   onTap: () {
-                                    editReceiptScreenModel
-                                        .saveReceipt();
-                                    appModel.editReceiptScreenModel =
-                                        EditReceiptScreenModel(appModel);
-                                    Navigator.pop(context);
+                                    print("llength" +
+                                        erModel.receipt.items.length
+                                            .toString() +
+                                        "merchant" +
+                                        erModel.receipt.merchant +
+                                        "cat" +
+                                        erModel.receipt.category);
+                                    if (erModel.receipt.items.length == 0 ||
+                                        erModel.receipt.merchant == "" ||
+                                        erModel.receipt.category == "") {
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                                content: Text(
+                                              "Unable to proceed because some fields are missing.",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ));
+                                          });
+                                    } else {
+                                      erModel.saveReceipt();
+                                      appModel.editReceiptScreenModel =
+                                          EditReceiptScreenModel(appModel);
+
+                                      Navigator.pushReplacement(context,
+                                          CupertinoPageRoute(
+                                              builder: (context) {
+                                        return ShowReceiptScreen(erModel.receipt);
+                                      }));
+                                    }
                                   },
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -833,7 +846,7 @@ class EditItem extends StatefulWidget {
 class _EditItemState extends State<EditItem> {
   BuildContext context;
   ReceiptItem receiptItem;
-  final EditReceiptScreenModel editReceiptScreenModel;
+  EditReceiptScreenModel editReceiptScreenModel;
   bool add;
   FocusNode fa = FocusNode();
   FocusNode fb = FocusNode();
@@ -1179,10 +1192,15 @@ class _EditItemState extends State<EditItem> {
                         receiptItem.price = double.parse(price_controller.text);
                         receiptItem.total = receiptItem.qty * receiptItem.price;
 
+
                         if (add) {
                           editReceiptScreenModel.addItemToReceipt(receiptItem);
+                          editReceiptScreenModel.update();
+                          print("added");
                         }
                         Navigator.pop(context);
+
+                        print("WTF" + editReceiptScreenModel.receipt.items[0].name + editReceiptScreenModel.receipt.items[0].total.toString());
 
                         Scaffold.of(ctx).showSnackBar(SnackBar(
                           content: Row(

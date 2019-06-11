@@ -2,26 +2,38 @@ import 'package:flutter/material.dart';
 import 'HomeScreen.dart';
 import 'package:papyrus_client/helpers/ClipShadowPath.dart';
 import 'package:papyrus_client/helpers/CustomShapeClipper.dart';
+import 'package:papyrus_client/data_models/Receipt.dart';
 
 class ShowReceiptScreen extends StatefulWidget {
+  Receipt receipt;
+
+  ShowReceiptScreen(this.receipt);
   @override
-  _ShowReceiptScreenState createState() => new _ShowReceiptScreenState();
+  _ShowReceiptScreenState createState() => new _ShowReceiptScreenState(this.receipt);
 }
 
 class _ShowReceiptScreenState extends State<ShowReceiptScreen> {
+
+  Receipt receipt;
+  _ShowReceiptScreenState(this.receipt);
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(body: ShowReceiptScreenStack());
+    return new Scaffold(body: ShowReceiptScreenStack(receipt));
   }
 }
 
 class ShowReceiptScreenStack extends StatefulWidget {
+
+  Receipt receipt;
+  ShowReceiptScreenStack(this.receipt);
   @override
   _ShowReceiptScreenStackState createState() =>
-      new _ShowReceiptScreenStackState();
+      new _ShowReceiptScreenStackState(receipt);
 }
 
 class _ShowReceiptScreenStackState extends State<ShowReceiptScreenStack> {
+  Receipt receipt;
+  _ShowReceiptScreenStackState(this.receipt);
   @override
   Widget build(BuildContext context) {
     TextStyle headerStyle = TextStyle(
@@ -50,12 +62,14 @@ class _ShowReceiptScreenStackState extends State<ShowReceiptScreenStack> {
                       children: <Widget>[
                         SizedBox(
                           height: 50 * sizeMul,
+                          child: Text(receipt.category , style: TextStyle(fontSize: 40*sizeMul),),
                         ),
+
                       ],
                     ),
                   ),
                   // The appbar
-                  new Stack(
+                 Stack(
                     children: <Widget>[
                       ClipShadowPath(
                           shadow: Shadow(
