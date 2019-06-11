@@ -9,8 +9,9 @@ class ReceiptCard extends StatelessWidget {
   final String mainItem;
   final String imagePath;
   final double margin;
+  final BuildContext context;
 
-  ReceiptCard(
+  ReceiptCard(this.context, 
       this.date, this.total, this.mainItem, this.imagePath, this.margin);
   @override
   Widget build(BuildContext context) {

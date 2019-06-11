@@ -8,7 +8,7 @@ import 'package:papyrus_client/data_models/Receipt.dart';
 import 'dart:convert';
 import 'AppModel.dart';
 import 'dart:io'; 
-import 'package:mlkit/mlkit.dart';
+import 'package:mlkit/mlkit.dart'; 
 
 class EditReceiptScreenModel extends Model {
   TextEditingController _controller = TextEditingController();
@@ -49,20 +49,23 @@ class EditReceiptScreenModel extends Model {
     _receipt = Receipt()
       ..dateTime = DateTime.now().toIso8601String()
       ..time_stamp = time
-      ..imagePath = "${appModel.rootDir.path}/ReceiptsImages/${time}.png";
+      ..imagePath = "${appModel.dirMap['ReceiptsImages']}/${time}.png";
   }
 
   // setCurrentImagePath(String path){
   //   _receipt.imagePath = path;
   //   notifyListeners();
   // }
+  void saveReceipt(){
+    appModel.addReceiptandSaveToStorage(_receipt);
+  }
 
   void saveReceiptToJsonAndToFile() {
     print("locals" + appModel.rootDir.path);
     print("saving");
 
     File file = new File(
-        '${appModel.rootDir.path}/ReceiptsJson/${_receipt.time_stamp}.json');
+        '${appModel.dirMap['Receipts']}/${_receipt.time_stamp}.json');
     file.writeAsString(jsonEncode(_receipt.toJson()));
 
     readReceiptFromJsonFile(file.path);

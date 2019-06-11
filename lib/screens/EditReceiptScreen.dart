@@ -13,7 +13,7 @@ import 'dart:core';
 import 'package:papyrus_client/models/AppModel.dart';
 import 'dart:io';
 import 'CameraCaptureScreen.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart'; 
 // import ''
 // import 'dart:core';
 
@@ -609,8 +609,6 @@ class _EditReceiptScreenBottomPartState
                           Column(
                             children: <Widget>[
                               Column(
-                                  // children: [],),
-                                  // // yawa
                                   children: editReceiptScreenModel.receipt.items
                                       .map((item) {
                                 return ReceiptItemLine(
@@ -666,8 +664,6 @@ class _EditReceiptScreenBottomPartState
                                           fontWeight: FontWeight.bold),
                                     ),
                                     Text(
-                                      // "3123131",
-                                      // // yawa
                                       "${((editReceiptScreenModel.receipt.total.toStringAsFixed(2)))}",
                                       style: TextStyle(
                                           color: Colors.white,
@@ -682,7 +678,7 @@ class _EditReceiptScreenBottomPartState
                                 child: InkWell(
                                   onTap: () {
                                     editReceiptScreenModel
-                                        .saveReceiptToJsonAndToFile();
+                                        .saveReceipt();
                                     appModel.editReceiptScreenModel =
                                         EditReceiptScreenModel(appModel);
                                     Navigator.pop(context);

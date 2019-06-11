@@ -657,100 +657,105 @@ class HomeScreenBottomPart extends StatefulWidget {
 }
 
 class _HomeScreenBottomPartState extends State<HomeScreenBottomPart> {
-  goToReceiptsScreen() {
-    Navigator.push(
-        context, CupertinoPageRoute(builder: (context) => ReceiptScreen()));
-  }
+  goToReceiptsScreen() {}
 
   @override
   Widget build(BuildContext context) {
-    return new Container(
-      // constraints: BoxConstraints(
-      //   minHeight: MediaQuery.of(context).size.height -
-      //     0.942 * MediaQuery.of(context).size.width,
-      //     minWidth:  MediaQuery.of(context).size.width,
-      // ),
-      // color: Colors.black26,
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height -
-          0.942 * MediaQuery.of(context).size.width,
-      color: Colors.white.withAlpha(0),
-      padding: EdgeInsets.symmetric(horizontal: sizeMul * 35),
-      child: Center(
-        // mainAxisAlignment: MainAxisAlignment.center,
-        // children: <Widget>[
-        child:
-            // SizedBox(width: 30 * MediaQuery.of(context).size.width / 400),
-            Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              "  Last Receipts",
-              style: TextStyle(
-                  fontSize: 24 * sizeMul,
-                  color: Colors.black.withOpacity(0.8),
-                  fontWeight: FontWeight.bold),
-            ),
-            // SizedBox(
-            //   height: sizeMul * 1,
-            // ),
-            Container(
-              height: MediaQuery.of(context).size.height -
-                  0.942 * MediaQuery.of(context).size.width -
-                  (34 * sizeMul),
-              child: ListView(
-                shrinkWrap: true,
-                scrollDirection: Axis.vertical,
-                padding: EdgeInsets.symmetric(vertical: sizeMul * 4),
-                children: <Widget>[
-                  ReceiptCard("May 19, 2019", 99.00, "2 pc Chicken Joy",
-                      "assets/icons/3x/jollibee.png", 6),
-                  ReceiptCard("May 19, 2019", 66.00, "B'lue water 500 ml",
-                      "assets/icons/3x/seven.png", 6),
-                  LongButton(
-                    greeny.colors[1],
-                    333 * sizeMul,
-                    69 * sizeMul,
-                    sizeMul * 3,
-                    Colors.green,
-                    greeny.colors[0],
-                    sizeMul * 9,
-                    goToReceiptsScreen,
-                    Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            "VIEW ALL",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w900,
-                                fontSize: sizeMul * 20),
-                          ),
-                          SizedBox(
-                            width: sizeMul * 5,
-                          ),
-                          Icon(
-                            Icons.chevron_right,
-                            color: Colors.white,
-                            size: sizeMul * 35,
-                          )
-                        ],
-                      ),
-                    ),
-                    // null
-                  ),
-                ],
+    return ScopedModelDescendant<AppModel>(builder: (context, child, appModel) {
+      return new Container(
+        // constraints: BoxConstraints(
+        //   minHeight: MediaQuery.of(context).size.height -
+        //     0.942 * MediaQuery.of(context).size.width,
+        //     minWidth:  MediaQuery.of(context).size.width,
+        // ),
+        // color: Colors.black26,
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height -
+            0.942 * MediaQuery.of(context).size.width,
+        color: Colors.white.withAlpha(0),
+        padding: EdgeInsets.symmetric(horizontal: sizeMul * 35),
+        child: Center(
+          // mainAxisAlignment: MainAxisAlignment.center,
+          // children: <Widget>[
+          child:
+              // SizedBox(width: 30 * MediaQuery.of(context).size.width / 400),
+              Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                "  Last Receipts",
+                style: TextStyle(
+                    fontSize: 24 * sizeMul,
+                    color: Colors.black.withOpacity(0.8),
+                    fontWeight: FontWeight.bold),
               ),
-            )
+              // SizedBox(
+              //   height: sizeMul * 1,
+              // ),
+              Container(
+                height: MediaQuery.of(context).size.height -
+                    0.942 * MediaQuery.of(context).size.width -
+                    (34 * sizeMul),
+                child: ListView(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                  padding: EdgeInsets.symmetric(vertical: sizeMul * 4),
+                  children: <Widget>[
+                    // ReceiptCard("May 19, 2019", 99.00, "2 pc Chicken Joy",
+                    //     "assets/icons/3x/jollibee.png", 6),
+                    // ReceiptCard("May 19, 2019", 66.00, "B'lue water 500 ml",
+                    //     "assets/icons/3x/seven.png", 6),
+                    LongButton(
+                      greeny.colors[1],
+                      333 * sizeMul,
+                      69 * sizeMul,
+                      sizeMul * 3,
+                      Colors.green,
+                      greeny.colors[0],
+                      sizeMul * 9,
+                      () {
+                        Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                                builder: (context) => ReceiptScreen(
+                                    appModel.receiptsScreenModel)));
+                      },
+                      Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              "VIEW ALL",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: sizeMul * 20),
+                            ),
+                            SizedBox(
+                              width: sizeMul * 5,
+                            ),
+                            Icon(
+                              Icons.chevron_right,
+                              color: Colors.white,
+                              size: sizeMul * 35,
+                            )
+                          ],
+                        ),
+                      ),
+                      // null
+                    ),
+                  ],
+                ),
+              )
 
-            // ReceiptCard("May 19, 2019", 99, "mainItem", "imagePath"),
-          ],
+              // ReceiptCard("May 19, 2019", 99, "mainItem", "imagePath"),
+            ],
+          ),
+          // SizedBox(width: 30 * MediaQuery.of(context).size.width / 400),
+          // ],
         ),
-        // SizedBox(width: 30 * MediaQuery.of(context).size.width / 400),
-        // ],
-      ),
-    );
+      );
+    });
   }
 }
 

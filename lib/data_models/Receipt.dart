@@ -4,8 +4,8 @@ class Receipt {
   String _time_stamp = "";
   double _total = 0;
   String _merchant = "";
-  String _dateTime ="";
-  String _category ="";
+  String _dateTime = "";
+  String _category = "";
   bool _isPapyrus = false;
   String _imagePath = "";
 
@@ -24,6 +24,8 @@ class Receipt {
   // Receipt(this._recpt_id, this._uid, this._time_stamp, this._merchant, this._category, this._dateTime,this._isPapyrus,this._items ){
   //   updateReceipt();
   // }
+
+  Receipt();
 
   String get recpt_id => _recpt_id;
   bool get isPapyrus => _isPapyrus;
@@ -79,7 +81,7 @@ class Receipt {
     });
   }
 
-  toJson() => {
+  Map<String, dynamic> toJson() => {
         'recpt_id': _recpt_id,
         'uid': _uid,
         'time_stamp': _time_stamp,
@@ -91,6 +93,32 @@ class Receipt {
         "imagePath": _imagePath,
         "items": _items
       };
+  factory Receipt.fromJson(Map<String, dynamic> json) {
+    var r = Receipt()
+      .._recpt_id = json['recpt_id']
+      .._uid = json['uid']
+      .._time_stamp = json['time_stamp']
+      .._total = json['total']
+      .._merchant = json['merchant']
+      .._dateTime = json['dateTime']
+      .._category = json['category']
+      .._isPapyrus = json['isPapyrus']
+      .._imagePath = json['imagePath'];
+    var list = json['items'] as List;
+    if (list.length > 0) {
+      List<ReceiptItem> rList =
+          list.map((i) => ReceiptItem.fromJson(json)).toList();
+          r.items = rList;
+    }
+    else r.items = <ReceiptItem> [] ;
+    // r.items = rList;
+    return r;
+  }
+// {List<ReceiptItem> r}
+  // _items = (json['items']).map((i){return ReceiptItem.fromJson(i);}).toList()<ReceiptItem>;
+//     List<ReceiptItem> l = _items.map((i)=>ReceiptItem.fromJson(i).toList() );
+// List<ReceiptItem> imagesList = _items.map((i) => ReceiptItem.fromJson(i)).toList();
+
 }
 
 class ReceiptItem {
@@ -103,12 +131,18 @@ class ReceiptItem {
     this._total = this._price * this._qty;
   }
 
-  toJson() => {
+  Map<String, dynamic> toJson() => {
         "name": _name,
         "qty": _qty,
         "price": _price,
         "total": _total,
       };
+
+  ReceiptItem.fromJson(Map<String, dynamic> json)
+      : _name = json["name"],
+        _qty = json['qty'],
+        _price = json['price'],
+        _total = json['total'];
 
   // List<ReceiptItem> get items => _items;
   // set recpt_id(String id) => _recpt_id = id;
