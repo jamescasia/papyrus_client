@@ -22,6 +22,7 @@ class AppModel extends Model {
   bool _receiveOpenToAllPromos;
   List<String> _receipts_json_paths;
   FirebaseAuth mAuth;
+  String platformVersion;
   // String rootFilePath;
   EditReceiptScreenModel editReceiptScreenModel;
   CameraCaptureModel cameraCaptureModel;
@@ -31,6 +32,8 @@ class AppModel extends Model {
   Directory tempDir;
   List<String> dirList = ["/ReceiptsJson", "/ReceiptsImages", "/UserData"];
   String userQRPath;
+  List <Permission> perms = [Permission.AccessCoarseLocation, Permission.AccessFineLocation,Permission.Camera, Permission.ReadExternalStorage, Permission.WriteExternalStorage];
+  Map <Permission, PermissionStatus> perm_results = new Map<Permission, PermissionStatus>();
   // BuildContext context;
 
   // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -46,6 +49,23 @@ class AppModel extends Model {
   void init() async {
     mAuth = FirebaseAuth.instance;
     user = await mAuth.currentUser(); 
+    
+    try{
+      platformVersion = await SimplePermissions.platformVersion;
+    }
+    catch(e){
+      platformVersion = "failed to get platform version";
+    }
+    for(Permission p in perms){
+      // perm_results.addEntries(p:null);
+      perm_results[p] = await SimplePermissions.requestPermission(p);
+    }
+      print("The permission results" + perm_results.toString());
+
+
+
+
+
     editReceiptScreenModel = EditReceiptScreenModel(this);
     cameraCaptureModel = CameraCaptureModel(this);
     receiveReceiptModel = ReceiveReceiptModel(this);
