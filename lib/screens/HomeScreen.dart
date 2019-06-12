@@ -21,6 +21,7 @@ import 'SplashScreen.dart';
 import 'CameraCaptureScreen.dart';
 import 'GetReceiptScreen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'ReceiveReceiptScreen.dart';
 // void main() {
 //   return runApp(PapyrusCustomer());
 // }
@@ -242,6 +243,13 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                             highlightColor: Colors.black.withOpacity(0.1),
                             onTap: () {
                               appModel.viewing_period = Period.WEEKLY;
+
+                              Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                      builder: (context) =>
+                                          ReceiveReceiptScreen(
+                                              appModel.receiveReceiptModel)));
                             },
                             child: Container(
                               padding:
@@ -705,18 +713,14 @@ class _HomeScreenBottomPartState extends State<HomeScreenBottomPart> {
                     Column(
                         children: appModel.receipts
                             .map((f) => (appModel.receipts.indexOf(f) <=
-                                    (sqrt(
-                                      
-                                      (MediaQuery.of(context).size.height -
-                                                    0.942 *
-                                                        MediaQuery.of(context)
-                                                            .size
-                                                            .width) /
-                                                ((72 * sizeMul) *
-                                                (1 + 18 * sizeMul))
-                                                
-                                                ))
-                                            .floor()  )
+                                    (sqrt((MediaQuery.of(context).size.height -
+                                                0.942 *
+                                                    MediaQuery.of(context)
+                                                        .size
+                                                        .width) /
+                                            ((72 * sizeMul) *
+                                                (1 + 18 * sizeMul))))
+                                        .floor())
                                 ? ReceiptCard(context, f, 1)
                                 : SizedBox(
                                     width: 1,

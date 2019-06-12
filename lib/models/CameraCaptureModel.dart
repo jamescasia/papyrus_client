@@ -19,9 +19,9 @@ class CameraCaptureModel extends Model {
 
   AppModel appModel;
   String imagePath;
-  String ssid;
-  String passkey;
-  String ip ;
+  String ssid = "";
+  String passkey = "";
+  String ip = "";
 
   CameraCaptureModel(this.appModel) {
     cameraScreenState = CameraScreenState();
