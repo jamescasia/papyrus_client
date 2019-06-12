@@ -127,6 +127,8 @@ class AppModel extends Model {
     file.writeAsString(jsonEncode(r.toJson()));
     print("The encodedd is tadaa" + jsonEncode(r.toJson()) ) ;
     _receipts_json_paths.add(path);
+    receipts.insert(0, r);
+    // receipts.add(r);
 
 
     notifyListeners();

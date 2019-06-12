@@ -696,15 +696,32 @@ class _HomeScreenBottomPartState extends State<HomeScreenBottomPart> {
                 height: MediaQuery.of(context).size.height -
                     0.942 * MediaQuery.of(context).size.width -
                     (34 * sizeMul),
-                child: ListView(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.vertical,
-                  padding: EdgeInsets.symmetric(vertical: sizeMul * 4),
+                // color: Colors.red,
+                child: Column(
+                  // shrinkWrap: true,
+                  // scrollDirection: Axis.vertical,
+                  // padding: EdgeInsets.symmetric(vertical: sizeMul * 4),
                   children: <Widget>[
-                    // ReceiptCard("May 19, 2019", 99.00, "2 pc Chicken Joy",
-                    //     "assets/icons/3x/jollibee.png", 6),
-                    // ReceiptCard("May 19, 2019", 66.00, "B'lue water 500 ml",
-                    //     "assets/icons/3x/seven.png", 6),
+                    Column(
+                        children: appModel.receipts
+                            .map((f) => (appModel.receipts.indexOf(f) <=
+                                    (sqrt(
+                                      
+                                      (MediaQuery.of(context).size.height -
+                                                    0.942 *
+                                                        MediaQuery.of(context)
+                                                            .size
+                                                            .width) /
+                                                ((72 * sizeMul) *
+                                                (1 + 18 * sizeMul))
+                                                
+                                                ))
+                                            .floor()  )
+                                ? ReceiptCard(context, f, 1)
+                                : SizedBox(
+                                    width: 1,
+                                  ))
+                            .toList()),
                     LongButton(
                       greeny.colors[1],
                       333 * sizeMul,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:papyrus_client/screens/HomeScreen.dart';
 
 class LongButton extends StatelessWidget {
   final Color bgColor;
@@ -26,6 +27,9 @@ class LongButton extends StatelessWidget {
     return Container(
       width: width,
       height: height,
+      margin: EdgeInsets.only(
+          top: sizeMul *9,
+          bottom: sizeMul * 9),
       decoration: BoxDecoration(
         boxShadow: [
           new BoxShadow(
@@ -48,7 +52,6 @@ class LongButton extends StatelessWidget {
           child: InkWell(
             borderRadius: (BorderRadius.circular(borderRadius)),
             onTap: () {
-
               callback();
             },
             highlightColor: highlightColor.withOpacity(0.7),

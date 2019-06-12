@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:papyrus_client/models/AppModel.dart';
 import 'package:papyrus_client/models/ReceiptsScreenModel.dart';
+import 'package:intl/intl.dart';
 
 class ReceiptScreen extends StatefulWidget {
   ReceiptsScreenModel rsModel;
@@ -184,17 +185,28 @@ class _ReceiptScreenBottomPartState extends State<ReceiptScreenBottomPart> {
             return Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
-              margin: EdgeInsets.symmetric(horizontal: sizeMul * 50),
+              margin: EdgeInsets.symmetric(horizontal: sizeMul * 40),
               child: (appModel.receiptsAreReady)
                   ? ListView.builder(
-                      itemCount: appModel.receipts.length-1,
+                    // reverse: true,
+                      itemCount: appModel.receipts.length,
                       itemBuilder: (BuildContext context, int index) {
-                        // return  ReceiptCard(appModel.receipts[index], index);
-                        return Text("hello$index");
+                        var receipt = appModel.receipts[index];
+                        // if (DateTime.parse(receipt.dateTime).day !=
+                        //     DateTime.parse(
+                        //             appModel.receipts[index + 1].dateTime)
+                        //         .day)
+                        //   return Text("" +
+                        //       DateFormat("MMM dd, yyyy")
+                        //           .format(DateTime.parse(receipt.dateTime)));
+                        // else
+                          return ReceiptCard(
+                              context, appModel.receipts[index], index);
+                        // return Text("hello${appModel.receipts[index].items[0].name}",style: TextStyle(fontSize: 50,));
                       },
                     )
                   : Center(child: CircularProgressIndicator()),
-                  // replace with shimmer
+              // replace with shimmer
               // child: FutureBuilder(
               //     future: rsModel.fetchReceiptHeaders(),
               //     builder: (context, snapshot) {
