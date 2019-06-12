@@ -3,6 +3,7 @@ import 'package:scoped_model/scoped_model.dart';
 import 'HomeScreen.dart';
 import 'package:papyrus_client/models/ReceiveReceiptModel.dart';
 import 'package:papyrus_client/models/AppModel.dart';
+import 'package:toast/toast.dart';
 
 class ReceiveReceiptScreen extends StatefulWidget {
   ReceiveReceiptModel rrModel;
@@ -39,6 +40,8 @@ class ReceiveReceiptBody extends StatefulWidget {
 }
 
 class _ReceiveReceiptBodyState extends State<ReceiveReceiptBody> {
+  TextEditingController c = TextEditingController();
+  FocusNode f = FocusNode();
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant<AppModel>(builder: (context, child, appModel) {
@@ -46,6 +49,7 @@ class _ReceiveReceiptBodyState extends State<ReceiveReceiptBody> {
           model: appModel.receiveReceiptModel,
           child: ScopedModelDescendant<ReceiveReceiptModel>(
               builder: (context, child, rrModel) {
+            rrModel.context = context;
             return new Container(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
@@ -53,10 +57,65 @@ class _ReceiveReceiptBodyState extends State<ReceiveReceiptBody> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    Text("Receiving receipt", style: TextStyle(fontSize: sizeMul*40),),
+                    Text(
+                      "Receiving receipt",
+                      style: TextStyle(fontSize: sizeMul * 40),
+                    ),
+                    Container(
+                      height: 70,
+                      // color: Colors.red,
+                      width: MediaQuery.of(context).size.width,
+                      child: TextField(
+                        
+                        controller: c,
+                        focusNode: f,
+                        style: TextStyle(color: Colors.black),
+                        cursorColor: Colors.red,
+                        // backgroundCursorColor: Colors.amber,
+                      ),
+                    ),
                     RaisedButton(
+                      child: Text("CONN#EC"),
                       onPressed: () {
                         rrModel.connectToWifi();
+                      },
+                    ),
+                    RaisedButton(
+                      child: Text("START CLIENT"),
+                      onPressed: () {
+                        rrModel.state = "client";
+                        rrModel.startClient();
+                      },
+                    ),
+                    RaisedButton(
+                      child: Text("START SERVER"),
+                      onPressed: () {
+                        rrModel.state = "server";
+                        rrModel.startServer();
+                      },
+                    ),
+                    RaisedButton(
+                      child: Text("SEND"),
+                      onPressed: () {
+                        rrModel.write(c.text);
+                        c.clear();
+                      },
+                    ),
+                    RaisedButton(
+                      child: Text("RECEIVE"),
+                      onPressed: () {
+                        rrModel.connectToWifi();
+                      },
+                    ),
+                    RaisedButton(
+                      child: Text("Show toast"),
+                      onPressed: () {
+                        rrModel.showToast();
+                        // Toast.show("Toast plugin app",context,
+                        //     duration: Toast.LENGTH_SHORT,
+                        //     gravity: Toast.BOTTOM);
+
+                        // rrModel.showToast();
                       },
                     ),
                   ],

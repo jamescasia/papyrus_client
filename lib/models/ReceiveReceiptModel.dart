@@ -5,92 +5,135 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:convert';
 import 'package:toast/toast.dart';
+import 'package:flutter/material.dart';
 
 class ReceiveReceiptModel extends Model {
   AppModel appModel;
   String ssid;
   String passkey;
+  BuildContext context;
   String ip;
   Socket client;
   Socket serverSocket;
   ServerSocket server;
+  String state;
   ReceiveReceiptModel(this.appModel) {}
 
-  socketConnect1() async {
-   Socket.connect(ip, 5050)
-    .then((Socket sock) {
-      client = sock;
-      client.listen(dataHandler, 
-        onError: errorHandler, 
-        onDone: doneHandler, 
-        cancelOnError: false);
-    })
-    .catchError((AsyncError e) {
-      print("Unable to connect: $e");
-      exit(1);
+//   socketConnect1() async {
+//    Socket.connect(ip, 5050)
+//     .then((Socket sock) {
+//       client = sock;
+//       client.listen(dataHandler,
+//         onError: errorHandler,
+//         onDone: doneHandler,
+//         cancelOnError: false);
+//     })
+//     .catchError((AsyncError e) {
+//       print("Unable to connect: $e");
+//       exit(1);
+//     });
+
+//   //Connect standard in to the socket
+//   stdin.listen((data) =>
+//       client.write(
+//         new String.fromCharCodes(data).trim() + '\n'));
+// }
+
+  startClient() async {
+    Toast.show("Starting client", context,
+        duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+    client = await Socket.connect('192.168.43.1', 5050);
+
+    client.listen((e) { 
+
+      // client.write("hey there");
+
+      Toast.show(String.fromCharCodes(e), context,
+          duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+    });
+    // client.transform(new IntConverter()).listen((e) {
+    //   // Toast.show(String.fromCharCodes(e), context,
+    //   //     duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+    //   return e.forEach(print);
+    // });
+    print('main done');
+  }
+
+  void startServer() async {
+    Toast.show("Starting server", context,
+        duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+    server = await ServerSocket.bind('192.168.43.1', 5050);
+    await server.listen((Socket socket) {
+      serverSocket = socket;
+      print('Got connected ${socket.remoteAddress}');
+
+      Toast.show("someone connected ${socket.remoteAddress}", context,
+          duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+
+      // for (int i = 0; i < 1024; i++) {
+      //   // serverSocket.add
+      //   // socket.add(new Uint64List.fromList([i]).buffer.asUint8List()  );
+      // }
+      // // socket.close();
+      // print('Closed ${socket.remoteAddress}');
+
+
+       serverSocket.listen((a) {
+      Toast.show("Message from client ${String.fromCharCodes(a)}", context,
+          duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+    });
     });
 
-  //Connect standard in to the socket 
-  stdin.listen((data) => 
-      client.write(
-        new String.fromCharCodes(data).trim() + '\n'));
-}
+    serverSocket.listen((a) {
+      Toast.show("Message from client ${String.fromCharCodes(a)}", context,
+          duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+    });
+  }
 
+  void showToast() {
+    Toast.show("Toast plugin app", context,
+        duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+  }
 
-startClient()async{
-
-      client = await Socket.connect('192.168.43.1', 5050);
-  client.transform(new IntConverter()).listen((e) => e.forEach(print));
-  print('main done');
-}
-void startServer()async{
-
-   server = await ServerSocket.bind('192.168.43.1', 5050);
-  server.listen((Socket socket) {
-    serverSocket = socket;
-    print('Got connected ${socket.remoteAddress}');
-
-    for (int i = 0; i < 1024; i++) {
-      // socket.add(new Uint64List.fromList([i]).buffer.asUint8List());
+  void write(String s) {
+    if (state == "server") {
+      serverSocket.write(s);
     }
-    // socket.close();
-    // print('Closed ${socket.remoteAddress}');
-  });
 
+    if (state == "client") {
+      client.write(s);
+    }
 
-}
+    // Toast.show("printing", context,
+    //     duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+    // serverSocket.add([7, 11, 69, 69, 69]);
+  }
 
-void write(){
-  serverSocket.add([7,11,69,69,69]);
+  void read() {}
 
+  void dataHandler(data) {
+    print(new String.fromCharCodes(data).trim());
+  }
 
-}
-void read(){
+  void errorHandler(error, StackTrace trace) {
+    print(error);
+  }
 
+  void doneHandler() {
+    client.destroy();
+    exit(0);
+  }
 
-}
-
-void dataHandler(data){
-  print(new String.fromCharCodes(data).trim());
-}
-
-void errorHandler(error, StackTrace trace){
-  print(error);
-}
-
-void doneHandler(){
-  client.destroy();
-  exit(0);
-}
-
-  launch()async {
+  launch() async {
+    Toast.show("Toast plugin app", context,
+        duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
     ssid = appModel.cameraCaptureModel.ssid;
     passkey = appModel.cameraCaptureModel.passkey;
     ip = appModel.cameraCaptureModel.ip;
 
-  //  if(await connectToWifi())
-  //     socketConnect2();
-  //   else connectToWifi();
+    //  if(await connectToWifi())
+    //     socketConnect2();
+    //   else connectToWifi();
   }
 
   Future<bool> connectToWifi() async {

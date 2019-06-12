@@ -70,17 +70,17 @@ class AppModel extends Model {
   void init() async {
     mAuth = FirebaseAuth.instance;
     user = await mAuth.currentUser();
-    if (user == null) return;
-    try {
-      platformVersion = await SimplePermissions.platformVersion;
-    } catch (e) {
-      platformVersion = "failed to get platform version";
-    }
-    for (Permission p in perms) {
-      // perm_results.addEntries(p:null);
-      perm_results[p] = await SimplePermissions.requestPermission(p);
-    }
-    print("The permission results" + perm_results.toString());
+    // if (user == null) return;
+    // try {
+    //   platformVersion = await SimplePermissions.platformVersion;
+    // } catch (e) {
+    //   platformVersion = "failed to get platform version";
+    // }
+    // for (Permission p in perms) {
+    //   // perm_results.addEntries(p:null);
+    //   perm_results[p] = await SimplePermissions.requestPermission(p);
+    // }
+    // print("The permission results" + perm_results.toString());
 
     editReceiptScreenModel = EditReceiptScreenModel(this);
     cameraCaptureModel = CameraCaptureModel(this);
@@ -104,6 +104,7 @@ class AppModel extends Model {
     for (int i = 0; i < files.length; i++) { 
       File rJSON = File(files[i].path);   
       await rJSON.delete();
+      
       print('ouyst');
     }
 
