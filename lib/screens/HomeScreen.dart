@@ -4,6 +4,7 @@ import 'package:papyrus_client/helpers/ClipShadowPath.dart';
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:papyrus_client/helpers/ReceiptCard.dart';
+import 'package:shimmer/shimmer.dart';
 // import 'receipts_page.dart';
 import 'package:papyrus_client/helpers/ScrollBehaviour.dart';
 import 'package:papyrus_client/helpers/CustomShapeClipper.dart';
@@ -236,10 +237,10 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                                   : null,
 
                               child: Text("MONTHLY",
-                                  style:
-                                      (appModel.viewing_period == Period.MONTHLY)
-                                          ? headerStyleSelected
-                                          : headerStyle),
+                                  style: (appModel.viewing_period ==
+                                          Period.MONTHLY)
+                                      ? headerStyleSelected
+                                      : headerStyle),
                             ),
                           ),
                           InkWell(
@@ -274,10 +275,10 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                                 highlightColor: Colors.black.withOpacity(0.1),
                                 child: Text(
                                   "WEEKLY",
-                                  style: (appModel.viewing_period ==
-                                          Period.WEEKLY)
-                                      ? headerStyleSelected
-                                      : headerStyle,
+                                  style:
+                                      (appModel.viewing_period == Period.WEEKLY)
+                                          ? headerStyleSelected
+                                          : headerStyle,
                                 ),
                               ),
                             ),
@@ -712,11 +713,54 @@ class _HomeScreenBottomPartState extends State<HomeScreenBottomPart> {
                       (34 * sizeMul),
                   width: MediaQuery.of(context).size.width,
                   // color: Colors.red,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: bottomChildren(appModel, context),
-                  ))
+                  child: FutureBuilder(
+                      future: bottomChildren(appModel, context),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.active)
+                          return Container(
+                            // width: MediaQuery.of(context).size.width,
+                            // height: 300,
+                            child: Shimmer.fromColors(
+                              baseColor: Colors.grey[200],
+                              highlightColor: Colors.white,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: List<int>.generate(
+                                        ((MediaQuery.of(context).size.height - 0.942 * MediaQuery.of(context).size.width - (34 * sizeMul)) / (81 * sizeMul)).floor()  , (i) => i)
+                                    .toList()
+                                    .map((f) => Container(
+                                          width: 333 * sizeMul,
+                                          height: 72 * sizeMul,
+                                          decoration: BoxDecoration(
+                                            color: Colors.green,
+                                              // border: Border.all(
+                                              //     color: Colors.red,
+                                              //     width: 1 * sizeMul),
+                                              // boxShadow: [
+                                              //   new BoxShadow(
+                                              //     blurRadius: 2 * sizeMul,
+                                              //     color: Colors.black12,
+                                              //     offset: new Offset(
+                                              //         0, 0.4 * sizeMul),
+                                              //   ),
+                                              // ],
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(
+                                                      9 * sizeMul))),
+                                        )).toList(),
+                              ),
+                            ),
+                          );
+                        else {
+                          return Column(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: snapshot.data,
+                          );
+                        }
+                      }))
 
               // ReceiptCard("May 19, 2019", 99, "mainItem", "imagePath"),
             ],
@@ -734,7 +778,8 @@ String addCommas(int nums) {
       new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},');
 }
 
-List<Widget> bottomChildren(AppModel appModel, BuildContext context) {
+Future<List<Widget>> bottomChildren(
+    AppModel appModel, BuildContext context) async {
   List<Widget> bc = [
     LongButton(
       greeny.colors[1],
@@ -786,9 +831,9 @@ List<Widget> bottomChildren(AppModel appModel, BuildContext context) {
                     (81 * sizeMul))
                 .floor() -
             1) {
-      bc.insert(bc.length-1, ReceiptCard(context, receipt, 1));
-    }
-    else break;
+      bc.insert(bc.length - 1, ReceiptCard(context, receipt, 1));
+    } else
+      break;
 
     //  else if (appModel.receipts.indexOf(f) ==
     //     ((MediaQuery.of(context).size.height -
