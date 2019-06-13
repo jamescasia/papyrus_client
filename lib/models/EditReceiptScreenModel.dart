@@ -45,10 +45,10 @@ class EditReceiptScreenModel extends Model {
 
 
 
-  createReceipt() {
-    String time = DateTime.now().millisecondsSinceEpoch.toString();
+  createReceipt() { 
+    String time = DateTime.now().toLocal().millisecondsSinceEpoch.toString();
     _receipt = Receipt()
-      ..dateTime = DateTime.now().toIso8601String()
+      ..dateTime = DateTime.now().toLocal().toIso8601String()
       ..time_stamp = time
       ..imagePath = "${appModel.dirMap['ReceiptsImages']}/${time}.png";
   }

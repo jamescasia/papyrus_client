@@ -14,8 +14,8 @@ import 'ReceiveReceiptModel.dart';
 import 'ReceiptsScreenModel.dart';
 import 'package:papyrus_client/data_models/Receipt.dart';
 import 'dart:convert';
+import 'package:papyrus_client/data_models/UserExpense.dart';
 
-enum Period { MONTHLY, WEEKLY, DAILY }
 
 class AppModel extends Model {
   // User _user;
@@ -44,6 +44,9 @@ class AppModel extends Model {
     "Receipts": "null",
     "ReceiptsImages": "null",
     "UserData": "null",
+    "Expenses": "null",
+    
+
   };
   String userQRPath;
   List<Permission> perms = [

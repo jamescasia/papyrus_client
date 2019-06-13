@@ -120,7 +120,7 @@ Widget ReceiptCard(BuildContext context, Receipt receipt, index) {
                         child: Text(
                           // "",
                           (receipt.total.toString().split(".")[1] != "0")
-                              ? "${receipt.total.toString().split(".")[1].substring(1, 3)}"
+                              ? "${receipt.total.toStringAsFixed(2).split(".")[1]}"
                               : "00",
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(

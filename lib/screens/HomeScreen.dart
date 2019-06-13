@@ -23,6 +23,7 @@ import 'GetReceiptScreen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'ReceiveReceiptScreen.dart';
 import 'package:papyrus_client/data_models/Receipt.dart';
+import 'package:papyrus_client/data_models/UserExpense.dart';
 // void main() {
 //   return runApp(PapyrusCustomer());
 // }
@@ -214,10 +215,45 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                             splashColor: Colors.white.withAlpha(0),
                             highlightColor: Colors.black.withOpacity(0.1),
                             onTap: () {
-                              appModel.viewing_period = Period.MONTHLY;
+                              appModel.viewing_period = Period.YEARLY;
                             },
                             child: Container(
                               // color: Colors.white,
+                              padding:
+                                  (appModel.viewing_period == Period.YEARLY)
+                                      ? EdgeInsets.symmetric(
+                                          vertical: sizeMul * 2,
+                                          horizontal: sizeMul * 8)
+                                      : null,
+                              decoration: (appModel.viewing_period ==
+                                      Period.YEARLY)
+                                  ? BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius:
+                                          BorderRadius.circular(sizeMul * 300))
+                                  : null,
+
+                              child: Text("YEARLY",
+                                  style:
+                                      (appModel.viewing_period == Period.YEARLY)
+                                          ? headerStyleSelected
+                                          : headerStyle),
+                            ),
+                          ),
+                          InkWell(
+                            splashColor: Colors.white.withAlpha(0),
+                            highlightColor: Colors.black.withOpacity(0.1),
+                            onTap: () {
+                              appModel.viewing_period = Period.MONTHLY;
+
+                              Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                      builder: (context) =>
+                                          ReceiveReceiptScreen(
+                                              appModel.receiveReceiptModel)));
+                            },
+                            child: Container(
                               padding:
                                   (appModel.viewing_period == Period.MONTHLY)
                                       ? EdgeInsets.symmetric(
@@ -231,50 +267,15 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                                       borderRadius:
                                           BorderRadius.circular(sizeMul * 300))
                                   : null,
-
-                              child: Text("MONTHLY",
-                                  style: (appModel.viewing_period ==
-                                          Period.MONTHLY)
-                                      ? headerStyleSelected
-                                      : headerStyle),
-                            ),
-                          ),
-                          InkWell(
-                            splashColor: Colors.white.withAlpha(0),
-                            highlightColor: Colors.black.withOpacity(0.1),
-                            onTap: () {
-                              appModel.viewing_period = Period.WEEKLY;
-
-                              Navigator.push(
-                                  context,
-                                  CupertinoPageRoute(
-                                      builder: (context) =>
-                                          ReceiveReceiptScreen(
-                                              appModel.receiveReceiptModel)));
-                            },
-                            child: Container(
-                              padding:
-                                  (appModel.viewing_period == Period.WEEKLY)
-                                      ? EdgeInsets.symmetric(
-                                          vertical: sizeMul * 2,
-                                          horizontal: sizeMul * 8)
-                                      : null,
-                              decoration: (appModel.viewing_period ==
-                                      Period.WEEKLY)
-                                  ? BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius:
-                                          BorderRadius.circular(sizeMul * 300))
-                                  : null,
                               child: InkWell(
                                 splashColor: Colors.white.withAlpha(0),
                                 highlightColor: Colors.black.withOpacity(0.1),
                                 child: Text(
-                                  "WEEKLY",
-                                  style:
-                                      (appModel.viewing_period == Period.WEEKLY)
-                                          ? headerStyleSelected
-                                          : headerStyle,
+                                  "MONTHLY",
+                                  style: (appModel.viewing_period ==
+                                          Period.MONTHLY)
+                                      ? headerStyleSelected
+                                      : headerStyle,
                                 ),
                               ),
                             ),

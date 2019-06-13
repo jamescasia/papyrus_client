@@ -73,8 +73,8 @@ class _ShowReceiptScreenStackState extends State<ShowReceiptScreenStack> {
                           Container(
                             width: 300 * sizeMul,
                             child: Text(
-                              // receipt.merchant,
-                              "Jollibee Foods Corporation",
+                              receipt.merchant,
+                              // "Jollibee Foods Corporation",
                               maxLines: 2,
                               textAlign: TextAlign.center,
                               style: TextStyle(
@@ -82,10 +82,10 @@ class _ShowReceiptScreenStackState extends State<ShowReceiptScreenStack> {
                                   fontWeight: FontWeight.w800),
                             ),
                           ),
-                          Text(
-                            receipt.address,
-                            textAlign: TextAlign.center,
-                          ),
+                          // Text(
+                          //   receipt.address,
+                          //   textAlign: TextAlign.center,
+                          // ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisSize: MainAxisSize.min,
@@ -264,9 +264,10 @@ class _ShowReceiptScreenStackState extends State<ShowReceiptScreenStack> {
                               ],
                             ),
                           ),
-                          SizedBox(height: sizeMul*10,),
+                          SizedBox(height: sizeMul*30,),
                           
                           Text("Made with ❤ \nby AetherApps", textAlign: TextAlign.center,),
+                          SizedBox(height: sizeMul*50,),
                         ],
                       ),
                     ),

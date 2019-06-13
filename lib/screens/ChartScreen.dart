@@ -7,6 +7,7 @@ import 'package:papyrus_client/helpers/TimeSeriesChart.dart';
 import 'package:papyrus_client/helpers/GroupBarChart.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:papyrus_client/models/AppModel.dart';
+import 'package:papyrus_client/data_models/UserExpense.dart';
 
 class ChartScreen extends StatefulWidget {
   @override
@@ -215,20 +216,20 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                   Colors.black.withOpacity(0.1),
                                               onTap: () {
                                                 model.viewing_period =
-                                                    Period.MONTHLY;
+                                                    Period.YEARLY;
                                               },
                                               child: Container(
                                                 // color: Colors.white,
                                                 padding: (model
                                                             .viewing_period ==
-                                                        Period.MONTHLY)
+                                                        Period.YEARLY)
                                                     ? EdgeInsets.symmetric(
                                                         vertical: sizeMul * 2,
                                                         horizontal: sizeMul * 8)
                                                     : null,
                                                 decoration: (model
                                                             .viewing_period ==
-                                                        Period.MONTHLY)
+                                                        Period.YEARLY)
                                                     ? BoxDecoration(
                                                         color: Colors.white,
                                                         borderRadius:
@@ -238,10 +239,10 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                                         300))
                                                     : null,
 
-                                                child: Text("MONTHLY",
+                                                child: Text("YEARLY",
                                                     style:
                                                         (model.viewing_period ==
-                                                                Period.MONTHLY)
+                                                                Period.YEARLY)
                                                             ? headerStyleSelected
                                                             : headerStyle),
                                               ),
@@ -249,7 +250,7 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                             InkWell(
                                               onTap: () {
                                                 model.viewing_period =
-                                                    Period.MONTHLY;
+                                                    Period.YEARLY;
                                               },
                                               splashColor:
                                                   Colors.white.withAlpha(0),
@@ -258,14 +259,14 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                               child: Container(
                                                 padding: (model
                                                             .viewing_period ==
-                                                        Period.WEEKLY)
+                                                        Period.MONTHLY)
                                                     ? EdgeInsets.symmetric(
                                                         vertical: sizeMul * 2,
                                                         horizontal: sizeMul * 8)
                                                     : null,
                                                 decoration: (model
                                                             .viewing_period ==
-                                                        Period.WEEKLY)
+                                                        Period.MONTHLY)
                                                     ? BoxDecoration(
                                                         color: Colors.white,
                                                         borderRadius:
@@ -277,17 +278,17 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                 child: InkWell(
                                                   onTap: () {
                                                     model.viewing_period =
-                                                        Period.WEEKLY;
+                                                        Period.MONTHLY;
                                                   },
                                                   splashColor:
                                                       Colors.white.withAlpha(0),
                                                   highlightColor: Colors.black
                                                       .withOpacity(0.1),
                                                   child: Text(
-                                                    "WEEKLY",
+                                                    "MONTHLY",
                                                     style:
                                                         (model.viewing_period ==
-                                                                Period.WEEKLY)
+                                                                Period.MONTHLY)
                                                             ? headerStyleSelected
                                                             : headerStyle,
                                                   ),
