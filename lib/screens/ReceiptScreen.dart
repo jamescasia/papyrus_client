@@ -208,7 +208,7 @@ class _ReceiptScreenBottomPartState extends State<ReceiptScreenBottomPart> {
                         return Container(
                           margin: (index == 0)
                               ? EdgeInsets.only(
-                                  bottom: sizeMul * 9, top: sizeMul * 170)
+                                  bottom: sizeMul * 9, top: sizeMul * 130)
                               : (index == appModel.receipts.length - 1)
                                   ? EdgeInsets.only(
                                       top: sizeMul * 9, bottom: sizeMul * 50)
@@ -220,7 +220,7 @@ class _ReceiptScreenBottomPartState extends State<ReceiptScreenBottomPart> {
                               children: <Widget>[
                                 (dateCurr != datePrev || index == 0)
                                     ? Padding(padding: EdgeInsets.only(bottom: sizeMul*18),child:Text(
-                                        dateCurr.toString(),
+                                        "    " +dateCurr.toString(),
                                         style: TextStyle(
                                             fontWeight: FontWeight.w600),
                                       ))
