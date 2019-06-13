@@ -1,4 +1,4 @@
-enum Period { YEARLY, MONTHLY, DAILY }
+enum Period { MONTHLY, WEEKLY, DAILY }
 
 class UserExpense {
   double total_lifetime_expense_amount;

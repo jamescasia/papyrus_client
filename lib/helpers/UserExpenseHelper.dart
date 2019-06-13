@@ -7,17 +7,12 @@ class UserExpenseHelper {
   List<ExpenseItem> monthly_expense;
   List<ExpenseItem> daily_expense;
 
-  UserExpenseHelper(){
- 
-  }
-
-
+  UserExpenseHelper() {}
 
   List<ExpenseItem> getExpensesGivenCategory(
       List<ExpenseItem> expenses, Category category) {
     return expenses.where((f) => f.category == category).toList();
   }
- 
 
 // get based on time period and given date
 
@@ -26,7 +21,8 @@ class UserExpenseHelper {
   }
 
   void addExpenseFromRawData(Category category, double amount, DateTime date) {
-    ExpenseItem expense = ExpenseItem(category: category, amount: amount, date: date);
+    ExpenseItem expense =
+        ExpenseItem(category: category, amount: amount, date: date);
     userExpense.addExpense(expense);
   }
 
@@ -35,14 +31,11 @@ class UserExpenseHelper {
     if (period == Period.DAILY) {
       return expenses.where((f) => f.date.day == date.day).toList();
     }
-
+    if (period == Period.WEEKLY) {
+      return expenses.where((f) => f.date.year == date.year).toList();
+    }
     if (period == Period.MONTHLY) {
       return expenses.where((f) => f.date.month == date.month).toList();
     }
-
-    if (period == Period.YEARLY) {
-      return expenses.where((f) => f.date.year == date.year).toList();
-    }
   }
-   
 }

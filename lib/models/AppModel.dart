@@ -16,34 +16,32 @@ import 'package:papyrus_client/data_models/Receipt.dart';
 import 'dart:convert';
 import 'package:papyrus_client/data_models/UserExpense.dart';
 
-
 class AppModel extends Model {
   // User _user;
   MethodChannel platform = const MethodChannel('papyrus_client/');
   Period _viewing_period = Period.DAILY;
   bool _alsoReceivePromosThruEmail;
   bool _receiveUniquePromos;
-  bool _receiveOpenToAllPromos; 
+  bool _receiveOpenToAllPromos;
   FirebaseAuth mAuth;
-  String platformVersion; 
+  String platformVersion;
   // String rootFilePath;
   EditReceiptScreenModel editReceiptScreenModel;
   CameraCaptureModel cameraCaptureModel;
   ReceiveReceiptModel receiveReceiptModel;
-  ReceiptsScreenModel receiptsScreenModel; 
+  ReceiptsScreenModel receiptsScreenModel;
   FirebaseUser user;
   Directory rootDir;
   Directory tempDir;
   List<String> dirList;
 
-    List<FileSystemEntity> receiptFiles;
+  List<FileSystemEntity> receiptFiles;
+  List<FileSystemEntity> expenseFiles;
   Map<String, String> dirMap = {
     "Receipts": "null",
     "ReceiptsImages": "null",
     "UserData": "null",
     "Expenses": "null",
-    
-
   };
   String userQRPath;
   List<Permission> perms = [
@@ -85,31 +83,37 @@ class AppModel extends Model {
     editReceiptScreenModel = EditReceiptScreenModel(this);
     cameraCaptureModel = CameraCaptureModel(this);
     receiveReceiptModel = ReceiveReceiptModel(this);
-    receiptsScreenModel = ReceiptsScreenModel(this); 
+    receiptsScreenModel = ReceiptsScreenModel(this);
     rootDir = await getApplicationDocumentsDirectory();
     await checkOrGenerateDirectories();
     // await deleteAllReceiptFiles();
-    await listFileNamesOfReceiptsFoundInStorageAndGenerateReceipts(); 
+    listFileNamesOfReceiptsFoundInStorageAndGenerateReceipts();
 
     tempDir = await getTemporaryDirectory();
     generateImage();
   }
 
-  void deleteAllReceiptFiles()async{
-
+  void deleteAllReceiptFiles() async {
     List<FileSystemEntity> files;
     print("here are the files");
     files = Directory(dirMap['Receipts'])
         .listSync(recursive: true, followLinks: false);
-    for (int i = 0; i < files.length; i++) { 
-      File rJSON = File(files[i].path);   
+    for (int i = 0; i < files.length; i++) {
+      File rJSON = File(files[i].path);
       await rJSON.delete();
-      
+
       print('ouyst');
     }
-
-
   }
+/**
+ * Process
+ * 
+ * 
+ * 
+ * 
+ */
+
+
 
 // void saveReceiptToJsonAndToFile() {
 //     print("locals" + appModel.rootDir.path);
@@ -126,27 +130,34 @@ class AppModel extends Model {
     String path = '${dirMap['Receipts']}/${r.time_stamp}.json';
     File file = new File(path);
     file.writeAsString(jsonEncode(r.toJson()));
-    print("The encodedd is tadaa" + jsonEncode(r.toJson()) ) ;
+    print("The encodedd is tadaa" + jsonEncode(r.toJson()));
 
     receiptFiles.insert(0, file);
     // _receipts_json_paths.add(path);
     // receipts.insert(0, r);
     // receipts.add(r);
 
-
     notifyListeners();
   }
 
-  void listFileNamesOfReceiptsFoundInStorageAndGenerateReceipts() async {
+  // void addExpenseAndSaveToStorage(String path){
+  //   File file = new File(path);
+  //   file.writeAsString(jsonEncode(object)) 
+  // }
+
+  void listFileNamesOfReceiptsFoundInStorageAndGenerateReceipts() {
     print("here are the files");
     receiptFiles = Directory(dirMap['Receipts'])
-        .listSync(recursive: true, followLinks: false);  
+        .listSync(recursive: true, followLinks: false);
 
-        receiptFiles = receiptFiles.reversed.toList();
+    receiptFiles = receiptFiles.reversed.toList();
     notifyListeners();
   }
 
- 
+  void listFileNamesOfExpenseJsonsFoundInStorageAndGenerateExpenses() {
+    expenseFiles = Directory(dirMap['Expenses'])
+        .listSync(recursive: true, followLinks: false);
+  }
 
   checkOrGenerateDirectories() async {
     for (String i in dirMap.keys) {
@@ -223,4 +234,3 @@ class UserPreferences {
   // String
 
 }
- 

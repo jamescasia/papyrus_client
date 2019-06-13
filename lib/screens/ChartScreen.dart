@@ -216,20 +216,20 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                   Colors.black.withOpacity(0.1),
                                               onTap: () {
                                                 model.viewing_period =
-                                                    Period.YEARLY;
+                                                    Period.MONTHLY;
                                               },
                                               child: Container(
                                                 // color: Colors.white,
                                                 padding: (model
                                                             .viewing_period ==
-                                                        Period.YEARLY)
+                                                        Period.MONTHLY)
                                                     ? EdgeInsets.symmetric(
                                                         vertical: sizeMul * 2,
                                                         horizontal: sizeMul * 8)
                                                     : null,
                                                 decoration: (model
                                                             .viewing_period ==
-                                                        Period.YEARLY)
+                                                        Period.MONTHLY)
                                                     ? BoxDecoration(
                                                         color: Colors.white,
                                                         borderRadius:
@@ -239,10 +239,10 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                                         300))
                                                     : null,
 
-                                                child: Text("YEARLY",
+                                                child: Text("MONTHLY",
                                                     style:
                                                         (model.viewing_period ==
-                                                                Period.YEARLY)
+                                                                Period.MONTHLY)
                                                             ? headerStyleSelected
                                                             : headerStyle),
                                               ),
@@ -250,7 +250,7 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                             InkWell(
                                               onTap: () {
                                                 model.viewing_period =
-                                                    Period.YEARLY;
+                                                    Period.MONTHLY;
                                               },
                                               splashColor:
                                                   Colors.white.withAlpha(0),
@@ -259,14 +259,14 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                               child: Container(
                                                 padding: (model
                                                             .viewing_period ==
-                                                        Period.MONTHLY)
+                                                        Period.WEEKLY)
                                                     ? EdgeInsets.symmetric(
                                                         vertical: sizeMul * 2,
                                                         horizontal: sizeMul * 8)
                                                     : null,
                                                 decoration: (model
                                                             .viewing_period ==
-                                                        Period.MONTHLY)
+                                                        Period.WEEKLY)
                                                     ? BoxDecoration(
                                                         color: Colors.white,
                                                         borderRadius:
@@ -278,17 +278,17 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                 child: InkWell(
                                                   onTap: () {
                                                     model.viewing_period =
-                                                        Period.MONTHLY;
+                                                        Period.WEEKLY;
                                                   },
                                                   splashColor:
                                                       Colors.white.withAlpha(0),
                                                   highlightColor: Colors.black
                                                       .withOpacity(0.1),
                                                   child: Text(
-                                                    "MONTHLY",
+                                                    "WEEKLY",
                                                     style:
                                                         (model.viewing_period ==
-                                                                Period.MONTHLY)
+                                                                Period.WEEKLY)
                                                             ? headerStyleSelected
                                                             : headerStyle,
                                                   ),
