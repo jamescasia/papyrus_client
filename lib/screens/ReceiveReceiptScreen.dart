@@ -4,6 +4,8 @@ import 'HomeScreen.dart';
 import 'package:papyrus_client/models/ReceiveReceiptModel.dart';
 import 'package:papyrus_client/models/AppModel.dart';
 import 'package:toast/toast.dart';
+import 'dart:io';
+import 'package:zoomable_image/zoomable_image.dart';
 
 class ReceiveReceiptScreen extends StatefulWidget {
   ReceiveReceiptModel rrModel;
@@ -57,10 +59,7 @@ class _ReceiveReceiptBodyState extends State<ReceiveReceiptBody> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    Text(
-                      "Receiving receipt",
-                      style: TextStyle(fontSize: sizeMul * 40),
-                    ),
+                 
                     Container(
                       height: 70,
                       // color: Colors.red,
@@ -75,9 +74,10 @@ class _ReceiveReceiptBodyState extends State<ReceiveReceiptBody> {
                       ),
                     ),
                     RaisedButton(
-                      child: Text("CONN#EC"),
+                      child: Text("sendfile"),
                       onPressed: () {
-                        rrModel.connectToWifi();
+                        
+                        rrModel.sendFile();
                       },
                     ),
                     RaisedButton(
@@ -118,6 +118,15 @@ class _ReceiveReceiptBodyState extends State<ReceiveReceiptBody> {
                         // rrModel.showToast();
                       },
                     ),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 60,
+                      child: (rrModel.done)?ZoomableImage(FileImage(
+                        new File(rrModel.newImage)
+                        
+                      )):SizedBox(width: 1,),
+                    ),
+
                   ],
                 ));
           }));

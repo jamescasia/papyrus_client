@@ -188,77 +188,51 @@ class _ReceiptScreenBottomPartState extends State<ReceiptScreenBottomPart> {
               margin: EdgeInsets.symmetric(horizontal: sizeMul * 40),
               child: (appModel.receiptsAreReady)
                   ? ListView.builder(
-                    // reverse: true,
+                      // reverse: true,
                       itemCount: appModel.receipts.length,
                       itemBuilder: (BuildContext context, int index) {
-                        var receipt = appModel.receipts[index];
-                        // if (DateTime.parse(receipt.dateTime).day !=
-                        //     DateTime.parse(
-                        //             appModel.receipts[index + 1].dateTime)
-                        //         .day)
-                        //   return Text("" +
-                        //       DateFormat("MMM dd, yyyy")
-                        //           .format(DateTime.parse(receipt.dateTime)));
-                        // else
-                          return ReceiptCard(
-                              context, appModel.receipts[index], index);
+                        // var receipt = appModel.receipts[index];
+                        // DateFormat("MMM dd, yyyy")
+                        //         .format(DateTime.parse(receipt.dateTime))
+
+                        var dateCurr = DateFormat("MMM dd, yyyy").format(
+                            DateTime.parse(appModel.receipts[index].dateTime));
+                        var datePrev = dateCurr;
+
+                        if (index >1 ) {
+                          datePrev = DateFormat("MMM dd, yyyy").format(
+                              DateTime.parse(
+                                  appModel.receipts[index -1].dateTime));
+                        }
+
+                        return Container(
+                          margin: (index == 0)
+                              ? EdgeInsets.only(
+                                  bottom: sizeMul * 9, top: sizeMul * 170)
+                              : (index == appModel.receipts.length - 1)
+                                  ? EdgeInsets.only(
+                                      top: sizeMul * 9, bottom: sizeMul * 50)
+                                  : EdgeInsets.symmetric(vertical: sizeMul * 9),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                (dateCurr != datePrev || index == 0)
+                                    ? Padding(padding: EdgeInsets.only(bottom: sizeMul*18),child:Text(
+                                        dateCurr.toString(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w600),
+                                      ))
+                                    : SizedBox(width: 1),
+                                ReceiptCard(
+                                    context, appModel.receipts[index], index),
+                              ]),
+                        );
                         // return Text("hello${appModel.receipts[index].items[0].name}",style: TextStyle(fontSize: 50,));
                       },
                     )
                   : Center(child: CircularProgressIndicator()),
-              // replace with shimmer
-              // child: FutureBuilder(
-              //     future: rsModel.fetchReceiptHeaders(),
-              //     builder: (context, snapshot) {
-              //       if (snapshot.connectionState == ConnectionState.active)
-              //         return Center(child: CircularProgressIndicator());
-              //       else
-              //         return ListView.builder(
-              //           itemCount: rsModel.receiptHeaders.length,
-              //           itemBuilder: (BuildContext context, int index) {
-              //             print(
-              //                 "bobod row" + rsModel.receiptHeaders[index].date);
-              //             return new ReceiptCard(
-              //                 context,
-              //                 rsModel.receiptHeaders[index].date,
-              //                 rsModel.receiptHeaders[index].total,
-              //                 rsModel.receiptHeaders[index].firstItemName,
-              //                 "assets/icons/3x/seven.png",
-              //                 6);
-              //           },
-              //         );
-              //     }),
-
-              // Center(
-              //   child: Column(
-              //     crossAxisAlignment: CrossAxisAlignment.start,
-              //     children: <Widget>[
-              //       SizedBox(
-              //         height: sizeMul * 170,
-              //       ),
-
-              //       ListView.builder(
-              //         itemCount: rsModel.receiptHeaders.length,
-              //         itemBuilder: (BuildContext context, int index){
-              //           return ReceiptCard(rsModel.receiptHeaders[index].date, rsModel.receiptHeaders[index].total, rsModel.receiptHeaders[index].firstItemName, rsModel.receiptHeaders[index].imagePath, 6);
-              //           // ReceiptCard(date, total, mainItem, imagePath, margin)
-
-              //         },
-              //       ),
-              //       // Column(
-              //       //   mainAxisSize: MainAxisSize.min,
-              //       //   crossAxisAlignment: CrossAxisAlignment.center,
-              //       //   children: <Widget>[
-
-              //       //   ],
-              //       // ),
-
-              //       SizedBox(
-              //         height: 30 * sizeMul,
-              //       )
-              //     ],
-              //   ),
-              // )
             );
           }));
     });

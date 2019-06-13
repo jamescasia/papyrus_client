@@ -6,6 +6,8 @@ import 'dart:typed_data';
 import 'dart:convert';
 import 'package:toast/toast.dart';
 import 'package:flutter/material.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:path_provider/path_provider.dart';
 
 class ReceiveReceiptModel extends Model {
   AppModel appModel;
@@ -13,10 +15,13 @@ class ReceiveReceiptModel extends Model {
   String passkey;
   BuildContext context;
   String ip;
+  bool done = false;
   Socket client;
   Socket serverSocket;
   ServerSocket server;
   String state;
+
+  String newImage;
   ReceiveReceiptModel(this.appModel) {}
 
 //   socketConnect1() async {
@@ -40,16 +45,27 @@ class ReceiveReceiptModel extends Model {
 // }
 
   startClient() async {
+    File file = new File("${appModel.tempDir.path}/999.png");
     Toast.show("Starting client", context,
         duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
     client = await Socket.connect('192.168.43.1', 5050);
 
-    client.listen((e) { 
-
+    client.listen((e) {
       // client.write("hey there");
 
-      Toast.show(String.fromCharCodes(e), context,
+      Toast.show(" ${String.fromCharCodes(e)}", context,
           duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+
+      file.writeAsBytes(e).then((b) {
+        done = true;
+        newImage = b.path;
+        notifyListeners();
+        Toast.show("Finished file from ${b.path}", context,
+            duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+      });
+
+      // Toast.show(String.fromCharCodes(e), context,
+      //     duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
     });
     // client.transform(new IntConverter()).listen((e) {
     //   // Toast.show(String.fromCharCodes(e), context,
@@ -59,7 +75,24 @@ class ReceiveReceiptModel extends Model {
     print('main done');
   }
 
+  void sendFile() async {
+    File file = File(await FilePicker.getFilePath(type: FileType.IMAGE));
+
+    if (state == "server") {
+      serverSocket.add(await file.readAsBytes());
+      // serverSocket.write(file.readAsBytes());
+    }
+
+    if (state == "client") {
+      // client.write(file.readAsBytes());
+      client.add(await file.readAsBytes());
+    }
+  }
+
   void startServer() async {
+    var path = await getExternalStorageDirectory();
+    File file = new File("${appModel.tempDir.path}/Papyrus/999.png");
+
     Toast.show("Starting server", context,
         duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
     server = await ServerSocket.bind('192.168.43.1', 5050);
@@ -77,16 +110,24 @@ class ReceiveReceiptModel extends Model {
       // // socket.close();
       // print('Closed ${socket.remoteAddress}');
 
+      serverSocket.listen((a) {
+        Toast.show(" ${String.fromCharCodes(a)}", context,
+            duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
 
-       serverSocket.listen((a) {
-      Toast.show("Message from client ${String.fromCharCodes(a)}", context,
-          duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
-    });
+        file.writeAsBytes(a).then((b) {
+          Toast.show("Finished file from ${file.path}", context,
+              duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+        });
+      });
     });
 
     serverSocket.listen((a) {
-      Toast.show("Message from client ${String.fromCharCodes(a)}", context,
+      Toast.show(" ${String.fromCharCodes(a)}", context,
           duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+      file.writeAsBytes(a).then((b) {
+        Toast.show("Finished file from ${file.path}", context,
+            duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+      });
     });
   }
 

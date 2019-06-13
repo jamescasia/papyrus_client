@@ -9,9 +9,9 @@ Widget ReceiptCard(BuildContext context, Receipt receipt, index) {
   double margin = 9;
 
   return Container(
-    margin: EdgeInsets.only(
-        top: sizeMul * ((index == 0) ? 170 :(index == -1)?50: (margin)),
-        bottom: sizeMul * margin),
+    // margin: EdgeInsets.only(
+    //     top: sizeMul * ((index == 0) ? 170 : (index == -1) ? 50 : (margin)),
+    //     bottom: sizeMul * margin),
     width: 333 * sizeMul,
     height: 72 * sizeMul,
     decoration: BoxDecoration(
@@ -56,7 +56,7 @@ Widget ReceiptCard(BuildContext context, Receipt receipt, index) {
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Expanded(
-                  flex: 1,
+                  flex: 2,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -73,15 +73,19 @@ Widget ReceiptCard(BuildContext context, Receipt receipt, index) {
                   ),
                 ),
                 Expanded(
-                  flex: 4,
+                  flex: 3,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text(
-                        receipt.items.first.name,
-                        style: TextStyle(
-                            fontSize: 16 * sizeMul,
-                            fontWeight: FontWeight.w600),
+                      Flexible(
+                        child: Text(
+                          
+                          receipt.items.first.name,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 16 * sizeMul,
+                              fontWeight: FontWeight.w600),
+                        ),
                       ),
                       Text(
                         "" +
@@ -100,13 +104,13 @@ Widget ReceiptCard(BuildContext context, Receipt receipt, index) {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Flexible(
-                                              child: Text(
+                        child: Text(
                           "${addCommas((receipt.total.floor()))}.",
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                               color: Colors.red,
                               fontWeight: FontWeight.bold,
-                              fontSize: 16* sizeMul),
+                              fontSize: 16 * sizeMul),
                         ),
                       ),
                       Padding(

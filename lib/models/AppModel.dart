@@ -85,7 +85,7 @@ class AppModel extends Model {
     editReceiptScreenModel = EditReceiptScreenModel(this);
     cameraCaptureModel = CameraCaptureModel(this);
     receiveReceiptModel = ReceiveReceiptModel(this);
-    receiptsScreenModel = ReceiptsScreenModel(this);
+    receiptsScreenModel = ReceiptsScreenModel(this); 
     rootDir = await getApplicationDocumentsDirectory();
     await checkOrGenerateDirectories();
     // await deleteAllReceiptFiles();
@@ -145,7 +145,7 @@ class AppModel extends Model {
       File rJSON = File(files[i].path);
       Map map = jsonDecode(await rJSON.readAsString());
       var r = Receipt.fromJson(map);
-      receipts.add(r);
+      receipts.insert(0,r);
       print("The receipts are: "+ files[i].path.toString());
       print("the encoded value " + r.merchant);
       print("the encoded value " + (r.items[0].name.toString()));

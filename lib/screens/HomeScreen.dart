@@ -22,6 +22,7 @@ import 'CameraCaptureScreen.dart';
 import 'GetReceiptScreen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'ReceiveReceiptScreen.dart';
+import 'package:papyrus_client/data_models/Receipt.dart';
 // void main() {
 //   return runApp(PapyrusCustomer());
 // }
@@ -688,6 +689,8 @@ class _HomeScreenBottomPartState extends State<HomeScreenBottomPart> {
           child:
               // SizedBox(width: 30 * MediaQuery.of(context).size.width / 400),
               Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
@@ -701,73 +704,16 @@ class _HomeScreenBottomPartState extends State<HomeScreenBottomPart> {
               //   height: sizeMul * 1,
               // ),
               Container(
-                height: MediaQuery.of(context).size.height -
-                    0.942 * MediaQuery.of(context).size.width -
-                    (34 * sizeMul),
-                // color: Colors.red,
-                child: Column(
-                  // shrinkWrap: true,
-                  // scrollDirection: Axis.vertical,
-                  // padding: EdgeInsets.symmetric(vertical: sizeMul * 4),
-                  children: <Widget>[
-                    Column(
-                        children: appModel.receipts
-                            .map((f) => (appModel.receipts.indexOf(f) <=
-                                    (sqrt((MediaQuery.of(context).size.height -
-                                                0.942 *
-                                                    MediaQuery.of(context)
-                                                        .size
-                                                        .width) /
-                                            ((72 * sizeMul) *
-                                                (1 + 18 * sizeMul))))
-                                        .floor())
-                                ? ReceiptCard(context, f, 1)
-                                : SizedBox(
-                                    width: 1,
-                                  ))
-                            .toList()),
-                    LongButton(
-                      greeny.colors[1],
-                      333 * sizeMul,
-                      69 * sizeMul,
-                      sizeMul * 3,
-                      Colors.green,
-                      greeny.colors[0],
-                      sizeMul * 9,
-                      () {
-                        Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                                builder: (context) => ReceiptScreen(
-                                    appModel.receiptsScreenModel)));
-                      },
-                      Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              "VIEW ALL",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: sizeMul * 20),
-                            ),
-                            SizedBox(
-                              width: sizeMul * 5,
-                            ),
-                            Icon(
-                              Icons.chevron_right,
-                              color: Colors.white,
-                              size: sizeMul * 35,
-                            )
-                          ],
-                        ),
-                      ),
-                      // null
-                    ),
-                  ],
-                ),
-              )
+                  height: MediaQuery.of(context).size.height -
+                      0.942 * MediaQuery.of(context).size.width -
+                      (34 * sizeMul),
+                  width: MediaQuery.of(context).size.width,
+                  // color: Colors.red,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: bottomChildren(appModel, context),
+                  ))
 
               // ReceiptCard("May 19, 2019", 99, "mainItem", "imagePath"),
             ],
@@ -783,4 +729,67 @@ class _HomeScreenBottomPartState extends State<HomeScreenBottomPart> {
 String addCommas(int nums) {
   return nums.toString().replaceAllMapped(
       new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},');
+}
+
+List<Widget> bottomChildren(AppModel appModel, BuildContext context) {
+  List<Widget> bc = [];
+  for (Receipt f in appModel.receipts) {
+    if (appModel.receipts.indexOf(f) <
+        ((MediaQuery.of(context).size.height -
+                        0.942 * MediaQuery.of(context).size.width -
+                        (34 * sizeMul)) /
+                    (81 * sizeMul))
+                .floor() -
+            1) {
+      bc.add(ReceiptCard(context, f, 1));
+    } else if (appModel.receipts.indexOf(f) ==
+        ((MediaQuery.of(context).size.height -
+                        0.942 * MediaQuery.of(context).size.width -
+                        (34 * sizeMul)) /
+                    (81 * sizeMul))
+                .floor() -
+            1) {
+      bc.add(LongButton(
+        greeny.colors[1],
+        333 * sizeMul,
+        69 * sizeMul,
+        sizeMul * 3,
+        Colors.green,
+        greeny.colors[0],
+        sizeMul * 9,
+        () {
+          Navigator.push(
+              context,
+              CupertinoPageRoute(
+                  builder: (context) =>
+                      ReceiptScreen(appModel.receiptsScreenModel)));
+        },
+        Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                "VIEW ALL",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w900,
+                    fontSize: sizeMul * 20),
+              ),
+              SizedBox(
+                width: sizeMul * 5,
+              ),
+              Icon(
+                Icons.chevron_right,
+                color: Colors.white,
+                size: sizeMul * 35,
+              )
+            ],
+          ),
+        ),
+        // null
+      ));
+    }
+  }
+
+  return bc;
 }

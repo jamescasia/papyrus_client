@@ -27,9 +27,9 @@ class LongButton extends StatelessWidget {
     return Container(
       width: width,
       height: height,
-      margin: EdgeInsets.only(
-          top: sizeMul *9,
-          bottom: sizeMul * 9),
+      // margin: EdgeInsets.only(
+      //     top: sizeMul *9,
+      //     bottom: sizeMul * 9),
       decoration: BoxDecoration(
         boxShadow: [
           new BoxShadow(
