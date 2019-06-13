@@ -62,12 +62,15 @@ Widget ReceiptCard(BuildContext context, Receipt receipt, index) {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Icon(Icons.image, size: sizeMul * 35),
-                      Text(
-                        receipt.merchant,
-                        overflow: TextOverflow.fade,
-                        style: TextStyle(
-                            fontSize: 11 * sizeMul,
-                            fontWeight: FontWeight.w600),
+                      Flexible(
+                        child: Text(
+                          receipt.merchant,
+                          overflow: TextOverflow.fade,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 11 * sizeMul,
+                              fontWeight: FontWeight.w600),
+                        ),
                       ),
                     ],
                   ),
@@ -79,7 +82,6 @@ Widget ReceiptCard(BuildContext context, Receipt receipt, index) {
                     children: <Widget>[
                       Flexible(
                         child: Text(
-                          
                           receipt.items.first.name,
                           textAlign: TextAlign.center,
                           style: TextStyle(

@@ -176,8 +176,8 @@ class EditReceiptScreenTopPart extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(3000)),
                 onTap: () {
                   editReceiptScreenModel.deleteReceiptImage();
-                  
-                    Navigator.of(context).pop();
+
+                  Navigator.of(context).pop();
 
                   // editReceiptScreenModel = EditReceiptScreenModel();
                   // editReceiptScreenModel.changed=!editReceiptScreenModel.changed;
@@ -234,8 +234,7 @@ class _EditReceiptScreenBottomPartState
           return ScopedModelDescendant<AppModel>(
               // stream: null,
               builder: (context, child, appModel) {
-                
-          erModel.receipt.category = catChoice;
+            erModel.receipt.category = catChoice;
             return new Container(
               width: MediaQuery.of(context).size.width,
               // padding: EdgeInsets.only(top:sizeMul*10),
@@ -649,7 +648,17 @@ class _EditReceiptScreenBottomPartState
                                           fontWeight: FontWeight.bold),
                                     ),
                                     Text(
-                                      "${((erModel.receipt.total.toStringAsFixed(2)))}",
+                                      // "${((erModel.receipt.total.toStringAsFixed(2)))}",
+
+                                      addCommas(int.parse(erModel.receipt.total
+                                              .toStringAsFixed(2)
+                                              .split('.')[0])) +
+                                          ((erModel.receipt.total
+                                                      .toStringAsFixed(2)
+                                                      .split('.')[1] !=
+                                                  null)
+                                              ? ".${erModel.receipt.total.toStringAsFixed(2).split('.')[1]}"
+                                              : ""),
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 20 * sizeMul,
@@ -692,7 +701,8 @@ class _EditReceiptScreenBottomPartState
                                       Navigator.pushReplacement(context,
                                           CupertinoPageRoute(
                                               builder: (context) {
-                                        return ShowReceiptScreen(erModel.receipt);
+                                        return ShowReceiptScreen(
+                                            erModel.receipt);
                                       }));
                                     }
                                   },
@@ -779,6 +789,7 @@ class ReceiptItemLine extends StatelessWidget {
                     flex: 1,
                     child: Text(
                       receiptItem.qty.toString(),
+                      textAlign: TextAlign.center,
                       style: style,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -786,7 +797,15 @@ class ReceiptItemLine extends StatelessWidget {
                   Expanded(
                     flex: 2,
                     child: Text(
-                      receiptItem.price.toStringAsFixed(2),
+                      addCommas(int.parse(receiptItem.price
+                              .toStringAsFixed(2)
+                              .split('.')[0])) +
+                          ((receiptItem.price
+                                      .toStringAsFixed(2)
+                                      .split('.')[1] !=
+                                  null)
+                              ? ".${receiptItem.price.toStringAsFixed(2).split('.')[1]}"
+                              : ""),
                       style: style,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -794,7 +813,15 @@ class ReceiptItemLine extends StatelessWidget {
                   Expanded(
                     flex: 3,
                     child: Text(
-                      receiptItem.total.toStringAsFixed(2),
+                      addCommas(int.parse(receiptItem.total
+                              .toStringAsFixed(2)
+                              .split('.')[0])) +
+                          ((receiptItem.total
+                                      .toStringAsFixed(2)
+                                      .split('.')[1] !=
+                                  null)
+                              ? ".${receiptItem.total.toStringAsFixed(2).split('.')[1]}"
+                              : ""),
                       style: style,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -1192,7 +1219,6 @@ class _EditItemState extends State<EditItem> {
                         receiptItem.price = double.parse(price_controller.text);
                         receiptItem.total = receiptItem.qty * receiptItem.price;
 
-
                         if (add) {
                           editReceiptScreenModel.addItemToReceipt(receiptItem);
                           editReceiptScreenModel.update();
@@ -1200,7 +1226,10 @@ class _EditItemState extends State<EditItem> {
                         }
                         Navigator.pop(context);
 
-                        print("WTF" + editReceiptScreenModel.receipt.items[0].name + editReceiptScreenModel.receipt.items[0].total.toString());
+                        print("WTF" +
+                            editReceiptScreenModel.receipt.items[0].name +
+                            editReceiptScreenModel.receipt.items[0].total
+                                .toString());
 
                         Scaffold.of(ctx).showSnackBar(SnackBar(
                           content: Row(

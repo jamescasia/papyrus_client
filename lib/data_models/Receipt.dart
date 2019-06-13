@@ -8,7 +8,7 @@ class Receipt {
   String _category = "";
   bool _isPapyrus = false;
   String _imagePath = "";
-
+  String _address = "";
   List<ReceiptItem> _items = [
     // new ReceiptItem("Im Nayeon", 2, 1500.0),
     // new ReceiptItem("Yoo Jeongyeon", 2, 1500.0),
@@ -30,6 +30,7 @@ class Receipt {
   String get recpt_id => _recpt_id;
   bool get isPapyrus => _isPapyrus;
   String get uid => _uid;
+  String get address => _address;
   String get time_stamp => _time_stamp;
   String get merchant => _merchant;
   String get dateTime => _dateTime;
@@ -39,6 +40,7 @@ class Receipt {
 
   String get imagePath => _imagePath;
   set imagePath(String path) => _imagePath = path;
+  set address(String add) => _address = add;
   set total(double tot) => _total = tot;
   set recpt_id(String id) => _recpt_id = id;
   set isPapyrus(bool val) => _isPapyrus = val;
@@ -91,6 +93,7 @@ class Receipt {
         "category": _category,
         "isPapyrus": _isPapyrus,
         "imagePath": _imagePath,
+        "address": _address,
         "items": _items.map((f)=>f.toJson() ).toList(),
       };
   factory Receipt.fromJson(Map<String, dynamic> json) {
@@ -103,7 +106,8 @@ class Receipt {
       ..dateTime = json['dateTime']
       ..category = json['category']
       ..isPapyrus = json['isPapyrus']
-      ..imagePath = json['imagePath'];
+      ..imagePath = json['imagePath']
+      ..address = json['address'];
     var list = json['items'] as List;
     if (list.length > 0) {
       List<ReceiptItem> rList =
