@@ -9,6 +9,10 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:papyrus_client/models/AppModel.dart';
 import 'package:papyrus_client/models/ReceiptsScreenModel.dart';
 import 'package:intl/intl.dart';
+import 'dart:io';
+import 'dart:convert';
+import 'dart:async';
+import 'package:papyrus_client/data_models/Receipt.dart';
 
 class ReceiptScreen extends StatefulWidget {
   ReceiptsScreenModel rsModel;
@@ -186,47 +190,56 @@ class _ReceiptScreenBottomPartState extends State<ReceiptScreenBottomPart> {
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
               margin: EdgeInsets.symmetric(horizontal: sizeMul * 40),
-              child: (appModel.receiptsAreReady)
+              child: (true)
                   ? ListView.builder(
                       // reverse: true,
-                      itemCount: appModel.receipts.length,
+                      itemCount: appModel.receiptFiles.length,
                       itemBuilder: (BuildContext context, int index) {
                         // var receipt = appModel.receipts[index];
                         // DateFormat("MMM dd, yyyy")
                         //         .format(DateTime.parse(receipt.dateTime))
 
-                        var dateCurr = DateFormat("MMM dd, yyyy").format(
-                            DateTime.parse(appModel.receipts[index].dateTime));
+                        File rJSON = File(appModel.receiptFiles[index].path);
+                        Map map = jsonDecode(rJSON.readAsStringSync());
+                        var receipt = Receipt.fromJson(map);
+
+                        var dateCurr = DateFormat("MMM dd, yyyy")
+                            .format(DateTime.parse(receipt.dateTime));
                         var datePrev = dateCurr;
 
-                        if (index >1 ) {
-                          datePrev = DateFormat("MMM dd, yyyy").format(
-                              DateTime.parse(
-                                  appModel.receipts[index -1].dateTime));
+                        if (index > 1) {
+                          File rJSON1 =
+                              File(appModel.receiptFiles[index - 1].path);
+                          Map map1 = jsonDecode(rJSON1.readAsStringSync());
+                          var receipt1 = Receipt.fromJson(map1);
+                          datePrev = DateFormat("MMM dd, yyyy")
+                              .format(DateTime.parse(receipt1.dateTime));
                         }
 
                         return Container(
                           margin: (index == 0)
                               ? EdgeInsets.only(
                                   bottom: sizeMul * 9, top: sizeMul * 130)
-                              : (index == appModel.receipts.length - 1)
+                              : (index == appModel.receiptFiles.length - 1)
                                   ? EdgeInsets.only(
                                       top: sizeMul * 9, bottom: sizeMul * 50)
                                   : EdgeInsets.symmetric(vertical: sizeMul * 9),
                           child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 (dateCurr != datePrev || index == 0)
-                                    ? Padding(padding: EdgeInsets.only(bottom: sizeMul*18),child:Text(
-                                        "    " +dateCurr.toString(),
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w600),
-                                      ))
+                                    ? Padding(
+                                        padding: EdgeInsets.only(
+                                            bottom: sizeMul * 18),
+                                        child: Text(
+                                          "    " + dateCurr.toString(),
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w600),
+                                        ))
                                     : SizedBox(width: 1),
-                                ReceiptCard(
-                                    context, appModel.receipts[index], index),
+                                ReceiptCard(context, receipt, index),
                               ]),
                         );
                         // return Text("hello${appModel.receipts[index].items[0].name}",style: TextStyle(fontSize: 50,));

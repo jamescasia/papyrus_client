@@ -23,23 +23,20 @@ class AppModel extends Model {
   Period _viewing_period = Period.DAILY;
   bool _alsoReceivePromosThruEmail;
   bool _receiveUniquePromos;
-  bool _receiveOpenToAllPromos;
-  List<String> _receipts_json_paths = []; 
-  List<Receipt> receipts = [];
+  bool _receiveOpenToAllPromos; 
   FirebaseAuth mAuth;
-  String platformVersion;
-  bool receiptsAreReady = false;
+  String platformVersion; 
   // String rootFilePath;
   EditReceiptScreenModel editReceiptScreenModel;
   CameraCaptureModel cameraCaptureModel;
   ReceiveReceiptModel receiveReceiptModel;
-  ReceiptsScreenModel receiptsScreenModel;
-
+  ReceiptsScreenModel receiptsScreenModel; 
   FirebaseUser user;
   Directory rootDir;
   Directory tempDir;
   List<String> dirList;
 
+    List<FileSystemEntity> receiptFiles;
   Map<String, String> dirMap = {
     "Receipts": "null",
     "ReceiptsImages": "null",
@@ -130,8 +127,10 @@ class AppModel extends Model {
     File file = new File(path);
     file.writeAsString(jsonEncode(r.toJson()));
     print("The encodedd is tadaa" + jsonEncode(r.toJson()) ) ;
-    _receipts_json_paths.add(path);
-    receipts.insert(0, r);
+
+    receiptFiles.insert(0, file);
+    // _receipts_json_paths.add(path);
+    // receipts.insert(0, r);
     // receipts.add(r);
 
 
@@ -139,33 +138,11 @@ class AppModel extends Model {
   }
 
   void listFileNamesOfReceiptsFoundInStorageAndGenerateReceipts() async {
-    List<FileSystemEntity> files;
     print("here are the files");
-    files = Directory(dirMap['Receipts'])
-        .listSync(recursive: true, followLinks: false);
-    for (int i = 0; i < files.length; i++) {
-      _receipts_json_paths.add(files[i].path);
-      File rJSON = File(files[i].path);
-      Map map = jsonDecode(await rJSON.readAsString());
-      var r = Receipt.fromJson(map);
-      receipts.insert(0,r);
-      print("The receipts are: "+ files[i].path.toString());
-      print("the encoded value " + r.merchant);
-      print("the encoded value " + (r.items[0].name.toString()));
-      print("hey the value" + await rJSON.readAsString());
-      // await rJSON.delete();
-      // print('ouyst');
-    }
-    receiptsAreReady = true;
-    print("all the recpts nibbas");
-    for(Receipt r in receipts){
-      
-      print(r.merchant);
-      print(r.items[0].name);
-      print(r.items[0].price);
-      print("next");
-    }
-    print(receipts.length);
+    receiptFiles = Directory(dirMap['Receipts'])
+        .listSync(recursive: true, followLinks: false);  
+
+        receiptFiles = receiptFiles.reversed.toList();
     notifyListeners();
   }
 

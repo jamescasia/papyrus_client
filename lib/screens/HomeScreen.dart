@@ -24,6 +24,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'ReceiveReceiptScreen.dart';
 import 'package:papyrus_client/data_models/Receipt.dart';
 import 'package:papyrus_client/data_models/UserExpense.dart';
+import 'dart:convert';
+import 'dart:io';
 // void main() {
 //   return runApp(PapyrusCustomer());
 // }
@@ -733,63 +735,72 @@ String addCommas(int nums) {
 }
 
 List<Widget> bottomChildren(AppModel appModel, BuildContext context) {
-  List<Widget> bc = [];
-  for (Receipt f in appModel.receipts) {
-    if (appModel.receipts.indexOf(f) <
-        ((MediaQuery.of(context).size.height -
-                        0.942 * MediaQuery.of(context).size.width -
-                        (34 * sizeMul)) /
-                    (81 * sizeMul))
-                .floor() -
-            1) {
-      bc.add(ReceiptCard(context, f, 1));
-    } else if (appModel.receipts.indexOf(f) ==
-        ((MediaQuery.of(context).size.height -
-                        0.942 * MediaQuery.of(context).size.width -
-                        (34 * sizeMul)) /
-                    (81 * sizeMul))
-                .floor() -
-            1) {
-      bc.add(LongButton(
-        greeny.colors[1],
-        333 * sizeMul,
-        69 * sizeMul,
-        sizeMul * 3,
-        Colors.green,
-        greeny.colors[0],
-        sizeMul * 9,
-        () {
-          Navigator.push(
-              context,
-              CupertinoPageRoute(
-                  builder: (context) =>
-                      ReceiptScreen(appModel.receiptsScreenModel)));
-        },
-        Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                "VIEW ALL",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w900,
-                    fontSize: sizeMul * 20),
-              ),
-              SizedBox(
-                width: sizeMul * 5,
-              ),
-              Icon(
-                Icons.chevron_right,
-                color: Colors.white,
-                size: sizeMul * 35,
-              )
-            ],
-          ),
+  List<Widget> bc = [
+    LongButton(
+      greeny.colors[1],
+      333 * sizeMul,
+      69 * sizeMul,
+      sizeMul * 3,
+      Colors.green,
+      greeny.colors[0],
+      sizeMul * 9,
+      () {
+        Navigator.push(
+            context,
+            CupertinoPageRoute(
+                builder: (context) =>
+                    ReceiptScreen(appModel.receiptsScreenModel)));
+      },
+      Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              "VIEW ALL",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w900,
+                  fontSize: sizeMul * 20),
+            ),
+            SizedBox(
+              width: sizeMul * 5,
+            ),
+            Icon(
+              Icons.chevron_right,
+              color: Colors.white,
+              size: sizeMul * 35,
+            )
+          ],
         ),
-        // null
-      ));
+      ),
+      // null
+    )
+  ];
+  for (File f in appModel.receiptFiles) {
+    Map map = jsonDecode(f.readAsStringSync());
+    var receipt = Receipt.fromJson(map);
+    if (appModel.receiptFiles.indexOf(f) <
+        ((MediaQuery.of(context).size.height -
+                        0.942 * MediaQuery.of(context).size.width -
+                        (34 * sizeMul)) /
+                    (81 * sizeMul))
+                .floor() -
+            1) {
+      bc.insert(bc.length-1, ReceiptCard(context, receipt, 1));
     }
+    else break;
+
+    //  else if (appModel.receipts.indexOf(f) ==
+    //     ((MediaQuery.of(context).size.height -
+    //                     0.942 * MediaQuery.of(context).size.width -
+    //                     (34 * sizeMul)) /
+    //                 (81 * sizeMul))
+    //             .floor() -
+    //         1) {
+    //   // bc.add(
+
+    //   // );
+    // }
   }
 
   return bc;

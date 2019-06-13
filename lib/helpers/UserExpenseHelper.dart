@@ -8,10 +8,7 @@ class UserExpenseHelper {
   List<ExpenseItem> daily_expense;
 
   UserExpenseHelper(){
-
-    
-
-
+ 
   }
 
 
