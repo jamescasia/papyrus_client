@@ -76,7 +76,7 @@ class AppModel extends Model {
   bool get receiveOpenToAllPromos => _receiveOpenToAllPromos;
 
   AppModel() {
-    init();
+    // init();
   }
 
   void init() async {
