@@ -1,5 +1,3 @@
-enum Period { MONTHLY, WEEKLY, DAILY }
-
 // class UserExpense {
 //   double total_lifetime_expense_amount;
 
@@ -28,46 +26,51 @@ enum Period { MONTHLY, WEEKLY, DAILY }
 //       };
 // }
 
+import 'dart:io';
+import 'package:papyrus_client/data_models/DayExpense.dart';
+import 'package:papyrus_client/data_models/WeekExpense.dart';
+import 'package:papyrus_client/data_models/MonthExpense.dart';
+
 class UserExpense {
-  String userExpensesFilePath = "";
-  String userExpenseJSONFilePath = "";
   double totalLifetimeExpenseAmount = 0;
   double leisureLifetimeExpenseAmount = 0;
   double foodLifetimeExpenseAmount = 0;
   double transportationLifetimeExpenseAmount = 0;
   double necessitiesLifetimeExpenseAmount = 0;
-  double miscellaneousLifetimeExpenseAmount = 0;
+  double miscellaneousLifetimeExpenseAmount = 0; 
 
-  UserExpense();
+  UserExpense() {}
+
+  initialize() {}
 
   Map<String, dynamic> toJson() => {
         "totalLifetimeExpenseAmount": totalLifetimeExpenseAmount,
-        "userExpensesFilePath": userExpensesFilePath,
         "leisureLifetimeExpenseAmount": leisureLifetimeExpenseAmount,
         "foodLifetimeExpenseAmount": foodLifetimeExpenseAmount,
         "transportationLifetimeExpenseAmount":
             transportationLifetimeExpenseAmount,
         "necessitiesLifetimeExpenseAmount": necessitiesLifetimeExpenseAmount,
         "miscellaneousLifetimeExpenseAmount":
-            miscellaneousLifetimeExpenseAmount,
-        "userExpenseJSONFilePath": userExpenseJSONFilePath,
+            miscellaneousLifetimeExpenseAmount, 
       };
 
-  UserExpense.fromJson(Map<String, dynamic> json)
-      : userExpensesFilePath = json['userExpensesFilePath'],
-        userExpenseJSONFilePath = json['userExpenseJSONFilePath'],
-        totalLifetimeExpenseAmount = json["totalLifetimeExpenseAmount"],
-        foodLifetimeExpenseAmount = json['foodLifetimeExpenseAmount'],
-        transportationLifetimeExpenseAmount =
-            json['transportationLifetimeExpenseAmount'],
-        necessitiesLifetimeExpenseAmount =
-            json['necessitiesLifetimeExpenseAmount'],
-        miscellaneousLifetimeExpenseAmount =
-            json['miscellaneousLifetimeExpenseAmount'],
-        leisureLifetimeExpenseAmount = json['leisureLifetimeExpenseAmount'];
+  factory UserExpense.fromJson(Map<String, dynamic> json) {
+    UserExpense userExpense = UserExpense()
+      ..totalLifetimeExpenseAmount = json["totalLifetimeExpenseAmount"]
+      ..foodLifetimeExpenseAmount = json['foodLifetimeExpenseAmount']
+      ..transportationLifetimeExpenseAmount =
+          json['transportationLifetimeExpenseAmount']
+      ..necessitiesLifetimeExpenseAmount =
+          json['necessitiesLifetimeExpenseAmount']
+      ..miscellaneousLifetimeExpenseAmount =
+          json['miscellaneousLifetimeExpenseAmount']
+      ..leisureLifetimeExpenseAmount = json['leisureLifetimeExpenseAmount'] ;
+    return userExpense;
+  }
 }
 
 enum Category { LEISURE, FOOD, TRANSPORTATION, MISCELLANEOUS, NECESSITIES }
+enum Period { MONTHLY, WEEKLY, DAILY }
 
 class ExpenseItem {
   String category;
