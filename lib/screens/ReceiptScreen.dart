@@ -207,7 +207,7 @@ class _ReceiptScreenBottomPartState extends State<ReceiptScreenBottomPart> {
                             .format(DateTime.parse(receipt.dateTime));
                         var datePrev = dateCurr;
 
-                        if (index > 1) {
+                        if (index >= 1) {
                           File rJSON1 =
                               File(appModel.receiptFiles[index - 1].path);
                           Map map1 = jsonDecode(rJSON1.readAsStringSync());

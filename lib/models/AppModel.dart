@@ -30,13 +30,16 @@ class AppModel extends Model {
   CameraCaptureModel cameraCaptureModel;
   ReceiveReceiptModel receiveReceiptModel;
   ReceiptsScreenModel receiptsScreenModel;
+  // UserExpense userExpense;
   FirebaseUser user;
   Directory rootDir;
   Directory tempDir;
   List<String> dirList;
+  File userExpensesFile;
+  File userExpenseJSONFile;
+  UserExpense userExpense;
 
   List<FileSystemEntity> receiptFiles;
-  List<FileSystemEntity> expenseFiles;
   Map<String, String> dirMap = {
     "Receipts": "null",
     "ReceiptsImages": "null",
@@ -84,10 +87,12 @@ class AppModel extends Model {
     cameraCaptureModel = CameraCaptureModel(this);
     receiveReceiptModel = ReceiveReceiptModel(this);
     receiptsScreenModel = ReceiptsScreenModel(this);
+    userExpense = UserExpense();
     rootDir = await getApplicationDocumentsDirectory();
     await checkOrGenerateDirectories();
     // await deleteAllReceiptFiles();
     listFileNamesOfReceiptsFoundInStorageAndGenerateReceipts();
+    prepareExpenseFiles();
 
     tempDir = await getTemporaryDirectory();
     generateImage();
@@ -113,8 +118,6 @@ class AppModel extends Model {
  * 
  */
 
-
-
 // void saveReceiptToJsonAndToFile() {
 //     print("locals" + appModel.rootDir.path);
 //     print("saving");
@@ -126,11 +129,26 @@ class AppModel extends Model {
 //     readReceiptFromJsonFile(file.path);
 //   }
 
+  fromStringToEnumCategory(String cat) {
+// enum Category { LEISURE, FOOD, TRANSPORTATION, MISCELLANEOUS, NECESSITIES }
+    if (cat == "LEISURE") return Category.LEISURE;
+    if (cat == "FOOD") return Category.FOOD;
+    if (cat == "TRANSPORTATION") return Category.TRANSPORTATION;
+    if (cat == "MISCELLANEOUS") return Category.MISCELLANEOUS;
+    if (cat == "NECESSITIES") return Category.NECESSITIES;
+  }
+
   void addReceiptandSaveToStorage(Receipt r) {
     String path = '${dirMap['Receipts']}/${r.time_stamp}.json';
     File file = new File(path);
     file.writeAsString(jsonEncode(r.toJson()));
-    print("The encodedd is tadaa" + jsonEncode(r.toJson()));
+
+    ExpenseItem e =   ExpenseItem(r.category, r.total, r.dateTime);
+
+    print("made expenseItem" + e.amount.toString());
+
+    addExpenseItemToExpenseTxtFile(e);
+    // print("The encodedd is tadaa" + jsonEncode(r.toJson()));
 
     receiptFiles.insert(0, file);
     // _receipts_json_paths.add(path);
@@ -140,9 +158,63 @@ class AppModel extends Model {
     notifyListeners();
   }
 
+  void prepareExpenseFiles() {
+    userExpenseJSONFile = File(userExpense.userExpenseJSONFilePath);
+    userExpensesFile = File(userExpense.userExpensesFilePath);
+    try {
+      Map map = jsonDecode(userExpenseJSONFile.readAsStringSync());
+      userExpense = UserExpense.fromJson(map);
+    } catch (e) {}
+    print("READ");
+    print(userExpensesFile.readAsStringSync());
+    print(userExpenseJSONFile.readAsStringSync());
+    print("READ" + userExpense.toJson().toString());
+
+    //  File rJSON1 =
+    //                         File(appModel.receiptFiles[index - 1].path);
+    //                     Map map1 = jsonDecode(rJSON1.readAsStringSync());
+    //                     var receipt1 = Receipt.fromJson(map1);
+    //                     datePrev = DateFormat("MMM dd, yyyy")
+    //                         .format(DateTime.parse(receipt1.dateTime));
+  }
+
+  void addExpenseItemToExpenseTxtFile(ExpenseItem expenseItem) async {
+    print(expenseItem.amount.toString() +
+        " a" +
+        expenseItem.category +
+        " a " +
+        expenseItem.dateTime);
+    await userExpensesFile.writeAsString(jsonEncode(expenseItem.toJson()) + "\n", mode: FileMode.writeOnlyAppend);
+    userExpense.totalLifetimeExpenseAmount += expenseItem.amount;
+    if (expenseItem.category == "FOOD")
+      userExpense.foodLifetimeExpenseAmount += expenseItem.amount;
+    if (expenseItem.category == "TRANSPORTATION")
+      userExpense.transportationLifetimeExpenseAmount += expenseItem.amount;
+    if (expenseItem.category == "NECESSITIES")
+      userExpense.necessitiesLifetimeExpenseAmount += expenseItem.amount;
+    if (expenseItem.category == "MISCELLANEOUS")
+      userExpense.miscellaneousLifetimeExpenseAmount += expenseItem.amount;
+    if (expenseItem.category == "LEISURE")
+      userExpense.leisureLifetimeExpenseAmount += expenseItem.amount;
+
+    await userExpenseJSONFile.writeAsString(jsonEncode(userExpense.toJson()));
+
+    print("tadaa: expenses" + userExpensesFile.readAsStringSync());
+    notifyListeners();
+
+    // print("locals" + appModel.rootDir.path);
+    // print("saving");
+
+    // File file = new File(
+    //     '${appModel.dirMap['Receipts']}/${_receipt.time_stamp}.json');
+    // file.writeAsString(jsonEncode(_receipt.toJson()));
+
+    // readReceiptFromJsonFile(file.path);
+  }
+
   // void addExpenseAndSaveToStorage(String path){
   //   File file = new File(path);
-  //   file.writeAsString(jsonEncode(object)) 
+  //   file.writeAsString(jsonEncode(object))
   // }
 
   void listFileNamesOfReceiptsFoundInStorageAndGenerateReceipts() {
@@ -154,10 +226,10 @@ class AppModel extends Model {
     notifyListeners();
   }
 
-  void listFileNamesOfExpenseJsonsFoundInStorageAndGenerateExpenses() {
-    expenseFiles = Directory(dirMap['Expenses'])
-        .listSync(recursive: true, followLinks: false);
-  }
+  //  loadUserExpenses() {
+
+  //    return Direc
+  // }
 
   checkOrGenerateDirectories() async {
     for (String i in dirMap.keys) {
@@ -168,6 +240,15 @@ class AppModel extends Model {
       });
       dirMap[i] = path;
     }
+
+    userExpense.userExpensesFilePath = "${dirMap['Expenses']}Expenses.txt";
+    userExpense.userExpenseJSONFilePath = "${dirMap['Expenses']}Expense.json";
+
+
+    var b = await File(userExpense.userExpenseJSONFilePath).create();
+    var c = await File(userExpense.userExpensesFilePath).create();
+    // b.delete();
+    // c.delete();
     return true;
   }
 
