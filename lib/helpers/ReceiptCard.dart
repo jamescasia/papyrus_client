@@ -4,9 +4,11 @@ import 'package:papyrus_client/screens/ShowReceiptScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:papyrus_client/data_models/Receipt.dart';
 import 'package:intl/intl.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 Widget ReceiptCard(BuildContext context, Receipt receipt, index) {
   double margin = 9;
+  // print("CAT IDIOT "  + receipt.category);
 
   return Container(
     // margin: EdgeInsets.only(
@@ -61,12 +63,13 @@ Widget ReceiptCard(BuildContext context, Receipt receipt, index) {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Icon(Icons.image, size: sizeMul * 35),
+                      Icon((receipt.category == "Leisure")?FontAwesomeIcons.wineGlassAlt: (receipt.category == "Transportation")?FontAwesomeIcons.bus:(receipt.category == "Food")?FontAwesomeIcons.utensils:(receipt.category == "Necessities")?FontAwesomeIcons.toiletPaper:(receipt.category == "Miscellaneous")?FontAwesomeIcons.campground:FontAwesomeIcons.file,size: sizeMul * 26, color: Colors.lightGreen[200],),
                       Flexible(
                         child: Text(
                           receipt.merchant,
                           overflow: TextOverflow.fade,
                           textAlign: TextAlign.center,
+                          maxLines: 2,
                           style: TextStyle(
                               fontSize: 11 * sizeMul,
                               fontWeight: FontWeight.w600),

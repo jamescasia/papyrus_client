@@ -138,7 +138,7 @@ class AppModel extends Model {
 
 //     readReceiptFromJsonFile(file.path);
 //   }
-  loadUserExpense() async{
+  loadUserExpense() async {
     try {
       Map map = jsonDecode(await userExpenseJSONFile.readAsString());
       return UserExpense.fromJson(map);
@@ -176,14 +176,14 @@ class AppModel extends Model {
     notifyListeners();
   }
 
-  void prepareExpenseFiles() async{
+  void prepareExpenseFiles() async {
     userExpenseJSONFile = File(userExpenseJSONFilePath);
     userExpensesFile = File(userExpensesFilePath);
     dayExpenseFile = File(dayExpenseFilePath);
     weekExpenseFile = File(weekExpenseFilePath);
     monthExpenseFile = File(monthExpenseFilePath);
     try {
-      Map map =  jsonDecode(await userExpenseJSONFile.readAsString());
+      Map map = jsonDecode(await userExpenseJSONFile.readAsString());
       userExpense = UserExpense.fromJson(map);
     } catch (e) {}
 

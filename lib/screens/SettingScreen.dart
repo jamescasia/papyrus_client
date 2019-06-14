@@ -9,6 +9,7 @@ import 'package:papyrus_client/models/AppModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'LogInScreen.dart';
 
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class SettingScreen extends StatefulWidget {
   @override
   _SettingScreenState createState() => new _SettingScreenState();
@@ -98,12 +99,14 @@ class _SettingScreenTopPartState extends State<SettingScreenTopPart> {
                                 fontSize: sizeMul * 20),
                           ),
                           SizedBox(
-                            width: sizeMul * 5,
+                            width: sizeMul * 10,
                           ),
                           Icon(
-                            Icons.chevron_right,
+                            // Icons.chevron_right,
+                            FontAwesomeIcons.doorOpen,
                             color: Colors.white,
-                            size: sizeMul * 35,
+                            size:sizeMul*23
+                            // size: sizeMul * 35,
                           )
                         ],
                       ),

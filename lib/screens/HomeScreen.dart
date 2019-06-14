@@ -28,6 +28,7 @@ import 'package:papyrus_client/data_models/UserExpense.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:core';
+import 'package:papyrus_client/helpers/CustomIcons.dart';
 // void main() {
 //   return runApp(PapyrusCustomer());
 // }
@@ -348,11 +349,14 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                                     },
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(3000)),
-                                    child: Icon(
-                                      Icons.keyboard_arrow_down,
+                                    child: 
+                                    
+                                    Icon(
+                                      // Icons.keyboard_arrow_down,
+                                      FontAwesomeIcons.dollarSign,
                                       color: Colors.white,
                                       size: MediaQuery.of(context).size.width *
-                                          0.08,
+                                          0.05,
                                     ),
                                   ),
                                 ),
@@ -495,7 +499,12 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                           },
                           child: Icon(
                             Icons.more_horiz,
-                            size: MediaQuery.of(context).size.width * 0.12,
+                            
+                        // CustomIcons.menu,
+                        // FontAwesomeIcons.ellipsisV,
+                        // FontAwesomeIcons.bars,
+                        // Icons.settings,
+                            size: MediaQuery.of(context).size.width * 0.11,
                             color: Colors.white,
                           ),
                         ),
@@ -521,6 +530,8 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                           child: Stack(
                             children: <Widget>[
                               Icon(
+                                // Icons.local_offer,
+                                // FontAwesomeIcons.bell,
                                 Icons.notifications,
                                 size: MediaQuery.of(context).size.width * 0.11,
                                 color: Colors.white,
@@ -538,8 +549,8 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                                 top: 14 * sizeMul,
                                 right: 5 * sizeMul,
                                 child: Container(
-                                  width: sizeMul * 18,
-                                  height: sizeMul * 18,
+                                  width: sizeMul * 20,
+                                  height: sizeMul * 20,
                                   child: Center(
                                     child: Text(
                                       "12",
@@ -599,10 +610,11 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: <Widget>[
-                        Image.asset(
-                          'assets/icons/charts.png',
-                          height: MediaQuery.of(context).size.width * 0.098,
-                        ),
+                        Icon(FontAwesomeIcons.chartPie, size: MediaQuery.of(context).size.width * 0.088,color: Colors.white,),
+                        // Image.asset(
+                        //   'assets/icons/charts.png',
+                        //   height: MediaQuery.of(context).size.width * 0.098,
+                        // ),
                         SizedBox(
                           height: MediaQuery.of(context).size.width * 0.015,
                         ),
@@ -654,7 +666,9 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                   child: Icon(
                     // print(size);
                     Icons.add,
+                    // FontAwesomeIcons.plus,
                     size: sizeMul * 41.14,
+                    // size: sizeMul*30,
                     color: Colors.white,
                   ),
                 )),
@@ -698,12 +712,19 @@ class _HomeScreenBottomPartState extends State<HomeScreenBottomPart> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(
-                "  Last Receipts",
-                style: TextStyle(
-                    fontSize: 24 * sizeMul,
-                    color: Colors.black.withOpacity(0.8),
-                    fontWeight: FontWeight.bold),
+              Row(
+                children: <Widget>[
+                  Text(
+                    "  Last Receipts",
+                    style: TextStyle(
+                        fontSize: 24 * sizeMul,
+                        color: Colors.black.withOpacity(0.8),
+                        fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(width: sizeMul*10,),
+
+                  Icon(FontAwesomeIcons.file, size: MediaQuery.of(context).size.width * 0.062,color: Colors.green,)
+                ],
               ),
               // SizedBox(
               //   height: sizeMul * 1,
@@ -729,13 +750,21 @@ class _HomeScreenBottomPartState extends State<HomeScreenBottomPart> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: List<int>.generate(
-                                        ((MediaQuery.of(context).size.height - 0.942 * MediaQuery.of(context).size.width - (34 * sizeMul)) / (81 * sizeMul)).floor()  , (i) => i)
+                                        ((MediaQuery.of(context).size.height -
+                                                    0.942 *
+                                                        MediaQuery.of(context)
+                                                            .size
+                                                            .width -
+                                                    (34 * sizeMul)) /
+                                                (81 * sizeMul))
+                                            .floor(),
+                                        (i) => i)
                                     .toList()
                                     .map((f) => Container(
                                           width: 333 * sizeMul,
                                           height: 72 * sizeMul,
                                           decoration: BoxDecoration(
-                                            color: Colors.green,
+                                              color: Colors.green,
                                               // border: Border.all(
                                               //     color: Colors.red,
                                               //     width: 1 * sizeMul),
@@ -750,7 +779,8 @@ class _HomeScreenBottomPartState extends State<HomeScreenBottomPart> {
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(
                                                       9 * sizeMul))),
-                                        )).toList(),
+                                        ))
+                                    .toList(),
                               ),
                             ),
                           );

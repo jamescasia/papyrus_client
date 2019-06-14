@@ -431,13 +431,13 @@ class _EditReceiptScreenBottomPartState
                                 items: [
                                   new DropdownMenuItem(
                                     child: Text(
-                                      "Entertainment",
+                                      "Necessities",
                                       style: TextStyle(
                                         color: Colors.black,
                                         fontSize: sizeMul * 20,
                                       ),
                                     ),
-                                    value: "Entertainment",
+                                    value: "Necessities",
                                   ),
                                   new DropdownMenuItem(
                                     value: "Food",
@@ -460,9 +460,9 @@ class _EditReceiptScreenBottomPartState
                                     ),
                                   ),
                                   new DropdownMenuItem(
-                                    value: "Necessities",
+                                    value: "Leisure",
                                     child: Text(
-                                      "Necessities",
+                                      "Leisure",
                                       style: TextStyle(
                                         color: Colors.black,
                                         fontSize: sizeMul * 20,

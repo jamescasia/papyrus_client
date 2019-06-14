@@ -1,30 +1,4 @@
-// class UserExpense {
-//   double total_lifetime_expense_amount;
 
-//   List<ExpenseItem> lifetime_expenses;
-
-//   UserExpense();
-
-//   addExpense(ExpenseItem expenseItem) {
-//     lifetime_expenses.insert(0, expenseItem);
-//   }
-
-//   factory UserExpense.fromJson(Map<String, dynamic> json) {
-//     var r = UserExpense();
-//     var list = json['lifetime_expenses'] as List;
-//     if (list.length > 0) {
-//       List<ExpenseItem> rList =
-//           list.map((i) => ExpenseItem.fromJson(i)).toList();
-//       r.lifetime_expenses = rList;
-//     } else
-//       r.lifetime_expenses = <ExpenseItem>[];
-//     return r;
-//   }
-//   Map<String, dynamic> toJson() => {
-//         "total_lifetime_expense_amount": total_lifetime_expense_amount,
-//         "lifetime_expenses": lifetime_expenses.map((f) => f.toJson()).toList(),
-//       };
-// }
 
 import 'dart:io';
 import 'package:papyrus_client/data_models/DayExpense.dart';

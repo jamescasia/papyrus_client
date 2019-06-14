@@ -8,6 +8,7 @@ import 'ReceiptScreen.dart';
 import 'package:papyrus_client/models/AppModel.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:intl/intl.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ShowReceiptScreen extends StatefulWidget {
   Receipt receipt;
@@ -331,12 +332,19 @@ class _ShowReceiptScreenStackState extends State<ShowReceiptScreenStack> {
                                   ],
                                 ))),
                         Positioned(
-                            left: homeButtonDist+ sizeMul*24,
+                            left: homeButtonDist+ sizeMul*32,
                             bottom: 13,
-                            child: Icon(
-                              Icons.image,
-                              size: sizeMul * 50,
-                            ))
+                            child: 
+                            
+                      Icon((receipt.category == "Leisure")?FontAwesomeIcons.wineGlassAlt: (receipt.category == "Transportation")?FontAwesomeIcons.bus:(receipt.category == "Food")?FontAwesomeIcons.utensils:(receipt.category == "Necessities")?FontAwesomeIcons.toiletPaper:(receipt.category == "Miscellaneous")?FontAwesomeIcons.campground:FontAwesomeIcons.file,size: sizeMul * 35, color: Colors.lightGreen,),
+                            // Icon(
+                            //   // Icons.image,
+                            //   FontAwesomeIcons.file,
+                            //   size: sizeMul * 35,
+                            //   color: Colors.green,
+                            // )
+                            
+                            )
                       ],
                     ),
                   ],
