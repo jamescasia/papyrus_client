@@ -76,12 +76,19 @@ class AppModel extends Model {
   bool get receiveOpenToAllPromos => _receiveOpenToAllPromos;
 
   AppModel() {
-    // init();
+    launch();
+
+  }
+
+  launch()async{
+
+    mAuth = FirebaseAuth.instance;
+    user = await mAuth.currentUser();
+    if (user != null) init();
+
   }
 
   void init() async {
-    mAuth = FirebaseAuth.instance;
-    user = await mAuth.currentUser();
     // if (user == null) return;
     // try {
     //   platformVersion = await SimplePermissions.platformVersion;

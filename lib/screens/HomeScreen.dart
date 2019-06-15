@@ -352,8 +352,8 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                                     child: 
                                     
                                     Icon(
-                                      // Icons.keyboard_arrow_down,
-                                      FontAwesomeIcons.dollarSign,
+                                      Icons.keyboard_arrow_down,
+                                      // FontAwesomeIcons.dollarSign,
                                       color: Colors.white,
                                       size: MediaQuery.of(context).size.width *
                                           0.05,
@@ -717,7 +717,7 @@ class _HomeScreenBottomPartState extends State<HomeScreenBottomPart> {
                   Text(
                     "  Last Receipts",
                     style: TextStyle(
-                        fontSize: 24 * sizeMul,
+                        fontSize: 24 ,
                         color: Colors.black.withOpacity(0.8),
                         fontWeight: FontWeight.bold),
                   ),
