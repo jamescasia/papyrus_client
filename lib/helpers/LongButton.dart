@@ -28,8 +28,8 @@ class LongButton extends StatelessWidget {
       width: width,
       height: height,
       // margin: EdgeInsets.only(
-      //     top: sizeMul *9,
-      //     bottom: sizeMul * 9),
+      //     top: sizeMulW *9,
+      //     bottom: sizeMulW * 9),
       decoration: BoxDecoration(
         boxShadow: [
           new BoxShadow(

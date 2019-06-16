@@ -55,65 +55,65 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                       child: Column(
                         children: <Widget>[
                           SizedBox(
-                            height: 50 * sizeMul,
+                            height: 50 * sizeMulW,
                           ),
                           Container(
                             width: MediaQuery.of(context).size.width,
-                            height: sizeMul * 230,
+                            height: sizeMulW * 230,
                             // color: Colors.red,
                             child: Stack(
                               children: <Widget>[
                                 Positioned(
-                                  // right: sizeMul*-28*sizeMul,
-                                  // left: sizeMul * 250,
+                                  // right: sizeMulW*-28*sizeMulW,
+                                  // left: sizeMulW * 250,
                                   // right:
                                   left:
                                       MediaQuery.of(context).size.width * 0.61,
-                                  top: sizeMul * 30,
+                                  top: sizeMulW * 30,
                                   // top:
-                                  // bottom: sizeMul * -15,
+                                  // bottom: sizeMulW * -15,
                                   child: RotatedBox(
                                     quarterTurns: -1,
                                     child: SizedBox(
                                         // color: Colors.black,
-                                        width: sizeMul * 185,
-                                        height: sizeMul * 185,
+                                        width: sizeMulW * 185,
+                                        height: sizeMulW * 185,
                                         child: GaugeChart.withSampleData()),
                                   ),
                                 ),
                                 Positioned(
-                                  left: sizeMul * 20,
-                                  top: sizeMul * 114,
+                                  left: sizeMulW * 20,
+                                  top: sizeMulW * 114,
                                   child: GaugeChartLegendItem(
                                       "Food", Colors.green[600]),
                                 ),
                                 Positioned(
-                                  left: sizeMul * 108,
-                                  top: sizeMul * 118,
+                                  left: sizeMulW * 108,
+                                  top: sizeMulW * 118,
                                   child: GaugeChartLegendItem(
                                       "Leisure", Colors.green[500]),
                                 ),
                                 Positioned(
-                                  left: sizeMul * 197,
-                                  top: sizeMul * 108,
+                                  left: sizeMulW * 197,
+                                  top: sizeMulW * 108,
                                   child: GaugeChartLegendItem(
                                       "Fuel", Colors.green[400]),
                                 ),
                                 Positioned(
-                                  left: sizeMul * 13,
-                                  top: sizeMul * 154,
+                                  left: sizeMulW * 13,
+                                  top: sizeMulW * 154,
                                   child: GaugeChartLegendItem(
                                       "Transpo", Colors.green[300]),
                                 ),
                                 Positioned(
-                                  left: sizeMul * 103,
-                                  top: sizeMul * 156,
+                                  left: sizeMulW * 103,
+                                  top: sizeMulW * 156,
                                   child: GaugeChartLegendItem(
                                       "School", Colors.green[200]),
                                 ),
                                 Positioned(
-                                  left: sizeMul * 193,
-                                  top: sizeMul * 150,
+                                  left: sizeMulW * 193,
+                                  top: sizeMulW * 150,
                                   child: GaugeChartLegendItem(
                                       "Misc.", Colors.green[100]),
                                 ),
@@ -123,24 +123,24 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                           // Text(),
 
                           Container(
-                              padding: EdgeInsets.all(sizeMul * 20),
+                              padding: EdgeInsets.all(sizeMulW * 20),
                               width: MediaQuery.of(context).size.width,
-                              height: sizeMul * 230,
+                              height: sizeMulW * 230,
                               child: GroupedBarChart.withSampleData()),
                           Container(
-                              padding: EdgeInsets.all(sizeMul * 20),
+                              padding: EdgeInsets.all(sizeMulW * 20),
                               width: MediaQuery.of(context).size.width,
-                              height: sizeMul * 230,
+                              height: sizeMulW * 230,
                               child: SimpleTimeSeriesChart.withSampleData()),
                           Container(
-                              padding: EdgeInsets.all(sizeMul * 20),
+                              padding: EdgeInsets.all(sizeMulW * 20),
                               width: MediaQuery.of(context).size.width,
-                              height: sizeMul * 230,
+                              height: sizeMulW * 230,
                               child: GroupedBarChart.withSampleData()),
                           Container(
-                              padding: EdgeInsets.all(sizeMul * 20),
+                              padding: EdgeInsets.all(sizeMulW * 20),
                               width: MediaQuery.of(context).size.width,
-                              height: sizeMul * 230,
+                              height: sizeMulW * 230,
                               child: GroupedBarChart.withSampleData()),
                         ],
                       ),
@@ -150,11 +150,11 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                       children: <Widget>[
                         ClipShadowPath(
                             shadow: Shadow(
-                                blurRadius: 10 * sizeMul,
-                                offset: Offset(0, sizeMul),
+                                blurRadius: 10 * sizeMulW,
+                                offset: Offset(0, sizeMulW),
                                 color: Colors.black38),
                             clipper: CustomShapeClipper(
-                                sizeMul: sizeMul,
+                                sizeMulW: sizeMulW,
                                 maxWidth: MediaQuery.of(context).size.width,
                                 maxHeight:
                                     MediaQuery.of(context).size.width * 0.4),
@@ -177,10 +177,10 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                           Navigator.pop(context);
                                         },
                                         child: Container(
-                                          width: sizeMul * 40,
+                                          width: sizeMulW * 40,
                                           padding: EdgeInsets.symmetric(
-                                              vertical: 10 * sizeMul),
-                                          // height: sizeMul*40,
+                                              vertical: 10 * sizeMulW),
+                                          // height: sizeMulW*40,
                                           // color: Colors.red,
                                           child: Image.asset(
                                             'assets/icons/3x/back.png',
@@ -193,8 +193,8 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                       ),
                                     ),
                                     Positioned(
-                                      left: sizeMul * 10,
-                                      top: sizeMul * 33.5,
+                                      left: sizeMulW * 10,
+                                      top: sizeMulW * 33.5,
                                       child: Container(
                                         width:
                                             MediaQuery.of(context).size.width,
@@ -224,8 +224,8 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                             .viewing_period ==
                                                         Period.MONTHLY)
                                                     ? EdgeInsets.symmetric(
-                                                        vertical: sizeMul * 2,
-                                                        horizontal: sizeMul * 8)
+                                                        vertical: sizeMulW * 2,
+                                                        horizontal: sizeMulW * 8)
                                                     : null,
                                                 decoration: (model
                                                             .viewing_period ==
@@ -235,7 +235,7 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(
-                                                                    sizeMul *
+                                                                    sizeMulW *
                                                                         300))
                                                     : null,
 
@@ -261,8 +261,8 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                             .viewing_period ==
                                                         Period.WEEKLY)
                                                     ? EdgeInsets.symmetric(
-                                                        vertical: sizeMul * 2,
-                                                        horizontal: sizeMul * 8)
+                                                        vertical: sizeMulW * 2,
+                                                        horizontal: sizeMulW * 8)
                                                     : null,
                                                 decoration: (model
                                                             .viewing_period ==
@@ -272,7 +272,7 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(
-                                                                    sizeMul *
+                                                                    sizeMulW *
                                                                         300))
                                                     : null,
                                                 child: InkWell(
@@ -305,8 +305,8 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                             .viewing_period ==
                                                         Period.DAILY)
                                                     ? EdgeInsets.symmetric(
-                                                        vertical: sizeMul * 2,
-                                                        horizontal: sizeMul * 8)
+                                                        vertical: sizeMulW * 2,
+                                                        horizontal: sizeMulW * 8)
                                                     : null,
                                                 decoration: (model
                                                             .viewing_period ==
@@ -316,7 +316,7 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(
-                                                                    sizeMul *
+                                                                    sizeMulW *
                                                                         300))
                                                     : null,
                                                 child: Text(
@@ -340,11 +340,11 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                       ),
                                     ),
                                     Positioned(
-                                      left: sizeMul * 30,
-                                      top: sizeMul * 79,
+                                      left: sizeMulW * 30,
+                                      top: sizeMulW * 79,
                                       child: Text("Charts",
                                           style: TextStyle(
-                                            fontSize: sizeMul * 35,
+                                            fontSize: sizeMulW * 35,
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold,
                                           )),

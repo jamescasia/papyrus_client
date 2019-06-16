@@ -16,11 +16,11 @@ class LogInScreen extends StatefulWidget {
   _LogInScreenState createState() => new _LogInScreenState();
 }
 
-// var sizeMul;
+// var sizeMulW;
 class _LogInScreenState extends State<LogInScreen> {
   @override
   Widget build(BuildContext context) {
-    sizeMul = MediaQuery.of(context).size.width / 411.4;
+    sizeMulW = MediaQuery.of(context).size.width / 411.4;
 
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
       statusBarColor: Colors.white,
@@ -75,13 +75,13 @@ class _LogInScreenStackState extends State<LogInScreenStack> {
             children: <Widget>[
               Image.asset(
                 "assets/icons/3x/papygreen.png",
-                width: sizeMul * 50,
+                width: sizeMulW * 50,
               ),
               Text(
                 "Sign in \nto Papyrus.",
                 textAlign: TextAlign.left,
                 style: TextStyle(
-                    fontSize: sizeMul * 50,
+                    fontSize: sizeMulW * 50,
                     color: Colors.grey[700],
                     fontWeight: FontWeight.w900),
               ),
@@ -89,12 +89,12 @@ class _LogInScreenStackState extends State<LogInScreenStack> {
               TextField(),
               LongButton(
                 greeny.colors[1],
-                300 * sizeMul,
-                60 * sizeMul,
-                sizeMul * 3,
+                300 * sizeMulW,
+                60 * sizeMulW,
+                sizeMulW * 3,
                 Colors.green,
                 greeny.colors[0],
-                sizeMul * 9,
+                sizeMulW * 9,
                 () {},
                 Center(
                   child: Row(
@@ -105,15 +105,15 @@ class _LogInScreenStackState extends State<LogInScreenStack> {
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w900,
-                            fontSize: sizeMul * 25),
+                            fontSize: sizeMulW * 25),
                       ),
                       SizedBox(
-                        width: sizeMul * 5,
+                        width: sizeMulW * 5,
                       ),
                       Icon(
                         Icons.chevron_right,
                         color: Colors.white,
-                        size: sizeMul * 35,
+                        size: sizeMulW * 35,
                       )
                     ],
                   ),
@@ -122,36 +122,36 @@ class _LogInScreenStackState extends State<LogInScreenStack> {
               ),
 
               Container(
-                // margin: EdgeInsets.all(sizeMul*10),
-                width: sizeMul * 360,
-                height: sizeMul * 60,
+                // margin: EdgeInsets.all(sizeMulW*10),
+                width: sizeMulW * 360,
+                height: sizeMulW * 60,
                 decoration: BoxDecoration(
                     color: Colors.grey[100],
                     borderRadius:
-                        BorderRadius.all(Radius.circular(sizeMul * 10))),
+                        BorderRadius.all(Radius.circular(sizeMulW * 10))),
                 child: Stack(
                   children: <Widget>[
                     Positioned(
                         top: 0,
                         bottom: 0,
-                        left: sizeMul * 20,
+                        left: sizeMulW * 20,
                         child: Icon(
                           FontAwesomeIcons.user,
                           color: Colors.grey[500],
                         )),
                     Positioned(
-                      left: sizeMul * 55,
+                      left: sizeMulW * 55,
                       top: 0,
                       bottom: 0,
                       child: Container(
-                        padding: EdgeInsets.all(sizeMul * 18.0),
+                        padding: EdgeInsets.all(sizeMulW * 18.0),
                         child: Center(
                           child: EditableText(
                             controller: email_controller,
                             focusNode: email_focus,
                             style: TextStyle(
                                 color: Colors.grey[700],
-                                fontSize: sizeMul * 30),
+                                fontSize: sizeMulW * 30),
                             cursorColor: Colors.pinkAccent,
                             backgroundCursorColor: Colors.red,
                           ),
@@ -162,48 +162,48 @@ class _LogInScreenStackState extends State<LogInScreenStack> {
                 ),
               )
               // Container(
-              //   height: sizeMul * 300,
+              //   height: sizeMulW * 300,
               //   width: MediaQuery.of(context).size.width,
               //   margin: EdgeInsets.symmetric(
-              //       horizontal: sizeMul * 30, vertical: sizeMul * 30),
+              //       horizontal: sizeMulW * 30, vertical: sizeMulW * 30),
               //   child: Card(
               //     color: Colors.green,
               //     elevation: 0,
               //     shape: RoundedRectangleBorder(
               //         borderRadius:
-              //             BorderRadius.all(Radius.circular(30 * sizeMul))),
+              //             BorderRadius.all(Radius.circular(30 * sizeMulW))),
               //     child: Column(
               //       children: <Widget>[
               //         Container(
-              //           width: sizeMul * 300,
-              //           height: sizeMul * 60,
+              //           width: sizeMulW * 300,
+              //           height: sizeMulW * 60,
               //           decoration: BoxDecoration(
               //               color: Colors.grey[200],
               //               borderRadius: BorderRadius.all(
-              //                   Radius.circular(sizeMul * 10))),
+              //                   Radius.circular(sizeMulW * 10))),
               //           child: Stack(
               //             children: <Widget>[
               //               Positioned(
               //                   top: 0,
               //                   bottom: 0,
-              //                   left: sizeMul * 20,
+              //                   left: sizeMulW * 20,
               //                   child: Icon(
               //                     FontAwesomeIcons.user,
               //                     color: Colors.grey[500],
               //                   )),
               //               Positioned(
-              //                 left: sizeMul * 55,
+              //                 left: sizeMulW * 55,
               //                 top: 0,
               //                 bottom: 0,
               //                 child: Container(
-              //                   padding:   EdgeInsets.all(sizeMul*18.0),
+              //                   padding:   EdgeInsets.all(sizeMulW*18.0),
               //                   child: Center(
               //                     child: EditableText(
               //                       controller: email_controller,
               //                       focusNode: email_focus,
               //                       style: TextStyle(
               //                           color: Colors.grey[700],
-              //                           fontSize: sizeMul * 30),
+              //                           fontSize: sizeMulW * 30),
               //                       cursorColor: Colors.pinkAccent,
               //                       backgroundCursorColor: Colors.red,
               //                     ),

@@ -27,7 +27,7 @@ class GaugeChart extends StatelessWidget {
         // the chart will be left as a hole in the center. Adjust the start
         // angle and the arc length of the pie so it resembles a gauge.
         defaultRenderer: new charts.ArcRendererConfig(
-            arcWidth: (sizeMul * 24).toInt(),
+            arcWidth: (sizeMulW * 24).toInt(),
             startAngle: 4 / 5 * pi,
             arcLength: 7 / 5 * pi));
   }
@@ -95,8 +95,8 @@ class GaugeChartLegendItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Container(
-            height: sizeMul * 20,
-            width: sizeMul*20,
+            height: sizeMulW * 20,
+            width: sizeMulW*20,
             decoration: BoxDecoration(
               color: color,
                 borderRadius: BorderRadius.all(
@@ -105,14 +105,14 @@ class GaugeChartLegendItem extends StatelessWidget {
               // color: color,
             )),
           ),
-          SizedBox(width: sizeMul*5,),
+          SizedBox(width: sizeMulW*5,),
           Text(
             
             title,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
               fontWeight: FontWeight.w600,
-              fontSize: 15 * sizeMul,
+              fontSize: 15 * sizeMulW,
             ),
           )
         ],

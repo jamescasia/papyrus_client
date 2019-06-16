@@ -106,10 +106,11 @@ class AppModel extends Model {
     receiveReceiptModel = ReceiveReceiptModel(this);
     receiptsScreenModel = ReceiptsScreenModel(this);
     rootDir = await getApplicationDocumentsDirectory();
+    // var = await getExte
     await checkOrGenerateDirectories();
     // await deleteAllReceiptFiles();
     listFileNamesOfReceiptsFoundInStorageAndGenerateReceipts();
-    prepareExpenseFiles();
+    // prepareExpenseFiles();
 
     tempDir = await getTemporaryDirectory();
     generateImage();
@@ -283,7 +284,7 @@ class AppModel extends Model {
 
   void generateImage() async {
     try {
-      var imageFile = await EfQrcode.generate(user.email, "#ffffff", "#000000");
+      var imageFile = await EfQrcode.generate(user.uid, "#ffffff", "#000000");
       userQRPath = "${dirMap['UserData']}/${user.email}.jpg";
       imageFile.copy(userQRPath);
       print('done file');

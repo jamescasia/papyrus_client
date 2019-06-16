@@ -46,11 +46,11 @@ class _ShowQRTabStackState extends State<ShowQRTabStack> {
           children: <Widget>[
             ClipShadowPath(
                 shadow: Shadow(
-                    blurRadius: 10 * sizeMul,
-                    offset: Offset(0, sizeMul),
+                    blurRadius: 10 * sizeMulW,
+                    offset: Offset(0, sizeMulW),
                     color: Colors.black38.withAlpha(0)),
                 clipper: CustomShapeClipper(
-                    sizeMul: sizeMul,
+                    sizeMulW: sizeMulW,
                     maxWidth: MediaQuery.of(context).size.width,
                     maxHeight: MediaQuery.of(context).size.width * 0.91),
                 child: Container(
@@ -64,24 +64,24 @@ class _ShowQRTabStackState extends State<ShowQRTabStack> {
               children: <Widget>[
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
-                  height: sizeMul * 125,
+                  height: sizeMulW * 125,
                 ),
                 Text(
                   "PAPYRUS",
                   style: TextStyle(
                       color: Colors.black,
-                      fontSize: sizeMul * 40,
+                      fontSize: sizeMulW * 40,
                       fontWeight: FontWeight.bold),
                 ),
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: sizeMul * 50),
+                  margin: EdgeInsets.symmetric(horizontal: sizeMulW * 50),
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius:
-                          BorderRadius.all(Radius.circular(sizeMul * 30))),
+                          BorderRadius.all(Radius.circular(sizeMulW * 30))),
                   child: ClipRRect(
                     borderRadius:
-                        BorderRadius.all(Radius.circular(sizeMul * 55)),
+                        BorderRadius.all(Radius.circular(sizeMulW * 55)),
                     child: Image.file(File(appModel.userQRPath), scale: 1.05,),
 
                     // Image.asset(
@@ -94,7 +94,7 @@ class _ShowQRTabStackState extends State<ShowQRTabStack> {
                   "SCAN ME!",
                   style: TextStyle(
                       color: Colors.white,
-                      fontSize: sizeMul * 60,
+                      fontSize: sizeMulW * 60,
                       fontWeight: FontWeight.w900),
                 ),
                 Text(
@@ -102,7 +102,7 @@ class _ShowQRTabStackState extends State<ShowQRTabStack> {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: Colors.white,
-                      fontSize: sizeMul * 19,
+                      fontSize: sizeMulW * 19,
                       fontWeight: FontWeight.w600),
                 ),
               ],

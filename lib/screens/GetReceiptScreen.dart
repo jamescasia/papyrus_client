@@ -74,30 +74,30 @@ class _GetReceiptScreenState extends State<GetReceiptScreen>
             // color: Colors.white,
             items: [
               Padding(
-                padding: EdgeInsets.all(sizeMul * 4),
+                padding: EdgeInsets.all(sizeMulW * 4),
                 child: Center(
                   child: Icon(
                     Icons.tap_and_play,
                     color: Colors.green,
-                    size: sizeMul * 40,
+                    size: sizeMulW * 40,
                   ),
                 ),
               ),
               Padding(
-                padding: EdgeInsets.all(sizeMul * 4),
+                padding: EdgeInsets.all(sizeMulW * 4),
                 child: Icon(
                   FontAwesomeIcons.expand,
                   // Icons.crop_free,
                   color: Colors.green,
-                  size: sizeMul * 35,
+                  size: sizeMulW * 35,
                 ),
               ),
               Padding(
-                padding: EdgeInsets.all(sizeMul * 4),
+                padding: EdgeInsets.all(sizeMulW * 4),
                 child: Icon(
                   Icons.cloud_download,
                   color: Colors.green,
-                  size: sizeMul * 40,
+                  size: sizeMulW * 40,
                 ),
               ),
             ],
@@ -128,9 +128,9 @@ class _GetReceiptScreenState extends State<GetReceiptScreen>
                     Navigator.pop(context);
                   },
                   child: Container(
-                    width: sizeMul * 40,
-                    padding: EdgeInsets.symmetric(vertical: 10 * sizeMul),
-                    // height: sizeMul*40,
+                    width: sizeMulW * 40,
+                    padding: EdgeInsets.symmetric(vertical: 10 * sizeMulW),
+                    // height: sizeMulW*40,
                     // color: Colors.red,
                     child: Image.asset(
                       'assets/icons/3x/back.png',

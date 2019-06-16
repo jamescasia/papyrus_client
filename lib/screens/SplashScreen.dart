@@ -54,8 +54,8 @@ class SplashFrame extends StatelessWidget {
         child: Center(
             child: Image.asset(
           'assets/icons/3x/papygreen.png',color: Colors.white,
-          height: sizeMul * 100,
-          width: sizeMul * 100,
+          height: sizeMulW * 100,
+          width: sizeMulW * 100,
         )),
       ),
     );

@@ -12,26 +12,26 @@ Widget ReceiptCard(BuildContext context, Receipt receipt, index) {
 
   return Container(
     // margin: EdgeInsets.only(
-    //     top: sizeMul * ((index == 0) ? 170 : (index == -1) ? 50 : (margin)),
-    //     bottom: sizeMul * margin),
-    width: 333 * sizeMul,
-    height: 72 * sizeMul,
+    //     top: sizeMulW * ((index == 0) ? 170 : (index == -1) ? 50 : (margin)),
+    //     bottom: sizeMulW * margin),
+    width: 333 * sizeMulW,
+    height: 72 * sizeMulW,
     decoration: BoxDecoration(
-        border: Border.all(color: Colors.black12, width: 1 * sizeMul),
+        border: Border.all(color: Colors.black12, width: 1 * sizeMulW),
         color: Colors.white,
         boxShadow: [
           new BoxShadow(
-            blurRadius: 2 * sizeMul,
+            blurRadius: 2 * sizeMulW,
             color: Colors.black12,
-            offset: new Offset(0, 0.4 * sizeMul),
+            offset: new Offset(0, 0.4 * sizeMulW),
           ),
         ],
-        borderRadius: BorderRadius.all(Radius.circular(9 * sizeMul))),
+        borderRadius: BorderRadius.all(Radius.circular(9 * sizeMulW))),
     child: InkWell(
       onTap: () {
         print("");
       },
-      borderRadius: BorderRadius.all(Radius.circular(9 * sizeMul)),
+      borderRadius: BorderRadius.all(Radius.circular(9 * sizeMulW)),
       // highlightColor: Colors.red,
       // splashColor: Colors.red,
 
@@ -40,7 +40,7 @@ Widget ReceiptCard(BuildContext context, Receipt receipt, index) {
       child: Material(
         color: Colors.white.withAlpha(0),
         child: InkWell(
-          borderRadius: BorderRadius.all(Radius.circular(9 * sizeMul)),
+          borderRadius: BorderRadius.all(Radius.circular(9 * sizeMulW)),
           onTap: () {
             Navigator.push(
                 context,
@@ -51,7 +51,7 @@ Widget ReceiptCard(BuildContext context, Receipt receipt, index) {
           highlightColor: Colors.black.withOpacity(0.1),
           child: Container(
             padding: EdgeInsets.symmetric(
-                horizontal: sizeMul * 12, vertical: sizeMul * 4),
+                horizontal: sizeMulW * 12, vertical: sizeMulW * 4),
             child: Flex(
               direction: Axis.horizontal,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -63,7 +63,7 @@ Widget ReceiptCard(BuildContext context, Receipt receipt, index) {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Icon((receipt.category == "Leisure")?FontAwesomeIcons.wineGlassAlt: (receipt.category == "Transportation")?FontAwesomeIcons.bus:(receipt.category == "Food")?FontAwesomeIcons.utensils:(receipt.category == "Necessities")?FontAwesomeIcons.toiletPaper:(receipt.category == "Miscellaneous")?FontAwesomeIcons.campground:FontAwesomeIcons.file,size: sizeMul * 26, color: Colors.lightGreen[200],),
+                      Icon((receipt.category == "Leisure")?FontAwesomeIcons.wineGlassAlt: (receipt.category == "Transportation")?FontAwesomeIcons.bus:(receipt.category == "Food")?FontAwesomeIcons.utensils:(receipt.category == "Necessities")?FontAwesomeIcons.toiletPaper:(receipt.category == "Miscellaneous")?FontAwesomeIcons.campground:FontAwesomeIcons.file,size: sizeMulW * 26, color: Colors.lightGreen[200],),
                       Flexible(
                         child: Text(
                           receipt.merchant,
@@ -71,7 +71,7 @@ Widget ReceiptCard(BuildContext context, Receipt receipt, index) {
                           textAlign: TextAlign.center,
                           maxLines: 2,
                           style: TextStyle(
-                              fontSize: 11 * sizeMul,
+                              fontSize: 11 * sizeMulW,
                               fontWeight: FontWeight.w600),
                         ),
                       ),
@@ -88,7 +88,7 @@ Widget ReceiptCard(BuildContext context, Receipt receipt, index) {
                           receipt.items.first.name,
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              fontSize: 16 * sizeMul,
+                              fontSize: 16 * sizeMulW,
                               fontWeight: FontWeight.w600),
                         ),
                       ),
@@ -97,7 +97,7 @@ Widget ReceiptCard(BuildContext context, Receipt receipt, index) {
                             DateFormat("MMM dd, yyyy")
                                 .format(DateTime.parse(receipt.dateTime)),
                         // DateTime.parse( receipt.dateTime).month.toString().substring(1,4) +" " + DateTime.parse( receipt.dateTime).day.toString() +", "+  DateTime.parse( receipt.dateTime).year.toString(),
-                        style: TextStyle(fontSize: 11 * sizeMul),
+                        style: TextStyle(fontSize: 11 * sizeMulW),
                       )
                     ],
                   ),
@@ -115,7 +115,7 @@ Widget ReceiptCard(BuildContext context, Receipt receipt, index) {
                           style: TextStyle(
                               color: Colors.red,
                               fontWeight: FontWeight.bold,
-                              fontSize: 16 * sizeMul),
+                              fontSize: 16 * sizeMulW),
                         ),
                       ),
                       Padding(
@@ -129,7 +129,7 @@ Widget ReceiptCard(BuildContext context, Receipt receipt, index) {
                           style: TextStyle(
                               color: Colors.red,
                               fontWeight: FontWeight.bold,
-                              fontSize: 12 * sizeMul),
+                              fontSize: 12 * sizeMulW),
                         ),
                       ),
                     ],
@@ -169,25 +169,25 @@ Widget ReceiptCard(BuildContext context, Receipt receipt, index) {
 
 //     return Container(
 
-//       margin: EdgeInsets.only(top: sizeMul * (margin), bottom:sizeMul*margin),
-//       width: 333 * sizeMul,
-//       height: 72 * sizeMul,
+//       margin: EdgeInsets.only(top: sizeMulW * (margin), bottom:sizeMulW*margin),
+//       width: 333 * sizeMulW,
+//       height: 72 * sizeMulW,
 //       decoration: BoxDecoration(
-//           border: Border.all(color: Colors.black12, width: 1 * sizeMul),
+//           border: Border.all(color: Colors.black12, width: 1 * sizeMulW),
 //           color: Colors.white,
 //           boxShadow: [
 //             new BoxShadow(
-//               blurRadius: 2 * sizeMul,
+//               blurRadius: 2 * sizeMulW,
 //               color: Colors.black12,
-//               offset: new Offset(0, 0.4 * sizeMul),
+//               offset: new Offset(0, 0.4 * sizeMulW),
 //             ),
 //           ],
-//           borderRadius: BorderRadius.all(Radius.circular(9 * sizeMul))),
+//           borderRadius: BorderRadius.all(Radius.circular(9 * sizeMulW))),
 //       child: InkWell(
 //         onTap: () {
 //           print("");
 //         },
-//         borderRadius: BorderRadius.all(Radius.circular(9 * sizeMul)),
+//         borderRadius: BorderRadius.all(Radius.circular(9 * sizeMulW)),
 //         // highlightColor: Colors.red,
 //         // splashColor: Colors.red,
 
@@ -196,7 +196,7 @@ Widget ReceiptCard(BuildContext context, Receipt receipt, index) {
 //         child: Material(
 //           color: Colors.white.withAlpha(0),
 //           child: InkWell(
-//             borderRadius: BorderRadius.all(Radius.circular(9 * sizeMul)),
+//             borderRadius: BorderRadius.all(Radius.circular(9 * sizeMulW)),
 //             onTap: () {
 //               Navigator.push(
 //                   context,
@@ -219,7 +219,7 @@ Widget ReceiptCard(BuildContext context, Receipt receipt, index) {
 //                       widget.receipt.merchant,
 //                       overflow: TextOverflow.fade,
 //                       style: TextStyle(
-//                           fontSize: 11 * sizeMul, fontWeight: FontWeight.w600),
+//                           fontSize: 11 * sizeMulW, fontWeight: FontWeight.w600),
 //                     ),
 //                   ],
 //                 ),
@@ -229,11 +229,11 @@ Widget ReceiptCard(BuildContext context, Receipt receipt, index) {
 //                     Text(
 //                       widget.receipt.items.first.name,
 //                       style: TextStyle(
-//                           fontSize: 16 * sizeMul, fontWeight: FontWeight.w600),
+//                           fontSize: 16 * sizeMulW, fontWeight: FontWeight.w600),
 //                     ),
 //                     Text(
 //                       DateTime.parse(widget.receipt.dateTime).month.toString().substring(1,4) +" " + DateTime.parse(widget.receipt.dateTime).day.toString() +", "+  DateTime.parse(widget.receipt.dateTime).year.toString(),
-//                       style: TextStyle(fontSize: 11 * sizeMul),
+//                       style: TextStyle(fontSize: 11 * sizeMulW),
 //                     )
 //                   ],
 //                 ),
@@ -245,10 +245,10 @@ Widget ReceiptCard(BuildContext context, Receipt receipt, index) {
 //                       style: TextStyle(
 //                           color: Colors.red,
 //                           fontWeight: FontWeight.bold,
-//                           fontSize: 17 * sizeMul),
+//                           fontSize: 17 * sizeMulW),
 //                     ),
 //                     Padding(
-//                       padding: EdgeInsets.only(bottom: sizeMul*1.5),
+//                       padding: EdgeInsets.only(bottom: sizeMulW*1.5),
 //                       child: Text(
 //                         (widget.receipt.total.toString().split(".")[1] != "0")
 //                             ? "${widget.receipt.total.toString().split(".")[1]}"
@@ -256,7 +256,7 @@ Widget ReceiptCard(BuildContext context, Receipt receipt, index) {
 //                         style: TextStyle(
 //                             color: Colors.red,
 //                             fontWeight: FontWeight.bold,
-//                             fontSize: 11 * sizeMul),
+//                             fontSize: 11 * sizeMulW),
 //                       ),
 //                     ),
 //                   ],

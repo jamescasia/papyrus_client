@@ -63,7 +63,7 @@ class _SettingScreenTopPartState extends State<SettingScreenTopPart> {
             ),
           ),
           Positioned(
-            bottom: sizeMul * 35,
+            bottom: sizeMulW * 35,
             left: 0,
             // right: 0,
             child: Container(
@@ -72,10 +72,10 @@ class _SettingScreenTopPartState extends State<SettingScreenTopPart> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   LongButton(
-                    Colors.red, 333 * sizeMul, 69 * sizeMul, sizeMul * 3,
+                    Colors.red, 333 * sizeMulW, 69 * sizeMulW, sizeMulW * 3,
                     Colors.redAccent,
                     Colors.red[800],
-                    sizeMul * 9,
+                    sizeMulW * 9,
                     () {
                       setState(() {
                         isLoading = true;
@@ -96,17 +96,17 @@ class _SettingScreenTopPartState extends State<SettingScreenTopPart> {
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w900,
-                                fontSize: sizeMul * 20),
+                                fontSize: sizeMulW * 20),
                           ),
                           SizedBox(
-                            width: sizeMul * 10,
+                            width: sizeMulW * 10,
                           ),
                           Icon(
                             // Icons.chevron_right,
                             FontAwesomeIcons.doorOpen,
                             color: Colors.white,
-                            size:sizeMul*23
-                            // size: sizeMul * 35,
+                            size:sizeMulW*23
+                            // size: sizeMulW * 35,
                           )
                         ],
                       ),
@@ -124,11 +124,11 @@ class _SettingScreenTopPartState extends State<SettingScreenTopPart> {
               children: <Widget>[
                 ClipShadowPath(
                     shadow: Shadow(
-                        blurRadius: 10 * sizeMul,
-                        offset: Offset(0, sizeMul),
+                        blurRadius: 10 * sizeMulW,
+                        offset: Offset(0, sizeMulW),
                         color: Colors.black38),
                     clipper: CustomShapeClipper(
-                        sizeMul: sizeMul,
+                        sizeMulW: sizeMulW,
                         maxWidth: MediaQuery.of(context).size.width,
                         maxHeight: MediaQuery.of(context).size.width * 0.38),
                     child: Container(
@@ -148,10 +148,10 @@ class _SettingScreenTopPartState extends State<SettingScreenTopPart> {
                                   Navigator.pop(context);
                                 },
                                 child: Container(
-                                  width: sizeMul * 40,
+                                  width: sizeMulW * 40,
                                   padding: EdgeInsets.symmetric(
-                                      vertical: 10 * sizeMul),
-                                  // height: sizeMul*40,
+                                      vertical: 10 * sizeMulW),
+                                  // height: sizeMulW*40,
                                   // color: Colors.red,
                                   child: Image.asset(
                                     'assets/icons/3x/back.png',
@@ -162,11 +162,11 @@ class _SettingScreenTopPartState extends State<SettingScreenTopPart> {
                               ),
                             ),
                             Positioned(
-                              left: sizeMul * 30,
-                              top: sizeMul * 70,
+                              left: sizeMulW * 30,
+                              top: sizeMulW * 70,
                               child: Text("Settings",
                                   style: TextStyle(
-                                    fontSize: sizeMul * 35,
+                                    fontSize: sizeMulW * 35,
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
                                   )),
@@ -174,7 +174,7 @@ class _SettingScreenTopPartState extends State<SettingScreenTopPart> {
                           ],
                         ))),
                 Positioned(
-                    // right: sizeMul * sizeMul * 12,
+                    // right: sizeMulW * sizeMulW * 12,
 
                     // right: MediaQuery.of(context).size.width * 0.035,
                     left: homeButtonDist,
@@ -190,13 +190,13 @@ class _SettingScreenTopPartState extends State<SettingScreenTopPart> {
                           color: greeny.colors[1],
                           onPressed: () {},
                           child: Container(
-                            width: sizeMul * 74.052,
-                            height: sizeMul * 74.052,
-                            padding: EdgeInsets.all(sizeMul * 22),
+                            width: sizeMulW * 74.052,
+                            height: sizeMulW * 74.052,
+                            padding: EdgeInsets.all(sizeMulW * 22),
                             child: Image.asset(
                               'assets/icons/3x/papyrus.png',
-                              height: sizeMul * 3,
-                              width: sizeMul * 3,
+                              height: sizeMulW * 3,
+                              width: sizeMulW * 3,
                             ),
 
                             //     Icon(
@@ -234,20 +234,20 @@ class _SettingScreenBottomPartState extends State<SettingScreenBottomPart> {
     return ScopedModelDescendant<AppModel>(builder: (context, child, model) {
       return Container(
         width: MediaQuery.of(context).size.width,
-        // margin: EdgeInsets.symmetric(horizontal: sizeMul*20),
+        // margin: EdgeInsets.symmetric(horizontal: sizeMulW*20),
         child: Center(
           child: Container(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 SizedBox(
-                  height: sizeMul * 200,
+                  height: sizeMulW * 200,
                 ),
                 Container(
                   color: Colors.grey[200],
-                  height: sizeMul * 65,
+                  height: sizeMulW * 65,
                   child: Padding(
-                    padding: EdgeInsets.all(18.0 * sizeMul),
+                    padding: EdgeInsets.all(18.0 * sizeMulW),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -255,12 +255,12 @@ class _SettingScreenBottomPartState extends State<SettingScreenBottomPart> {
                         Text(
                           "Get notified of unique promos",
                           style: TextStyle(
-                              fontSize: sizeMul * 17,
+                              fontSize: sizeMulW * 17,
                               fontWeight: FontWeight.w600),
                         ),
                         Container(
-                          width: sizeMul * 60,
-                          height: sizeMul * 60,
+                          width: sizeMulW * 60,
+                          height: sizeMulW * 60,
                           child: Switch(
                             value: true,
                             onChanged: (bool value) {
@@ -274,9 +274,9 @@ class _SettingScreenBottomPartState extends State<SettingScreenBottomPart> {
                 ),
                 Container(
                   // color: Colors.grey[200],
-                  height: sizeMul * 65,
+                  height: sizeMulW * 65,
                   child: Padding(
-                    padding: EdgeInsets.all(18.0 * sizeMul),
+                    padding: EdgeInsets.all(18.0 * sizeMulW),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -285,12 +285,12 @@ class _SettingScreenBottomPartState extends State<SettingScreenBottomPart> {
                           "Get notified of open-to-all promos",
                           overflow: TextOverflow.fade,
                           style: TextStyle(
-                              fontSize: sizeMul * 17,
+                              fontSize: sizeMulW * 17,
                               fontWeight: FontWeight.w600),
                         ),
                         Container(
-                          height: sizeMul * 60,
-                          width: sizeMul * 60,
+                          height: sizeMulW * 60,
+                          width: sizeMulW * 60,
                           child: Switch(
                             value: true,
                             onChanged: (bool value) {
@@ -304,9 +304,9 @@ class _SettingScreenBottomPartState extends State<SettingScreenBottomPart> {
                 ),
                 Container(
                   color: Colors.grey[200],
-                  height: sizeMul * 65,
+                  height: sizeMulW * 65,
                   child: Padding(
-                    padding: EdgeInsets.all(18.0 * sizeMul),
+                    padding: EdgeInsets.all(18.0 * sizeMulW),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -315,7 +315,7 @@ class _SettingScreenBottomPartState extends State<SettingScreenBottomPart> {
                           "Delete Account",
                           style: TextStyle(
                               color: Colors.red,
-                              fontSize: sizeMul * 17,
+                              fontSize: sizeMulW * 17,
                               fontWeight: FontWeight.w600),
                         ),
                       ],
@@ -323,7 +323,7 @@ class _SettingScreenBottomPartState extends State<SettingScreenBottomPart> {
                   ),
                 ),
                 SizedBox(
-                  height: 30 * sizeMul,
+                  height: 30 * sizeMulW,
                 )
               ],
             ),

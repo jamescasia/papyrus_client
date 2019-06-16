@@ -37,11 +37,11 @@ class _ShowQRScreenStackState extends State<ShowQRScreenStack> {
         children: <Widget>[
           ClipShadowPath(
               shadow: Shadow(
-                  blurRadius: 10 * sizeMul,
-                  offset: Offset(0, sizeMul),
+                  blurRadius: 10 * sizeMulW,
+                  offset: Offset(0, sizeMulW),
                   color: Colors.black38.withAlpha(0)),
               clipper: CustomShapeClipper(
-                  sizeMul: sizeMul,
+                  sizeMulW: sizeMulW,
                   maxWidth: MediaQuery.of(context).size.width,
                   maxHeight: MediaQuery.of(context).size.width * 0.91),
               child: Container(
@@ -55,35 +55,35 @@ class _ShowQRScreenStackState extends State<ShowQRScreenStack> {
             children: <Widget>[
               SizedBox(
                 width: MediaQuery.of(context).size.width,
-                height: sizeMul * 90,
+                height: sizeMulW * 90,
               ),
               Text(
                 "PAPYRUS",
                 style: TextStyle(
                     color: Colors.black,
-                    fontSize: sizeMul * 40,
+                    fontSize: sizeMulW * 40,
                     fontWeight: FontWeight.bold),
               ),
               Container(
-                margin: EdgeInsets.symmetric(horizontal: sizeMul * 50),
+                margin: EdgeInsets.symmetric(horizontal: sizeMulW * 50),
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius:
-                        BorderRadius.all(Radius.circular(sizeMul * 30))),
+                        BorderRadius.all(Radius.circular(sizeMulW * 30))),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(sizeMul * 35)),
+                  borderRadius: BorderRadius.all(Radius.circular(sizeMulW * 35)),
                   child: Image.asset(
                     'assets/pictures/sampleqrcode.png',
                     height: MediaQuery.of(context).size.width * 0.7,
                   ),
                 ),
               ),
-              SizedBox(height: sizeMul * 10),
+              SizedBox(height: sizeMulW * 10),
               Text(
                 "SCAN ME!",
                 style: TextStyle(
                     color: Colors.white,
-                    fontSize: sizeMul * 60,
+                    fontSize: sizeMulW * 60,
                     fontWeight: FontWeight.w900),
               ),
               Text(
@@ -91,7 +91,7 @@ class _ShowQRScreenStackState extends State<ShowQRScreenStack> {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     color: Colors.white,
-                    fontSize: sizeMul * 18,
+                    fontSize: sizeMulW * 18,
                     fontWeight: FontWeight.w600),
               ),
             ],
@@ -107,9 +107,9 @@ class _ShowQRScreenStackState extends State<ShowQRScreenStack> {
                 Navigator.pop(context);
               },
               child: Container(
-                width: sizeMul * 40,
-                padding: EdgeInsets.symmetric(vertical: 10 * sizeMul),
-                // height: sizeMul*40,
+                width: sizeMulW * 40,
+                padding: EdgeInsets.symmetric(vertical: 10 * sizeMulW),
+                // height: sizeMulW*40,
                 // color: Colors.red,
                 child: Image.asset(
                   'assets/icons/3x/back.png',
@@ -120,10 +120,10 @@ class _ShowQRScreenStackState extends State<ShowQRScreenStack> {
             ),
           ),
           Positioned(
-            bottom: sizeMul * 40,
+            bottom: sizeMulW * 40,
             child: Container(
               width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.only(top: sizeMul * 40),
+              padding: EdgeInsets.only(top: sizeMulW * 40),
               child: Material(
                 color: Colors.white.withAlpha(0),
                 child: InkWell(
@@ -141,12 +141,12 @@ class _ShowQRScreenStackState extends State<ShowQRScreenStack> {
                           "CONTINUE",
                           style: TextStyle(
                               color: Colors.white,
-                              fontSize: 22 * sizeMul,
+                              fontSize: 22 * sizeMulW,
                               fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(width: sizeMul * 12),
+                        SizedBox(width: sizeMulW * 12),
                         Icon(Icons.chevron_right,
-                            size: sizeMul * 30, color: Colors.white),
+                            size: sizeMulW * 30, color: Colors.white),
                       ],
                     ),
                   ),
@@ -189,7 +189,7 @@ class _ShowQRScreenTopPartState extends State<ShowQRScreenTopPart> {
           ),
         ),
         Positioned(
-          bottom: sizeMul * 35,
+          bottom: sizeMulW * 35,
           left: 0,
           // right: 0,
           child: Container(
@@ -198,9 +198,9 @@ class _ShowQRScreenTopPartState extends State<ShowQRScreenTopPart> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 LongButton(
-                  Colors.red, 333 * sizeMul, 69 * sizeMul, sizeMul * 3,
+                  Colors.red, 333 * sizeMulW, 69 * sizeMulW, sizeMulW * 3,
                   Colors.redAccent,
-                  Colors.red[800], sizeMul * 9, null,
+                  Colors.red[800], sizeMulW * 9, null,
                   Center(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -210,15 +210,15 @@ class _ShowQRScreenTopPartState extends State<ShowQRScreenTopPart> {
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w900,
-                              fontSize: sizeMul * 20),
+                              fontSize: sizeMulW * 20),
                         ),
                         SizedBox(
-                          width: sizeMul * 5,
+                          width: sizeMulW * 5,
                         ),
                         Icon(
                           Icons.chevron_right,
                           color: Colors.white,
-                          size: sizeMul * 35,
+                          size: sizeMulW * 35,
                         )
                       ],
                     ),
@@ -236,11 +236,11 @@ class _ShowQRScreenTopPartState extends State<ShowQRScreenTopPart> {
             children: <Widget>[
               ClipShadowPath(
                   shadow: Shadow(
-                      blurRadius: 10 * sizeMul,
-                      offset: Offset(0, sizeMul),
+                      blurRadius: 10 * sizeMulW,
+                      offset: Offset(0, sizeMulW),
                       color: Colors.black38),
                   clipper: CustomShapeClipper(
-                      sizeMul: sizeMul,
+                      sizeMulW: sizeMulW,
                       maxWidth: MediaQuery.of(context).size.width,
                       maxHeight: MediaQuery.of(context).size.width * 0.38),
                   child: Container(
@@ -260,10 +260,10 @@ class _ShowQRScreenTopPartState extends State<ShowQRScreenTopPart> {
                                 Navigator.pop(context);
                               },
                               child: Container(
-                                width: sizeMul * 40,
+                                width: sizeMulW * 40,
                                 padding: EdgeInsets.symmetric(
-                                    vertical: 10 * sizeMul),
-                                // height: sizeMul*40,
+                                    vertical: 10 * sizeMulW),
+                                // height: sizeMulW*40,
                                 // color: Colors.red,
                                 child: Image.asset(
                                   'assets/icons/3x/back.png',
@@ -274,11 +274,11 @@ class _ShowQRScreenTopPartState extends State<ShowQRScreenTopPart> {
                             ),
                           ),
                           Positioned(
-                            left: sizeMul * 30,
-                            top: sizeMul * 70,
+                            left: sizeMulW * 30,
+                            top: sizeMulW * 70,
                             child: Text("ShowQRs",
                                 style: TextStyle(
-                                  fontSize: sizeMul * 35,
+                                  fontSize: sizeMulW * 35,
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
                                 )),
@@ -286,7 +286,7 @@ class _ShowQRScreenTopPartState extends State<ShowQRScreenTopPart> {
                         ],
                       ))),
               Positioned(
-                  right: sizeMul * sizeMul * 12,
+                  right: sizeMulW * sizeMulW * 12,
                   bottom: 0,
                   // top:100,
                   child: Tooltip(
@@ -299,13 +299,13 @@ class _ShowQRScreenTopPartState extends State<ShowQRScreenTopPart> {
                         color: greeny.colors[1],
                         onPressed: () {},
                         child: Container(
-                          width: sizeMul * 74.052,
-                          height: sizeMul * 74.052,
-                          padding: EdgeInsets.all(sizeMul * 22),
+                          width: sizeMulW * 74.052,
+                          height: sizeMulW * 74.052,
+                          padding: EdgeInsets.all(sizeMulW * 22),
                           child: Image.asset(
                             'assets/icons/3x/papyrus.png',
-                            height: sizeMul * 5,
-                            width: sizeMul * 5,
+                            height: sizeMulW * 5,
+                            width: sizeMulW * 5,
                           ),
 
                           //     Icon(
@@ -334,20 +334,20 @@ class _ShowQRScreenBottomPartState extends State<ShowQRScreenBottomPart> {
   Widget build(BuildContext context) {
     return new Container(
       width: MediaQuery.of(context).size.width,
-      // margin: EdgeInsets.symmetric(horizontal: sizeMul*20),
+      // margin: EdgeInsets.symmetric(horizontal: sizeMulW*20),
       child: Center(
         child: Container(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               SizedBox(
-                height: sizeMul * 200,
+                height: sizeMulW * 200,
               ),
               Container(
                 color: Colors.grey[200],
-                height: sizeMul * 65,
+                height: sizeMulW * 65,
                 child: Padding(
-                  padding: EdgeInsets.all(18.0 * sizeMul),
+                  padding: EdgeInsets.all(18.0 * sizeMulW),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -355,7 +355,7 @@ class _ShowQRScreenBottomPartState extends State<ShowQRScreenBottomPart> {
                       Text(
                         "Get notified of unique promos",
                         style: TextStyle(
-                            fontSize: sizeMul * 17,
+                            fontSize: sizeMulW * 17,
                             fontWeight: FontWeight.w600),
                       ),
                       Switch(
@@ -368,9 +368,9 @@ class _ShowQRScreenBottomPartState extends State<ShowQRScreenBottomPart> {
               ),
               Container(
                 // color: Colors.grey[200],
-                height: sizeMul * 65,
+                height: sizeMulW * 65,
                 child: Padding(
-                  padding: EdgeInsets.all(18.0 * sizeMul),
+                  padding: EdgeInsets.all(18.0 * sizeMulW),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -379,7 +379,7 @@ class _ShowQRScreenBottomPartState extends State<ShowQRScreenBottomPart> {
                         "Get notified of open-to-all promos",
                         overflow: TextOverflow.fade,
                         style: TextStyle(
-                            fontSize: sizeMul * 17,
+                            fontSize: sizeMulW * 17,
                             fontWeight: FontWeight.w600),
                       ),
                       Switch(
@@ -392,9 +392,9 @@ class _ShowQRScreenBottomPartState extends State<ShowQRScreenBottomPart> {
               ),
               Container(
                 color: Colors.grey[200],
-                height: sizeMul * 65,
+                height: sizeMulW * 65,
                 child: Padding(
-                  padding: EdgeInsets.all(18.0 * sizeMul),
+                  padding: EdgeInsets.all(18.0 * sizeMulW),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -403,7 +403,7 @@ class _ShowQRScreenBottomPartState extends State<ShowQRScreenBottomPart> {
                         "Delete Account",
                         style: TextStyle(
                             color: Colors.red,
-                            fontSize: sizeMul * 17,
+                            fontSize: sizeMulW * 17,
                             fontWeight: FontWeight.w600),
                       ),
                     ],
@@ -411,7 +411,7 @@ class _ShowQRScreenBottomPartState extends State<ShowQRScreenBottomPart> {
                 ),
               ),
               SizedBox(
-                height: 30 * sizeMul,
+                height: 30 * sizeMulW,
               )
             ],
           ),

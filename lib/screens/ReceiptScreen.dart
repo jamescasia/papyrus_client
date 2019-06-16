@@ -82,11 +82,11 @@ class _ReceiptScreenTopPartState extends State<ReceiptScreenTopPart> {
               children: <Widget>[
                 ClipShadowPath(
                     shadow: Shadow(
-                        blurRadius: 10 * sizeMul,
-                        offset: Offset(0, sizeMul),
+                        blurRadius: 10 * sizeMulW,
+                        offset: Offset(0, sizeMulW),
                         color: Colors.black38),
                     clipper: CustomShapeClipper(
-                        sizeMul: sizeMul,
+                        sizeMulW: sizeMulW,
                         maxWidth: MediaQuery.of(context).size.width,
                         maxHeight: MediaQuery.of(context).size.width * 0.38),
                     child: Container(
@@ -106,10 +106,10 @@ class _ReceiptScreenTopPartState extends State<ReceiptScreenTopPart> {
                                   Navigator.pop(context);
                                 },
                                 child: Container(
-                                  width: sizeMul * 40,
+                                  width: sizeMulW * 40,
                                   padding: EdgeInsets.symmetric(
-                                      vertical: 10 * sizeMul),
-                                  // height: sizeMul*40,
+                                      vertical: 10 * sizeMulW),
+                                  // height: sizeMulW*40,
                                   // color: Colors.red,
                                   child: Image.asset(
                                     'assets/icons/3x/back.png',
@@ -120,11 +120,11 @@ class _ReceiptScreenTopPartState extends State<ReceiptScreenTopPart> {
                               ),
                             ),
                             Positioned(
-                              left: sizeMul * 30,
-                              top: sizeMul * 70,
+                              left: sizeMulW * 30,
+                              top: sizeMulW * 70,
                               child: Text("Receipts",
                                   style: TextStyle(
-                                    fontSize: sizeMul * 35,
+                                    fontSize: sizeMulW * 35,
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
                                   )),
@@ -132,7 +132,7 @@ class _ReceiptScreenTopPartState extends State<ReceiptScreenTopPart> {
                           ],
                         ))),
                 Positioned(
-                    // right: sizeMul * sizeMul * 12,
+                    // right: sizeMulW * sizeMulW * 12,
 
                     // right: MediaQuery.of(context).size.width * 0.035,
                     left: homeButtonDist,
@@ -189,7 +189,7 @@ class _ReceiptScreenBottomPartState extends State<ReceiptScreenBottomPart> {
             return Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
-              margin: EdgeInsets.symmetric(horizontal: sizeMul * 40),
+              margin: EdgeInsets.symmetric(horizontal: sizeMulW * 40),
               child: (true)
                   ? ListView.builder(
                       // reverse: true,
@@ -219,11 +219,11 @@ class _ReceiptScreenBottomPartState extends State<ReceiptScreenBottomPart> {
                         return Container(
                           margin: (index == 0)
                               ? EdgeInsets.only(
-                                  bottom: sizeMul * 9, top: sizeMul * 130)
+                                  bottom: sizeMulW * 9, top: sizeMulW * 130)
                               : (index == appModel.receiptFiles.length - 1)
                                   ? EdgeInsets.only(
-                                      top: sizeMul * 9, bottom: sizeMul * 50)
-                                  : EdgeInsets.symmetric(vertical: sizeMul * 9),
+                                      top: sizeMulW * 9, bottom: sizeMulW * 50)
+                                  : EdgeInsets.symmetric(vertical: sizeMulW * 9),
                           child: Column(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -232,7 +232,7 @@ class _ReceiptScreenBottomPartState extends State<ReceiptScreenBottomPart> {
                                 (dateCurr != datePrev || index == 0)
                                     ? Padding(
                                         padding: EdgeInsets.only(
-                                            bottom: sizeMul * 18),
+                                            bottom: sizeMulW * 18),
                                         child: Text(
                                           "    " + dateCurr.toString(),
                                           style: TextStyle(

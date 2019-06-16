@@ -63,11 +63,11 @@ class _PromoScreenTopPartState extends State<PromoScreenTopPart> {
             children: <Widget>[
               ClipShadowPath(
                   shadow: Shadow(
-                      blurRadius: 10 * sizeMul,
-                      offset: Offset(0, sizeMul),
+                      blurRadius: 10 * sizeMulW,
+                      offset: Offset(0, sizeMulW),
                       color: Colors.black38),
                   clipper: CustomShapeClipper(
-                      sizeMul: sizeMul,
+                      sizeMulW: sizeMulW,
                       maxWidth: MediaQuery.of(context).size.width,
                       maxHeight: MediaQuery.of(context).size.width * 0.38),
                   child: Container(
@@ -87,10 +87,10 @@ class _PromoScreenTopPartState extends State<PromoScreenTopPart> {
                                 Navigator.pop(context);
                               },
                               child: Container(
-                                width: sizeMul * 40,
+                                width: sizeMulW * 40,
                                 padding: EdgeInsets.symmetric(
-                                    vertical: 10 * sizeMul),
-                                // height: sizeMul*40,
+                                    vertical: 10 * sizeMulW),
+                                // height: sizeMulW*40,
                                 // color: Colors.red,
                                 child: Image.asset(
                                   'assets/icons/3x/back.png',
@@ -101,11 +101,11 @@ class _PromoScreenTopPartState extends State<PromoScreenTopPart> {
                             ),
                           ),
                           Positioned(
-                            left: sizeMul * 30,
-                            top: sizeMul * 70,
+                            left: sizeMulW * 30,
+                            top: sizeMulW * 70,
                             child: Text("Promos",
                                 style: TextStyle(
-                                  fontSize: sizeMul * 35,
+                                  fontSize: sizeMulW * 35,
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
                                 )),
@@ -159,23 +159,23 @@ class _PromoScreenBottomPartState extends State<PromoScreenBottomPart> {
   Widget build(BuildContext context) {
     return new Container(
       width: MediaQuery.of(context).size.width,
-      // margin: EdgeInsets.symmetric(horizontal: sizeMul*20),
+      // margin: EdgeInsets.symmetric(horizontal: sizeMulW*20),
       child: Center(
         child: Container(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               SizedBox(
-                height: sizeMul * 170,
+                height: sizeMulW * 170,
               ),
               Container(
-                margin: EdgeInsets.symmetric(vertical: sizeMul * 10),
+                margin: EdgeInsets.symmetric(vertical: sizeMulW * 10),
                 width: MediaQuery.of(context).size.width,
                 // child: Text(
                 //   "May 23, 2019",
                 //   textAlign: TextAlign.start,
                 //   style: TextStyle(
-                //       fontSize: sizeMul * 17, fontWeight: FontWeight.w500),
+                //       fontSize: sizeMulW * 17, fontWeight: FontWeight.w500),
                 // ),
               ),
               PromoCard("assets/icons/3x/jollibee.png", "300% OFF",
@@ -197,7 +197,7 @@ class _PromoScreenBottomPartState extends State<PromoScreenBottomPart> {
               PromoCard("assets/icons/3x/jollibee.png", "300% OFF",
                   "May 11,2019", true, 12, false),
               SizedBox(
-                height: 30 * sizeMul,
+                height: 30 * sizeMulW,
               )
             ],
           ),

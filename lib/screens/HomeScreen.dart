@@ -31,9 +31,9 @@ import 'dart:core';
 import 'package:papyrus_client/helpers/CustomIcons.dart';
 // void main() {
 //   return runApp(PapyrusCustomer());
-// }
-
-double sizeMul = 0;
+// } 
+double sizeMulW = 0;
+double sizeMulH = 0;
 double recptCardHeight = 0;
 LinearGradient greeny = LinearGradient(
   begin: Alignment.topCenter,
@@ -72,7 +72,9 @@ class PapyrusCustomer extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Papyrus - Expense Management',
           theme: ThemeData(
+            // fon
             fontFamily: 'Montserrat',
+            
             primarySwatch: Colors.blue,
           ),
           home: SplashScreen(),
@@ -126,8 +128,9 @@ class _HomeScreenState extends State<HomeScreen> {
   // var ShapeBorder s = new ShapeBorder();
   @override
   Widget build(BuildContext context) {
-    sizeMul = MediaQuery.of(context).size.width / 411.4;
-    recptCardHeight = 72 * sizeMul;
+    sizeMulW = MediaQuery.of(context).size.width / 411.4;
+    sizeMulH = MediaQuery.of(context).size.height / 683;
+    recptCardHeight = 72 * sizeMulW;
     homeButtonDist = -0.00023 *
             (MediaQuery.of(context).size.width *
                 MediaQuery.of(context).size.width) +
@@ -174,12 +177,12 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
   @override
   Widget build(BuildContext context) {
     TextStyle headerStyle = TextStyle(
-        fontSize: sizeMul * 18.513,
+        fontSize: sizeMulW * 18.513,
         fontWeight: FontWeight.normal,
         color: Colors.white);
 
     TextStyle headerStyleSelected = TextStyle(
-        fontSize: sizeMul * 20.57,
+        fontSize: sizeMulW * 20.57,
         fontWeight: FontWeight.bold,
         color: Colors.green[700]);
 
@@ -188,11 +191,11 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
         children: <Widget>[
           ClipShadowPath(
             shadow: Shadow(
-                blurRadius: 10 * sizeMul,
-                offset: Offset(0, sizeMul),
+                blurRadius: 10 * sizeMulW,
+                offset: Offset(0, sizeMulW),
                 color: Colors.black38),
             clipper: CustomShapeClipper(
-                sizeMul: sizeMul,
+                sizeMulW: sizeMulW,
                 maxWidth: MediaQuery.of(context).size.width,
                 maxHeight: MediaQuery.of(context).size.width * 0.91),
             child: Container(
@@ -201,20 +204,20 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
               child: Material(
                 color: Colors.white.withAlpha(0),
                 child: InkWell(
-                  borderRadius: BorderRadius.all(Radius.circular(15 * sizeMul)),
+                  borderRadius: BorderRadius.all(Radius.circular(15 * sizeMulW)),
                   onTap: () {},
                   splashColor: Colors.green,
                   highlightColor: greeny.colors[0],
                   child: Column(
                     children: <Widget>[
                       SizedBox(
-                        height: 82.28 * sizeMul,
+                        height: 82.28 * sizeMulW,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           SizedBox(
-                            width: 20.57 * sizeMul,
+                            width: 20.57 * sizeMulW,
                           ),
                           InkWell(
                             splashColor: Colors.white.withAlpha(0),
@@ -227,15 +230,15 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                               padding:
                                   (appModel.viewing_period == Period.MONTHLY)
                                       ? EdgeInsets.symmetric(
-                                          vertical: sizeMul * 2,
-                                          horizontal: sizeMul * 8)
+                                          vertical: sizeMulW * 2,
+                                          horizontal: sizeMulW * 8)
                                       : null,
                               decoration: (appModel.viewing_period ==
                                       Period.MONTHLY)
                                   ? BoxDecoration(
                                       color: Colors.white,
                                       borderRadius:
-                                          BorderRadius.circular(sizeMul * 300))
+                                          BorderRadius.circular(sizeMulW * 300))
                                   : null,
 
                               child: Text("MONTHLY",
@@ -262,15 +265,15 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                               padding:
                                   (appModel.viewing_period == Period.WEEKLY)
                                       ? EdgeInsets.symmetric(
-                                          vertical: sizeMul * 2,
-                                          horizontal: sizeMul * 8)
+                                          vertical: sizeMulW * 2,
+                                          horizontal: sizeMulW * 8)
                                       : null,
                               decoration: (appModel.viewing_period ==
                                       Period.WEEKLY)
                                   ? BoxDecoration(
                                       color: Colors.white,
                                       borderRadius:
-                                          BorderRadius.circular(sizeMul * 300))
+                                          BorderRadius.circular(sizeMulW * 300))
                                   : null,
                               child: InkWell(
                                 splashColor: Colors.white.withAlpha(0),
@@ -292,15 +295,15 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                             child: Container(
                               padding: (appModel.viewing_period == Period.DAILY)
                                   ? EdgeInsets.symmetric(
-                                      vertical: sizeMul * 2,
-                                      horizontal: sizeMul * 8)
+                                      vertical: sizeMulW * 2,
+                                      horizontal: sizeMulW * 8)
                                   : null,
                               decoration: (appModel.viewing_period ==
                                       Period.DAILY)
                                   ? BoxDecoration(
                                       color: Colors.white,
                                       borderRadius:
-                                          BorderRadius.circular(sizeMul * 300))
+                                          BorderRadius.circular(sizeMulW * 300))
                                   : null,
                               child: Text(
                                 "DAILY",
@@ -349,9 +352,7 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                                     },
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(3000)),
-                                    child: 
-                                    
-                                    Icon(
+                                    child: Icon(
                                       Icons.keyboard_arrow_down,
                                       // FontAwesomeIcons.dollarSign,
                                       color: Colors.white,
@@ -366,12 +367,12 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                         ),
                       ),
                       SizedBox(
-                        height: 7 * sizeMul,
+                        height: 7 * sizeMulW,
                       ),
                       ConstrainedBox(
                         constraints: new BoxConstraints(
-                          // minHeight: 100*sizeMul,
-                          minWidth: 160 * sizeMul,
+                          // minHeight: 100*sizeMulW,
+                          minWidth: 160 * sizeMulW,
 
                           // maxHeight: 30.0,
                           // maxWidth: 30.0,
@@ -381,14 +382,14 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                           color: Colors.white.withAlpha(0),
                           child: InkWell(
                             borderRadius:
-                                BorderRadius.all(Radius.circular(15 * sizeMul)),
+                                BorderRadius.all(Radius.circular(15 * sizeMulW)),
                             onTap: () {
                               // print(result);
                             },
                             splashColor: Colors.greenAccent,
                             highlightColor: Colors.green,
                             child: Container(
-                              // height: sizeMul * 80,
+                              // height: sizeMulW * 80,
                               padding: EdgeInsets.all(
                                   MediaQuery.of(context).size.width * 0.042),
                               child: Row(
@@ -407,7 +408,7 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
 
                                   Container(
                                     padding:
-                                        EdgeInsets.only(bottom: 4 * sizeMul),
+                                        EdgeInsets.only(bottom: 4 * sizeMulW),
                                     child: Text("75 ",
                                         style: TextStyle(
                                             fontSize: MediaQuery.of(context)
@@ -422,7 +423,7 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                               ),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.all(
-                                      Radius.circular(15 * sizeMul)),
+                                      Radius.circular(15 * sizeMulW)),
                                   border: Border.all(
                                       color: Colors.white,
                                       width: MediaQuery.of(context).size.width *
@@ -481,13 +482,13 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       SizedBox(
-                        width: 20 * sizeMul,
+                        width: 20 * sizeMulW,
                       ),
                       Material(
                         color: Colors.white.withOpacity(0),
                         borderRadius: BorderRadius.all(Radius.circular(3000)),
                         child: InkWell(
-                          radius: sizeMul * 4,
+                          radius: sizeMulW * 4,
                           splashColor: Colors.white.withAlpha(0),
                           highlightColor: Colors.black.withOpacity(0.1),
                           borderRadius: BorderRadius.all(Radius.circular(3000)),
@@ -499,11 +500,11 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                           },
                           child: Icon(
                             Icons.more_horiz,
-                            
-                        // CustomIcons.menu,
-                        // FontAwesomeIcons.ellipsisV,
-                        // FontAwesomeIcons.bars,
-                        // Icons.settings,
+
+                            // CustomIcons.menu,
+                            // FontAwesomeIcons.ellipsisV,
+                            // FontAwesomeIcons.bars,
+                            // Icons.settings,
                             size: MediaQuery.of(context).size.width * 0.11,
                             color: Colors.white,
                           ),
@@ -538,7 +539,7 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                               ),
                               // Positioned()
                               // Container(
-                              //   margin: EdgeInsets.all(sizeMul*2),
+                              //   margin: EdgeInsets.all(sizeMulW*2),
                               //   child: Image.asset(
                               //     'assets/icons/3x/bell.png',
                               //     height:
@@ -546,16 +547,16 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                               //   ),
                               // ),
                               Positioned(
-                                top: 14 * sizeMul,
-                                right: 5 * sizeMul,
+                                top: 14 * sizeMulW,
+                                right: 5 * sizeMulW,
                                 child: Container(
-                                  width: sizeMul * 20,
-                                  height: sizeMul * 20,
+                                  width: sizeMulW * 20,
+                                  height: sizeMulW * 20,
                                   child: Center(
                                     child: Text(
                                       "12",
                                       style: TextStyle(
-                                          fontSize: 12 * sizeMul,
+                                          fontSize: 12 * sizeMulW,
                                           color: Colors.white,
                                           fontWeight: FontWeight.w900),
                                     ),
@@ -577,7 +578,7 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                         ),
                       ),
                       SizedBox(
-                        width: 20 * sizeMul,
+                        width: 20 * sizeMulW,
                       ),
                     ],
                   ),
@@ -597,7 +598,7 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                   color: Colors.white.withOpacity(0),
                   borderRadius: BorderRadius.all(Radius.circular(3000)),
                   child: InkWell(
-                    radius: sizeMul * 20,
+                    radius: sizeMulW * 20,
                     splashColor: Colors.white.withAlpha(0),
                     highlightColor: Colors.black.withOpacity(0.1),
                     borderRadius: BorderRadius.all(Radius.circular(3000)),
@@ -610,7 +611,11 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: <Widget>[
-                        Icon(FontAwesomeIcons.chartPie, size: MediaQuery.of(context).size.width * 0.088,color: Colors.white,),
+                        Icon(
+                          FontAwesomeIcons.chartPie,
+                          size: MediaQuery.of(context).size.width * 0.088,
+                          color: Colors.white,
+                        ),
                         // Image.asset(
                         //   'assets/icons/charts.png',
                         //   height: MediaQuery.of(context).size.width * 0.098,
@@ -661,14 +666,14 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                   }));
                 },
                 child: Container(
-                  width: sizeMul * 74.052,
-                  height: sizeMul * 74.052,
+                  width: sizeMulW * 74.052,
+                  height: sizeMulW * 74.052,
                   child: Icon(
                     // print(size);
                     Icons.add,
                     // FontAwesomeIcons.plus,
-                    size: sizeMul * 41.14,
-                    // size: sizeMul*30,
+                    size: sizeMulW * 41.14,
+                    // size: sizeMulW*30,
                     color: Colors.white,
                   ),
                 )),
@@ -701,7 +706,7 @@ class _HomeScreenBottomPartState extends State<HomeScreenBottomPart> {
         height: MediaQuery.of(context).size.height -
             0.942 * MediaQuery.of(context).size.width,
         color: Colors.white.withAlpha(0),
-        padding: EdgeInsets.symmetric(horizontal: sizeMul * 35),
+        padding: EdgeInsets.symmetric(horizontal: sizeMulW * 35),
         child: Center(
           // mainAxisAlignment: MainAxisAlignment.center,
           // children: <Widget>[
@@ -717,73 +722,79 @@ class _HomeScreenBottomPartState extends State<HomeScreenBottomPart> {
                   Text(
                     "  Last Receipts",
                     style: TextStyle(
-                        fontSize: 24 ,
+                        fontSize: 24,
                         color: Colors.black.withOpacity(0.8),
                         fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(width: sizeMul*10,),
-
-                  Icon(FontAwesomeIcons.file, size: MediaQuery.of(context).size.width * 0.062,color: Colors.green,)
+                  SizedBox(
+                    width: sizeMulW * 10,
+                  ),
+                  Icon(
+                    FontAwesomeIcons.file,
+                    size: MediaQuery.of(context).size.width * 0.062,
+                    color: Colors.green,
+                  )
                 ],
               ),
               // SizedBox(
-              //   height: sizeMul * 1,
+              //   height: sizeMulW * 1,
               // ),
               Container(
                   height: MediaQuery.of(context).size.height -
                       0.942 * MediaQuery.of(context).size.width -
-                      (34 * sizeMul),
+                      (34 * sizeMulW),
                   width: MediaQuery.of(context).size.width,
                   // color: Colors.red,
                   child: FutureBuilder(
                       future: bottomChildren(appModel, context),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.active)
-                          return Container(
-                            // width: MediaQuery.of(context).size.width,
-                            // height: 300,
-                            child: Shimmer.fromColors(
-                              baseColor: Colors.grey[200],
-                              highlightColor: Colors.white,
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: List<int>.generate(
-                                        ((MediaQuery.of(context).size.height -
-                                                    0.942 *
-                                                        MediaQuery.of(context)
-                                                            .size
-                                                            .width -
-                                                    (34 * sizeMul)) /
-                                                (81 * sizeMul))
-                                            .floor(),
-                                        (i) => i)
-                                    .toList()
-                                    .map((f) => Container(
-                                          width: 333 * sizeMul,
-                                          height: 72 * sizeMul,
-                                          decoration: BoxDecoration(
-                                              color: Colors.green,
-                                              // border: Border.all(
-                                              //     color: Colors.red,
-                                              //     width: 1 * sizeMul),
-                                              // boxShadow: [
-                                              //   new BoxShadow(
-                                              //     blurRadius: 2 * sizeMul,
-                                              //     color: Colors.black12,
-                                              //     offset: new Offset(
-                                              //         0, 0.4 * sizeMul),
-                                              //   ),
-                                              // ],
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(
-                                                      9 * sizeMul))),
-                                        ))
-                                    .toList(),
-                              ),
-                            ),
-                          );
+                        return CircularProgressIndicator();
+                          // return Container(
+                          //   // width: MediaQuery.of(context).size.width,
+                          //   // height: 300,
+                          //   child: Shimmer.fromColors(
+                          //     baseColor: Colors.grey[200],
+                          //     highlightColor: Colors.white,
+                          //     child: Column(
+                          //       mainAxisSize: MainAxisSize.max,
+                          //       mainAxisAlignment:
+                          //           MainAxisAlignment.spaceEvenly,
+                          //       children: List<int>.generate(
+                          //               ((MediaQuery.of(context).size.height -
+                          //                           0.942 *
+                          //                               MediaQuery.of(context)
+                          //                                   .size
+                          //                                   .width -
+                          //                           (34 * sizeMulW)) /
+                          //                       (81 * sizeMulW))
+                          //                   .floor(),
+                          //               (i) => i)
+                          //           .toList()
+                          //           .map((f) => Container(
+                          //                 width: 333 * sizeMulW,
+                          //                 height: 72 * sizeMulW,
+                          //                 decoration: BoxDecoration(
+                          //                     color: Colors.green,
+                          //                     // border: Border.all(
+                          //                     //     color: Colors.red,
+                          //                     //     width: 1 * sizeMulW),
+                          //                     // boxShadow: [
+                          //                     //   new BoxShadow(
+                          //                     //     blurRadius: 2 * sizeMulW,
+                          //                     //     color: Colors.black12,
+                          //                     //     offset: new Offset(
+                          //                     //         0, 0.4 * sizeMulW),
+                          //                     //   ),
+                          //                     // ],
+                          //                     borderRadius: BorderRadius.all(
+                          //                         Radius.circular(
+                          //                             9 * sizeMulW))),
+                          //               ))
+                          //           .toList(),
+                          //     ),
+                          //   ),
+                          // );
                         else {
                           return Column(
                             mainAxisSize: MainAxisSize.max,
@@ -814,12 +825,12 @@ Future<List<Widget>> bottomChildren(
   List<Widget> bc = [
     LongButton(
       greeny.colors[1],
-      333 * sizeMul,
-      69 * sizeMul,
-      sizeMul * 3,
+      333 * sizeMulW,
+      69 * sizeMulW,
+      sizeMulW * 3,
       Colors.green,
       greeny.colors[0],
-      sizeMul * 9,
+      sizeMulW * 9,
       () {
         Navigator.push(
             context,
@@ -836,15 +847,15 @@ Future<List<Widget>> bottomChildren(
               style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w900,
-                  fontSize: sizeMul * 20),
+                  fontSize: sizeMulW * 20),
             ),
             SizedBox(
-              width: sizeMul * 5,
+              width: sizeMulW * 5,
             ),
             Icon(
               Icons.chevron_right,
               color: Colors.white,
-              size: sizeMul * 35,
+              size: sizeMulW * 35,
             )
           ],
         ),
@@ -858,8 +869,8 @@ Future<List<Widget>> bottomChildren(
     if (appModel.receiptFiles.indexOf(f) <
         ((MediaQuery.of(context).size.height -
                         0.942 * MediaQuery.of(context).size.width -
-                        (34 * sizeMul)) /
-                    (81 * sizeMul))
+                        (34 * sizeMulW)) /
+                    (81 * sizeMulW))
                 .floor() -
             1) {
       bc.insert(bc.length - 1, ReceiptCard(context, receipt, 1));
@@ -869,8 +880,8 @@ Future<List<Widget>> bottomChildren(
     //  else if (appModel.receipts.indexOf(f) ==
     //     ((MediaQuery.of(context).size.height -
     //                     0.942 * MediaQuery.of(context).size.width -
-    //                     (34 * sizeMul)) /
-    //                 (81 * sizeMul))
+    //                     (34 * sizeMulW)) /
+    //                 (81 * sizeMulW))
     //             .floor() -
     //         1) {
     //   // bc.add(

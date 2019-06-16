@@ -81,7 +81,7 @@ class _EditReceiptScreenScrollPartState
               backgroundColor:
                   //  Colors.red,
                   greeny.colors[0],
-              expandedHeight: 340.0 * sizeMul,
+              expandedHeight: 340.0 * sizeMulW,
               floating: false,
               automaticallyImplyLeading: false,
               pinned: false,
@@ -123,11 +123,11 @@ class EditReceiptScreenTopPart extends StatelessWidget {
         children: <Widget>[
           ClipShadowPath(
               shadow: Shadow(
-                  blurRadius: 10 * sizeMul,
-                  offset: Offset(0, sizeMul),
+                  blurRadius: 10 * sizeMulW,
+                  offset: Offset(0, sizeMulW),
                   color: Colors.black38.withAlpha(0)),
               clipper: CustomShapeClipper(
-                  sizeMul: sizeMul,
+                  sizeMulW: sizeMulW,
                   maxWidth: MediaQuery.of(context).size.width,
                   maxHeight: MediaQuery.of(context).size.width * 0.91),
               child: ZoomableImage(
@@ -151,9 +151,9 @@ class EditReceiptScreenTopPart extends StatelessWidget {
                 editReceiptScreenModel.deleteReceiptImage();
               },
               child: Container(
-                width: sizeMul * 40,
-                padding: EdgeInsets.symmetric(vertical: 10 * sizeMul),
-                // height: sizeMul*40,
+                width: sizeMulW * 40,
+                padding: EdgeInsets.symmetric(vertical: 10 * sizeMulW),
+                // height: sizeMulW*40,
                 // color: Colors.red,
                 child: Image.asset(
                   'assets/icons/3x/back.png',
@@ -163,14 +163,14 @@ class EditReceiptScreenTopPart extends StatelessWidget {
             ),
           ),
           Positioned(
-            bottom: sizeMul * 15,
-            // right: 48 * sizeMul * sizeMul,
-            left: homeButtonDist + 40 * sizeMul,
+            bottom: sizeMulW * 15,
+            // right: 48 * sizeMulW * sizeMulW,
+            left: homeButtonDist + 40 * sizeMulW,
             child: Material(
               color: Colors.white.withOpacity(0),
               borderRadius: BorderRadius.all(Radius.circular(3000)),
               child: InkWell(
-                radius: sizeMul * 24,
+                radius: sizeMulW * 24,
                 splashColor: Colors.white.withAlpha(0),
                 highlightColor: Colors.black.withOpacity(0.1),
                 borderRadius: BorderRadius.all(Radius.circular(3000)),
@@ -185,7 +185,7 @@ class EditReceiptScreenTopPart extends StatelessWidget {
                 },
                 child: Icon(
                   Icons.camera_alt,
-                  size: sizeMul * 40,
+                  size: sizeMulW * 40,
                   color: Colors.white,
                 ),
               ),
@@ -237,17 +237,17 @@ class _EditReceiptScreenBottomPartState
             erModel.receipt.category = catChoice;
             return new Container(
               width: MediaQuery.of(context).size.width,
-              // padding: EdgeInsets.only(top:sizeMul*10),
+              // padding: EdgeInsets.only(top:sizeMulW*10),
               // height: MediaQuery.of(context).size.height,
               decoration: BoxDecoration(
                 gradient: greeny,
               ),
               // height: MediaQuery.of(context).size.height,
-              // margin: EdgeInsets.symmetric(horizontal: sizeMul*20),
+              // margin: EdgeInsets.symmetric(horizontal: sizeMulW*20),
               child: SingleChildScrollView(
                 child: Container(
                   padding: EdgeInsets.symmetric(
-                      horizontal: sizeMul * 15, vertical: sizeMul * 20),
+                      horizontal: sizeMulW * 15, vertical: sizeMulW * 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
@@ -264,35 +264,38 @@ class _EditReceiptScreenBottomPartState
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
                                 Padding(
-                                  padding: EdgeInsets.only(left: sizeMul * 8.0),
+                                  padding: EdgeInsets.only(left: sizeMulW * 8.0),
                                   child: Text(
                                     "MERCHANT",
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.w900,
-                                        fontSize: sizeMul * 14),
+                                        fontSize: sizeMulW * 14),
                                   ),
                                 ),
-                                SizedBox(height: sizeMul * 4),
+                                SizedBox(height: sizeMulW * 4),
                                 Container(
-                                  // width: sizeMul * 200,
-                                  height: sizeMul * 40,
+                                  // width: sizeMulW * 200,
+                                  height: sizeMulW * 40,
                                   padding: EdgeInsets.symmetric(
-                                      horizontal: sizeMul * 15),
+                                      horizontal: sizeMulW * 15),
                                   decoration: BoxDecoration(
                                       color: Colors.white,
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(3000)),
                                       border: Border.all(
                                           color: Colors.white,
-                                          width: sizeMul * 2)),
+                                          width: sizeMulW * 2)),
                                   child: Center(
                                     child: EditableText(
+                                      inputFormatters: [
+                                        new LengthLimitingTextInputFormatter(25)
+                                      ],
                                       autofocus: false,
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
                                           color: Colors.black,
-                                          fontSize: sizeMul * 20),
+                                          fontSize: sizeMulW * 20),
                                       backgroundCursorColor: Colors.red,
                                       cursorColor: Colors.pinkAccent,
                                       focusNode: m_focus,
@@ -308,6 +311,7 @@ class _EditReceiptScreenBottomPartState
                               ],
                             )),
                           ),
+
                           Expanded(
                             flex: 3,
                             child: SizedBox(
@@ -315,7 +319,7 @@ class _EditReceiptScreenBottomPartState
                             ),
                           ),
                           // SizedBox(
-                          //   width: sizeMul * 20,
+                          //   width: sizeMulW * 20,
                           // ),
                           Expanded(
                             flex: 35,
@@ -326,29 +330,29 @@ class _EditReceiptScreenBottomPartState
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
                                 Padding(
-                                  padding: EdgeInsets.only(left: sizeMul * 8.0),
+                                  padding: EdgeInsets.only(left: sizeMulW * 8.0),
                                   child: Text(
                                     "DATE & TIME",
                                     // maxLines: 1,
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.w900,
-                                        fontSize: sizeMul * 14),
+                                        fontSize: sizeMulW * 14),
                                   ),
                                 ),
-                                SizedBox(height: sizeMul * 4),
+                                SizedBox(height: sizeMulW * 4),
                                 Container(
-                                  // width: sizeMul * 130,
-                                  height: sizeMul * 40,
+                                  // width: sizeMulW * 130,
+                                  height: sizeMulW * 40,
                                   padding: EdgeInsets.symmetric(
-                                      horizontal: sizeMul * 15),
+                                      horizontal: sizeMulW * 15),
                                   decoration: BoxDecoration(
                                       color: Colors.white,
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(3000)),
                                       border: Border.all(
                                           color: Colors.white,
-                                          width: sizeMul * 2)),
+                                          width: sizeMulW * 2)),
                                   child: Center(
                                     child:
                                         //     TextFormField(
@@ -360,7 +364,7 @@ class _EditReceiptScreenBottomPartState
                                         //   style: TextStyle(
                                         //       color: Colors.black,
                                         //       fontWeight: FontWeight.bold,
-                                        //       fontSize: sizeMul * 20),
+                                        //       fontSize: sizeMulW * 20),
 
                                         //       onSaved: (input) => editReceiptScreenModel.receipt.dateTime = input,
 
@@ -372,7 +376,7 @@ class _EditReceiptScreenBottomPartState
                                             textAlign: TextAlign.start,
                                             style: TextStyle(
                                               color: Colors.black,
-                                              fontSize: sizeMul * 20,
+                                              fontSize: sizeMulW * 20,
                                             ),
                                             backgroundCursorColor: Colors.red,
                                             cursorColor: Colors.pinkAccent,
@@ -395,7 +399,7 @@ class _EditReceiptScreenBottomPartState
                         ],
                       ),
                       SizedBox(
-                        height: sizeMul * 12,
+                        height: sizeMulW * 12,
                       ),
                       Container(
                           child: Column(
@@ -404,27 +408,27 @@ class _EditReceiptScreenBottomPartState
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           Padding(
-                            padding: EdgeInsets.only(left: sizeMul * 8.0),
+                            padding: EdgeInsets.only(left: sizeMulW * 8.0),
                             child: Text(
                               "CATEGORY",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w900,
-                                  fontSize: sizeMul * 14),
+                                  fontSize: sizeMulW * 14),
                             ),
                           ),
-                          SizedBox(height: sizeMul * 4),
+                          SizedBox(height: sizeMulW * 4),
                           Container(
-                              // width: sizeMul * 270,
-                              height: sizeMul * 40,
+                              // width: sizeMulW * 270,
+                              height: sizeMulW * 40,
                               padding: EdgeInsets.symmetric(
-                                  horizontal: sizeMul * 15),
+                                  horizontal: sizeMulW * 15),
                               decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(3000)),
                                   border: Border.all(
-                                      color: Colors.white, width: sizeMul * 2)),
+                                      color: Colors.white, width: sizeMulW * 2)),
                               // child: Center(
                               child: DropdownButton<String>(
                                 value: catChoice,
@@ -434,7 +438,7 @@ class _EditReceiptScreenBottomPartState
                                       "Necessities",
                                       style: TextStyle(
                                         color: Colors.black,
-                                        fontSize: sizeMul * 20,
+                                        fontSize: sizeMulW * 20,
                                       ),
                                     ),
                                     value: "Necessities",
@@ -445,7 +449,7 @@ class _EditReceiptScreenBottomPartState
                                       "Food",
                                       style: TextStyle(
                                         color: Colors.black,
-                                        fontSize: sizeMul * 20,
+                                        fontSize: sizeMulW * 20,
                                       ),
                                     ),
                                   ),
@@ -455,7 +459,7 @@ class _EditReceiptScreenBottomPartState
                                       "Transportation",
                                       style: TextStyle(
                                         color: Colors.black,
-                                        fontSize: sizeMul * 20,
+                                        fontSize: sizeMulW * 20,
                                       ),
                                     ),
                                   ),
@@ -465,7 +469,7 @@ class _EditReceiptScreenBottomPartState
                                       "Leisure",
                                       style: TextStyle(
                                         color: Colors.black,
-                                        fontSize: sizeMul * 20,
+                                        fontSize: sizeMulW * 20,
                                       ),
                                     ),
                                   ),
@@ -475,7 +479,7 @@ class _EditReceiptScreenBottomPartState
                                       "Miscellaneous",
                                       style: TextStyle(
                                         color: Colors.black,
-                                        fontSize: sizeMul * 20,
+                                        fontSize: sizeMulW * 20,
                                       ),
                                     ),
                                   ),
@@ -501,25 +505,25 @@ class _EditReceiptScreenBottomPartState
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           SizedBox(
-                            height: sizeMul * 35,
+                            height: sizeMulW * 35,
                           ),
                           Padding(
-                            padding: EdgeInsets.only(left: sizeMul * 17),
+                            padding: EdgeInsets.only(left: sizeMulW * 17),
                             child: Text(
                               "ITEMS",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w900,
-                                  fontSize: sizeMul * 20),
+                                  fontSize: sizeMulW * 20),
                             ),
                           ),
                           SizedBox(
-                            height: sizeMul * 22,
+                            height: sizeMulW * 22,
                           ),
                           Padding(
                             padding: EdgeInsets.only(
-                              bottom: sizeMul * 18,
+                              bottom: sizeMulW * 18,
                             ),
                             child: Container(
                               width: MediaQuery.of(context).size.width * 0.87,
@@ -534,11 +538,11 @@ class _EditReceiptScreenBottomPartState
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.w900,
-                                          fontSize: sizeMul * 17),
+                                          fontSize: sizeMulW * 17),
                                     ),
                                   ),
                                   // SizedBox(
-                                  //   width: sizeMul * 140,
+                                  //   width: sizeMulW * 140,
                                   // ),
                                   Text(
                                     "QTY",
@@ -546,7 +550,7 @@ class _EditReceiptScreenBottomPartState
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.w900,
-                                        fontSize: sizeMul * 17),
+                                        fontSize: sizeMulW * 17),
                                   ),
                                   // Expanded(
                                   //   flex: 1,
@@ -557,12 +561,12 @@ class _EditReceiptScreenBottomPartState
                                   //       style: TextStyle(
                                   //           color: Colors.white,
                                   //           fontWeight: FontWeight.w900,
-                                  //           fontSize: sizeMul * 17),
+                                  //           fontSize: sizeMulW * 17),
                                   //     ),
                                   //   ),
                                   // ),
                                   // SizedBox(
-                                  //   width: sizeMul * 15,
+                                  //   width: sizeMulW * 15,
                                   // ),
                                   Expanded(
                                     flex: 2,
@@ -571,11 +575,11 @@ class _EditReceiptScreenBottomPartState
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.w900,
-                                          fontSize: sizeMul * 17),
+                                          fontSize: sizeMulW * 17),
                                     ),
                                   ),
                                   // SizedBox(
-                                  //   width: sizeMul * 15,
+                                  //   width: sizeMulW * 15,
                                   // ),
                                   Expanded(
                                     flex: 3,
@@ -584,7 +588,7 @@ class _EditReceiptScreenBottomPartState
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.w900,
-                                          fontSize: sizeMul * 17),
+                                          fontSize: sizeMulW * 17),
                                     ),
                                   )
                                 ],
@@ -601,10 +605,10 @@ class _EditReceiptScreenBottomPartState
                               Container(
                                 width: MediaQuery.of(context).size.width,
                                 padding: EdgeInsets.symmetric(
-                                    vertical: sizeMul * 14),
+                                    vertical: sizeMulW * 14),
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.all(
-                                        Radius.circular(sizeMul * 35))),
+                                        Radius.circular(sizeMulW * 35))),
                                 child: OutlineButton(
                                   highlightedBorderColor: Colors.white,
                                   highlightColor: Colors.green,
@@ -612,10 +616,10 @@ class _EditReceiptScreenBottomPartState
                                   disabledBorderColor: Colors.white,
                                   color: Colors.white,
                                   borderSide: BorderSide(
-                                      color: Colors.white, width: sizeMul * 2),
+                                      color: Colors.white, width: sizeMulW * 2),
                                   child: Text(
                                     "+ADD",
-                                    style: TextStyle(fontSize: sizeMul * 19),
+                                    style: TextStyle(fontSize: sizeMulW * 19),
                                   ),
                                   splashColor: Colors.greenAccent,
                                   highlightElevation: 5,
@@ -634,7 +638,7 @@ class _EditReceiptScreenBottomPartState
                                 ),
                               ),
                               Container(
-                                padding: EdgeInsets.only(top: sizeMul * 20),
+                                padding: EdgeInsets.only(top: sizeMulW * 20),
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
@@ -644,7 +648,7 @@ class _EditReceiptScreenBottomPartState
                                       "TOTAL",
                                       style: TextStyle(
                                           color: Colors.white,
-                                          fontSize: 20 * sizeMul,
+                                          fontSize: 20 * sizeMulW,
                                           fontWeight: FontWeight.bold),
                                     ),
                                     Text(
@@ -661,14 +665,14 @@ class _EditReceiptScreenBottomPartState
                                               : ""),
                                       style: TextStyle(
                                           color: Colors.white,
-                                          fontSize: 20 * sizeMul,
+                                          fontSize: 20 * sizeMulW,
                                           fontWeight: FontWeight.w400),
                                     ),
                                   ],
                                 ),
                               ),
                               Container(
-                                padding: EdgeInsets.only(top: sizeMul * 40),
+                                padding: EdgeInsets.only(top: sizeMulW * 40),
                                 child: InkWell(
                                   onTap: () {
                                     print("llength" +
@@ -714,12 +718,12 @@ class _EditReceiptScreenBottomPartState
                                         "CONTINUE",
                                         style: TextStyle(
                                             color: Colors.white,
-                                            fontSize: 22 * sizeMul,
+                                            fontSize: 22 * sizeMulW,
                                             fontWeight: FontWeight.bold),
                                       ),
-                                      SizedBox(width: sizeMul * 12),
+                                      SizedBox(width: sizeMulW * 12),
                                       Icon(Icons.chevron_right,
-                                          size: sizeMul * 30,
+                                          size: sizeMulW * 30,
                                           color: Colors.white),
                                     ],
                                   ),
@@ -754,7 +758,7 @@ class ReceiptItemLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextStyle style = TextStyle(
-        fontSize: sizeMul * 17,
+        fontSize: sizeMulW * 17,
         color: Colors.white,
         fontWeight: FontWeight.w300);
 
@@ -763,7 +767,7 @@ class ReceiptItemLine extends StatelessWidget {
     price_controller.text = receiptItem.price.toString();
 
     return new Container(
-        margin: EdgeInsets.symmetric(vertical: sizeMul * 8),
+        margin: EdgeInsets.symmetric(vertical: sizeMulW * 8),
         child: Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -847,7 +851,7 @@ class ReceiptItemLine extends StatelessWidget {
                 child: Icon(
                   Icons.edit,
                   color: Colors.white,
-                  size: sizeMul * 23,
+                  size: sizeMulW * 23,
                 ),
               ),
             )
@@ -899,7 +903,7 @@ class _EditItemState extends State<EditItem> {
     return AlertDialog(
       content: Container(
         width: MediaQuery.of(context).size.width * 0.9,
-        // height: sizeMul * 300,
+        // height: sizeMulW * 300,
         // color: Colors.red,
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -909,30 +913,33 @@ class _EditItemState extends State<EditItem> {
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.only(left: sizeMul * 4.0),
+                  padding: EdgeInsets.only(left: sizeMulW * 4.0),
                   child: Text(
                     "Name",
                     style: TextStyle(
                         color: Colors.grey[800],
                         fontWeight: FontWeight.w900,
-                        fontSize: sizeMul * 14),
+                        fontSize: sizeMulW * 14),
                   ),
                 ),
-                SizedBox(height: sizeMul * 4),
+                SizedBox(height: sizeMulW * 4),
                 Container(
-                  // width: sizeMul * 130,
+                  // width: sizeMulW * 130,
                   // color: Colors.green,
-                  height: sizeMul * 35,
-                  padding: EdgeInsets.symmetric(horizontal: sizeMul * 15),
+                  height: sizeMulW * 35,
+                  padding: EdgeInsets.symmetric(horizontal: sizeMulW * 15),
                   decoration: BoxDecoration(
                     color: Colors.green,
                     borderRadius: BorderRadius.all(Radius.circular(3000)),
                     // border: Border.all(
                     //     color: Colors.white,
-                    //     width: sizeMul * 2)
+                    //     width: sizeMulW * 2)
                   ),
                   child: Center(
                     child: EditableText(
+                      inputFormatters: [
+                        new LengthLimitingTextInputFormatter(25)
+                      ],
                       autocorrect: false,
                       autofocus: false,
                       onChanged: (text) {
@@ -963,7 +970,7 @@ class _EditItemState extends State<EditItem> {
                       selectionColor: Colors.green,
                       // textAlign: TextAlign.start,
                       style: TextStyle(
-                          color: Colors.white, fontSize: sizeMul * 17),
+                          color: Colors.white, fontSize: sizeMulW * 17),
                       backgroundCursorColor: Colors.red,
                       cursorColor: Colors.pinkAccent,
                       focusNode: fa,
@@ -989,30 +996,33 @@ class _EditItemState extends State<EditItem> {
                     mainAxisSize: MainAxisSize.max,
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.only(left: sizeMul * 8.0),
+                        padding: EdgeInsets.only(left: sizeMulW * 8.0),
                         child: Text(
                           "Price",
                           style: TextStyle(
                               color: Colors.grey[800],
                               fontWeight: FontWeight.w900,
-                              fontSize: sizeMul * 14),
+                              fontSize: sizeMulW * 14),
                         ),
                       ),
-                      SizedBox(height: sizeMul * 4),
+                      SizedBox(height: sizeMulW * 4),
                       Container(
-                        // width: sizeMul * 130,
+                        // width: sizeMulW * 130,
                         // color: Colors.green,
-                        height: sizeMul * 35,
-                        padding: EdgeInsets.symmetric(horizontal: sizeMul * 15),
+                        height: sizeMulW * 35,
+                        padding: EdgeInsets.symmetric(horizontal: sizeMulW * 15),
                         decoration: BoxDecoration(
                           color: Colors.green,
                           borderRadius: BorderRadius.all(Radius.circular(3000)),
                           // border: Border.all(
                           //     color: Colors.white,
-                          //     width: sizeMul * 2)
+                          //     width: sizeMulW * 2)
                         ),
                         child: Center(
                           child: EditableText(
+                            inputFormatters: [
+                              new LengthLimitingTextInputFormatter(9)
+                            ],
                             keyboardType: TextInputType.numberWithOptions(),
 
                             // inputType
@@ -1045,7 +1055,7 @@ class _EditItemState extends State<EditItem> {
                             selectionColor: Colors.green,
                             // textAlign: TextAlign.start,
                             style: TextStyle(
-                                color: Colors.white, fontSize: sizeMul * 17),
+                                color: Colors.white, fontSize: sizeMulW * 17),
                             backgroundCursorColor: Colors.red,
                             cursorColor: Colors.pinkAccent,
                             focusNode: fb,
@@ -1062,7 +1072,7 @@ class _EditItemState extends State<EditItem> {
                   ),
                 ),
                 SizedBox(
-                  width: sizeMul * 10,
+                  width: sizeMulW * 10,
                 ),
                 Expanded(
                   flex: 3,
@@ -1071,30 +1081,33 @@ class _EditItemState extends State<EditItem> {
                     mainAxisSize: MainAxisSize.max,
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.only(left: sizeMul * 8.0),
+                        padding: EdgeInsets.only(left: sizeMulW * 8.0),
                         child: Text(
                           "Qty",
                           style: TextStyle(
                               color: Colors.grey[800],
                               fontWeight: FontWeight.w900,
-                              fontSize: sizeMul * 14),
+                              fontSize: sizeMulW * 14),
                         ),
                       ),
-                      SizedBox(height: sizeMul * 4),
+                      SizedBox(height: sizeMulW * 4),
                       Container(
-                        // width: sizeMul * 130,
+                        // width: sizeMulW * 130,
                         // color: Colors.green,
-                        height: sizeMul * 35,
-                        padding: EdgeInsets.symmetric(horizontal: sizeMul * 15),
+                        height: sizeMulW * 35,
+                        padding: EdgeInsets.symmetric(horizontal: sizeMulW * 15),
                         decoration: BoxDecoration(
                           color: Colors.green,
                           borderRadius: BorderRadius.all(Radius.circular(3000)),
                           // border: Border.all(
                           //     color: Colors.white,
-                          //     width: sizeMul * 2)
+                          //     width: sizeMulW * 2)
                         ),
                         child: Center(
                           child: EditableText(
+                            inputFormatters: [
+                              new LengthLimitingTextInputFormatter(3)
+                            ],
                             keyboardType: TextInputType.numberWithOptions(),
                             onChanged: (text) {
                               setState(() {
@@ -1125,7 +1138,7 @@ class _EditItemState extends State<EditItem> {
                             selectionColor: Colors.green,
                             // textAlign: TextAlign.start,
                             style: TextStyle(
-                                color: Colors.white, fontSize: sizeMul * 17),
+                                color: Colors.white, fontSize: sizeMulW * 17),
                             backgroundCursorColor: Colors.red,
                             cursorColor: Colors.pinkAccent,
                             focusNode: fc,
@@ -1139,7 +1152,7 @@ class _EditItemState extends State<EditItem> {
               ],
             ),
             SizedBox(
-              height: sizeMul * 8,
+              height: sizeMulW * 8,
             ),
             Flex(
               direction: Axis.horizontal,
@@ -1152,12 +1165,12 @@ class _EditItemState extends State<EditItem> {
                   child: Text("Total: ",
                       style: TextStyle(
                         color: Colors.grey[800],
-                        fontSize: sizeMul * 18,
+                        fontSize: sizeMulW * 18,
                         fontWeight: FontWeight.bold,
                       )),
                 ),
                 // SizedBox(
-                //   width: sizeMul * 27,
+                //   width: sizeMulW * 27,
                 // ),
                 Text(
                     "${(double.parse(price_controller.text) * int.parse(qty_controller.text)).toStringAsFixed(2)}",
@@ -1165,30 +1178,30 @@ class _EditItemState extends State<EditItem> {
                     textAlign: TextAlign.left,
                     style: TextStyle(
                         color: Colors.grey[800],
-                        fontSize: sizeMul * 18,
+                        fontSize: sizeMulW * 18,
                         fontWeight: FontWeight.bold)),
                 // SizedBox(
-                //   height: sizeMul * 50,
+                //   height: sizeMulW * 50,
                 // ),
               ],
             ),
             SizedBox(
-              height: sizeMul * 8,
+              height: sizeMulW * 8,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 Material(
                   child: Container(
-                    height: sizeMul * 50,
-                    width: sizeMul * 50,
+                    height: sizeMulW * 50,
+                    width: sizeMulW * 50,
                     decoration: BoxDecoration(
                         color: Colors.red,
                         borderRadius:
-                            BorderRadius.all(Radius.circular(sizeMul * 8))),
+                            BorderRadius.all(Radius.circular(sizeMulW * 8))),
                     child: InkWell(
                       borderRadius:
-                          BorderRadius.all(Radius.circular(sizeMul * 8)),
+                          BorderRadius.all(Radius.circular(sizeMulW * 8)),
                       onTap: () {
                         Navigator.pop(context);
                         editReceiptScreenModel
@@ -1197,17 +1210,17 @@ class _EditItemState extends State<EditItem> {
                       splashColor: Colors.amber,
                       highlightColor: Colors.redAccent,
                       child: Icon(Icons.delete,
-                          color: Colors.white, size: sizeMul * 30),
+                          color: Colors.white, size: sizeMulW * 30),
                     ),
                   ),
                 ),
                 SizedBox(
-                  width: sizeMul * 10,
+                  width: sizeMulW * 10,
                 ),
                 Material(
                   child: InkWell(
                     borderRadius:
-                        BorderRadius.all(Radius.circular(sizeMul * 8)),
+                        BorderRadius.all(Radius.circular(sizeMulW * 8)),
                     splashColor: Colors.lightGreenAccent,
                     highlightColor: Colors.green,
                     onTap: () {
@@ -1239,21 +1252,21 @@ class _EditItemState extends State<EditItem> {
                                 Text(
                                   "Name: ${receiptItem.name} ",
                                   overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(fontSize: sizeMul * 15),
+                                  style: TextStyle(fontSize: sizeMulW * 15),
                                 ),
                                 // Text(
                                 //   "Qty: ${receiptItem.qty} ",
                                 //   overflow: TextOverflow.ellipsis,
-                                //   style: TextStyle(fontSize: sizeMul * 15),
+                                //   style: TextStyle(fontSize: sizeMulW * 15),
                                 // ),
                                 // Text(
                                 //   "Price: ${receiptItem.price} ",
                                 //   overflow: TextOverflow.ellipsis,
-                                //   style: TextStyle(fontSize: sizeMul * 15),
+                                //   style: TextStyle(fontSize: sizeMulW * 15),
                                 // ),
                                 Text(
                                   "Total: ${receiptItem.total.toStringAsFixed(2)} ",
-                                  style: TextStyle(fontSize: sizeMul * 15),
+                                  style: TextStyle(fontSize: sizeMulW * 15),
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ]),
@@ -1261,14 +1274,14 @@ class _EditItemState extends State<EditItem> {
                       }
                     },
                     child: Container(
-                      height: sizeMul * 50,
-                      width: sizeMul * 50,
+                      height: sizeMulW * 50,
+                      width: sizeMulW * 50,
                       decoration: BoxDecoration(
                           color: Colors.lightGreen,
                           borderRadius:
-                              BorderRadius.all(Radius.circular(sizeMul * 8))),
+                              BorderRadius.all(Radius.circular(sizeMulW * 8))),
                       child: Icon(Icons.check,
-                          color: Colors.white, size: sizeMul * 30),
+                          color: Colors.white, size: sizeMulW * 30),
                     ),
                   ),
                 ),

@@ -15,25 +15,25 @@ class PromoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(
-          horizontal: sizeMul * 0, vertical: sizeMul * margin),
-      width: 333 * sizeMul,
-      height: 72 * sizeMul,
+          horizontal: sizeMulW * 0, vertical: sizeMulW * margin),
+      width: 333 * sizeMulW,
+      height: 72 * sizeMulW,
       decoration: BoxDecoration(
-          border: Border.all(color: Colors.black12, width: 1 * sizeMul),
+          border: Border.all(color: Colors.black12, width: 1 * sizeMulW),
           color: (enabled) ? Colors.white : Colors.grey[350],
           boxShadow: [
             new BoxShadow(
-              blurRadius: 2 * sizeMul,
+              blurRadius: 2 * sizeMulW,
               color: Colors.black12,
-              offset: new Offset(0, 0.4 * sizeMul),
+              offset: new Offset(0, 0.4 * sizeMulW),
             ),
           ],
-          borderRadius: BorderRadius.all(Radius.circular(9 * sizeMul))),
+          borderRadius: BorderRadius.all(Radius.circular(9 * sizeMulW))),
       child: InkWell(
         onTap: () {
           print("");
         },
-        borderRadius: BorderRadius.all(Radius.circular(9 * sizeMul)),
+        borderRadius: BorderRadius.all(Radius.circular(9 * sizeMulW)),
         // highlightColor: Colors.red,
         // splashColor: Colors.red,
 
@@ -53,12 +53,12 @@ class PromoCard extends StatelessWidget {
                 Text(
                   title,
                   style: TextStyle(
-                      fontSize: 16 * sizeMul, fontWeight: FontWeight.w600),
+                      fontSize: 16 * sizeMulW, fontWeight: FontWeight.w600),
                 ),
                 Text(
                   "Valid until: " + date,
                   style: TextStyle(
-                      fontSize: 13 * sizeMul, fontWeight: FontWeight.w500),
+                      fontSize: 13 * sizeMulW, fontWeight: FontWeight.w500),
                 )
               ],
             ),
@@ -67,7 +67,7 @@ class PromoCard extends StatelessWidget {
               style: TextStyle(
                   // color: Colors.red,
                   fontWeight: FontWeight.w500,
-                  fontSize: 12 * sizeMul),
+                  fontSize: 12 * sizeMulW),
             ),
           ],
         ),
