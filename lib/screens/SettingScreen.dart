@@ -10,6 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'LogInScreen.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 class SettingScreen extends StatefulWidget {
   @override
   _SettingScreenState createState() => new _SettingScreenState();
@@ -102,12 +103,12 @@ class _SettingScreenTopPartState extends State<SettingScreenTopPart> {
                             width: sizeMulW * 10,
                           ),
                           Icon(
-                            // Icons.chevron_right,
-                            FontAwesomeIcons.doorOpen,
-                            color: Colors.white,
-                            size:sizeMulW*23
-                            // size: sizeMulW * 35,
-                          )
+                              // Icons.chevron_right,
+                              FontAwesomeIcons.doorOpen,
+                              color: Colors.white,
+                              size: sizeMulW * 23
+                              // size: sizeMulW * 35,
+                              )
                         ],
                       ),
                     ),
@@ -138,25 +139,40 @@ class _SettingScreenTopPartState extends State<SettingScreenTopPart> {
                         child: Stack(
                           children: <Widget>[
                             Positioned(
-                              left: 2,
-                              top:   24,
-                              child: InkWell(
-                                splashColor: Colors.white.withAlpha(0),
-                                highlightColor: Colors.black.withOpacity(0.1),
-                                // ,
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Container(
-                                  width: sizeMulW * 40,
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 10 * sizeMulW),
-                                  // height: sizeMulW*40,
-                                  // color: Colors.red,
-                                  child: Image.asset(
-                                    'assets/icons/3x/back.png',
-                                    height: MediaQuery.of(context).size.width *
-                                        0.075,
+                              left: 0,
+                              top: 24,
+                              child: Container(
+                                width: sizeMulW*60,
+                                child: RaisedButton(
+                                  
+                                  highlightElevation: 0,
+                                  color: Colors.white.withOpacity(0),
+                                  elevation: 0,
+                                  splashColor: Colors.white.withAlpha(0),
+                                  highlightColor: Colors.black.withOpacity(0), 
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Container(
+                                    // width: sizeMulW * 50,
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 10 * sizeMulW),
+                                    // height: sizeMulW*40,
+                                    // color: Colors.red,
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Image.asset(
+                                          'assets/icons/3x/back.png',
+                                          height:
+                                              MediaQuery.of(context).size.width *
+                                                  0.075,
+                                        ),
+                                        
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
@@ -256,7 +272,7 @@ class _SettingScreenBottomPartState extends State<SettingScreenBottomPart> {
                           "Get notified of unique promos",
                           style: TextStyle(
                               fontSize: sizeMulW * 17,
-                              fontWeight: FontWeight.w600),
+                              fontWeight: FontWeight.w500),
                         ),
                         Container(
                           width: sizeMulW * 60,
@@ -286,7 +302,7 @@ class _SettingScreenBottomPartState extends State<SettingScreenBottomPart> {
                           overflow: TextOverflow.fade,
                           style: TextStyle(
                               fontSize: sizeMulW * 17,
-                              fontWeight: FontWeight.w600),
+                              fontWeight: FontWeight.w500),
                         ),
                         Container(
                           height: sizeMulW * 60,
@@ -316,7 +332,7 @@ class _SettingScreenBottomPartState extends State<SettingScreenBottomPart> {
                           style: TextStyle(
                               color: Colors.red,
                               fontSize: sizeMulW * 17,
-                              fontWeight: FontWeight.w600),
+                              fontWeight: FontWeight.w500),
                         ),
                       ],
                     ),

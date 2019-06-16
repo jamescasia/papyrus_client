@@ -29,9 +29,10 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:core';
 import 'package:papyrus_client/helpers/CustomIcons.dart';
+
 // void main() {
 //   return runApp(PapyrusCustomer());
-// } 
+// }
 double sizeMulW = 0;
 double sizeMulH = 0;
 double recptCardHeight = 0;
@@ -74,7 +75,7 @@ class PapyrusCustomer extends StatelessWidget {
           theme: ThemeData(
             // fon
             fontFamily: 'Montserrat',
-            
+
             primarySwatch: Colors.blue,
           ),
           home: SplashScreen(),
@@ -177,8 +178,8 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
   @override
   Widget build(BuildContext context) {
     TextStyle headerStyle = TextStyle(
-        fontSize: sizeMulW * 18.513,
-        fontWeight: FontWeight.normal,
+        fontSize: sizeMulH * 20,
+        fontWeight: FontWeight.w500,
         color: Colors.white);
 
     TextStyle headerStyleSelected = TextStyle(
@@ -204,28 +205,36 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
               child: Material(
                 color: Colors.white.withAlpha(0),
                 child: InkWell(
-                  borderRadius: BorderRadius.all(Radius.circular(15 * sizeMulW)),
+                  borderRadius:
+                      BorderRadius.all(Radius.circular(15 * sizeMulW)),
                   onTap: () {},
                   splashColor: Colors.green,
                   highlightColor: greeny.colors[0],
                   child: Column(
                     children: <Widget>[
                       SizedBox(
-                        height: 82.28 * sizeMulW,
+                        height:71 * sizeMulH,
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          SizedBox(
-                            width: 20.57 * sizeMulW,
-                          ),
-                          InkWell(
+                          // SizedBox(
+                          //   width: MediaQuery.of(context).size.width * 0.05,
+                          // ),
+                          // SizedBox(
+                          //   width: 20.57 * sizeMulW,
+                          // ),
+                          RaisedButton(
+                            highlightElevation: 0,
+                            color: Colors.white.withOpacity(0),
+                            elevation: 0,
                             splashColor: Colors.white.withAlpha(0),
-                            highlightColor: Colors.black.withOpacity(0.1),
-                            onTap: () {
+                            highlightColor: Colors.black.withOpacity(0),
+                            onPressed: () {
                               appModel.viewing_period = Period.MONTHLY;
                             },
                             child: Container(
+                              // margin: EdgeInsets.all((sizeMulH*15)),
                               // color: Colors.white,
                               padding:
                                   (appModel.viewing_period == Period.MONTHLY)
@@ -248,10 +257,13 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                                       : headerStyle),
                             ),
                           ),
-                          InkWell(
+                          RaisedButton(
                             splashColor: Colors.white.withAlpha(0),
-                            highlightColor: Colors.black.withOpacity(0.1),
-                            onTap: () {
+                            elevation: 0,
+                            color: Colors.white.withAlpha(0),
+                            highlightElevation: 0,
+                            highlightColor: Colors.black.withOpacity(0),
+                            onPressed: () {
                               appModel.viewing_period = Period.WEEKLY;
 
                               Navigator.push(
@@ -275,21 +287,22 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                                       borderRadius:
                                           BorderRadius.circular(sizeMulW * 300))
                                   : null,
-                              child: InkWell(
-                                splashColor: Colors.white.withAlpha(0),
-                                highlightColor: Colors.black.withOpacity(0.1),
-                                child: Text(
-                                  "WEEKLY",
-                                  style:
-                                      (appModel.viewing_period == Period.WEEKLY)
-                                          ? headerStyleSelected
-                                          : headerStyle,
-                                ),
+                              child: Text(
+                                "WEEKLY",
+                                style:
+                                    (appModel.viewing_period == Period.WEEKLY)
+                                        ? headerStyleSelected
+                                        : headerStyle,
                               ),
                             ),
                           ),
-                          InkWell(
-                            onTap: () {
+                          RaisedButton(
+                            splashColor: Colors.white.withAlpha(0),
+                            elevation: 0,
+                            highlightElevation: 0,
+                            color: Colors.white.withAlpha(0),
+                            highlightColor: Colors.black.withOpacity(0),
+                            onPressed: () {
                               appModel.viewing_period = Period.DAILY;
                             },
                             child: Container(
@@ -313,9 +326,9 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                               ),
                             ),
                           ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.05,
-                          ),
+                          // SizedBox(
+                          //   width: MediaQuery.of(context).size.width * 0.05,
+                          // ),
                         ],
                       ),
                       SizedBox(
@@ -381,8 +394,8 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                           // shape: CircleBorder(),
                           color: Colors.white.withAlpha(0),
                           child: InkWell(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(15 * sizeMulW)),
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(15 * sizeMulW)),
                             onTap: () {
                               // print(result);
                             },
@@ -598,7 +611,7 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                   color: Colors.white.withOpacity(0),
                   borderRadius: BorderRadius.all(Radius.circular(3000)),
                   child: InkWell(
-                    radius: sizeMulW * 20,
+                    radius: sizeMulW * 51,
                     splashColor: Colors.white.withAlpha(0),
                     highlightColor: Colors.black.withOpacity(0.1),
                     borderRadius: BorderRadius.all(Radius.circular(3000)),
@@ -642,7 +655,7 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
 
           // )
           Positioned(
-            bottom: 3,
+            bottom: 3 * sizeMulH,
             // right: MediaQuery.of(context).size.width * 0.035,
             // left: ( MediaQuery.of(context).size.height/ MediaQuery.of(context).size.width)*102,
             // left:128,
@@ -666,8 +679,8 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                   }));
                 },
                 child: Container(
-                  width: sizeMulW * 74.052,
-                  height: sizeMulW * 74.052,
+                  width: (0.5 * (sizeMulW + sizeMulH)) * 74.052,
+                  height: (0.5 * (sizeMulW + sizeMulH)) * 74.052,
                   child: Icon(
                     // print(size);
                     Icons.add,
@@ -722,7 +735,7 @@ class _HomeScreenBottomPartState extends State<HomeScreenBottomPart> {
                   Text(
                     "  Last Receipts",
                     style: TextStyle(
-                        fontSize: 24,
+                        fontSize: 26 * sizeMulW,
                         color: Colors.black.withOpacity(0.8),
                         fontWeight: FontWeight.bold),
                   ),
@@ -749,52 +762,52 @@ class _HomeScreenBottomPartState extends State<HomeScreenBottomPart> {
                       future: bottomChildren(appModel, context),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.active)
-                        return CircularProgressIndicator();
-                          // return Container(
-                          //   // width: MediaQuery.of(context).size.width,
-                          //   // height: 300,
-                          //   child: Shimmer.fromColors(
-                          //     baseColor: Colors.grey[200],
-                          //     highlightColor: Colors.white,
-                          //     child: Column(
-                          //       mainAxisSize: MainAxisSize.max,
-                          //       mainAxisAlignment:
-                          //           MainAxisAlignment.spaceEvenly,
-                          //       children: List<int>.generate(
-                          //               ((MediaQuery.of(context).size.height -
-                          //                           0.942 *
-                          //                               MediaQuery.of(context)
-                          //                                   .size
-                          //                                   .width -
-                          //                           (34 * sizeMulW)) /
-                          //                       (81 * sizeMulW))
-                          //                   .floor(),
-                          //               (i) => i)
-                          //           .toList()
-                          //           .map((f) => Container(
-                          //                 width: 333 * sizeMulW,
-                          //                 height: 72 * sizeMulW,
-                          //                 decoration: BoxDecoration(
-                          //                     color: Colors.green,
-                          //                     // border: Border.all(
-                          //                     //     color: Colors.red,
-                          //                     //     width: 1 * sizeMulW),
-                          //                     // boxShadow: [
-                          //                     //   new BoxShadow(
-                          //                     //     blurRadius: 2 * sizeMulW,
-                          //                     //     color: Colors.black12,
-                          //                     //     offset: new Offset(
-                          //                     //         0, 0.4 * sizeMulW),
-                          //                     //   ),
-                          //                     // ],
-                          //                     borderRadius: BorderRadius.all(
-                          //                         Radius.circular(
-                          //                             9 * sizeMulW))),
-                          //               ))
-                          //           .toList(),
-                          //     ),
-                          //   ),
-                          // );
+                          return CircularProgressIndicator();
+                        // return Container(
+                        //   // width: MediaQuery.of(context).size.width,
+                        //   // height: 300,
+                        //   child: Shimmer.fromColors(
+                        //     baseColor: Colors.grey[200],
+                        //     highlightColor: Colors.white,
+                        //     child: Column(
+                        //       mainAxisSize: MainAxisSize.max,
+                        //       mainAxisAlignment:
+                        //           MainAxisAlignment.spaceEvenly,
+                        //       children: List<int>.generate(
+                        //               ((MediaQuery.of(context).size.height -
+                        //                           0.942 *
+                        //                               MediaQuery.of(context)
+                        //                                   .size
+                        //                                   .width -
+                        //                           (34 * sizeMulW)) /
+                        //                       (81 * sizeMulW))
+                        //                   .floor(),
+                        //               (i) => i)
+                        //           .toList()
+                        //           .map((f) => Container(
+                        //                 width: 333 * sizeMulW,
+                        //                 height: 72 * sizeMulW,
+                        //                 decoration: BoxDecoration(
+                        //                     color: Colors.green,
+                        //                     // border: Border.all(
+                        //                     //     color: Colors.red,
+                        //                     //     width: 1 * sizeMulW),
+                        //                     // boxShadow: [
+                        //                     //   new BoxShadow(
+                        //                     //     blurRadius: 2 * sizeMulW,
+                        //                     //     color: Colors.black12,
+                        //                     //     offset: new Offset(
+                        //                     //         0, 0.4 * sizeMulW),
+                        //                     //   ),
+                        //                     // ],
+                        //                     borderRadius: BorderRadius.all(
+                        //                         Radius.circular(
+                        //                             9 * sizeMulW))),
+                        //               ))
+                        //           .toList(),
+                        //     ),
+                        //   ),
+                        // );
                         else {
                           return Column(
                             mainAxisSize: MainAxisSize.max,
@@ -846,6 +859,7 @@ Future<List<Widget>> bottomChildren(
               "VIEW ALL",
               style: TextStyle(
                   color: Colors.white,
+                  //
                   fontWeight: FontWeight.w900,
                   fontSize: sizeMulW * 20),
             ),

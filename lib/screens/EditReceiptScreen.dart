@@ -138,26 +138,35 @@ class EditReceiptScreenTopPart extends StatelessWidget {
                 backgroundColor: Colors.grey[700],
               )),
           Positioned(
-            left: 2,
+            left: 0,
             top: 24,
-            child: InkWell(
-              splashColor: Colors.white.withAlpha(0),
-              highlightColor: Colors.black.withOpacity(0.1),
-              // ,
-              onTap: () {
-                // editReceiptScreenModel = EditReceiptScreenModel();
-
-                Navigator.pop(context);
-                editReceiptScreenModel.deleteReceiptImage();
-              },
-              child: Container(
-                width: sizeMulW * 40,
-                padding: EdgeInsets.symmetric(vertical: 10 * sizeMulW),
-                // height: sizeMulW*40,
-                // color: Colors.red,
-                child: Image.asset(
-                  'assets/icons/3x/back.png',
-                  height: MediaQuery.of(context).size.width * 0.075,
+            child: Container(
+              width: sizeMulW * 60,
+              child: RaisedButton(
+                highlightElevation: 0,
+                color: Colors.white.withOpacity(0),
+                elevation: 0,
+                splashColor: Colors.white.withAlpha(0),
+                highlightColor: Colors.black.withOpacity(0),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Container(
+                  // width: sizeMulW * 50,
+                  padding: EdgeInsets.symmetric(vertical: 10 * sizeMulW),
+                  // height: sizeMulW*40,
+                  // color: Colors.red,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Image.asset(
+                        'assets/icons/3x/back.png',
+                        height: MediaQuery.of(context).size.width * 0.075,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -264,7 +273,8 @@ class _EditReceiptScreenBottomPartState
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
                                 Padding(
-                                  padding: EdgeInsets.only(left: sizeMulW * 8.0),
+                                  padding:
+                                      EdgeInsets.only(left: sizeMulW * 8.0),
                                   child: Text(
                                     "MERCHANT",
                                     style: TextStyle(
@@ -330,7 +340,8 @@ class _EditReceiptScreenBottomPartState
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
                                 Padding(
-                                  padding: EdgeInsets.only(left: sizeMulW * 8.0),
+                                  padding:
+                                      EdgeInsets.only(left: sizeMulW * 8.0),
                                   child: Text(
                                     "DATE & TIME",
                                     // maxLines: 1,
@@ -428,21 +439,12 @@ class _EditReceiptScreenBottomPartState
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(3000)),
                                   border: Border.all(
-                                      color: Colors.white, width: sizeMulW * 2)),
+                                      color: Colors.white,
+                                      width: sizeMulW * 2)),
                               // child: Center(
                               child: DropdownButton<String>(
                                 value: catChoice,
                                 items: [
-                                  new DropdownMenuItem(
-                                    child: Text(
-                                      "Necessities",
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: sizeMulW * 20,
-                                      ),
-                                    ),
-                                    value: "Necessities",
-                                  ),
                                   new DropdownMenuItem(
                                     value: "Food",
                                     child: Text(
@@ -452,6 +454,16 @@ class _EditReceiptScreenBottomPartState
                                         fontSize: sizeMulW * 20,
                                       ),
                                     ),
+                                  ),
+                                  new DropdownMenuItem(
+                                    child: Text(
+                                      "Necessities",
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: sizeMulW * 20,
+                                      ),
+                                    ),
+                                    value: "Necessities",
                                   ),
                                   new DropdownMenuItem(
                                     value: "Transportation",
@@ -1010,7 +1022,8 @@ class _EditItemState extends State<EditItem> {
                         // width: sizeMulW * 130,
                         // color: Colors.green,
                         height: sizeMulW * 35,
-                        padding: EdgeInsets.symmetric(horizontal: sizeMulW * 15),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: sizeMulW * 15),
                         decoration: BoxDecoration(
                           color: Colors.green,
                           borderRadius: BorderRadius.all(Radius.circular(3000)),
@@ -1095,7 +1108,8 @@ class _EditItemState extends State<EditItem> {
                         // width: sizeMulW * 130,
                         // color: Colors.green,
                         height: sizeMulW * 35,
-                        padding: EdgeInsets.symmetric(horizontal: sizeMulW * 15),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: sizeMulW * 15),
                         decoration: BoxDecoration(
                           color: Colors.green,
                           borderRadius: BorderRadius.all(Radius.circular(3000)),

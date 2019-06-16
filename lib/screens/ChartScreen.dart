@@ -166,32 +166,44 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                 child: Stack(
                                   children: <Widget>[
                                     Positioned(
-                                      left: 2,
-                                      top: 24,
-                                      child: InkWell(
-                                        splashColor: Colors.white.withAlpha(0),
-                                        highlightColor:
-                                            Colors.black.withOpacity(0.1),
-                                        // ,
-                                        onTap: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: Container(
-                                          width: sizeMulW * 40,
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 10 * sizeMulW),
-                                          // height: sizeMulW*40,
-                                          // color: Colors.red,
-                                          child: Image.asset(
-                                            'assets/icons/3x/back.png',
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.075,
-                                          ),
+                              left: 0,
+                              top: 24,
+                              child: Container(
+                                width: sizeMulW*60,
+                                child: RaisedButton(
+                                  
+                                  highlightElevation: 0,
+                                  color: Colors.white.withOpacity(0),
+                                  elevation: 0,
+                                  splashColor: Colors.white.withAlpha(0),
+                                  highlightColor: Colors.black.withOpacity(0), 
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Container(
+                                    // width: sizeMulW * 50,
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 10 * sizeMulW),
+                                    // height: sizeMulW*40,
+                                    // color: Colors.red,
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Image.asset(
+                                          'assets/icons/3x/back.png',
+                                          height:
+                                              MediaQuery.of(context).size.width *
+                                                  0.075,
                                         ),
-                                      ),
+                                        
+                                      ],
                                     ),
+                                  ),
+                                ),
+                              ),
+                            ),
                                     Positioned(
                                       left: sizeMulW * 10,
                                       top: sizeMulW * 33.5,
