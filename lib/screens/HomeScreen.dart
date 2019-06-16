@@ -76,7 +76,7 @@ class PapyrusCustomer extends StatelessWidget {
             // fon
             fontFamily: 'Montserrat',
 
-            primarySwatch: Colors.blue,
+            primarySwatch: Colors.lightGreen,
           ),
           home: SplashScreen(),
           // FutureBuilder(
@@ -213,7 +213,7 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                   child: Column(
                     children: <Widget>[
                       SizedBox(
-                        height:71 * sizeMulH,
+                        height: 71 * sizeMulH,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -341,8 +341,7 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                               mainAxisSize: MainAxisSize.min,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
-                                Text(
-                                  "TOTAL SPENT",
+                                Text("TOTAL SPENT"  ,
                                   style: TextStyle(
                                       fontSize:
                                           MediaQuery.of(context).size.width *
@@ -410,7 +409,13 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  Text("${addCommas(4231)}.",
+                                  Text( ((appModel.viewing_period == Period.DAILY &&appModel.loadedUserExpense)? addCommas(int.parse(appModel.userExpense.lastDateTotalExpenseAmount
+                                              .toStringAsFixed(2)
+                                              .split('.')[0])):   (appModel.viewing_period == Period.MONTHLY&&appModel.loadedUserExpense)? addCommas(int.parse(appModel.userExpense.lastMonthTotalExpenseAmount
+                                              .toStringAsFixed(2)
+                                              .split('.')[0])): (appModel.viewing_period == Period.WEEKLY&&appModel.loadedUserExpense)? addCommas(int.parse(appModel.userExpense.lastWeekTotalExpenseAmount
+                                              .toStringAsFixed(2)
+                                              .split('.')[0])): "0" )+".",
                                       style: TextStyle(
                                           fontSize: MediaQuery.of(context)
                                                   .size
@@ -422,7 +427,13 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                                   Container(
                                     padding:
                                         EdgeInsets.only(bottom: 4 * sizeMulW),
-                                    child: Text("75 ",
+                                    child: Text((appModel.viewing_period == Period.DAILY &&appModel.loadedUserExpense)? addCommas(int.parse(appModel.userExpense.lastDateTotalExpenseAmount
+                                              .toStringAsFixed(2)
+                                              .split('.')[1])):   (appModel.viewing_period == Period.MONTHLY&&appModel.loadedUserExpense)? addCommas(int.parse(appModel.userExpense.lastMonthTotalExpenseAmount
+                                              .toStringAsFixed(2)
+                                              .split('.')[1])): (appModel.viewing_period == Period.WEEKLY&&appModel.loadedUserExpense)? addCommas(int.parse(appModel.userExpense.lastWeekTotalExpenseAmount
+                                              .toStringAsFixed(2)
+                                              .split('.')[1])): "00"  ,
                                         style: TextStyle(
                                             fontSize: MediaQuery.of(context)
                                                     .size
@@ -808,13 +819,29 @@ class _HomeScreenBottomPartState extends State<HomeScreenBottomPart> {
                         //     ),
                         //   ),
                         // );
-                        else {
+                        else if (snapshot.connectionState ==
+                            ConnectionState.done) {
                           return Column(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: snapshot.data,
+                            children: (snapshot.data.first != null)
+                                ? snapshot.data
+                                : [
+                                    SizedBox(
+                                      width: 1,
+                                    )
+                                  ],
                           );
-                        }
+                        } else
+                          return Column(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              SizedBox(
+                                width: 1,
+                              )
+                            ],
+                          );
                       }))
 
               // ReceiptCard("May 19, 2019", 99, "mainItem", "imagePath"),

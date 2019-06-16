@@ -29,6 +29,7 @@ class AppModel extends Model {
   FirebaseAuth mAuth;
   String platformVersion;
   // String rootFilePath;
+  bool loadedUserExpense = false;
   EditReceiptScreenModel editReceiptScreenModel;
   CameraCaptureModel cameraCaptureModel;
   ReceiveReceiptModel receiveReceiptModel;
@@ -48,6 +49,7 @@ class AppModel extends Model {
   String userExpensesFilePath;
   UserExpense userExpense;
   String userExpenseJSONFilePath;
+  // bool loaded
 
   List<FileSystemEntity> receiptFiles;
   Map<String, String> dirMap = {
@@ -77,43 +79,70 @@ class AppModel extends Model {
 
   AppModel() {
     launch();
-
   }
 
-  launch()async{
-
+  launch() async {
     mAuth = FirebaseAuth.instance;
     user = await mAuth.currentUser();
+    for (Permission p in perms) {
+      // perm_results.addEntries(p:null);
+      perm_results[p] = await SimplePermissions.requestPermission(p);
+    }
+    editReceiptScreenModel = EditReceiptScreenModel(this);
+    cameraCaptureModel = CameraCaptureModel(this);
+    receiveReceiptModel = ReceiveReceiptModel(this);
+    receiptsScreenModel = ReceiptsScreenModel(this);
     if (user != null) init();
-
   }
 
   void init() async {
+    // for (Permission p in perms) {
+    //   // perm_results.addEntries(p:null);
+    //   perm_results[p] = await SimplePermissions.requestPermission(p);
+    // }
+    // editReceiptScreenModel = EditReceiptScreenModel(this);
+    // cameraCaptureModel = CameraCaptureModel(this);
+    // receiveReceiptModel = ReceiveReceiptModel(this);
+    // receiptsScreenModel = ReceiptsScreenModel(this);
     // if (user == null) return;
     // try {
     //   platformVersion = await SimplePermissions.platformVersion;
     // } catch (e) {
     //   platformVersion = "failed to get platform version";
     // }
-    // for (Permission p in perms) {
-    //   // perm_results.addEntries(p:null);
-    //   perm_results[p] = await SimplePermissions.requestPermission(p);
-    // }
+
     // print("The permission results" + perm_results.toString());
 
-    editReceiptScreenModel = EditReceiptScreenModel(this);
-    cameraCaptureModel = CameraCaptureModel(this);
-    receiveReceiptModel = ReceiveReceiptModel(this);
-    receiptsScreenModel = ReceiptsScreenModel(this);
     rootDir = await getApplicationDocumentsDirectory();
     // var = await getExte
     await checkOrGenerateDirectories();
+
+
+    
     // await deleteAllReceiptFiles();
+    // deleteAllExpenseFiles();
+
+
+
     listFileNamesOfReceiptsFoundInStorageAndGenerateReceipts();
-    // prepareExpenseFiles();
+    prepareExpenseFiles();
 
     tempDir = await getTemporaryDirectory();
     generateImage();
+  }
+
+  void deleteAllExpenseFiles() async {
+    List<FileSystemEntity> files;
+    print("here are the files");
+    files = Directory(dirMap['Expenses'])
+        .listSync(recursive: true, followLinks: false);
+    for (int i = 0; i < files.length; i++) {
+      File rJSON = File(files[i].path);
+      try {
+        await rJSON.delete();
+      } catch (e) {}
+      print('ouyst');
+    }
   }
 
   void deleteAllReceiptFiles() async {
@@ -121,9 +150,12 @@ class AppModel extends Model {
     print("here are the files");
     files = Directory(dirMap['Receipts'])
         .listSync(recursive: true, followLinks: false);
+
     for (int i = 0; i < files.length; i++) {
       File rJSON = File(files[i].path);
-      await rJSON.delete();
+      try {
+        await rJSON.delete();
+      } catch (e) {}
 
       print('ouyst');
     }
@@ -190,52 +222,150 @@ class AppModel extends Model {
     dayExpenseFile = File(dayExpenseFilePath);
     weekExpenseFile = File(weekExpenseFilePath);
     monthExpenseFile = File(monthExpenseFilePath);
-    try {
-      Map map = jsonDecode(await userExpenseJSONFile.readAsString());
-      userExpense = UserExpense.fromJson(map);
-    } catch (e) {}
+    // try {
+    //   Map map = jsonDecode(await userExpenseJSONFile.readAsString());
+    //   userExpense = UserExpense.fromJson(map);
+    // } catch (e) {}
 
-    print("READ ALOUD");
-    print("json current" + jsonEncode(userExpense.toJson()));
-    print(userExpensesFile.readAsString());
+    // print("READ ALOUD");
+    // print("json current" + jsonEncode(userExpense.toJson()));
+    // print(userExpensesFile.readAsString());
+
+    userExpense = await loadUserExpense();
+    loadedUserExpense = true;
+
+    print("lastweeks expense" +
+        userExpense.lastWeekTotalExpenseAmount.toString());
+
+    print("pass" + jsonEncode(userExpense.toJson()));
+
+    userExpenseInit();
+    // if(userE)
+  }
+
+  userExpenseInit() {}
+
+  void addToInvolvedExpenses(String category, double total) {
+    if (category == "Food") {
+      userExpense.lastDateFoodExpenseAmount += total;
+      userExpense.lastWeekFoodExpenseAmount += total;
+      userExpense.lastMonthFoodExpenseAmount += total;
+      userExpense.foodLifetimeExpenseAmount += total;
+    }
+    if (category == "Necessities") {
+      userExpense.lastDateNecessitiesExpenseAmount += total;
+      userExpense.lastWeekNecessitiesExpenseAmount += total;
+      userExpense.lastMonthNecessitiesExpenseAmount += total;
+      userExpense.necessitiesLifetimeExpenseAmount += total;
+    }
+    if (category == "Leisure") {
+      userExpense.lastDateLeisureExpenseAmount += total;
+      userExpense.lastWeekLeisureExpenseAmount += total;
+      userExpense.lastMonthLeisureExpenseAmount += total;
+      userExpense.leisureLifetimeExpenseAmount += total;
+    }
+    if (category == "Transportation") {
+      userExpense.lastDateTransportationExpenseAmount += total;
+      userExpense.lastWeekTransportationExpenseAmount += total;
+      userExpense.lasMonthTransportationExpenseAmount += total;
+      userExpense.transportationLifetimeExpenseAmount += total;
+    }
+    if (category == "Miscellaneous") {
+      userExpense.lastDateMiscellaneousExpenseAmount += total;
+      userExpense.lastWeekMiscellaneousExpenseAmount += total;
+      userExpense.lastMonthMiscellaneousExpenseAmount += total;
+      userExpense.miscellaneousLifetimeExpenseAmount += total;
+    }
+
+    userExpense.totalLifetimeExpenseAmount += total;
+
+    print(
+        "TOOOOOOOOOOTALL" + userExpense.totalLifetimeExpenseAmount.toString());
+  }
+
+  addDayExpense() async {
+    // this shiet only get called when day closed
+
+    DayExpense dayExpense = DayExpense(
+        userExpense.lastDateRecorded,
+        userExpense.lastDateFoodExpenseAmount,
+        userExpense.lastDateMiscellaneousExpenseAmount,
+        userExpense.lastDateTransportationExpenseAmount,
+        userExpense.lastDateLeisureExpenseAmount,
+        userExpense.lastDateNecessitiesExpenseAmount,
+        userExpense.lastDateTotalExpenseAmount);
+    await dayExpenseFile.writeAsString(jsonEncode(dayExpense.toJson()) + "\n",
+        mode: FileMode.writeOnlyAppend);
+  }
+
+  addWeekExpense() async {
+    WeekExpense weekExpense = WeekExpense(
+        userExpense.lastWeekRecorded,
+        userExpense.lastWeekFoodExpenseAmount,
+        userExpense.lastWeekMiscellaneousExpenseAmount,
+        userExpense.lastWeekTransportationExpenseAmount,
+        userExpense.lastWeekLeisureExpenseAmount,
+        userExpense.lastWeekNecessitiesExpenseAmount,
+        userExpense.lastWeekTotalExpenseAmount);
+    await dayExpenseFile.writeAsString(jsonEncode(weekExpense.toJson()) + "\n",
+        mode: FileMode.writeOnlyAppend);
+  }
+
+  addMonthExpense() async {
+    MonthExpense monthExpense = MonthExpense(
+        userExpense.lastMonthRecorded,
+        userExpense.lastMonthFoodExpenseAmount,
+        userExpense.lastMonthMiscellaneousExpenseAmount,
+        userExpense.lasMonthTransportationExpenseAmount,
+        userExpense.lastMonthLeisureExpenseAmount,
+        userExpense.lastMonthNecessitiesExpenseAmount,
+        userExpense.lastMonthTotalExpenseAmount);
+    await dayExpenseFile.writeAsString(jsonEncode(monthExpense.toJson()) + "\n",
+        mode: FileMode.writeOnlyAppend);
+  }
+
+  void updateUserExpense(ExpenseItem expenseItem) {
+    var date = DateTime.now().toLocal();
+
+    if (userExpense.lastDateRecorded == "" ||
+        date.day != DateTime.parse(userExpense.lastDateRecorded).day) {
+      addDayExpense();
+      userExpense.resetDateRecords();
+      addToInvolvedExpenses(expenseItem.category, expenseItem.amount);
+      // reset to 0
+      // add the newly added expense item to category and total
+
+    }
+    if (userExpense.lastMonthRecorded == "" ||
+        date.month != DateTime.parse(userExpense.lastDateRecorded).month) {
+      addMonthExpense();
+      userExpense.resetMonthRecords();
+      userExpense.lastMonthTotalExpenseAmount += expenseItem.amount;
+      addToInvolvedExpenses(expenseItem.category, expenseItem.amount);
+      userExpense.firstDayMonth = date.toIso8601String();
+      // reset to 0
+
+      // add the newly added expense item to category and total
+
+    }
+
+    userExpense.lastDateTotalExpenseAmount += expenseItem.amount;
+    userExpense.lastMonthTotalExpenseAmount += expenseItem.amount;
+    userExpense.lastWeekTotalExpenseAmount += expenseItem.amount;
+
+    userExpense.lastDateRecorded = date.toIso8601String();
+    userExpense.lastMonthRecorded = date.month.toString();
+    userExpenseJSONFile.writeAsString(jsonEncode(userExpense.toJson()));
+    notifyListeners();
   }
 
   void addExpenseItemToExpenseTxtFile(ExpenseItem expenseItem) async {
-    print(expenseItem.amount.toString() +
-        " a" +
-        expenseItem.category +
-        " a " +
-        expenseItem.dateTime);
     await userExpensesFile.writeAsString(
         jsonEncode(expenseItem.toJson()) + "\n",
         mode: FileMode.writeOnlyAppend);
-    userExpense.totalLifetimeExpenseAmount += expenseItem.amount;
-    if (expenseItem.category == "FOOD")
-      userExpense.foodLifetimeExpenseAmount += expenseItem.amount;
-    if (expenseItem.category == "TRANSPORTATION")
-      userExpense.transportationLifetimeExpenseAmount += expenseItem.amount;
-    if (expenseItem.category == "NECESSITIES")
-      userExpense.necessitiesLifetimeExpenseAmount += expenseItem.amount;
-    if (expenseItem.category == "MISCELLANEOUS")
-      userExpense.miscellaneousLifetimeExpenseAmount += expenseItem.amount;
-    if (expenseItem.category == "LEISURE")
-      userExpense.leisureLifetimeExpenseAmount += expenseItem.amount;
 
-    await userExpenseJSONFile.writeAsString(jsonEncode(userExpense.toJson()));
-    print("read after add");
-    print("json current" + jsonEncode(userExpense.toJson()));
-    print(userExpensesFile.readAsString());
-    // print("tadaa: expenses" + userExpensesFile.readAsStringSync());
+    updateUserExpense(expenseItem);
     notifyListeners();
-
-    // print("locals" + appModel.rootDir.path);
-    // print("saving");
-
-    // File file = new File(
-    //     '${appModel.dirMap['Receipts']}/${_receipt.time_stamp}.json');
-    // file.writeAsString(jsonEncode(_receipt.toJson()));
-
-    // readReceiptFromJsonFile(file.path);
   }
 
   // void addExpenseAndSaveToStorage(String path){
@@ -272,8 +402,11 @@ class AppModel extends Model {
     weekExpenseFilePath = "${dirMap['Expenses/Period']}WeekExpense.txt";
     monthExpenseFilePath = "${dirMap['Expenses/Period']}MonthExpense.txt";
 
-    var b = await File(userExpenseJSONFilePath).create();
-    var c = await File(userExpensesFilePath).create();
+    await File(userExpenseJSONFilePath).create();
+    await File(userExpensesFilePath).create();
+    await File(dayExpenseFilePath).create();
+    await File(weekExpenseFilePath).create();
+    await File(monthExpenseFilePath).create();
 
     // b.delete();
     // c.delete();
@@ -283,17 +416,19 @@ class AppModel extends Model {
   void findAllReceipts() async {}
 
   void generateImage() async {
-    try {
-      var imageFile = await EfQrcode.generate(user.uid, "#ffffff", "#000000");
-      userQRPath = "${dirMap['UserData']}/${user.email}.jpg";
-      imageFile.copy(userQRPath);
-      print('done file');
-      // imageFile.pat
-      // await imageFile.rename( userQRPath);
-      //  file.writeAsBytes(imageFile);
+    if (!await File("${dirMap['UserData']}/${user.email}.jpg").exists()) {
+      try {
+        var imageFile = await EfQrcode.generate(user.uid, "#ffffff", "#000000");
+        userQRPath = "${dirMap['UserData']}/${user.email}.jpg";
+        imageFile.copy(userQRPath);
+        print('done file');
+        // imageFile.pat
+        // await imageFile.rename( userQRPath);
+        //  file.writeAsBytes(imageFile);
 
-    } catch (e) {
-      print(e);
+      } catch (e) {
+        print(e);
+      }
     }
   }
 
