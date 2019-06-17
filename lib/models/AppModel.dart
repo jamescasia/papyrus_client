@@ -237,8 +237,7 @@ class AppModel extends Model {
 
     print("lastweeks expense" +
         userExpense.lastWeekTotalExpenseAmount.toString());
-
-    print("pass" + jsonEncode(userExpense.toJson()));
+ 
 
     userExpenseInit();
     // if(userE)

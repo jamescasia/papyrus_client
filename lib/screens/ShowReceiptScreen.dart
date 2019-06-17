@@ -25,6 +25,11 @@ class _ShowReceiptScreenState extends State<ShowReceiptScreen> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          
+        },
+      ),
       body: ShowReceiptScreenStack(receipt), 
     );
   }
