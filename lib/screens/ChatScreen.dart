@@ -153,7 +153,9 @@ class _ChatScreenState extends State<ChatScreen> {
                                                             FontWeight.w600),
                                                   ),
                                                 ),
-                                                SizedBox(width: sizeMulW*20,),
+                                                SizedBox(
+                                                  width: sizeMulW * 20,
+                                                ),
                                                 CollectionSlideTransition(
                                                   children: <Widget>[
                                                     Container(
@@ -230,57 +232,154 @@ class _ChatScreenState extends State<ChatScreen> {
                               //   color: Colors.blue,
                               //   // child: ,
                               // )),
+
                               Positioned(
+                                left: 0,
+                                right: 0,
                                 bottom: 0,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.all(
-                                      Radius.circular(sizeMulW * 30)),
+                                child: Opacity(
+                                  opacity: 1,
                                   child: Container(
-                                    height: h * 0.1,
-                                    width: w,
-                                    color: Colors.green,
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
                                       children: <Widget>[
-                                        SizedBox(
-                                          width: 0.05 * h,
-                                        ),
-                                        Expanded(
-                                          child: EditableText(
-                                            backgroundCursorColor: Colors.red,
-                                            style: TextStyle(
-                                                fontSize: sizeMulW * 19),
-                                            cursorColor: Colors.white,
-                                            controller: cModel.cont,
-                                            focusNode: fn,
-                                          ),
-                                        ),
-                                        Container(
-                                          width: 0.1 * h,
-                                          height: 0.1 * h,
-                                          decoration: BoxDecoration(
-                                            color: Colors.green[700],
+                                        
+                                        OutlineButton(
+                                          color: Colors.white,
+                                          borderSide: BorderSide(color: Colors.blue),
+                                          onPressed: () {},
+                                          child:
+                                              Text("Tell me what you do.", style: TextStyle(fontWeight: FontWeight.w500),),
+                                          shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(sizeMulW * 30)),
                                           ),
-                                          child: InkWell(
+                                        ),
+                                        OutlineButton(
+                                          color: Colors.white,
+                                          borderSide: BorderSide(color: Colors.blue),
+                                          onPressed: () {},
+                                          child:
+                                              Text("How is my spending?", style: TextStyle(fontWeight: FontWeight.w500),),
+                                          shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(sizeMulW * 30)),
-                                            splashColor: Colors.yellow,
-                                            highlightColor: Colors.lightGreen,
-                                            onTap: () {
-                                              cModel.sendMessage();
-                                            },
-                                            child: Icon(
-                                              FontAwesomeIcons.paperPlane,
-                                              size: sizeMulW * 23,
-                                              color: Colors.white,
-                                            ),
                                           ),
                                         ),
+                                        OutlineButton(
+                                          color: Colors.white,
+                                          borderSide: BorderSide(color: Colors.blue),
+                                          onPressed: () {},
+                                          child:
+                                              Text("Are there any deals I am not aware of? ", style: TextStyle(fontWeight: FontWeight.w500),),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(sizeMulW * 30)),
+                                          ),
+                                        ), 
+                                        OutlineButton(
+                                          color: Colors.white,
+                                          borderSide: BorderSide(color: Colors.blue),
+                                          onPressed: () {},
+                                          child:
+                                              Text("I have a concern regarding something", style: TextStyle(fontWeight: FontWeight.w500),),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(sizeMulW * 30)),
+                                          ),
+                                        )
                                       ],
                                     ),
+                                    decoration: BoxDecoration(
+                                      border:Border.all(color: Colors.black.withOpacity(0.4)),
+                                      color: Colors.grey[200],
+                                      borderRadius: BorderRadius.vertical(
+                                          top: Radius.circular(sizeMulW * 30)),
+                                    ),
+
+                                    width: w,
+                                    height: h * 0.4,
+                                    // child: ,
                                   ),
+                                ),
+                              ),
+                              Positioned(
+                                bottom: 0,
+                                child: Stack(
+                                  children: <Widget>[
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(sizeMulW * 30)),
+                                      child: Container(
+                                        height: h * 0.1,
+                                        width: w,
+                                        color: Colors.green,
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: <Widget>[
+                                            SizedBox(
+                                              width: 0.05 * h,
+                                            ),
+                                            Expanded(
+                                              child: EditableText(
+                                                backgroundCursorColor:
+                                                    Colors.red,
+                                                style: TextStyle(
+                                                    fontSize: sizeMulW * 19),
+                                                cursorColor: Colors.white,
+                                                controller: cModel.cont,
+                                                focusNode: fn,
+                                              ),
+                                            ),
+                                            Container(
+                                              width: 0.1 * h,
+                                              height: 0.1 * h,
+                                              decoration: BoxDecoration(
+                                                color: Colors.green[700],
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(
+                                                        sizeMulW * 30)),
+                                              ),
+                                              child: InkWell(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(
+                                                        sizeMulW * 30)),
+                                                splashColor: Colors.yellow,
+                                                highlightColor:
+                                                    Colors.lightGreen,
+                                                onTap: () {
+                                                  cModel.sendMessage();
+                                                },
+                                                child: Icon(
+                                                  FontAwesomeIcons.paperPlane,
+                                                  size: sizeMulW * 23,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    Positioned(
+                                        top: 0,
+                                        bottom: 0,
+                                        left: 0,
+                                        child: Container(
+                                            width: h * 0.1,
+                                            height: h * 0.1,
+                                            decoration: BoxDecoration(
+                                              // color: Colors.green[700],
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(
+                                                      sizeMulW * 30)),
+                                            ),
+                                            child: Icon(
+                                              FontAwesomeIcons.chevronCircleUp,
+                                              color: Colors.white,
+                                              size: sizeMulW * 30,
+                                            ))),
+                                  ],
                                 ),
                               )
                             ],
