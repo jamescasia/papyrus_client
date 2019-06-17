@@ -637,7 +637,7 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                           borderRadius: BorderRadius.all(Radius.circular(3000)),
                           radius: sizeMulW * 45,
                           onTap: () {
-                            showChat(context);
+                            showChat(context,appModel);
                             // Navigator.push(
                             //     context,
                             //     CupertinoPageRoute(
@@ -648,7 +648,7 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                             children: <Widget>[
                               InkWell(
                                 onTap: () {
-                                  showChat(context);
+                                  showChat(context,appModel);
                                   // Navigator.push(
                                   //     context,
                                   //     CupertinoPageRoute(
@@ -976,7 +976,7 @@ class _HomeScreenBottomPartState extends State<HomeScreenBottomPart> {
   }
 }
 
-showChat(BuildContext context) {
+showChat(BuildContext context, AppModel appModel) {
   showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -984,7 +984,7 @@ showChat(BuildContext context) {
         // height: double.infinity,
         // margin: EdgeInsets.all(50),
         // color: Colors.red,);
-        return ChatScreen();
+        return ChatScreen(appModel.chatModel);
       });
 }
 

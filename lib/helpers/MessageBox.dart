@@ -18,22 +18,29 @@ class MessageBox extends StatelessWidget {
                 width: 0,
               ),
         Container(
-          constraints: BoxConstraints(
-            maxWidth: MediaQuery.of(context).size.width*0.7
-          ),
+          constraints:
+              BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.7),
           margin: EdgeInsets.all(sizeMulW * 4),
           padding: EdgeInsets.symmetric(
               horizontal: sizeMulW * 15, vertical: sizeMulW * 10),
           decoration: BoxDecoration(
-              color: (msg.iAmTheSender) ? Colors.blue : Colors.green,
+              color: (msg.iAmTheSender) ? Colors.blue : Color(0xFF1ADB5B),
               borderRadius: BorderRadius.all(Radius.circular(sizeMulH * 20))),
-          child: Text(
-            msg.message,
-            
-            style: TextStyle(
-                fontSize: sizeMulW * 17,
-                fontWeight: FontWeight.w500,
-                color: Colors.white),
+          child: Column(
+            children: <Widget>[
+              Text(
+                msg.message,
+                style: TextStyle(
+                    fontSize: sizeMulW * 17,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white),
+              ),
+              (!msg.iAmTheSender && msg.imagePath!="")
+                  ? Image(
+                      image: NetworkImage(msg.imagePath),
+                    )
+                  : SizedBox(height: 0.001),
+            ],
           ),
         ),
         (!msg.iAmTheSender)

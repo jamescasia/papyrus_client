@@ -267,16 +267,21 @@ class AppModel extends Model {
   void passiveUpdateMessages() {
     List<int> toDelPos = [];
 
-    for (Message msg in allMessages.messages) {
-      if (DateTime.now().toLocal().day - DateTime.parse(msg.dateTime).day >=
-          5) {
-        toDelPos.add(allMessages.messages.indexOf(msg));
-      }
+    if(allMessages.messages.length>100) {
+      var start = allMessages.messages.length-100;
+      allMessages.messages = allMessages.messages.sublist(start);
     }
 
-    for (int i in toDelPos) {
-      allMessages.messages.removeAt(i);
-    }
+    // for (Message msg in allMessages.messages) {
+    //   if (DateTime.now().toLocal().day - DateTime.parse(msg.dateTime).day >=
+    //       5) {
+    //     toDelPos.add(allMessages.messages.indexOf(msg));
+    //   }
+    // }
+
+    // for (int i in toDelPos) {
+    //   allMessages.messages.removeAt(i);
+    // }
   }
 
   prepareMessageFile() async {

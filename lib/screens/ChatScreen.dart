@@ -12,15 +12,30 @@ import 'package:progress_indicators/progress_indicators.dart';
 import 'package:papyrus_client/helpers/MessageBox.dart';
 
 class ChatScreen extends StatefulWidget {
+  ChatModel cModel;
+
+  ChatScreen(this.cModel);
   @override
-  _ChatScreenState createState() => new _ChatScreenState();
+  _ChatScreenState createState() => new _ChatScreenState(cModel);
 }
 
 var h;
 var w;
 
 class _ChatScreenState extends State<ChatScreen> {
+  ChatModel cModel;
+  _ChatScreenState(this.cModel);
   FocusNode fn = FocusNode();
+
+  double slidePanelChoicesHeight = 0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    cModel.init();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height * 0.9;
@@ -237,70 +252,124 @@ class _ChatScreenState extends State<ChatScreen> {
                                 left: 0,
                                 right: 0,
                                 bottom: 0,
-                                child: Opacity(
-                                  opacity: 1,
-                                  child: Container(
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        
-                                        OutlineButton(
-                                          color: Colors.white,
-                                          borderSide: BorderSide(color: Colors.blue),
-                                          onPressed: () {},
-                                          child:
-                                              Text("Tell me what you do.", style: TextStyle(fontWeight: FontWeight.w500),),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(sizeMulW * 30)),
-                                          ),
+                                child: AnimatedContainer(
+                                  duration: Duration(milliseconds: 130),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      OutlineButton(
+                                        color: Colors.white,
+                                        borderSide:
+                                            BorderSide(color: Colors.blue),
+                                        onPressed: () {
+                                          setState(() {
+                                            if (slidePanelChoicesHeight == 0)
+                                              slidePanelChoicesHeight = h * 0.4;
+                                            else
+                                              slidePanelChoicesHeight = 0;
+                                          });
+                                          cModel.cont.text =
+                                              cModel.choiceMessages[0];
+                                          cModel.sendMessage();
+                                        },
+                                        child: Text(
+                                          cModel.choiceMessages[0],
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500),
                                         ),
-                                        OutlineButton(
-                                          color: Colors.white,
-                                          borderSide: BorderSide(color: Colors.blue),
-                                          onPressed: () {},
-                                          child:
-                                              Text("How is my spending?", style: TextStyle(fontWeight: FontWeight.w500),),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(sizeMulW * 30)),
-                                          ),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(sizeMulW * 30)),
                                         ),
-                                        OutlineButton(
-                                          color: Colors.white,
-                                          borderSide: BorderSide(color: Colors.blue),
-                                          onPressed: () {},
-                                          child:
-                                              Text("Are there any deals I am not aware of? ", style: TextStyle(fontWeight: FontWeight.w500),),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(sizeMulW * 30)),
-                                          ),
-                                        ), 
-                                        OutlineButton(
-                                          color: Colors.white,
-                                          borderSide: BorderSide(color: Colors.blue),
-                                          onPressed: () {},
-                                          child:
-                                              Text("I have a concern regarding something", style: TextStyle(fontWeight: FontWeight.w500),),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(sizeMulW * 30)),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                    decoration: BoxDecoration(
-                                      border:Border.all(color: Colors.black.withOpacity(0.4)),
-                                      color: Colors.grey[200],
-                                      borderRadius: BorderRadius.vertical(
-                                          top: Radius.circular(sizeMulW * 30)),
-                                    ),
-
-                                    width: w,
-                                    height: h * 0.4,
-                                    // child: ,
+                                      ),
+                                      OutlineButton(
+                                        color: Colors.white,
+                                        borderSide:
+                                            BorderSide(color: Colors.blue),
+                                        onPressed: () {
+                                          setState(() {
+                                            if (slidePanelChoicesHeight == 0)
+                                              slidePanelChoicesHeight = h * 0.4;
+                                            else
+                                              slidePanelChoicesHeight = 0;
+                                          });
+                                          cModel.cont.text =
+                                              cModel.choiceMessages[1];
+                                          cModel.sendMessage();
+                                        },
+                                        child: Text(
+                                          cModel.choiceMessages[1],
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(sizeMulW * 30)),
+                                        ),
+                                      ),
+                                      OutlineButton(
+                                        color: Colors.white,
+                                        borderSide:
+                                            BorderSide(color: Colors.blue),
+                                        onPressed: () {
+                                          setState(() {
+                                            if (slidePanelChoicesHeight == 0)
+                                              slidePanelChoicesHeight = h * 0.4;
+                                            else
+                                              slidePanelChoicesHeight = 0;
+                                          });
+                                          cModel.cont.text =
+                                              cModel.choiceMessages[2];
+                                          cModel.sendMessage();
+                                        },
+                                        child: Text(
+                                          cModel.choiceMessages[2],
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(sizeMulW * 30)),
+                                        ),
+                                      ),
+                                      OutlineButton(
+                                        color: Colors.white,
+                                        borderSide:
+                                            BorderSide(color: Colors.blue),
+                                        onPressed: () {
+                                          setState(() {
+                                            if (slidePanelChoicesHeight == 0)
+                                              slidePanelChoicesHeight = h * 0.4;
+                                            else
+                                              slidePanelChoicesHeight = 0;
+                                          });
+                                          cModel.cont.text =
+                                              cModel.choiceMessages[3];
+                                          cModel.sendMessage();
+                                        },
+                                        child: Text(
+                                          cModel.choiceMessages[3],
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(sizeMulW * 30)),
+                                        ),
+                                      )
+                                    ],
                                   ),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: Colors.black.withOpacity(0.4)),
+                                    color: Colors.grey[200],
+                                    borderRadius: BorderRadius.vertical(
+                                        top: Radius.circular(sizeMulW * 30)),
+                                  ),
+
+                                  width: w,
+                                  height: slidePanelChoicesHeight,
+                                  // child: ,
                                 ),
                               ),
                               Positioned(
@@ -374,10 +443,26 @@ class _ChatScreenState extends State<ChatScreen> {
                                                   Radius.circular(
                                                       sizeMulW * 30)),
                                             ),
-                                            child: Icon(
-                                              FontAwesomeIcons.chevronCircleUp,
-                                              color: Colors.white,
-                                              size: sizeMulW * 30,
+                                            child: InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  if (slidePanelChoicesHeight ==
+                                                      0)
+                                                    slidePanelChoicesHeight =
+                                                        h * 0.4;
+                                                  else
+                                                    slidePanelChoicesHeight = 0;
+                                                });
+                                              },
+                                              child: Icon(
+                                                (slidePanelChoicesHeight == 0)
+                                                    ? FontAwesomeIcons
+                                                        .chevronCircleUp
+                                                    : FontAwesomeIcons
+                                                        .chevronCircleDown,
+                                                color: Colors.white,
+                                                size: sizeMulW * 30,
+                                              ),
                                             ))),
                                   ],
                                 ),
