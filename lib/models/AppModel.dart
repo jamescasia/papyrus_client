@@ -92,16 +92,18 @@ class AppModel extends Model {
 
   launch() async {
     mAuth = FirebaseAuth.instance;
-    user = await mAuth.currentUser();
-    for (Permission p in perms) {
-      // perm_results.addEntries(p:null);
-      perm_results[p] = await SimplePermissions.requestPermission(p);
-    }
     editReceiptScreenModel = EditReceiptScreenModel(this);
     cameraCaptureModel = CameraCaptureModel(this);
     receiveReceiptModel = ReceiveReceiptModel(this);
     receiptsScreenModel = ReceiptsScreenModel(this);
     chatModel = ChatModel(this);
+
+    for (Permission p in perms) {
+      // perm_results.addEntries(p:null);
+      perm_results[p] = await SimplePermissions.requestPermission(p);
+    }
+    user = await mAuth.currentUser();
+
     if (user != null) init();
   }
 
@@ -127,13 +129,20 @@ class AppModel extends Model {
     // var = await getExte
     await checkOrGenerateDirectories();
 
-    // await deleteAllReceiptFiles();
-    // deleteAllExpenseFiles();
+
+
+
+  //   await deleteAllReceiptFiles();
+  //   deleteAllExpenseFiles();
+  // deleteMessages();
+
+
+
+
 
     listFileNamesOfReceiptsFoundInStorageAndGenerateReceipts();
     await prepareExpenseFiles();
     passiveUpdateUserExpense();
-
 
     await prepareMessageFile();
     passiveUpdateMessages();
@@ -241,6 +250,18 @@ class AppModel extends Model {
     allMessages.messages.add(msg);
     allMessagesFile.writeAsString(jsonEncode(allMessages.toJson()));
     notifyListeners();
+  }
+
+  void deleteMessages() {
+    List<int> toDelPos = [];
+
+    for (Message msg in allMessages.messages) {
+      toDelPos.add(allMessages.messages.indexOf(msg));
+    }
+
+    for (int i in toDelPos) {
+      allMessages.messages.removeAt(i);
+    }
   }
 
   void passiveUpdateMessages() {

@@ -9,6 +9,7 @@ import 'package:shimmer/shimmer.dart';
 import 'package:papyrus_client/helpers/ScrollBehaviour.dart';
 import 'package:papyrus_client/helpers/CustomShapeClipper.dart';
 import 'package:papyrus_client/screens/ReceiptScreen.dart';
+
 import 'ChartScreen.dart';
 import 'PromoScreen.dart';
 import 'SettingScreen.dart';
@@ -44,6 +45,7 @@ LinearGradient greeny = LinearGradient(
   end: Alignment.bottomCenter,
   colors: [
     const Color(0xFF6DC739),
+    // Colors.green[300],
     const Color(0xFF1BA977),
   ],
   tileMode: TileMode.repeated,
@@ -152,6 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
         56.372;
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
       statusBarColor: const Color(0xFF61C350),
+      systemNavigationBarColor: const Color(0xFF1BA977),
       // #61C350
     ));
     return Scaffold(
@@ -209,7 +212,7 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
             shadow: Shadow(
                 blurRadius: 10 * sizeMulW,
                 offset: Offset(0, sizeMulW),
-                color: Colors.black38),
+                color: Colors.black38.withAlpha(0)),
             clipper: CustomShapeClipper(
                 sizeMulW: sizeMulW,
                 maxWidth: MediaQuery.of(context).size.width,
@@ -495,23 +498,26 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                                                 padding: EdgeInsets.only(
                                                     bottom: 4 * sizeMulW),
                                                 child: Text(
-                                                    (appModel.viewing_period == Period.DAILY &&
-                                                            appModel
-                                                                .loadedUserExpense)
+                                                    (appModel.viewing_period == Period.DAILY && appModel.loadedUserExpense &&
+                                                                    (int.parse(appModel.userExpense.lastWeekTotalExpenseAmount.toStringAsFixed(2).split('.')[1])) != 0)
                                                         ? addCommas(int.parse(appModel
                                                             .userExpense
                                                             .lastDateTotalExpenseAmount
                                                             .toStringAsFixed(2)
                                                             .split('.')[1]))
-                                                        : (appModel.viewing_period == Period.MONTHLY &&
-                                                                appModel
-                                                                    .loadedUserExpense)
+                                                        : (appModel.viewing_period == Period.MONTHLY && appModel.loadedUserExpense && 
+                                                                    (int.parse(appModel.userExpense.lastWeekTotalExpenseAmount.toStringAsFixed(2).split('.')[1])) != 0)
                                                             ? addCommas(int.parse(appModel
                                                                 .userExpense
                                                                 .lastMonthTotalExpenseAmount
-                                                                .toStringAsFixed(2)
+                                                                .toStringAsFixed(
+                                                                    2)
                                                                 .split('.')[1]))
-                                                            : (appModel.viewing_period == Period.WEEKLY && appModel.loadedUserExpense && (int.parse(appModel.userExpense.lastWeekTotalExpenseAmount.toStringAsFixed(2).split('.')[1])) !=0) ? addCommas(int.parse(appModel.userExpense.lastWeekTotalExpenseAmount.toStringAsFixed(2).split('.')[1])) : "00",
+                                                            : (appModel.viewing_period == Period.WEEKLY &&
+                                                                    appModel.loadedUserExpense &&
+                                                                    (int.parse(appModel.userExpense.lastWeekTotalExpenseAmount.toStringAsFixed(2).split('.')[1])) != 0)
+                                                                ? addCommas(int.parse(appModel.userExpense.lastWeekTotalExpenseAmount.toStringAsFixed(2).split('.')[1]))
+                                                                : "00",
                                                     style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.05, fontWeight: FontWeight.bold, color: Colors.white)),
                                               ),
                                               // ),
@@ -629,6 +635,7 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                           splashColor: Colors.white.withAlpha(0),
                           highlightColor: Colors.black.withOpacity(0.1),
                           borderRadius: BorderRadius.all(Radius.circular(3000)),
+                          radius: sizeMulW * 45,
                           onTap: () {
                             showChat(context);
                             // Navigator.push(
@@ -639,12 +646,25 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                           // highlightColor: Colors.black,
                           child: Stack(
                             children: <Widget>[
+                              InkWell(
+                                onTap: () {
+                                  showChat(context);
+                                  // Navigator.push(
+                                  //     context,
+                                  //     CupertinoPageRoute(
+                                  //         builder: (context) => PromoScreen()));
+                                },
+                                child: SizedBox(
+                                  width: sizeMulW * 45,
+                                  height: sizeMulW * 45,
+                                ),
+                              ),
                               Icon(
                                 // Icons.local_offer,
                                 // FontAwesomeIcons.bell,
                                 // Icons.notifications,
                                 FontAwesomeIcons.robot,
-                                size: sizeMulW*30,
+                                size: sizeMulW * 30,
                                 color: Colors.white,
                               ),
                               // Positioned()
@@ -956,27 +976,16 @@ class _HomeScreenBottomPartState extends State<HomeScreenBottomPart> {
   }
 }
 
-
-showChat(BuildContext context){
-
+showChat(BuildContext context) {
   showDialog(
-    context: context,
-    builder: (BuildContext context){
-
-      // return Container(width: MediaQuery.of(context).size.width,
-      // height: double.infinity,
-      // margin: EdgeInsets.all(50),
-      // color: Colors.red,);
-return ChatScreen();
-});
-
- 
-
-
-
-
-
-
+      context: context,
+      builder: (BuildContext context) {
+        // return Container(width: MediaQuery.of(context).size.width,
+        // height: double.infinity,
+        // margin: EdgeInsets.all(50),
+        // color: Colors.red,);
+        return ChatScreen();
+      });
 }
 
 String addCommas(int nums) {
@@ -1068,24 +1077,31 @@ List<Widget> bottomChildren(AppModel appModel, BuildContext context) {
                   width: MediaQuery.of(context).size.width,
                   height: double.infinity,
                   child: RaisedButton(
-                    onPressed: (){
-                      Navigator.push(context,
-                      CupertinoPageRoute(builder: (context) {
-                    return 
-                        GetReceiptScreen(appModel.cameraCaptureModel);
-                  }));
-
-                    },
+                      onPressed: () {
+                        Navigator.push(context,
+                            CupertinoPageRoute(builder: (context) {
+                          return GetReceiptScreen(appModel.cameraCaptureModel);
+                        }));
+                      },
                       highlightElevation: 0,
                       color: Colors.white.withOpacity(0),
                       elevation: 0,
-                      splashColor: Colors.white.withAlpha(0), 
+                      splashColor: Colors.white.withAlpha(0),
                       highlightColor: Colors.white.withAlpha(0),
-                      child: Center(child: Column(
+                      child: Center(
+                          child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
-                          Text("NO RECEIPTS YET.\nTAP TO ADD", textAlign: TextAlign.center,style: TextStyle(fontSize: sizeMulW*15),),
-                          Icon(FontAwesomeIcons.plusSquare, size: sizeMulW*30,color: Colors.black12,),
+                          Text(
+                            "NO RECEIPTS YET.\nTAP TO ADD",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: sizeMulW * 15),
+                          ),
+                          Icon(
+                            FontAwesomeIcons.plusSquare,
+                            size: sizeMulW * 30,
+                            color: Colors.black12,
+                          ),
                         ],
                       ))))
 
