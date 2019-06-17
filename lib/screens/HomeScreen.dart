@@ -212,7 +212,7 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
             shadow: Shadow(
                 blurRadius: 10 * sizeMulW,
                 offset: Offset(0, sizeMulW),
-                color: Colors.black38.withAlpha(0)),
+                color: Colors.black38),
             clipper: CustomShapeClipper(
                 sizeMulW: sizeMulW,
                 maxWidth: MediaQuery.of(context).size.width,
