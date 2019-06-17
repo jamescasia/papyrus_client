@@ -12,7 +12,7 @@ class PromoScreen extends StatefulWidget {
 class _PromoScreenState extends State<PromoScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Scaffold( 
       body: new Container(
         // color: Colors.white,
         // child: SingleChildScrollView(

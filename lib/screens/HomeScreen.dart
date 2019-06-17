@@ -120,6 +120,16 @@ class PapyrusCustomer extends StatelessWidget {
 // }
 double homeButtonDist;
 
+class EmptyAppBar extends StatelessWidget implements PreferredSizeWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+
+  @override
+  Size get preferredSize => Size(0.0, 0.0);
+}
+
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => new _HomeScreenState();
@@ -143,8 +153,10 @@ class _HomeScreenState extends State<HomeScreen> {
     ));
     return Scaffold(
       // bottomNavigationBar: CustomAppBar(),
-      // appBar: AppBar(),
+      appBar: EmptyAppBar(),
       // body: SingleChildScrollView(
+      primary: true,
+
       body: Column(
         children: <Widget>[HomeScreenTopPart(), HomeScreenBottomPart()],
       ),
@@ -178,12 +190,12 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
   @override
   Widget build(BuildContext context) {
     TextStyle headerStyle = TextStyle(
-        fontSize: sizeMulH * 20,
+        fontSize: sizeMulW * 20,
         fontWeight: FontWeight.w500,
         color: Colors.white);
 
     TextStyle headerStyleSelected = TextStyle(
-        fontSize: sizeMulW * 20.57,
+        fontSize: sizeMulW * 21,
         fontWeight: FontWeight.bold,
         color: Colors.green[700]);
 
@@ -198,10 +210,11 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
             clipper: CustomShapeClipper(
                 sizeMulW: sizeMulW,
                 maxWidth: MediaQuery.of(context).size.width,
-                maxHeight: MediaQuery.of(context).size.width * 0.91),
+                maxHeight:
+                    MediaQuery.of(context).size.width * 0.91 - (24 * sizeMulW)),
             child: Container(
               width: MediaQuery.of(context).size.width,
-              height: 0.942 * MediaQuery.of(context).size.width,
+              height: 0.942 * MediaQuery.of(context).size.width - 24 * sizeMulW,
               child: Material(
                 color: Colors.white.withAlpha(0),
                 child: InkWell(
@@ -210,252 +223,320 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                   onTap: () {},
                   splashColor: Colors.green,
                   highlightColor: greeny.colors[0],
-                  child: Column(
+                  child: Stack(
+                    // crossAxisAlignment: CrossAxisAlignment.center,
+                    // mainAxisAlignment: MainAxisAlignment.center,
+                    // mainAxisSize: MainAxisSize.max,
+
                     children: <Widget>[
-                      SizedBox(
-                        height: 71 * sizeMulH,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          // SizedBox(
-                          //   width: MediaQuery.of(context).size.width * 0.05,
-                          // ),
-                          // SizedBox(
-                          //   width: 20.57 * sizeMulW,
-                          // ),
-                          RaisedButton(
-                            highlightElevation: 0,
-                            color: Colors.white.withOpacity(0),
-                            elevation: 0,
-                            splashColor: Colors.white.withAlpha(0),
-                            highlightColor: Colors.black.withOpacity(0),
-                            onPressed: () {
-                              appModel.viewing_period = Period.MONTHLY;
-                            },
-                            child: Container(
-                              // margin: EdgeInsets.all((sizeMulH*15)),
-                              // color: Colors.white,
-                              padding:
-                                  (appModel.viewing_period == Period.MONTHLY)
-                                      ? EdgeInsets.symmetric(
-                                          vertical: sizeMulW * 2,
-                                          horizontal: sizeMulW * 8)
-                                      : null,
-                              decoration: (appModel.viewing_period ==
-                                      Period.MONTHLY)
-                                  ? BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius:
-                                          BorderRadius.circular(sizeMulW * 300))
-                                  : null,
-
-                              child: Text("MONTHLY",
-                                  style: (appModel.viewing_period ==
-                                          Period.MONTHLY)
-                                      ? headerStyleSelected
-                                      : headerStyle),
-                            ),
-                          ),
-                          RaisedButton(
-                            splashColor: Colors.white.withAlpha(0),
-                            elevation: 0,
-                            color: Colors.white.withAlpha(0),
-                            highlightElevation: 0,
-                            highlightColor: Colors.black.withOpacity(0),
-                            onPressed: () {
-                              appModel.viewing_period = Period.WEEKLY;
-
-                              Navigator.push(
-                                  context,
-                                  CupertinoPageRoute(
-                                      builder: (context) =>
-                                          ReceiveReceiptScreen(
-                                              appModel.receiveReceiptModel)));
-                            },
-                            child: Container(
-                              padding:
-                                  (appModel.viewing_period == Period.WEEKLY)
-                                      ? EdgeInsets.symmetric(
-                                          vertical: sizeMulW * 2,
-                                          horizontal: sizeMulW * 8)
-                                      : null,
-                              decoration: (appModel.viewing_period ==
-                                      Period.WEEKLY)
-                                  ? BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius:
-                                          BorderRadius.circular(sizeMulW * 300))
-                                  : null,
-                              child: Text(
-                                "WEEKLY",
-                                style:
-                                    (appModel.viewing_period == Period.WEEKLY)
-                                        ? headerStyleSelected
-                                        : headerStyle,
-                              ),
-                            ),
-                          ),
-                          RaisedButton(
-                            splashColor: Colors.white.withAlpha(0),
-                            elevation: 0,
-                            highlightElevation: 0,
-                            color: Colors.white.withAlpha(0),
-                            highlightColor: Colors.black.withOpacity(0),
-                            onPressed: () {
-                              appModel.viewing_period = Period.DAILY;
-                            },
-                            child: Container(
-                              padding: (appModel.viewing_period == Period.DAILY)
-                                  ? EdgeInsets.symmetric(
-                                      vertical: sizeMulW * 2,
-                                      horizontal: sizeMulW * 8)
-                                  : null,
-                              decoration: (appModel.viewing_period ==
-                                      Period.DAILY)
-                                  ? BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius:
-                                          BorderRadius.circular(sizeMulW * 300))
-                                  : null,
-                              child: Text(
-                                "DAILY",
-                                style: (appModel.viewing_period == Period.DAILY)
-                                    ? headerStyleSelected
-                                    : headerStyle,
-                              ),
-                            ),
-                          ),
-                          // SizedBox(
-                          //   width: MediaQuery.of(context).size.width * 0.05,
-                          // ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.width * 0.07,
-                      ),
-                      Container(
-                        child: Column(
+                      // SizedBox(
+                      //   height: 71 * sizeMulW,
+                      // ),
+                      Positioned(
+                        left: 0,
+                        right: 0,
+                        top: MediaQuery.of(context).size.width * 0.91 * 0.16,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Text("TOTAL SPENT"  ,
-                                  style: TextStyle(
-                                      fontSize:
-                                          MediaQuery.of(context).size.width *
-                                              0.042,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.white),
+                            // SizedBox(
+                            //   width: MediaQuery.of(context).size.width * 0.05,
+                            // ),
+                            // SizedBox(
+                            //   width: 20.57 * sizeMulW,
+                            // ),
+                            Container(
+                              width: sizeMulW * 130,
+                              height: sizeMulH * 30,
+                              child: Center(
+                                child: InkWell(
+                                  // highlightElevation: 0,
+                                  // color: Colors.white.withOpacity(0),
+                                  // elevation: 0,
+                                  splashColor: Colors.white.withAlpha(0),
+                                  highlightColor: Colors.black.withOpacity(0),
+
+                                  onTap: () {
+                                    appModel.viewing_period = Period.MONTHLY;
+                                  },
+                                  child: Container(
+                                    // margin: EdgeInsets.all((sizeMulH*15)),
+                                    // color: Colors.white,
+                                    // width: sizeMulW*20,
+                                    // height: sizeMulH*0.2,
+                                    padding: (appModel.viewing_period ==
+                                            Period.MONTHLY)
+                                        ? EdgeInsets.symmetric(
+                                            vertical: sizeMulW * 2,
+                                            horizontal: sizeMulW * 8)
+                                        : null,
+                                    decoration: (appModel.viewing_period ==
+                                            Period.MONTHLY)
+                                        ? BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.circular(
+                                                sizeMulW * 300))
+                                        : null,
+
+                                    child: Text("MONTHLY",
+                                        style: (appModel.viewing_period ==
+                                                Period.MONTHLY)
+                                            ? headerStyleSelected
+                                            : headerStyle),
+                                  ),
                                 ),
-                                Material(
-                                  color: Colors.white.withOpacity(0),
-                                  child: InkWell(
-                                    splashColor: Colors.white.withAlpha(0),
-                                    highlightColor:
-                                        Colors.black.withOpacity(0.1),
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          CupertinoPageRoute(
-                                              builder: (context) =>
-                                                  ShowQRScreen()));
-                                    },
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(3000)),
-                                    child: Icon(
-                                      Icons.keyboard_arrow_down,
-                                      // FontAwesomeIcons.dollarSign,
-                                      color: Colors.white,
-                                      size: MediaQuery.of(context).size.width *
-                                          0.05,
+                              ),
+                            ),
+                            Container(
+                              width: sizeMulW * 130,
+                              height: sizeMulH * 30,
+                              child: Center(
+                                child: InkWell(
+                                  splashColor: Colors.white.withAlpha(0),
+                                  // elevation: 0,
+                                  // color: Colors.white.withAlpha(0),
+                                  // highlightElevation: 0,
+                                  highlightColor: Colors.black.withOpacity(0),
+                                  onTap: () {
+                                    appModel.viewing_period = Period.WEEKLY;
+
+                                    // Navigator.push(
+                                    //     context,
+                                    //     CupertinoPageRoute(
+                                    //         builder: (context) =>
+                                    //             ReceiveReceiptScreen(
+                                    //                 appModel.receiveReceiptModel)));
+                                  },
+                                  child: Container(
+                                    padding: (appModel.viewing_period ==
+                                            Period.WEEKLY)
+                                        ? EdgeInsets.symmetric(
+                                            vertical: sizeMulW * 2,
+                                            horizontal: sizeMulW * 8)
+                                        : null,
+                                    decoration: (appModel.viewing_period ==
+                                            Period.WEEKLY)
+                                        ? BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.circular(
+                                                sizeMulW * 300))
+                                        : null,
+                                    child: Text(
+                                      "WEEKLY",
+                                      style: (appModel.viewing_period ==
+                                              Period.WEEKLY)
+                                          ? headerStyleSelected
+                                          : headerStyle,
                                     ),
                                   ),
                                 ),
-                              ],
-                            )
+                              ),
+                            ),
+                            Container(
+                              width: sizeMulW * 110,
+                              height: sizeMulH * 30,
+                              child: Center(
+                                child: InkWell(
+                                  splashColor: Colors.white.withAlpha(0),
+                                  // elevation: 0,
+                                  // highlightElevation: 0,
+                                  // color: Colors.white.withAlpha(0),
+                                  highlightColor: Colors.black.withOpacity(0),
+                                  onTap: () {
+                                    appModel.viewing_period = Period.DAILY;
+                                  },
+                                  child: Container(
+                                    padding: (appModel.viewing_period ==
+                                            Period.DAILY)
+                                        ? EdgeInsets.symmetric(
+                                            vertical: sizeMulW * 2,
+                                            horizontal: sizeMulW * 8)
+                                        : null,
+                                    decoration: (appModel.viewing_period ==
+                                            Period.DAILY)
+                                        ? BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.circular(
+                                                sizeMulW * 300))
+                                        : null,
+                                    child: Text(
+                                      "DAILY",
+                                      style: (appModel.viewing_period ==
+                                              Period.DAILY)
+                                          ? headerStyleSelected
+                                          : headerStyle,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            // SizedBox(
+                            //   width: MediaQuery.of(context).size.width * 0.05,
+                            // ),
                           ],
                         ),
                       ),
-                      SizedBox(
-                        height: 7 * sizeMulW,
-                      ),
-                      ConstrainedBox(
-                        constraints: new BoxConstraints(
-                          // minHeight: 100*sizeMulW,
-                          minWidth: 160 * sizeMulW,
-
-                          // maxHeight: 30.0,
-                          // maxWidth: 30.0,
-                        ),
-                        child: Material(
-                          // shape: CircleBorder(),
-                          color: Colors.white.withAlpha(0),
-                          child: InkWell(
-                            borderRadius: BorderRadius.all(
-                                Radius.circular(15 * sizeMulW)),
-                            onTap: () {
-                              // print(result);
-                            },
-                            splashColor: Colors.greenAccent,
-                            highlightColor: Colors.green,
-                            child: Container(
-                              // height: sizeMulW * 80,
-                              padding: EdgeInsets.all(
-                                  MediaQuery.of(context).size.width * 0.042),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                mainAxisAlignment: MainAxisAlignment.center,
+                      // SizedBox(
+                      //   height: MediaQuery.of(context).size.width * 0.07,
+                      // ),
+                      Center(
+                        // left: 0,
+                        // right: 0,
+                        // top: MediaQuery.of(context).size.width * 0.91 * 0.3,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Container(
+                              child: Column(
                                 children: <Widget>[
-                                  Text( ((appModel.viewing_period == Period.DAILY &&appModel.loadedUserExpense)? addCommas(int.parse(appModel.userExpense.lastDateTotalExpenseAmount
-                                              .toStringAsFixed(2)
-                                              .split('.')[0])):   (appModel.viewing_period == Period.MONTHLY&&appModel.loadedUserExpense)? addCommas(int.parse(appModel.userExpense.lastMonthTotalExpenseAmount
-                                              .toStringAsFixed(2)
-                                              .split('.')[0])): (appModel.viewing_period == Period.WEEKLY&&appModel.loadedUserExpense)? addCommas(int.parse(appModel.userExpense.lastWeekTotalExpenseAmount
-                                              .toStringAsFixed(2)
-                                              .split('.')[0])): "0" )+".",
-                                      style: TextStyle(
-                                          fontSize: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.09,
-                                          fontWeight: FontWeight.w600,
-                                          color: Colors.white)),
-
-                                  Container(
-                                    padding:
-                                        EdgeInsets.only(bottom: 4 * sizeMulW),
-                                    child: Text((appModel.viewing_period == Period.DAILY &&appModel.loadedUserExpense)? addCommas(int.parse(appModel.userExpense.lastDateTotalExpenseAmount
-                                              .toStringAsFixed(2)
-                                              .split('.')[1])):   (appModel.viewing_period == Period.MONTHLY&&appModel.loadedUserExpense)? addCommas(int.parse(appModel.userExpense.lastMonthTotalExpenseAmount
-                                              .toStringAsFixed(2)
-                                              .split('.')[1])): (appModel.viewing_period == Period.WEEKLY&&appModel.loadedUserExpense)? addCommas(int.parse(appModel.userExpense.lastWeekTotalExpenseAmount
-                                              .toStringAsFixed(2)
-                                              .split('.')[1])): "00"  ,
+                                  Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Text(
+                                        "TOTAL SPENT",
                                         style: TextStyle(
                                             fontSize: MediaQuery.of(context)
                                                     .size
                                                     .width *
+                                                0.042,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.white),
+                                      ),
+                                      Material(
+                                        color: Colors.white.withOpacity(0),
+                                        child: InkWell(
+                                          splashColor:
+                                              Colors.white.withAlpha(0),
+                                          highlightColor:
+                                              Colors.black.withOpacity(0.1),
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                CupertinoPageRoute(
+                                                    builder: (context) =>
+                                                        ShowQRScreen()));
+                                          },
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(3000)),
+                                          child: Icon(
+                                            Icons.keyboard_arrow_down,
+                                            // FontAwesomeIcons.dollarSign,
+                                            color: Colors.white,
+                                            size: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
                                                 0.05,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white)),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  // ),
+                                  ConstrainedBox(
+                                    constraints: new BoxConstraints(
+                                      // minHeight: 100*sizeMulW,
+                                      minWidth: 160 * sizeMulW,
+
+                                      // maxHeight: 30.0,
+                                      // maxWidth: 30.0,
+                                    ),
+                                    child: Material(
+                                      // shape: CircleBorder(),
+                                      color: Colors.white.withAlpha(0),
+                                      child: InkWell(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(15 * sizeMulW)),
+                                        onTap: () {
+                                          // print(result);
+                                        },
+                                        splashColor: Colors.greenAccent,
+                                        highlightColor: Colors.green,
+                                        child: Container(
+                                          // height: sizeMulW * 80,
+                                          padding: EdgeInsets.all(
+                                              MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.042),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.end,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: <Widget>[
+                                              Text(
+                                                  ((appModel.viewing_period == Period.DAILY &&
+                                                              appModel
+                                                                  .loadedUserExpense)
+                                                          ? addCommas(int.parse(appModel
+                                                              .userExpense
+                                                              .lastDateTotalExpenseAmount
+                                                              .toStringAsFixed(
+                                                                  2)
+                                                              .split('.')[0]))
+                                                          : (appModel.viewing_period == Period.MONTHLY &&
+                                                                  appModel
+                                                                      .loadedUserExpense)
+                                                              ? addCommas(int.parse(appModel
+                                                                  .userExpense
+                                                                  .lastMonthTotalExpenseAmount
+                                                                  .toStringAsFixed(2)
+                                                                  .split('.')[0]))
+                                                              : (appModel.viewing_period == Period.WEEKLY && appModel.loadedUserExpense) ? addCommas(int.parse(appModel.userExpense.lastWeekTotalExpenseAmount.toStringAsFixed(2).split('.')[0])) : "0") +
+                                                      ".",
+                                                  style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.09, fontWeight: FontWeight.w600, color: Colors.white)),
+
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                    bottom: 4 * sizeMulW),
+                                                child: Text(
+                                                    (appModel.viewing_period == Period.DAILY &&
+                                                            appModel
+                                                                .loadedUserExpense)
+                                                        ? addCommas(int.parse(appModel
+                                                            .userExpense
+                                                            .lastDateTotalExpenseAmount
+                                                            .toStringAsFixed(2)
+                                                            .split('.')[1]))
+                                                        : (appModel.viewing_period == Period.MONTHLY &&
+                                                                appModel
+                                                                    .loadedUserExpense)
+                                                            ? addCommas(int.parse(appModel
+                                                                .userExpense
+                                                                .lastMonthTotalExpenseAmount
+                                                                .toStringAsFixed(2)
+                                                                .split('.')[1]))
+                                                            : (appModel.viewing_period == Period.WEEKLY && appModel.loadedUserExpense) ? addCommas(int.parse(appModel.userExpense.lastWeekTotalExpenseAmount.toStringAsFixed(2).split('.')[1])) : "00",
+                                                    style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.05, fontWeight: FontWeight.bold, color: Colors.white)),
+                                              ),
+                                              // ),
+                                            ],
+                                          ),
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(
+                                                      15 * sizeMulW)),
+                                              border: Border.all(
+                                                  color: Colors.white,
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.005)),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                 ],
                               ),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(
-                                      Radius.circular(15 * sizeMulW)),
-                                  border: Border.all(
-                                      color: Colors.white,
-                                      width: MediaQuery.of(context).size.width *
-                                          0.005)),
                             ),
-                          ),
+                          ],
                         ),
                       ),
+                      // SizedBox(
+                      //   height: 7 * sizeMulW,
+                      // ),
 
                       // Container(margin: EdgeIns,)
                     ],
@@ -494,7 +575,7 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
             ),
           ),
           Positioned(
-            top: 20,
+            top: 0,
             right: 0,
             left: 0,
             child: Padding(
@@ -727,8 +808,7 @@ class _HomeScreenBottomPartState extends State<HomeScreenBottomPart> {
         // ),
         // color: Colors.black26,
         width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height -
-            0.942 * MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height -0.942 * MediaQuery.of(context).size.width - 24 * sizeMulW,
         color: Colors.white.withAlpha(0),
         padding: EdgeInsets.symmetric(horizontal: sizeMulW * 35),
         child: Center(
@@ -764,8 +844,7 @@ class _HomeScreenBottomPartState extends State<HomeScreenBottomPart> {
               //   height: sizeMulW * 1,
               // ),
               Container(
-                  height: MediaQuery.of(context).size.height -
-                      0.942 * MediaQuery.of(context).size.width -
+                  height: MediaQuery.of(context).size.height -0.942 * MediaQuery.of(context).size.width - 24 * sizeMulW - 
                       (34 * sizeMulW),
                   width: MediaQuery.of(context).size.width,
                   // color: Colors.red,

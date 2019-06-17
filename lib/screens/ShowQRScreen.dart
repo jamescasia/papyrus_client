@@ -12,7 +12,7 @@ class ShowQRScreen extends StatefulWidget {
 class _ShowQRScreenState extends State<ShowQRScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Scaffold( 
       body: ShowQRScreenStack(),
     );
   }

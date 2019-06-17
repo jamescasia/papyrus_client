@@ -36,7 +36,7 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Scaffold( 
       body: new Container(
         // color: Colors.white,
         // child: SingleChildScrollView(

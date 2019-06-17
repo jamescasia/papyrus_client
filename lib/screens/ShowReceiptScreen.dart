@@ -24,7 +24,9 @@ class _ShowReceiptScreenState extends State<ShowReceiptScreen> {
   _ShowReceiptScreenState(this.receipt);
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(body: ShowReceiptScreenStack(receipt));
+    return new Scaffold(
+      body: ShowReceiptScreenStack(receipt), 
+    );
   }
 }
 

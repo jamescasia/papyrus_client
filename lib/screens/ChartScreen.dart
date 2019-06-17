@@ -17,7 +17,8 @@ class ChartScreen extends StatefulWidget {
 class _ChartScreenState extends State<ChartScreen> {
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(body: ChartScreenStack());
+
+    return new Scaffold(body: ChartScreenStack() );
   }
 }
 
@@ -38,7 +39,7 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
         fontSize: MediaQuery.of(context).size.width * 0.05,
         fontWeight: FontWeight.bold,
         color: Colors.green[700]);
-    return ScopedModelDescendant<AppModel>(builder: (context, child, model) {
+    return ScopedModelDescendant<AppModel>(builder: (context, child, appModel) {
       return Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
@@ -166,191 +167,341 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                 child: Stack(
                                   children: <Widget>[
                                     Positioned(
-                              left: 0,
-                              top: 24,
-                              child: Container(
-                                width: sizeMulW*60,
-                                child: RaisedButton(
-                                  
-                                  highlightElevation: 0,
-                                  color: Colors.white.withOpacity(0),
-                                  elevation: 0,
+                                      left: 0,
+                                      top: 24,
+                                      child: Container(
+                                        width: sizeMulW * 60,
+                                        child: RaisedButton(
+                                          highlightElevation: 0,
+                                          color: Colors.white.withOpacity(0),
+                                          elevation: 0,
+                                          splashColor:
+                                              Colors.white.withAlpha(0),
+                                          highlightColor:
+                                              Colors.black.withOpacity(0),
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: Container(
+                                            // width: sizeMulW * 50,
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 10 * sizeMulW),
+                                            // height: sizeMulW*40,
+                                            // color: Colors.red,
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: <Widget>[
+                                                Image.asset(
+                                                  'assets/icons/3x/back.png',
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.075,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Positioned(
+                        left: 20*sizeMulW,
+                        right: 0,
+                        top: MediaQuery.of(context).size.width * 0.91 * 0.09,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            // SizedBox(
+                            //   width: MediaQuery.of(context).size.width * 0.05,
+                            // ),
+                            // SizedBox(
+                            //   width: 20.57 * sizeMulW,
+                            // ),
+                            Container(
+                              width: sizeMulW * 130,
+                              height: sizeMulH * 30,
+                              child: Center(
+                                child: InkWell(
+                                  // highlightElevation: 0,
+                                  // color: Colors.white.withOpacity(0),
+                                  // elevation: 0,
                                   splashColor: Colors.white.withAlpha(0),
-                                  highlightColor: Colors.black.withOpacity(0), 
-                                  onPressed: () {
-                                    Navigator.pop(context);
+                                  highlightColor: Colors.black.withOpacity(0),
+
+                                  onTap: () {
+                                    appModel.viewing_period = Period.MONTHLY;
                                   },
                                   child: Container(
-                                    // width: sizeMulW * 50,
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 10 * sizeMulW),
-                                    // height: sizeMulW*40,
-                                    // color: Colors.red,
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Image.asset(
-                                          'assets/icons/3x/back.png',
-                                          height:
-                                              MediaQuery.of(context).size.width *
-                                                  0.075,
-                                        ),
-                                        
-                                      ],
+                                    // margin: EdgeInsets.all((sizeMulH*15)),
+                                    // color: Colors.white,
+                                    // width: sizeMulW*20,
+                                    // height: sizeMulH*0.2,
+                                    padding: (appModel.viewing_period ==
+                                            Period.MONTHLY)
+                                        ? EdgeInsets.symmetric(
+                                            vertical: sizeMulW * 2,
+                                            horizontal: sizeMulW * 8)
+                                        : null,
+                                    decoration: (appModel.viewing_period ==
+                                            Period.MONTHLY)
+                                        ? BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.circular(
+                                                sizeMulW * 300))
+                                        : null,
+
+                                    child: Text("MONTHLY",
+                                        style: (appModel.viewing_period ==
+                                                Period.MONTHLY)
+                                            ? headerStyleSelected
+                                            : headerStyle),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              width: sizeMulW * 130,
+                              height: sizeMulH * 30,
+                              child: Center(
+                                child: InkWell(
+                                  splashColor: Colors.white.withAlpha(0),
+                                  // elevation: 0,
+                                  // color: Colors.white.withAlpha(0),
+                                  // highlightElevation: 0,
+                                  highlightColor: Colors.black.withOpacity(0),
+                                  onTap: () {
+                                    appModel.viewing_period = Period.WEEKLY;
+
+                                    // Navigator.push(
+                                    //     context,
+                                    //     CupertinoPageRoute(
+                                    //         builder: (context) =>
+                                    //             ReceiveReceiptScreen(
+                                    //                 appModel.receiveReceiptModel)));
+                                  },
+                                  child: Container(
+                                    padding: (appModel.viewing_period ==
+                                            Period.WEEKLY)
+                                        ? EdgeInsets.symmetric(
+                                            vertical: sizeMulW * 2,
+                                            horizontal: sizeMulW * 8)
+                                        : null,
+                                    decoration: (appModel.viewing_period ==
+                                            Period.WEEKLY)
+                                        ? BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.circular(
+                                                sizeMulW * 300))
+                                        : null,
+                                    child: Text(
+                                      "WEEKLY",
+                                      style: (appModel.viewing_period ==
+                                              Period.WEEKLY)
+                                          ? headerStyleSelected
+                                          : headerStyle,
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                                    Positioned(
-                                      left: sizeMulW * 10,
-                                      top: sizeMulW * 33.5,
-                                      child: Container(
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          // mainAxisSize: MainAxisSize.max,
-                                          children: <Widget>[
-                                            SizedBox(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.05,
-                                            ),
-                                            InkWell(
-                                              splashColor:
-                                                  Colors.white.withAlpha(0),
-                                              highlightColor:
-                                                  Colors.black.withOpacity(0.1),
-                                              onTap: () {
-                                                model.viewing_period =
-                                                    Period.MONTHLY;
-                                              },
-                                              child: Container(
-                                                // color: Colors.white,
-                                                padding: (model
-                                                            .viewing_period ==
-                                                        Period.MONTHLY)
-                                                    ? EdgeInsets.symmetric(
-                                                        vertical: sizeMulW * 2,
-                                                        horizontal: sizeMulW * 8)
-                                                    : null,
-                                                decoration: (model
-                                                            .viewing_period ==
-                                                        Period.MONTHLY)
-                                                    ? BoxDecoration(
-                                                        color: Colors.white,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(
-                                                                    sizeMulW *
-                                                                        300))
-                                                    : null,
-
-                                                child: Text("MONTHLY",
-                                                    style:
-                                                        (model.viewing_period ==
-                                                                Period.MONTHLY)
-                                                            ? headerStyleSelected
-                                                            : headerStyle),
-                                              ),
-                                            ),
-                                            InkWell(
-                                              onTap: () {
-                                                model.viewing_period =
-                                                    Period.MONTHLY;
-                                              },
-                                              splashColor:
-                                                  Colors.white.withAlpha(0),
-                                              highlightColor:
-                                                  Colors.black.withOpacity(0.1),
-                                              child: Container(
-                                                padding: (model
-                                                            .viewing_period ==
-                                                        Period.WEEKLY)
-                                                    ? EdgeInsets.symmetric(
-                                                        vertical: sizeMulW * 2,
-                                                        horizontal: sizeMulW * 8)
-                                                    : null,
-                                                decoration: (model
-                                                            .viewing_period ==
-                                                        Period.WEEKLY)
-                                                    ? BoxDecoration(
-                                                        color: Colors.white,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(
-                                                                    sizeMulW *
-                                                                        300))
-                                                    : null,
-                                                child: InkWell(
-                                                  onTap: () {
-                                                    model.viewing_period =
-                                                        Period.WEEKLY;
-                                                  },
-                                                  splashColor:
-                                                      Colors.white.withAlpha(0),
-                                                  highlightColor: Colors.black
-                                                      .withOpacity(0.1),
-                                                  child: Text(
-                                                    "WEEKLY",
-                                                    style:
-                                                        (model.viewing_period ==
-                                                                Period.WEEKLY)
-                                                            ? headerStyleSelected
-                                                            : headerStyle,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            InkWell(
-                                              onTap: () {
-                                                model.viewing_period =
-                                                    Period.DAILY;
-                                              },
-                                              child: Container(
-                                                padding: (model
-                                                            .viewing_period ==
-                                                        Period.DAILY)
-                                                    ? EdgeInsets.symmetric(
-                                                        vertical: sizeMulW * 2,
-                                                        horizontal: sizeMulW * 8)
-                                                    : null,
-                                                decoration: (model
-                                                            .viewing_period ==
-                                                        Period.DAILY)
-                                                    ? BoxDecoration(
-                                                        color: Colors.white,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(
-                                                                    sizeMulW *
-                                                                        300))
-                                                    : null,
-                                                child: Text(
-                                                  "DAILY",
-                                                  style:
-                                                      (model.viewing_period ==
-                                                              Period.DAILY)
-                                                          ? headerStyleSelected
-                                                          : headerStyle,
-                                                ),
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.05,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
+                            Container(
+                              width: sizeMulW * 110,
+                              height: sizeMulH * 30,
+                              child: Center(
+                                child: InkWell(
+                                  splashColor: Colors.white.withAlpha(0),
+                                  // elevation: 0,
+                                  // highlightElevation: 0,
+                                  // color: Colors.white.withAlpha(0),
+                                  highlightColor: Colors.black.withOpacity(0),
+                                  onTap: () {
+                                    appModel.viewing_period = Period.DAILY;
+                                  },
+                                  child: Container(
+                                    padding: (appModel.viewing_period ==
+                                            Period.DAILY)
+                                        ? EdgeInsets.symmetric(
+                                            vertical: sizeMulW * 2,
+                                            horizontal: sizeMulW * 8)
+                                        : null,
+                                    decoration: (appModel.viewing_period ==
+                                            Period.DAILY)
+                                        ? BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.circular(
+                                                sizeMulW * 300))
+                                        : null,
+                                    child: Text(
+                                      "DAILY",
+                                      style: (appModel.viewing_period ==
+                                              Period.DAILY)
+                                          ? headerStyleSelected
+                                          : headerStyle,
                                     ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            // SizedBox(
+                            //   width: MediaQuery.of(context).size.width * 0.05,
+                            // ),
+                          ],
+                        ),
+                      ),
+                                    // Positioned(
+                                    //   left: sizeMulW * 10,
+                                    //   top: sizeMulW * 33.5,
+                                    //   child: Container(
+                                    //     width:
+                                    //         MediaQuery.of(context).size.width,
+                                    //     child: Row(
+                                    //       mainAxisAlignment:
+                                    //           MainAxisAlignment.spaceBetween,
+                                    //       // mainAxisSize: MainAxisSize.max,
+                                    //       children: <Widget>[
+                                    //         SizedBox(
+                                    //           width: MediaQuery.of(context)
+                                    //                   .size
+                                    //                   .width *
+                                    //               0.05,
+                                    //         ),
+                                    //         InkWell(
+                                    //           splashColor:
+                                    //               Colors.white.withAlpha(0),
+                                    //           highlightColor:
+                                    //               Colors.black.withOpacity(0.1),
+                                    //           onTap: () {
+                                    //             model.viewing_period =
+                                    //                 Period.MONTHLY;
+                                    //           },
+                                    //           child: Container(
+                                    //             // color: Colors.white,
+                                    //             padding: (model
+                                    //                         .viewing_period ==
+                                    //                     Period.MONTHLY)
+                                    //                 ? EdgeInsets.symmetric(
+                                    //                     vertical: sizeMulW * 2,
+                                    //                     horizontal:
+                                    //                         sizeMulW * 8)
+                                    //                 : null,
+                                    //             decoration: (model
+                                    //                         .viewing_period ==
+                                    //                     Period.MONTHLY)
+                                    //                 ? BoxDecoration(
+                                    //                     color: Colors.white,
+                                    //                     borderRadius:
+                                    //                         BorderRadius
+                                    //                             .circular(
+                                    //                                 sizeMulW *
+                                    //                                     300))
+                                    //                 : null,
+
+                                    //             child: Text("MONTHLY",
+                                    //                 style:
+                                    //                     (model.viewing_period ==
+                                    //                             Period.MONTHLY)
+                                    //                         ? headerStyleSelected
+                                    //                         : headerStyle),
+                                    //           ),
+                                    //         ),
+                                    //         InkWell(
+                                    //           onTap: () {
+                                    //             model.viewing_period =
+                                    //                 Period.MONTHLY;
+                                    //           },
+                                    //           splashColor:
+                                    //               Colors.white.withAlpha(0),
+                                    //           highlightColor:
+                                    //               Colors.black.withOpacity(0.1),
+                                    //           child: Container(
+                                    //             padding: (model
+                                    //                         .viewing_period ==
+                                    //                     Period.WEEKLY)
+                                    //                 ? EdgeInsets.symmetric(
+                                    //                     vertical: sizeMulW * 2,
+                                    //                     horizontal:
+                                    //                         sizeMulW * 8)
+                                    //                 : null,
+                                    //             decoration: (model
+                                    //                         .viewing_period ==
+                                    //                     Period.WEEKLY)
+                                    //                 ? BoxDecoration(
+                                    //                     color: Colors.white,
+                                    //                     borderRadius:
+                                    //                         BorderRadius
+                                    //                             .circular(
+                                    //                                 sizeMulW *
+                                    //                                     300))
+                                    //                 : null,
+                                    //             child: InkWell(
+                                    //               onTap: () {
+                                    //                 model.viewing_period =
+                                    //                     Period.WEEKLY;
+                                    //               },
+                                    //               splashColor:
+                                    //                   Colors.white.withAlpha(0),
+                                    //               highlightColor: Colors.black
+                                    //                   .withOpacity(0.1),
+                                    //               child: Text(
+                                    //                 "WEEKLY",
+                                    //                 style:
+                                    //                     (model.viewing_period ==
+                                    //                             Period.WEEKLY)
+                                    //                         ? headerStyleSelected
+                                    //                         : headerStyle,
+                                    //               ),
+                                    //             ),
+                                    //           ),
+                                    //         ),
+                                    //         InkWell(
+                                    //           onTap: () {
+                                    //             model.viewing_period =
+                                    //                 Period.DAILY;
+                                    //           },
+                                    //           child: Container(
+                                    //             padding: (model
+                                    //                         .viewing_period ==
+                                    //                     Period.DAILY)
+                                    //                 ? EdgeInsets.symmetric(
+                                    //                     vertical: sizeMulW * 2,
+                                    //                     horizontal:
+                                    //                         sizeMulW * 8)
+                                    //                 : null,
+                                    //             decoration: (model
+                                    //                         .viewing_period ==
+                                    //                     Period.DAILY)
+                                    //                 ? BoxDecoration(
+                                    //                     color: Colors.white,
+                                    //                     borderRadius:
+                                    //                         BorderRadius
+                                    //                             .circular(
+                                    //                                 sizeMulW *
+                                    //                                     300))
+                                    //                 : null,
+                                    //             child: Text(
+                                    //               "DAILY",
+                                    //               style:
+                                    //                   (model.viewing_period ==
+                                    //                           Period.DAILY)
+                                    //                       ? headerStyleSelected
+                                    //                       : headerStyle,
+                                    //             ),
+                                    //           ),
+                                    //         ),
+                                    //         SizedBox(
+                                    //           width: MediaQuery.of(context)
+                                    //                   .size
+                                    //                   .width *
+                                    //               0.05,
+                                    //         ),
+                                    //       ],
+                                    //     ),
+                                    //   ),
+                                    // ),
                                     Positioned(
                                       left: sizeMulW * 30,
                                       top: sizeMulW * 79,
