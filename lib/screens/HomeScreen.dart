@@ -17,6 +17,7 @@ import 'EditReceiptScreen.dart';
 import 'ShowQRScreen.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:papyrus_client/models/AppModel.dart';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:papyrus_client/screens/LogInScreen.dart';
 import 'SplashScreen.dart';
 import 'CameraCaptureScreen.dart';
@@ -508,7 +509,7 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                                                                 .lastMonthTotalExpenseAmount
                                                                 .toStringAsFixed(2)
                                                                 .split('.')[1]))
-                                                            : (appModel.viewing_period == Period.WEEKLY && appModel.loadedUserExpense) ? addCommas(int.parse(appModel.userExpense.lastWeekTotalExpenseAmount.toStringAsFixed(2).split('.')[1])) : "00",
+                                                            : (appModel.viewing_period == Period.WEEKLY && appModel.loadedUserExpense && (int.parse(appModel.userExpense.lastWeekTotalExpenseAmount.toStringAsFixed(2).split('.')[1])) !=0) ? addCommas(int.parse(appModel.userExpense.lastWeekTotalExpenseAmount.toStringAsFixed(2).split('.')[1])) : "00",
                                                     style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.05, fontWeight: FontWeight.bold, color: Colors.white)),
                                               ),
                                               // ),
@@ -775,9 +776,9 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                   height: (0.5 * (sizeMulW + sizeMulH)) * 74.052,
                   child: Icon(
                     // print(size);
-                    Icons.add,
-                    // FontAwesomeIcons.plus,
-                    size: sizeMulW * 41.14,
+                    // Icons.add,
+                    FontAwesomeIcons.plus,
+                    size: sizeMulW * 33,
                     // size: sizeMulW*30,
                     color: Colors.white,
                   ),
@@ -808,7 +809,9 @@ class _HomeScreenBottomPartState extends State<HomeScreenBottomPart> {
         // ),
         // color: Colors.black26,
         width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height -0.942 * MediaQuery.of(context).size.width - 24 * sizeMulW,
+        height: MediaQuery.of(context).size.height -
+            0.942 * MediaQuery.of(context).size.width -
+            24 * sizeMulW,
         color: Colors.white.withAlpha(0),
         padding: EdgeInsets.symmetric(horizontal: sizeMulW * 35),
         child: Center(
@@ -844,84 +847,99 @@ class _HomeScreenBottomPartState extends State<HomeScreenBottomPart> {
               //   height: sizeMulW * 1,
               // ),
               Container(
-                  height: MediaQuery.of(context).size.height -0.942 * MediaQuery.of(context).size.width - 24 * sizeMulW - 
-                      (34 * sizeMulW),
-                  width: MediaQuery.of(context).size.width,
-                  // color: Colors.red,
-                  child: FutureBuilder(
-                      future: bottomChildren(appModel, context),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.active)
-                          return CircularProgressIndicator();
-                        // return Container(
-                        //   // width: MediaQuery.of(context).size.width,
-                        //   // height: 300,
-                        //   child: Shimmer.fromColors(
-                        //     baseColor: Colors.grey[200],
-                        //     highlightColor: Colors.white,
-                        //     child: Column(
-                        //       mainAxisSize: MainAxisSize.max,
-                        //       mainAxisAlignment:
-                        //           MainAxisAlignment.spaceEvenly,
-                        //       children: List<int>.generate(
-                        //               ((MediaQuery.of(context).size.height -
-                        //                           0.942 *
-                        //                               MediaQuery.of(context)
-                        //                                   .size
-                        //                                   .width -
-                        //                           (34 * sizeMulW)) /
-                        //                       (81 * sizeMulW))
-                        //                   .floor(),
-                        //               (i) => i)
-                        //           .toList()
-                        //           .map((f) => Container(
-                        //                 width: 333 * sizeMulW,
-                        //                 height: 72 * sizeMulW,
-                        //                 decoration: BoxDecoration(
-                        //                     color: Colors.green,
-                        //                     // border: Border.all(
-                        //                     //     color: Colors.red,
-                        //                     //     width: 1 * sizeMulW),
-                        //                     // boxShadow: [
-                        //                     //   new BoxShadow(
-                        //                     //     blurRadius: 2 * sizeMulW,
-                        //                     //     color: Colors.black12,
-                        //                     //     offset: new Offset(
-                        //                     //         0, 0.4 * sizeMulW),
-                        //                     //   ),
-                        //                     // ],
-                        //                     borderRadius: BorderRadius.all(
-                        //                         Radius.circular(
-                        //                             9 * sizeMulW))),
-                        //               ))
-                        //           .toList(),
-                        //     ),
-                        //   ),
-                        // );
-                        else if (snapshot.connectionState ==
-                            ConnectionState.done) {
-                          return Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: (snapshot.data.first != null)
-                                ? snapshot.data
-                                : [
-                                    SizedBox(
-                                      width: 1,
-                                    )
-                                  ],
-                          );
-                        } else
-                          return Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              SizedBox(
-                                width: 1,
-                              )
-                            ],
-                          );
-                      }))
+                height: MediaQuery.of(context).size.height -
+                    0.942 * MediaQuery.of(context).size.width -
+                    24 * sizeMulW -
+                    (34 * sizeMulW),
+                width: MediaQuery.of(context).size.width,
+                // color: Colors.red,
+
+                child: Flex(
+                  direction: Axis.vertical,
+                  children: (appModel.receiptsLoaded)
+                      ? bottomChildren(appModel, context)
+                      : [SizedBox(width: 1)],
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: (appModel.receiptsLoaded &&
+                          appModel.receiptFiles.length != 0)
+                      ? MainAxisAlignment.spaceEvenly
+                      : MainAxisAlignment.end,
+                ),
+              )
+              // child: FutureBuilder(
+              //     future: bottomChildren(appModel, context),
+              //     builder: (context, snapshot) {
+              //       if (snapshot.connectionState == ConnectionState.active)
+              //         return CircularProgressIndicator();
+              //       // return Container(
+              //       //   // width: MediaQuery.of(context).size.width,
+              //       //   // height: 300,
+              //       //   child: Shimmer.fromColors(
+              //       //     baseColor: Colors.grey[200],
+              //       //     highlightColor: Colors.white,
+              //       //     child: Column(
+              //       //       mainAxisSize: MainAxisSize.max,
+              //       //       mainAxisAlignment:
+              //       //           MainAxisAlignment.spaceEvenly,
+              //       //       children: List<int>.generate(
+              //       //               ((MediaQuery.of(context).size.height -
+              //       //                           0.942 *
+              //       //                               MediaQuery.of(context)
+              //       //                                   .size
+              //       //                                   .width -
+              //       //                           (34 * sizeMulW)) /
+              //       //                       (81 * sizeMulW))
+              //       //                   .floor(),
+              //       //               (i) => i)
+              //       //           .toList()
+              //       //           .map((f) => Container(
+              //       //                 width: 333 * sizeMulW,
+              //       //                 height: 72 * sizeMulW,
+              //       //                 decoration: BoxDecoration(
+              //       //                     color: Colors.green,
+              //       //                     // border: Border.all(
+              //       //                     //     color: Colors.red,
+              //       //                     //     width: 1 * sizeMulW),
+              //       //                     // boxShadow: [
+              //       //                     //   new BoxShadow(
+              //       //                     //     blurRadius: 2 * sizeMulW,
+              //       //                     //     color: Colors.black12,
+              //       //                     //     offset: new Offset(
+              //       //                     //         0, 0.4 * sizeMulW),
+              //       //                     //   ),
+              //       //                     // ],
+              //       //                     borderRadius: BorderRadius.all(
+              //       //                         Radius.circular(
+              //       //                             9 * sizeMulW))),
+              //       //               ))
+              //       //           .toList(),
+              //       //     ),
+              //       //   ),
+              //       // );
+              //       else if (snapshot.connectionState ==
+              //           ConnectionState.done) {
+              //         return Column(
+              //           mainAxisSize: MainAxisSize.max,
+              //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //           children: (snapshot.data.first != null)
+              //               ? snapshot.data
+              //               : [
+              //                   SizedBox(
+              //                     width: 1,
+              //                   )
+              //                 ],
+              //         );
+              //       } else
+              //         return Column(
+              //           mainAxisSize: MainAxisSize.max,
+              //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //           children: [
+              //             SizedBox(
+              //               width: 1,
+              //             )
+              //           ],
+              //         );
+              //     }))
 
               // ReceiptCard("May 19, 2019", 99, "mainItem", "imagePath"),
             ],
@@ -939,8 +957,7 @@ String addCommas(int nums) {
       new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},');
 }
 
-Future<List<Widget>> bottomChildren(
-    AppModel appModel, BuildContext context) async {
+List<Widget> bottomChildren(AppModel appModel, BuildContext context) {
   List<Widget> bc = [
     LongButton(
       greeny.colors[1],
@@ -1008,6 +1025,49 @@ Future<List<Widget>> bottomChildren(
 
     //   // );
     // }
+  }
+
+  if (bc.length == 1) {
+    bc.insert(
+      0,
+      Flexible(
+        child: Container(
+          padding: EdgeInsets.all(sizeMulH * 14),
+          child: DottedBorder(
+              color: Colors.black12,
+              gap: 8 * sizeMulW,
+              strokeWidth: 5 * sizeMulW,
+              child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: double.infinity,
+                  child: RaisedButton(
+                    onPressed: (){
+                      Navigator.push(context,
+                      CupertinoPageRoute(builder: (context) {
+                    return 
+                        GetReceiptScreen(appModel.cameraCaptureModel);
+                  }));
+
+                    },
+                      highlightElevation: 0,
+                      color: Colors.white.withOpacity(0),
+                      elevation: 0,
+                      splashColor: Colors.white.withAlpha(0), 
+                      highlightColor: Colors.white.withAlpha(0),
+                      child: Center(child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Text("NO RECEIPTS YET.\nTAP TO ADD", textAlign: TextAlign.center,style: TextStyle(fontSize: sizeMulW*15),),
+                          Icon(FontAwesomeIcons.plusSquare, size: sizeMulW*30,color: Colors.black12,),
+                        ],
+                      ))))
+
+              // child: ,
+
+              ),
+        ),
+      ),
+    );
   }
 
   return bc;

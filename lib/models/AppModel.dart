@@ -48,6 +48,7 @@ class AppModel extends Model {
   String monthExpenseFilePath;
   String userExpensesFilePath;
   UserExpense userExpense;
+  bool receiptsLoaded = false;
   String userExpenseJSONFilePath;
   // bool loaded
 
@@ -339,8 +340,7 @@ class AppModel extends Model {
     if (userExpense.lastMonthRecorded == "" ||
         date.month != DateTime.parse(userExpense.lastDateRecorded).month) {
       addMonthExpense();
-      userExpense.resetMonthRecords();
-      userExpense.lastMonthTotalExpenseAmount += expenseItem.amount;
+      userExpense.resetMonthRecords(); 
       addToInvolvedExpenses(expenseItem.category, expenseItem.amount);
       userExpense.firstDayMonth = date.toIso8601String();
       // reset to 0
@@ -379,6 +379,8 @@ class AppModel extends Model {
         .listSync(recursive: true, followLinks: false);
 
     receiptFiles = receiptFiles.reversed.toList();
+
+    receiptsLoaded = true;
     notifyListeners();
   }
 
