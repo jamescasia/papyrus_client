@@ -5,11 +5,12 @@
 import 'dart:async';
 import 'dart:ui';
 import 'package:papyrus_client/screens/HomeScreen.dart';
-
+import 'package:papyrus_client/screens/ChatScreen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:flutter/material.dart';
+
 
 // Examples can assume:
 // enum Department { treasury, state }
@@ -73,8 +74,9 @@ class Dialog extends StatelessWidget {
         removeBottom: true,
         context: context,
         child: new Center(
-          child: new ConstrainedBox(
-            constraints: const BoxConstraints(minWidth: 280.0),
+          child: new Container(
+            width: w,
+            // constraints: const BoxConstraints(maxWidth:w ),
             child: new Material(
               borderRadius: BorderRadius.all(Radius.circular(sizeMulW*30)),
               elevation: 30.0,
@@ -518,8 +520,8 @@ class SimpleDialog extends StatelessWidget {
 
     Widget dialogChild = new IntrinsicWidth(
       stepWidth: 56.0,
-      child: new ConstrainedBox(
-        constraints: const BoxConstraints(minWidth: 280.0),
+      child: new Container(
+        // constraints: const BoxConstraints(minWidth: 280.0),
         child: new Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,

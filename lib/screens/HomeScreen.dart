@@ -962,6 +962,11 @@ showChat(BuildContext context){
   showDialog(
     context: context,
     builder: (BuildContext context){
+
+      // return Container(width: MediaQuery.of(context).size.width,
+      // height: double.infinity,
+      // margin: EdgeInsets.all(50),
+      // color: Colors.red,);
 return ChatScreen();
 });
 
