@@ -8,6 +8,7 @@ import 'EditReceiptScreenModel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:simple_permissions/simple_permissions.dart';
 import 'dart:io';
+import 'ChatModel.dart';
 import 'CameraCaptureModel.dart';
 import 'package:ef_qrcode/ef_qrcode.dart';
 import 'ReceiveReceiptModel.dart';
@@ -18,6 +19,7 @@ import 'package:papyrus_client/data_models/UserExpense.dart';
 import 'package:papyrus_client/data_models/DayExpense.dart';
 import 'package:papyrus_client/data_models/WeekExpense.dart';
 import 'package:papyrus_client/data_models/MonthExpense.dart';
+import 'package:papyrus_client/data_models/Message.dart';
 
 class AppModel extends Model {
   // User _user;
@@ -33,6 +35,7 @@ class AppModel extends Model {
   EditReceiptScreenModel editReceiptScreenModel;
   CameraCaptureModel cameraCaptureModel;
   ReceiveReceiptModel receiveReceiptModel;
+  ChatModel chatModel;
   ReceiptsScreenModel receiptsScreenModel;
   FirebaseUser user;
   Directory rootDir;
@@ -43,12 +46,16 @@ class AppModel extends Model {
   File dayExpenseFile;
   File weekExpenseFile;
   File monthExpenseFile;
+  String allMessagesFilePath;
+  File allMessagesFile;
+  AllMessages allMessages;
   String dayExpenseFilePath;
   String weekExpenseFilePath;
   String monthExpenseFilePath;
   String userExpensesFilePath;
   UserExpense userExpense;
   bool receiptsLoaded = false;
+  bool loadedMessages = false;
   String userExpenseJSONFilePath;
   // bool loaded
 
@@ -59,6 +66,7 @@ class AppModel extends Model {
     "UserData": "null",
     "Expenses": "null",
     "Expenses/Period": "null",
+    "Messages": "null"
   };
   String userQRPath;
   List<Permission> perms = [
@@ -93,6 +101,7 @@ class AppModel extends Model {
     cameraCaptureModel = CameraCaptureModel(this);
     receiveReceiptModel = ReceiveReceiptModel(this);
     receiptsScreenModel = ReceiptsScreenModel(this);
+    chatModel = ChatModel(this);
     if (user != null) init();
   }
 
@@ -124,6 +133,10 @@ class AppModel extends Model {
     listFileNamesOfReceiptsFoundInStorageAndGenerateReceipts();
     await prepareExpenseFiles();
     passiveUpdateUserExpense();
+
+
+    await prepareMessageFile();
+    passiveUpdateMessages();
 
     tempDir = await getTemporaryDirectory();
     generateImage();
@@ -176,6 +189,16 @@ class AppModel extends Model {
 
 //     readReceiptFromJsonFile(file.path);
 //   }
+
+  loadMessageJson() async {
+    try {
+      Map map = jsonDecode(await allMessagesFile.readAsString());
+      return AllMessages.fromJson(map);
+    } catch (e) {
+      return AllMessages();
+    }
+  }
+
   loadUserExpense() async {
     try {
       Map map = jsonDecode(await userExpenseJSONFile.readAsString());
@@ -212,6 +235,35 @@ class AppModel extends Model {
     // receipts.add(r);
 
     notifyListeners();
+  }
+
+  void addMessage(Message msg) {
+    allMessages.messages.add(msg);
+    allMessagesFile.writeAsString(jsonEncode(allMessages.toJson()));
+    notifyListeners();
+  }
+
+  void passiveUpdateMessages() {
+    List<int> toDelPos = [];
+
+    for (Message msg in allMessages.messages) {
+      if (DateTime.now().toLocal().day - DateTime.parse(msg.dateTime).day >=
+          5) {
+        toDelPos.add(allMessages.messages.indexOf(msg));
+      }
+    }
+
+    for (int i in toDelPos) {
+      allMessages.messages.removeAt(i);
+    }
+  }
+
+  prepareMessageFile() async {
+    allMessagesFile = File(allMessagesFilePath);
+
+    allMessages = await loadMessageJson();
+
+    loadedMessages = true;
   }
 
   void prepareExpenseFiles() async {
@@ -407,7 +459,9 @@ class AppModel extends Model {
     dayExpenseFilePath = "${dirMap['Expenses/Period']}DayExpense.txt";
     weekExpenseFilePath = "${dirMap['Expenses/Period']}WeekExpense.txt";
     monthExpenseFilePath = "${dirMap['Expenses/Period']}MonthExpense.txt";
+    allMessagesFilePath = "${dirMap['Messages']}MonthExpense.json";
 
+    await File(allMessagesFilePath).create();
     await File(userExpenseJSONFilePath).create();
     await File(userExpensesFilePath).create();
     await File(dayExpenseFilePath).create();

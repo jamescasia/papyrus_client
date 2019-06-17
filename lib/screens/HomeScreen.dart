@@ -12,9 +12,11 @@ import 'package:papyrus_client/screens/ReceiptScreen.dart';
 import 'ChartScreen.dart';
 import 'PromoScreen.dart';
 import 'SettingScreen.dart';
+import 'package:papyrus_client/helpers/CustomShowDialog.dart';
 import 'package:papyrus_client/helpers/LongButton.dart';
 import 'EditReceiptScreen.dart';
 import 'ShowQRScreen.dart';
+import 'ChatScreen.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:papyrus_client/models/AppModel.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -628,10 +630,11 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                           highlightColor: Colors.black.withOpacity(0.1),
                           borderRadius: BorderRadius.all(Radius.circular(3000)),
                           onTap: () {
-                            Navigator.push(
-                                context,
-                                CupertinoPageRoute(
-                                    builder: (context) => PromoScreen()));
+                            showChat(context);
+                            // Navigator.push(
+                            //     context,
+                            //     CupertinoPageRoute(
+                            //         builder: (context) => PromoScreen()));
                           },
                           // highlightColor: Colors.black,
                           child: Stack(
@@ -639,8 +642,9 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                               Icon(
                                 // Icons.local_offer,
                                 // FontAwesomeIcons.bell,
-                                Icons.notifications,
-                                size: MediaQuery.of(context).size.width * 0.11,
+                                // Icons.notifications,
+                                FontAwesomeIcons.robot,
+                                size: sizeMulW*30,
                                 color: Colors.white,
                               ),
                               // Positioned()
@@ -652,27 +656,27 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                               //         MediaQuery.of(context).size.width * 0.1,
                               //   ),
                               // ),
-                              Positioned(
-                                top: 14 * sizeMulW,
-                                right: 5 * sizeMulW,
-                                child: Container(
-                                  width: sizeMulW * 20,
-                                  height: sizeMulW * 20,
-                                  child: Center(
-                                    child: Text(
-                                      "12",
-                                      style: TextStyle(
-                                          fontSize: 12 * sizeMulW,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w900),
-                                    ),
-                                  ),
-                                  decoration: BoxDecoration(
-                                      color: Colors.red,
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(3000))),
-                                ),
-                              )
+                              // Positioned(
+                              //   top: 14 * sizeMulW,
+                              //   right: 5 * sizeMulW,
+                              //   child: Container(
+                              //     width: sizeMulW * 20,
+                              //     height: sizeMulW * 20,
+                              //     child: Center(
+                              //       child: Text(
+                              //         "12",
+                              //         style: TextStyle(
+                              //             fontSize: 12 * sizeMulW,
+                              //             color: Colors.white,
+                              //             fontWeight: FontWeight.w900),
+                              //       ),
+                              //     ),
+                              //     decoration: BoxDecoration(
+                              //         color: Colors.red,
+                              //         borderRadius: BorderRadius.all(
+                              //             Radius.circular(3000))),
+                              //   ),
+                              // )
                             ],
                           ),
 
@@ -950,6 +954,24 @@ class _HomeScreenBottomPartState extends State<HomeScreenBottomPart> {
       );
     });
   }
+}
+
+
+showChat(BuildContext context){
+
+  showDialog(
+    context: context,
+    builder: (BuildContext context){
+return ChatScreen();
+});
+
+ 
+
+
+
+
+
+
 }
 
 String addCommas(int nums) {
