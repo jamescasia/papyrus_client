@@ -118,15 +118,12 @@ class AppModel extends Model {
     // var = await getExte
     await checkOrGenerateDirectories();
 
-
-    
     // await deleteAllReceiptFiles();
     // deleteAllExpenseFiles();
 
-
-
     listFileNamesOfReceiptsFoundInStorageAndGenerateReceipts();
-    prepareExpenseFiles();
+    await prepareExpenseFiles();
+    passiveUpdateUserExpense();
 
     tempDir = await getTemporaryDirectory();
     generateImage();
@@ -237,7 +234,6 @@ class AppModel extends Model {
 
     print("lastweeks expense" +
         userExpense.lastWeekTotalExpenseAmount.toString());
- 
 
     userExpenseInit();
     // if(userE)
@@ -324,6 +320,19 @@ class AppModel extends Model {
         mode: FileMode.writeOnlyAppend);
   }
 
+  void passiveUpdateUserExpense() {
+    var date = DateTime.now().toLocal();
+
+    if (userExpense.lastDateRecorded == "" ||
+        date.day != DateTime.parse(userExpense.lastDateRecorded).day) {
+      userExpense.resetDateRecords();
+    }
+    if (userExpense.lastMonthRecorded == "" ||
+        date.month != DateTime.parse(userExpense.lastDateRecorded).month) {
+      userExpense.resetMonthRecords();
+    }
+  }
+
   void updateUserExpense(ExpenseItem expenseItem) {
     var date = DateTime.now().toLocal();
 
@@ -339,13 +348,9 @@ class AppModel extends Model {
     if (userExpense.lastMonthRecorded == "" ||
         date.month != DateTime.parse(userExpense.lastDateRecorded).month) {
       addMonthExpense();
-      userExpense.resetMonthRecords(); 
+      userExpense.resetMonthRecords();
       addToInvolvedExpenses(expenseItem.category, expenseItem.amount);
       userExpense.firstDayMonth = date.toIso8601String();
-      // reset to 0
-
-      // add the newly added expense item to category and total
-
     }
 
     userExpense.lastDateTotalExpenseAmount += expenseItem.amount;
