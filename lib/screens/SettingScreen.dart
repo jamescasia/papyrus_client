@@ -179,8 +179,8 @@ class _SettingScreenTopPartState extends State<SettingScreenTopPart> {
                             ),
                             Positioned(
                               left: sizeMulW * 30,
-                              top: sizeMulW * 70,
-                              child: Text("Settings",
+                              top: MediaQuery.of(context).size.width * 0.38*0.45,
+                              child: Text("Settings", 
                                   style: TextStyle(
                                     fontSize: sizeMulW * 35,
                                     color: Colors.white,

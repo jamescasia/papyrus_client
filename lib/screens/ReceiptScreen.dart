@@ -136,7 +136,7 @@ class _ReceiptScreenTopPartState extends State<ReceiptScreenTopPart> {
                             ),
                             Positioned(
                               left: sizeMulW * 30,
-                              top: sizeMulW * 70,
+                              top: MediaQuery.of(context).size.width * 0.38*0.45,
                               child: Text("Receipts",
                                   style: TextStyle(
                                     fontSize: sizeMulW * 35,
