@@ -197,12 +197,12 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
   @override
   Widget build(BuildContext context) {
     TextStyle headerStyle = TextStyle(
-        fontSize: sizeMulW * 20,
+        fontSize: 17,
         fontWeight: FontWeight.w500,
         color: Colors.white);
 
     TextStyle headerStyleSelected = TextStyle(
-        fontSize: sizeMulW * 21,
+        fontSize:18 ,
         fontWeight: FontWeight.bold,
         color: Colors.green[700]);
 
@@ -244,7 +244,9 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                         right: 0,
                         top: MediaQuery.of(context).size.width * 0.91 * 0.16,
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisSize: MainAxisSize.max,
                           children: <Widget>[
                             // SizedBox(
                             //   width: MediaQuery.of(context).size.width * 0.05,
@@ -253,8 +255,8 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                             //   width: 20.57 * sizeMulW,
                             // ),
                             Container(
-                              width: sizeMulW * 130,
-                              height: sizeMulH * 30,
+                              // width: sizeMulW * 130,
+                              // height: sizeMulH * 30,
                               child: Center(
                                 child: InkWell(
                                   // highlightElevation: 0,
@@ -295,8 +297,8 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                               ),
                             ),
                             Container(
-                              width: sizeMulW * 130,
-                              height: sizeMulH * 30,
+                              // width: sizeMulW * 130,
+                              // height: sizeMulH * 30,
                               child: Center(
                                 child: InkWell(
                                   splashColor: Colors.white.withAlpha(0),
@@ -340,8 +342,8 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                               ),
                             ),
                             Container(
-                              width: sizeMulW * 110,
-                              height: sizeMulH * 30,
+                              // width: sizeMulW * 110,
+                              // height: sizeMulH * 30,
                               child: Center(
                                 child: InkWell(
                                   splashColor: Colors.white.withAlpha(0),
