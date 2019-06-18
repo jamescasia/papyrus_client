@@ -32,14 +32,10 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
   @override
   Widget build(BuildContext context) {
     TextStyle headerStyle = TextStyle(
-        fontSize: MediaQuery.of(context).size.width * 0.045,
-        fontWeight: FontWeight.normal,
-        color: Colors.white);
+        fontSize: 17, fontWeight: FontWeight.w500, color: Colors.white);
 
     TextStyle headerStyleSelected = TextStyle(
-        fontSize: MediaQuery.of(context).size.width * 0.05,
-        fontWeight: FontWeight.bold,
-        color: Colors.green[700]);
+        fontSize: 18, fontWeight: FontWeight.bold, color: Colors.green[700]);
     return ScopedModelDescendant<AppModel>(builder: (context, child, appModel) {
       return ScopedModel<ChartsScreenModel>(
           model: appModel.chartsScreenModel,
@@ -87,8 +83,8 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                 width: sizeMulW * 185,
                                                 height: sizeMulW * 185,
                                                 child: GaugeChart(
-                                                  chartsModel
-                                                      .generateChartData(appModel.viewing_period),
+                                                  chartsModel.generateChartData(
+                                                      appModel.viewing_period),
                                                   animate: true,
                                                 )),
                                           )),
@@ -98,17 +94,17 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                         child: GaugeChartLegendItem(
                                             "Food", Color(0xfff4a735)),
                                       ),
-  // new DataSegment("totalSpentOnFood",
-  //           appModel.dayExpense.totalSpentOnFood, "#f4a735"),
-  //       new DataSegment("totalSpentOnLeisure",
-  //           appModel.dayExpense.totalSpentOnLeisure, "#fef09c"),
-  //       new DataSegment("totalSpentOnTransportation",
-  //           appModel.dayExpense.totalSpentOnTransportation, "#8ec8f8"),
-  //       new DataSegment("totalSpentOnUtilities",
-  //           appModel.dayExpense.totalSpentOnUtilities, "#a1d2a6"),
-  //       new DataSegment("totalSpentOnMiscellaneous",
-  //           appModel.dayExpense.totalSpentOnMiscellaneous, "#ee9698"),
-                                      
+                                      // new DataSegment("totalSpentOnFood",
+                                      //           appModel.dayExpense.totalSpentOnFood, "#f4a735"),
+                                      //       new DataSegment("totalSpentOnLeisure",
+                                      //           appModel.dayExpense.totalSpentOnLeisure, "#fef09c"),
+                                      //       new DataSegment("totalSpentOnTransportation",
+                                      //           appModel.dayExpense.totalSpentOnTransportation, "#8ec8f8"),
+                                      //       new DataSegment("totalSpentOnUtilities",
+                                      //           appModel.dayExpense.totalSpentOnUtilities, "#a1d2a6"),
+                                      //       new DataSegment("totalSpentOnMiscellaneous",
+                                      //           appModel.dayExpense.totalSpentOnMiscellaneous, "#ee9698"),
+
                                       Positioned(
                                         left: sizeMulW * 108,
                                         top: sizeMulW * 118,
@@ -148,8 +144,7 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                 //   holeLabel: "hey",
                                 //   size: const Size(300.0, 300.0),
                                 //   startAngle: 3.1415/2,
-                                  
-                                  
+
                                 //   initialChartData: chartsModel.data,
                                 //   chartType: CircularChartType.Radial,
                                 // ),
@@ -250,7 +245,7 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                             ),
                                           ),
                                           Positioned(
-                                            left: 20 * sizeMulW,
+                                            left:34,
                                             right: 0,
                                             top: MediaQuery.of(context)
                                                     .size
@@ -258,8 +253,8 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                 0.91 *
                                                 0.09,
                                             child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisSize: MainAxisSize.max,
                                               children: <Widget>[
                                                 // SizedBox(
                                                 //   width: MediaQuery.of(context).size.width * 0.05,
@@ -268,8 +263,8 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                 //   width: 20.57 * sizeMulW,
                                                 // ),
                                                 Container(
-                                                  width: sizeMulW * 130,
-                                                  height: sizeMulH * 30,
+                                                  // width: sizeMulW * 130,
+                                                  // height: sizeMulH * 30,
                                                   child: Center(
                                                     child: InkWell(
                                                       // highlightElevation: 0,
@@ -325,8 +320,8 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                   ),
                                                 ),
                                                 Container(
-                                                  width: sizeMulW * 130,
-                                                  height: sizeMulH * 30,
+                                                  // width: sizeMulW * 130,
+                                                  // height: sizeMulH * 30,
                                                   child: Center(
                                                     child: InkWell(
                                                       splashColor: Colors.white
@@ -384,8 +379,8 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                   ),
                                                 ),
                                                 Container(
-                                                  width: sizeMulW * 110,
-                                                  height: sizeMulH * 30,
+                                                  // width: sizeMulW * 110,
+                                                  // height: sizeMulH * 30,
                                                   child: Center(
                                                     child: InkWell(
                                                       splashColor: Colors.white
