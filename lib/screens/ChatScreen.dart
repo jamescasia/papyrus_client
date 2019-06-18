@@ -120,8 +120,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                               (BuildContext context, int i) {
                                             if (i ==
                                                 appModel.allMessages.messages
-                                                        .length -
-                                                    1)
+                                                        .length )
                                               // return SizedBox(
                                               //   width: 1,
                                               // );

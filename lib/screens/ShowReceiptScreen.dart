@@ -377,7 +377,7 @@ class _ShowReceiptScreenStackState extends State<ShowReceiptScreenStack> {
                                     ? FontAwesomeIcons.bus
                                     : (receipt.category == "Food")
                                         ? FontAwesomeIcons.utensils
-                                        : (receipt.category == "Necessities")
+                                        : (receipt.category == "Utilities")
                                             ? FontAwesomeIcons.toiletPaper
                                             : (receipt.category ==
                                                     "Miscellaneous")

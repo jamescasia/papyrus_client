@@ -78,6 +78,7 @@ class PapyrusCustomer extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Papyrus - Expense Management',
           theme: ThemeData(
+            primaryColorDark:const Color(0xFF61C350),
             // fon
             fontFamily: 'Montserrat',
 

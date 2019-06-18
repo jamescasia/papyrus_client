@@ -223,12 +223,12 @@ class AppModel extends Model {
   }
 
   fromStringToEnumCategory(String cat) {
-// enum Category { LEISURE, FOOD, TRANSPORTATION, MISCELLANEOUS, NECESSITIES }
+// enum Category { LEISURE, FOOD, TRANSPORTATION, MISCELLANEOUS, UTILITIES }
     if (cat == "LEISURE") return Category.LEISURE;
     if (cat == "FOOD") return Category.FOOD;
     if (cat == "TRANSPORTATION") return Category.TRANSPORTATION;
     if (cat == "MISCELLANEOUS") return Category.MISCELLANEOUS;
-    if (cat == "NECESSITIES") return Category.NECESSITIES;
+    if (cat == "UTILITIES") return Category.UTILITIES;
   }
 
   void addReceiptandSaveToStorage(Receipt r) {
@@ -326,7 +326,7 @@ class AppModel extends Model {
         userExpense.lastDateMiscellaneousExpenseAmount,
         userExpense.lastDateTransportationExpenseAmount,
         userExpense.lastDateLeisureExpenseAmount,
-        userExpense.lastDateNecessitiesExpenseAmount,
+        userExpense.lastDateUtilitiesExpenseAmount,
         userExpense.lastDateTotalExpenseAmount);
 
     weekExpense = WeekExpense(
@@ -335,7 +335,7 @@ class AppModel extends Model {
         userExpense.lastWeekMiscellaneousExpenseAmount,
         userExpense.lastWeekTransportationExpenseAmount,
         userExpense.lastWeekLeisureExpenseAmount,
-        userExpense.lastWeekNecessitiesExpenseAmount,
+        userExpense.lastWeekUtilitiesExpenseAmount,
         userExpense.lastWeekTotalExpenseAmount);
 
     monthExpense = MonthExpense(
@@ -344,7 +344,7 @@ class AppModel extends Model {
         userExpense.lastMonthMiscellaneousExpenseAmount,
         userExpense.lastMonthTransportationExpenseAmount,
         userExpense.lastMonthLeisureExpenseAmount,
-        userExpense.lastMonthNecessitiesExpenseAmount,
+        userExpense.lastMonthUtilitiesExpenseAmount,
         userExpense.lastMonthTotalExpenseAmount);
 
     userExpenseInit();
@@ -360,10 +360,10 @@ class AppModel extends Model {
       userExpense.lastMonthFoodExpenseAmount += total;
       userExpense.foodLifetimeExpenseAmount += total;
     }
-    if (category == "Necessities") {
-      userExpense.lastDateNecessitiesExpenseAmount += total;
-      userExpense.lastWeekNecessitiesExpenseAmount += total;
-      userExpense.lastMonthNecessitiesExpenseAmount += total;
+    if (category == "Utilities") {
+      userExpense.lastDateUtilitiesExpenseAmount += total;
+      userExpense.lastWeekUtilitiesExpenseAmount += total;
+      userExpense.lastMonthUtilitiesExpenseAmount += total;
       userExpense.necessitiesLifetimeExpenseAmount += total;
     }
     if (category == "Leisure") {
@@ -460,8 +460,8 @@ class AppModel extends Model {
     dayExpense.totalSpentOnLeisure = userExpense.lastDateLeisureExpenseAmount;
     dayExpense.totalSpentOnMiscellaneous =
         userExpense.lastDateMiscellaneousExpenseAmount;
-    dayExpense.totalSpentOnNecessities =
-        userExpense.lastDateNecessitiesExpenseAmount;
+    dayExpense.totalSpentOnUtilities =
+        userExpense.lastDateUtilitiesExpenseAmount;
     dayExpense.totalSpentOnTransportation =
         userExpense.lastDateTransportationExpenseAmount;
   }
@@ -472,8 +472,8 @@ class AppModel extends Model {
     weekExpense.totalSpentOnLeisure = userExpense.lastWeekLeisureExpenseAmount;
     weekExpense.totalSpentOnMiscellaneous =
         userExpense.lastWeekMiscellaneousExpenseAmount;
-    weekExpense.totalSpentOnNecessities =
-        userExpense.lastWeekNecessitiesExpenseAmount;
+    weekExpense.totalSpentOnUtilities =
+        userExpense.lastWeekUtilitiesExpenseAmount;
     weekExpense.totalSpentOnTransportation =
         userExpense.lastWeekTransportationExpenseAmount;
   }
@@ -485,8 +485,8 @@ class AppModel extends Model {
         userExpense.lastMonthLeisureExpenseAmount;
     monthExpense.totalSpentOnMiscellaneous =
         userExpense.lastMonthMiscellaneousExpenseAmount;
-    monthExpense.totalSpentOnNecessities =
-        userExpense.lastMonthNecessitiesExpenseAmount;
+    monthExpense.totalSpentOnUtilities =
+        userExpense.lastMonthUtilitiesExpenseAmount;
     monthExpense.totalSpentOnTransportation =
         userExpense.lastMonthTransportationExpenseAmount;
   }

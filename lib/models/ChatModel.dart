@@ -117,7 +117,7 @@ class ChatModel extends Model {
     // "totalSpentOnMiscellaneous": totalSpentOnMiscellaneous,
     // "totalSpentOnTransportation": totalSpentOnTransportation,
     // "totalSpentOnLeisure": totalSpentOnLeisure,
-    // "totalSpentOnNecessities": totalSpentOnNecessities,
+    // "totalSpentOnUtilities": totalSpentOnUtilities,
     // "totalSpent": totalSpent,
   }
 

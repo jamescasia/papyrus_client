@@ -24,19 +24,19 @@ class UserExpense {
   double lastDateLeisureExpenseAmount = 0;
   double lastDateFoodExpenseAmount = 0;
   double lastDateTransportationExpenseAmount = 0;
-  double lastDateNecessitiesExpenseAmount = 0;
+  double lastDateUtilitiesExpenseAmount = 0;
   double lastDateMiscellaneousExpenseAmount = 0;
   double lastWeekTotalExpenseAmount = 0;
   double lastWeekLeisureExpenseAmount = 0;
   double lastWeekFoodExpenseAmount = 0;
   double lastWeekTransportationExpenseAmount = 0;
-  double lastWeekNecessitiesExpenseAmount = 0;
+  double lastWeekUtilitiesExpenseAmount = 0;
   double lastWeekMiscellaneousExpenseAmount = 0;
   double lastMonthTotalExpenseAmount = 0;
   double lastMonthLeisureExpenseAmount = 0;
   double lastMonthFoodExpenseAmount = 0;
   double lastMonthTransportationExpenseAmount = 0;
-  double lastMonthNecessitiesExpenseAmount = 0;
+  double lastMonthUtilitiesExpenseAmount = 0;
   double lastMonthMiscellaneousExpenseAmount = 0;
 
   UserExpense() {}
@@ -46,7 +46,7 @@ class UserExpense {
     lastDateLeisureExpenseAmount = 0;
     lastDateFoodExpenseAmount = 0;
     lastDateTransportationExpenseAmount = 0;
-    lastDateNecessitiesExpenseAmount = 0;
+    lastDateUtilitiesExpenseAmount = 0;
     lastDateMiscellaneousExpenseAmount = 0;
   }
 
@@ -55,7 +55,7 @@ class UserExpense {
     lastWeekLeisureExpenseAmount = 0;
     lastWeekFoodExpenseAmount = 0;
     lastWeekTransportationExpenseAmount = 0;
-    lastWeekNecessitiesExpenseAmount = 0;
+    lastWeekUtilitiesExpenseAmount = 0;
     lastWeekMiscellaneousExpenseAmount = 0;
   }
 
@@ -64,7 +64,7 @@ class UserExpense {
     lastMonthLeisureExpenseAmount = 0;
     lastMonthFoodExpenseAmount = 0;
     lastMonthTransportationExpenseAmount = 0;
-    lastMonthNecessitiesExpenseAmount = 0;
+    lastMonthUtilitiesExpenseAmount = 0;
     lastMonthMiscellaneousExpenseAmount = 0;
   }
 
@@ -87,7 +87,7 @@ class UserExpense {
         "lastDateFoodExpenseAmount": lastDateFoodExpenseAmount,
         "lastDateTransportationExpenseAmount":
             lastDateTransportationExpenseAmount,
-        "lastDateNecessitiesExpenseAmount": lastDateNecessitiesExpenseAmount,
+        "lastDateUtilitiesExpenseAmount": lastDateUtilitiesExpenseAmount,
         "lastDateMiscellaneousExpenseAmount":
             lastDateMiscellaneousExpenseAmount,
         "lastWeekTotalExpenseAmount": lastWeekTotalExpenseAmount,
@@ -95,7 +95,7 @@ class UserExpense {
         "lastWeekFoodExpenseAmount": lastWeekFoodExpenseAmount,
         "lastWeekTransportationExpenseAmount":
             lastWeekTransportationExpenseAmount,
-        "lastWeekNecessitiesExpenseAmount": lastWeekNecessitiesExpenseAmount,
+        "lastWeekUtilitiesExpenseAmount": lastWeekUtilitiesExpenseAmount,
         "lastWeekMiscellaneousExpenseAmount":
             lastWeekMiscellaneousExpenseAmount,
         "lastMonthTotalExpenseAmount": lastMonthTotalExpenseAmount,
@@ -103,7 +103,7 @@ class UserExpense {
         "lastMonthFoodExpenseAmount": lastMonthFoodExpenseAmount,
         "lastMonthTransportationExpenseAmount":
             lastMonthTransportationExpenseAmount,
-        "lastMonthNecessitiesExpenseAmount": lastMonthNecessitiesExpenseAmount,
+        "lastMonthUtilitiesExpenseAmount": lastMonthUtilitiesExpenseAmount,
         "lastMonthMiscellaneousExpenseAmount":
             lastMonthMiscellaneousExpenseAmount,
         "firstDayWeek": firstDayWeek,
@@ -145,8 +145,8 @@ class UserExpense {
         lastDateFoodExpenseAmount = json["lastDateFoodExpenseAmount"],
         lastDateTransportationExpenseAmount =
             json["lastDateTransportationExpenseAmount"],
-        lastDateNecessitiesExpenseAmount =
-            json["lastDateNecessitiesExpenseAmount"],
+        lastDateUtilitiesExpenseAmount =
+            json["lastDateUtilitiesExpenseAmount"],
         lastDateMiscellaneousExpenseAmount =
             json["lastDateMiscellaneousExpenseAmount"],
         lastWeekTotalExpenseAmount = json["lastWeekTotalExpenseAmount"],
@@ -154,8 +154,8 @@ class UserExpense {
         lastWeekFoodExpenseAmount = json["lastWeekFoodExpenseAmount"],
         lastWeekTransportationExpenseAmount =
             json["lastWeekTransportationExpenseAmount"],
-        lastWeekNecessitiesExpenseAmount =
-            json["lastWeekNecessitiesExpenseAmount"],
+        lastWeekUtilitiesExpenseAmount =
+            json["lastWeekUtilitiesExpenseAmount"],
         lastWeekMiscellaneousExpenseAmount =
             json["lastWeekMiscellaneousExpenseAmount"],
         lastMonthTotalExpenseAmount = json["lastMonthTotalExpenseAmount"],
@@ -163,8 +163,8 @@ class UserExpense {
         lastMonthFoodExpenseAmount = json["lastMonthFoodExpenseAmount"],
         lastMonthTransportationExpenseAmount =
             json["lastMonthTransportationExpenseAmount"],
-        lastMonthNecessitiesExpenseAmount =
-            json["lastMonthNecessitiesExpenseAmount"],
+        lastMonthUtilitiesExpenseAmount =
+            json["lastMonthUtilitiesExpenseAmount"],
         lastMonthMiscellaneousExpenseAmount =
             json["lastMonthMiscellaneousExpenseAmount"],
         firstDayWeek = json['firstDayWeek'],
@@ -174,7 +174,7 @@ class UserExpense {
         numberOfRecordedMonths = json['numberOfRecordedMonths'];
 }
 
-enum Category { LEISURE, FOOD, TRANSPORTATION, MISCELLANEOUS, NECESSITIES }
+enum Category { LEISURE, FOOD, TRANSPORTATION, MISCELLANEOUS, UTILITIES }
 enum Period { MONTHLY, WEEKLY, DAILY }
 
 class ExpenseItem {

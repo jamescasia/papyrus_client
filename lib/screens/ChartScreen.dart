@@ -116,7 +116,7 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                   left: sizeMulW * 180,
                                   top: sizeMulW * 150,
                                   child: GaugeChartLegendItem(
-                                      "Necessities", Colors.green[100]),
+                                      "Utilities", Colors.green[100]),
                                 ),
                               ],
                             ),

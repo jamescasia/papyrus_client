@@ -6,7 +6,7 @@ class WeekExpense {
   double totalSpentOnMiscellaneous;
   double totalSpentOnTransportation;
   double totalSpentOnLeisure;
-  double totalSpentOnNecessities;
+  double totalSpentOnUtilities;
 
   WeekExpense(
       this.dateTime,
@@ -14,7 +14,7 @@ class WeekExpense {
       this.totalSpentOnMiscellaneous,
       this.totalSpentOnTransportation,
       this.totalSpentOnLeisure,
-      this.totalSpentOnNecessities,
+      this.totalSpentOnUtilities,
       this.totalSpent);
 
   WeekExpense.fromJson(Map<String, dynamic> json)
@@ -23,7 +23,7 @@ class WeekExpense {
         totalSpentOnMiscellaneous = (json['totalSpentOnMiscellaneous']),
         totalSpentOnTransportation = json["totalSpentOnTransportation"],
         totalSpentOnLeisure = json['totalSpentOnLeisure'],
-        totalSpentOnNecessities = (json['totalSpentOnNecessities']),
+        totalSpentOnUtilities = (json['totalSpentOnUtilities']),
         totalSpent = (json['totalSpent']) ;
 
 
@@ -33,7 +33,7 @@ class WeekExpense {
         "totalSpentOnMiscellaneous": totalSpentOnMiscellaneous,
         "totalSpentOnTransportation": totalSpentOnTransportation,
         "totalSpentOnLeisure": totalSpentOnLeisure,
-        "totalSpentOnNecessities": totalSpentOnNecessities,
+        "totalSpentOnUtilities": totalSpentOnUtilities,
         "totalSpent": totalSpent,
       };
 }
