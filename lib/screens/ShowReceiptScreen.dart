@@ -46,12 +46,22 @@ class ShowReceiptScreenStack extends StatefulWidget {
 class _ShowReceiptScreenStackState extends State<ShowReceiptScreenStack> {
   Receipt receipt;
   _ShowReceiptScreenStackState(this.receipt);
+
+
+  
   @override
   Widget build(BuildContext context) {
     TextStyle headerStyle = TextStyle(
         fontSize: MediaQuery.of(context).size.width * 0.045,
         fontWeight: FontWeight.normal,
         color: Colors.white);
+        Color iconColor; 
+
+  if (receipt.category == "Transportation") iconColor = Color(0xff8ec8f8); 
+  if (receipt.category == "Miscellaneous") iconColor = Color(0xffee9698); 
+  if (receipt.category == "Utilities") iconColor = Color(0xffa1d2a6); 
+  if (receipt.category == "Leisure") iconColor = Color(0xfffef09c); 
+  if (receipt.category == "Food") iconColor = Color(0xfff4a735);
 
     TextStyle headerStyleSelected = TextStyle(
         fontSize: MediaQuery.of(context).size.width * 0.05,
@@ -384,7 +394,7 @@ class _ShowReceiptScreenStackState extends State<ShowReceiptScreenStack> {
                                                 ? FontAwesomeIcons.campground
                                                 : FontAwesomeIcons.file,
                             size: sizeMulW * 35,
-                            color: Colors.lightGreen,
+                            color: iconColor,
                           ),
                           // Icon(
                           //   // Icons.image,

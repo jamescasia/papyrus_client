@@ -9,6 +9,13 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 Widget ReceiptCard(BuildContext context, Receipt receipt, index) {
   double margin = 9;
   // print("CAT IDIOT "  + receipt.category);
+  Color iconColor; 
+
+  if (receipt.category == "Transportation") iconColor = Color(0xff8ec8f8); 
+  if (receipt.category == "Miscellaneous") iconColor = Color(0xffee9698); 
+  if (receipt.category == "Utilities") iconColor = Color(0xffa1d2a6); 
+  if (receipt.category == "Leisure") iconColor = Color(0xfffef09c); 
+  if (receipt.category == "Food") iconColor = Color(0xfff4a735);
 
   return Container(
     // margin: EdgeInsets.only(
@@ -63,7 +70,21 @@ Widget ReceiptCard(BuildContext context, Receipt receipt, index) {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Icon((receipt.category == "Leisure")?FontAwesomeIcons.wineGlassAlt: (receipt.category == "Transportation")?FontAwesomeIcons.bus:(receipt.category == "Food")?FontAwesomeIcons.utensils:(receipt.category == "Utilities")?FontAwesomeIcons.toiletPaper:(receipt.category == "Miscellaneous")?FontAwesomeIcons.campground:FontAwesomeIcons.file,size: sizeMulW * 26, color: Colors.lightGreen[200],),
+                      Icon(
+                        (receipt.category == "Leisure")
+                            ? FontAwesomeIcons.wineGlassAlt
+                            : (receipt.category == "Transportation")
+                                ? FontAwesomeIcons.bus
+                                : (receipt.category == "Food")
+                                    ? FontAwesomeIcons.utensils
+                                    : (receipt.category == "Utilities")
+                                        ? FontAwesomeIcons.toiletPaper
+                                        : (receipt.category == "Miscellaneous")
+                                            ? FontAwesomeIcons.campground
+                                            : FontAwesomeIcons.file,
+                        size: sizeMulW * 26,
+                        color: iconColor,
+                      ),
                       Flexible(
                         child: Text(
                           receipt.merchant,

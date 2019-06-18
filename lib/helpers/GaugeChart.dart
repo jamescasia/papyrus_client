@@ -11,13 +11,7 @@ class GaugeChart extends StatelessWidget {
   GaugeChart(this.seriesList, {this.animate});
 
   /// Creates a [PieChart] with sample data and no transition.
-  factory GaugeChart.withSampleData() {
-    return new GaugeChart(
-      _createSampleData(),
-      // Disable animations for image tests.
-      animate: false,
-    );
-  }
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -33,33 +27,9 @@ class GaugeChart extends StatelessWidget {
   }
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<GaugeSegment, String>> _createSampleData() {
-    final data = [
-      new GaugeSegment('Low', 25),
-      new GaugeSegment('Acceptable', 50),
-      new GaugeSegment('High', 5),
-      new GaugeSegment('Highly Unusual', 20),
-      // new GaugeSegment('Highly Unusual', 5),
-    ];
-
-    return [
-      new charts.Series<GaugeSegment, String>(
-        id: 'Segments',
-        domainFn: (GaugeSegment segment, _) => segment.segment,
-        measureFn: (GaugeSegment segment, _) => segment.size,
-        data: data,
-      )
-    ];
-  }
+ 
 }
-
-/// Sample data type.
-class GaugeSegment {
-  final String segment;
-  final int size;
-
-  GaugeSegment(this.segment, this.size);
-}
+ 
 
 class GaugeChartLegend extends StatefulWidget {
   double width;

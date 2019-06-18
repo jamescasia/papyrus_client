@@ -20,6 +20,7 @@ import 'package:papyrus_client/data_models/DayExpense.dart';
 import 'package:papyrus_client/data_models/WeekExpense.dart';
 import 'package:papyrus_client/data_models/MonthExpense.dart';
 import 'package:papyrus_client/data_models/Message.dart';
+import 'package:papyrus_client/models/ChartsScreenModel.dart';
 
 class AppModel extends Model {
   // User _user;
@@ -36,6 +37,8 @@ class AppModel extends Model {
   CameraCaptureModel cameraCaptureModel;
   ReceiveReceiptModel receiveReceiptModel;
   ChatModel chatModel;
+  ChartsScreenModel chartsScreenModel;
+  
   ReceiptsScreenModel receiptsScreenModel;
   FirebaseUser user;
   Directory rootDir;
@@ -99,6 +102,7 @@ class AppModel extends Model {
     cameraCaptureModel = CameraCaptureModel(this);
     receiveReceiptModel = ReceiveReceiptModel(this);
     receiptsScreenModel = ReceiptsScreenModel(this);
+    chartsScreenModel = ChartsScreenModel(this);
     chatModel = ChatModel(this);
 
     for (Permission p in perms) {

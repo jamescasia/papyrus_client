@@ -473,7 +473,7 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             children: <Widget>[
-                                              Text(
+                                              (appModel.loadedUserExpense)?Text(
                                                   ((appModel.viewing_period == Period.DAILY &&
                                                               appModel
                                                                   .loadedUserExpense)
@@ -493,9 +493,9 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                                                                   .split('.')[0]))
                                                               : (appModel.viewing_period == Period.WEEKLY && appModel.loadedUserExpense) ? addCommas(int.parse(appModel.userExpense.lastWeekTotalExpenseAmount.toStringAsFixed(2).split('.')[0])) : "0") +
                                                       ".",
-                                                  style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.09, fontWeight: FontWeight.w600, color: Colors.white)),
+                                                  style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.09, fontWeight: FontWeight.w600, color: Colors.white)):SizedBox(width: 0.001,),
 
-                                              Container(
+                                             (appModel.loadedUserExpense)? Container(
                                                 padding: EdgeInsets.only(
                                                     bottom: 4 * sizeMulW),
                                                 child: Text(
@@ -520,7 +520,7 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                                                                 ? addCommas(int.parse(appModel.userExpense.lastWeekTotalExpenseAmount.toStringAsFixed(2).split('.')[1]))
                                                                 : "00",
                                                     style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.05, fontWeight: FontWeight.bold, color: Colors.white)),
-                                              ),
+                                              ):SizedBox(width:0.001),
                                               // ),
                                             ],
                                           ),
