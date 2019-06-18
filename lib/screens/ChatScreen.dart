@@ -87,7 +87,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           color: Colors.white.withAlpha(0),
                           child: ClipRRect(
                             borderRadius: BorderRadius.all(
-                                Radius.circular(sizeMulW * 30)),
+                                Radius.circular(sizeMulW * 3000)),
                             child: new Container(
                               width: w,
                               height: h,
