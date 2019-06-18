@@ -109,7 +109,7 @@ class ChatModel extends Model {
     print("SPENNT" + spends);
     // return "hey";
 
-    return "You spent ${todayExpenseTotal} today. That's ${percntDiff}% ${(todayExpenseTotal >= lifetimeAverageDaySpend) ? "higher" : "lower"} than your lifetime average day spend which is $lifetimeAverageDaySpend. You spent on these today:\n" +
+    return "You spent ${todayExpenseTotal} today. That's ${percntDiff}% ${(todayExpenseTotal >= lifetimeAverageDaySpend) ? "higher" : "lower"} than your lifetime average day spend which is $lifetimeAverageDaySpend. You spent on these today:\n\n" +
         spends;
 
     //  "dateTime": dateTime,
@@ -130,7 +130,7 @@ class ChatModel extends Model {
         msgText.toLowerCase().contains("what to do") ||
         msgText.toLowerCase().contains("help")) {
       reply = "Hey there ${appModel.user.email.split("@")[0]}! How you doing? I am Paypr, Papyrus's official chatbot 🤖. I like to plant trees!! 🌳 Aside from saving the earth and making retailers more competitive by providing digital receipts,  " +
-          "I am also tasked to:\n1. Informing you on GREAT EXCLUSIVE DEALS from partner stores tailored to your liking 🤑\n2. Assist and alert you on your spending and expense tracking ⚠,and\n3. Act as a readily available hotline for concerns on our partner stores. 📞\n \nSo don't hesitate to message me anytime 🤙😉";
+          "I am also tasked to:\n\n1. Informing you on GREAT EXCLUSIVE DEALS from partner stores tailored to your liking 🤑\n2. Assist and alert you on your spending and expense tracking ⚠,and\n3. Act as a readily available hotline for concerns on our partner stores. 📞\n \nSo don't hesitate to message me anytime 🤙😉";
 
       // reply = responseToChoiceMessages[0];
     }

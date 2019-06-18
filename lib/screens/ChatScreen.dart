@@ -10,6 +10,7 @@ import 'package:papyrus_client/models/AppModel.dart';
 import 'package:papyrus_client/models/ChatModel.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 import 'package:papyrus_client/helpers/MessageBox.dart';
+import 'package:keyboard_visibility/keyboard_visibility.dart';
 
 class ChatScreen extends StatefulWidget {
   ChatModel cModel;
@@ -28,6 +29,7 @@ class _ChatScreenState extends State<ChatScreen> {
   FocusNode fn = FocusNode();
 
   double slidePanelChoicesHeight = 0;
+  bool keyBoardUp = false;
 
   double chatHeight = h;
 
@@ -35,6 +37,15 @@ class _ChatScreenState extends State<ChatScreen> {
   void initState() {
     // TODO: implement initState
     cModel.init();
+
+    KeyboardVisibilityNotification().addNewListener(onChange: (bool visible) {
+      
+      print(visible);
+
+      setState(() {
+              keyBoardUp = visible;
+            });
+    });
     super.initState();
   }
 
@@ -64,7 +75,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 duration: Duration(milliseconds: 100),
                 // margin: EdgeInsets.symmetric(horizontal: sizeMulW*30, vertical: sizeMulH*30),
                 width: w,
-                height: chatHeight,
+                height: (!keyBoardUp)?h:0.55*h,
                 // contentPadding: EdgeInsets.all(0),
 
                 child: ScopedModelDescendant<AppModel>(
@@ -76,8 +87,8 @@ class _ChatScreenState extends State<ChatScreen> {
                         return Material(
                           color: Colors.white.withAlpha(0),
                           child: ClipRRect(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(sizeMulW * 30)),
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(sizeMulW * 30)),
                             child: new Container(
                               width: w,
                               height: h,
@@ -102,7 +113,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                           reverse: true,
                                           controller: cModel.scont,
                                           scrollDirection: Axis.vertical,
-                                          padding: EdgeInsets.all(sizeMulW * 10),
+                                          padding:
+                                              EdgeInsets.all(sizeMulW * 10),
                                           itemCount: appModel
                                               .allMessages.messages.length,
                                           itemBuilder:
@@ -192,7 +204,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                                             fontSize:
                                                                 sizeMulW * 23,
                                                             fontWeight:
-                                                                FontWeight.w600),
+                                                                FontWeight
+                                                                    .w600),
                                                       ),
                                                     ),
                                                     SizedBox(
@@ -207,16 +220,17 @@ class _ChatScreenState extends State<ChatScreen> {
                                                                         sizeMulW *
                                                                             2),
                                                                 width:
-                                                                    sizeMulW * 8,
+                                                                    sizeMulW *
+                                                                        8,
                                                                 height:
-                                                                    sizeMulW * 8,
+                                                                    sizeMulW *
+                                                                        8,
                                                                 decoration: BoxDecoration(
                                                                     color: Colors
                                                                         .white,
                                                                     borderRadius:
                                                                         BorderRadius.all(
-                                                                            Radius.circular(
-                                                                                3000))),
+                                                                            Radius.circular(3000))),
                                                               ),
                                                               Container(
                                                                 margin: EdgeInsets
@@ -224,16 +238,17 @@ class _ChatScreenState extends State<ChatScreen> {
                                                                         sizeMulW *
                                                                             2),
                                                                 width:
-                                                                    sizeMulW * 8,
+                                                                    sizeMulW *
+                                                                        8,
                                                                 height:
-                                                                    sizeMulW * 8,
+                                                                    sizeMulW *
+                                                                        8,
                                                                 decoration: BoxDecoration(
                                                                     color: Colors
                                                                         .white,
                                                                     borderRadius:
                                                                         BorderRadius.all(
-                                                                            Radius.circular(
-                                                                                3000))),
+                                                                            Radius.circular(3000))),
                                                               ),
                                                               Container(
                                                                 margin: EdgeInsets
@@ -241,16 +256,17 @@ class _ChatScreenState extends State<ChatScreen> {
                                                                         sizeMulW *
                                                                             2),
                                                                 width:
-                                                                    sizeMulW * 8,
+                                                                    sizeMulW *
+                                                                        8,
                                                                 height:
-                                                                    sizeMulW * 8,
+                                                                    sizeMulW *
+                                                                        8,
                                                                 decoration: BoxDecoration(
                                                                     color: Colors
                                                                         .white,
                                                                     borderRadius:
                                                                         BorderRadius.all(
-                                                                            Radius.circular(
-                                                                                3000))),
+                                                                            Radius.circular(3000))),
                                                               )
                                                             ],
                                                             // color: Colors.white,
@@ -313,8 +329,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                             height: sizeMulW * 35,
                                             child: OutlineButton(
                                               color: Colors.white,
-                                              borderSide:
-                                                  BorderSide(color: Colors.blue),
+                                              borderSide: BorderSide(
+                                                  color: Colors.blue),
                                               onPressed: () {
                                                 setState(() {
                                                   if (slidePanelChoicesHeight ==
@@ -331,7 +347,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                               child: Text(
                                                 cModel.choiceMessages[0],
                                                 style: TextStyle(
-                                                    fontWeight: FontWeight.w500),
+                                                    fontWeight:
+                                                        FontWeight.w500),
                                               ),
                                               shape: RoundedRectangleBorder(
                                                 borderRadius: BorderRadius.all(
@@ -346,8 +363,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                             height: sizeMulW * 35,
                                             child: OutlineButton(
                                               color: Colors.white,
-                                              borderSide:
-                                                  BorderSide(color: Colors.blue),
+                                              borderSide: BorderSide(
+                                                  color: Colors.blue),
                                               onPressed: () {
                                                 setState(() {
                                                   if (slidePanelChoicesHeight ==
@@ -364,7 +381,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                               child: Text(
                                                 cModel.choiceMessages[1],
                                                 style: TextStyle(
-                                                    fontWeight: FontWeight.w500),
+                                                    fontWeight:
+                                                        FontWeight.w500),
                                               ),
                                               shape: RoundedRectangleBorder(
                                                 borderRadius: BorderRadius.all(
@@ -379,8 +397,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                             height: sizeMulW * 35,
                                             child: OutlineButton(
                                               color: Colors.white,
-                                              borderSide:
-                                                  BorderSide(color: Colors.blue),
+                                              borderSide: BorderSide(
+                                                  color: Colors.blue),
                                               onPressed: () {
                                                 setState(() {
                                                   if (slidePanelChoicesHeight ==
@@ -397,7 +415,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                               child: Text(
                                                 cModel.choiceMessages[2],
                                                 style: TextStyle(
-                                                    fontWeight: FontWeight.w500),
+                                                    fontWeight:
+                                                        FontWeight.w500),
                                               ),
                                               shape: RoundedRectangleBorder(
                                                 borderRadius: BorderRadius.all(
@@ -412,8 +431,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                             height: sizeMulW * 35,
                                             child: OutlineButton(
                                               color: Colors.white,
-                                              borderSide:
-                                                  BorderSide(color: Colors.blue),
+                                              borderSide: BorderSide(
+                                                  color: Colors.blue),
                                               onPressed: () {
                                                 setState(() {
                                                   if (slidePanelChoicesHeight ==
@@ -430,7 +449,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                               child: Text(
                                                 cModel.choiceMessages[3],
                                                 style: TextStyle(
-                                                    fontWeight: FontWeight.w500),
+                                                    fontWeight:
+                                                        FontWeight.w500),
                                               ),
                                               shape: RoundedRectangleBorder(
                                                 borderRadius: BorderRadius.all(
@@ -443,10 +463,12 @@ class _ChatScreenState extends State<ChatScreen> {
                                       ),
                                       decoration: BoxDecoration(
                                         border: Border.all(
-                                            color: Colors.black.withOpacity(0.4)),
+                                            color:
+                                                Colors.black.withOpacity(0.4)),
                                         color: Colors.grey[200],
                                         borderRadius: BorderRadius.vertical(
-                                            top: Radius.circular(sizeMulW * 30)),
+                                            top:
+                                                Radius.circular(sizeMulW * 30)),
                                       ),
 
                                       // child: ,
@@ -471,10 +493,9 @@ class _ChatScreenState extends State<ChatScreen> {
                                                     height: h * 0.1,
                                                     decoration: BoxDecoration(
                                                       // color: Colors.green[700],
-                                                      borderRadius:
-                                                          BorderRadius.all(
-                                                              Radius.circular(
-                                                                  sizeMulW * 30)),
+                                                      borderRadius: BorderRadius
+                                                          .all(Radius.circular(
+                                                              sizeMulW * 30)),
                                                     ),
                                                     child: InkWell(
                                                       borderRadius:
@@ -486,11 +507,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                                           if (slidePanelChoicesHeight ==
                                                               0) {
                                                             slidePanelChoicesHeight =
-                                                                h * 0.4;
-
-                                                            chatHeight = 0.5 * h;
-                                                          } else {
-                                                            chatHeight = 0;
+                                                                h * 0.4; 
+                                                          } else { 
                                                             slidePanelChoicesHeight =
                                                                 0;
                                                           }
@@ -512,7 +530,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                                     backgroundCursorColor:
                                                         Colors.red,
                                                     style: TextStyle(
-                                                        fontSize: sizeMulW * 19),
+                                                        fontSize:
+                                                            sizeMulW * 19),
                                                     cursorColor: Colors.white,
                                                     controller: cModel.cont,
                                                     focusNode: fn,
@@ -540,7 +559,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                                       cModel.sendMessage();
                                                     },
                                                     child: Icon(
-                                                      FontAwesomeIcons.paperPlane,
+                                                      FontAwesomeIcons
+                                                          .paperPlane,
                                                       size: sizeMulW * 23,
                                                       color: Colors.white,
                                                     ),

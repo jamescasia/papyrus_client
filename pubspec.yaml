@@ -38,6 +38,7 @@ dependencies:
   shimmer:
   dotted_border:
   progress_indicators:
+  keyboard_visibility:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
