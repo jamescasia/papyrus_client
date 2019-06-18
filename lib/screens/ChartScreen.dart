@@ -98,25 +98,25 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                   left: sizeMulW * 197,
                                   top: sizeMulW * 108,
                                   child: GaugeChartLegendItem(
-                                      "Fuel", Colors.green[400]),
+                                      "Misc.", Colors.green[400]),
                                 ),
                                 Positioned(
                                   left: sizeMulW * 13,
                                   top: sizeMulW * 154,
                                   child: GaugeChartLegendItem(
-                                      "Transpo", Colors.green[300]),
+                                      "Transportation", Colors.green[300]),
                                 ),
+                                // Positioned(
+                                //   left: sizeMulW * 103,
+                                //   top: sizeMulW * 156,
+                                //   child: GaugeChartLegendItem(
+                                //       "School", Colors.green[200]),
+                                // ),
                                 Positioned(
-                                  left: sizeMulW * 103,
-                                  top: sizeMulW * 156,
-                                  child: GaugeChartLegendItem(
-                                      "School", Colors.green[200]),
-                                ),
-                                Positioned(
-                                  left: sizeMulW * 193,
+                                  left: sizeMulW * 180,
                                   top: sizeMulW * 150,
                                   child: GaugeChartLegendItem(
-                                      "Misc.", Colors.green[100]),
+                                      "Necessities", Colors.green[100]),
                                 ),
                               ],
                             ),
