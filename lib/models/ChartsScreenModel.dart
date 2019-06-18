@@ -17,6 +17,7 @@ import 'dart:math';
 import 'package:papyrus_client/data_models/DayExpense.dart';
 import 'package:papyrus_client/data_models/WeekExpense.dart';
 import 'package:papyrus_client/data_models/MonthExpense.dart';
+import 'dart:convert';
 
 class ChartsScreenModel extends Model {
   AppModel appModel;
@@ -25,9 +26,10 @@ class ChartsScreenModel extends Model {
   launch() {}
 
   List<charts.Series<DataSegment, String>> generateChartData(Period period) {
-    var map = appModel.dayExpense.toJson();
     var data;
     if (period == Period.DAILY) {
+print("ADADA");
+      print(jsonEncode(appModel.dayExpense.toJson()));
       data = [
         new DataSegment("totalSpentOnFood",
             appModel.dayExpense.totalSpentOnFood, "#f4a735"),

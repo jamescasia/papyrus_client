@@ -41,7 +41,8 @@ class UserExpense {
 
   UserExpense() {}
 
-  resetDateRecords() {
+  resetDateRecords(DateTime date) {
+    lastDateRecorded = date.toIso8601String();
     lastDateTotalExpenseAmount = 0;
     lastDateLeisureExpenseAmount = 0;
     lastDateFoodExpenseAmount = 0;
@@ -59,7 +60,8 @@ class UserExpense {
     lastWeekMiscellaneousExpenseAmount = 0;
   }
 
-  resetMonthRecords() {
+  resetMonthRecords(DateTime date) {
+    lastMonthRecorded = date.month.toString();
     lastMonthTotalExpenseAmount = 0;
     lastMonthLeisureExpenseAmount = 0;
     lastMonthFoodExpenseAmount = 0;

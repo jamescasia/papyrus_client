@@ -38,7 +38,7 @@ class AppModel extends Model {
   ReceiveReceiptModel receiveReceiptModel;
   ChatModel chatModel;
   ChartsScreenModel chartsScreenModel;
-  
+
   ReceiptsScreenModel receiptsScreenModel;
   FirebaseUser user;
   Directory rootDir;
@@ -139,8 +139,6 @@ class AppModel extends Model {
     //  reset();
     //  return;
 
-  
-
     listFileNamesOfReceiptsFoundInStorageAndGenerateReceipts();
     await prepareExpenseFiles();
     passiveUpdateUserExpense();
@@ -152,12 +150,11 @@ class AppModel extends Model {
     generateImage();
   }
 
-  void reset()async {
-     await prepareMessageFile();
-       deleteAllReceiptFiles();
-      deleteAllExpenseFiles();
-      deleteMessages();
-
+  void reset() async {
+    await prepareMessageFile();
+    deleteAllReceiptFiles();
+    deleteAllExpenseFiles();
+    deleteMessages();
   }
 
   void deleteAllExpenseFiles() async {
@@ -320,36 +317,9 @@ class AppModel extends Model {
 
     userExpense = await loadUserExpense();
     loadedUserExpense = true;
-
+  notifyListeners();
     print("lastweeks expense" +
         userExpense.lastWeekTotalExpenseAmount.toString());
-
-    dayExpense = DayExpense(
-        userExpense.lastDateRecorded,
-        userExpense.lastDateFoodExpenseAmount,
-        userExpense.lastDateMiscellaneousExpenseAmount,
-        userExpense.lastDateTransportationExpenseAmount,
-        userExpense.lastDateLeisureExpenseAmount,
-        userExpense.lastDateUtilitiesExpenseAmount,
-        userExpense.lastDateTotalExpenseAmount);
-
-    weekExpense = WeekExpense(
-        userExpense.lastWeekRecorded,
-        userExpense.lastWeekFoodExpenseAmount,
-        userExpense.lastWeekMiscellaneousExpenseAmount,
-        userExpense.lastWeekTransportationExpenseAmount,
-        userExpense.lastWeekLeisureExpenseAmount,
-        userExpense.lastWeekUtilitiesExpenseAmount,
-        userExpense.lastWeekTotalExpenseAmount);
-
-    monthExpense = MonthExpense(
-        userExpense.lastMonthRecorded,
-        userExpense.lastMonthFoodExpenseAmount,
-        userExpense.lastMonthMiscellaneousExpenseAmount,
-        userExpense.lastMonthTransportationExpenseAmount,
-        userExpense.lastMonthLeisureExpenseAmount,
-        userExpense.lastMonthUtilitiesExpenseAmount,
-        userExpense.lastMonthTotalExpenseAmount);
 
     userExpenseInit();
     // if(userE)
@@ -417,12 +387,39 @@ class AppModel extends Model {
 
     if (userExpense.lastDateRecorded == "" ||
         date.day != DateTime.parse(userExpense.lastDateRecorded).day) {
-      userExpense.resetDateRecords();
+      userExpense.resetDateRecords(date);
     }
     if (userExpense.lastMonthRecorded == "" ||
         date.month != DateTime.parse(userExpense.lastDateRecorded).month) {
-      userExpense.resetMonthRecords();
+      userExpense.resetMonthRecords(date);
     }
+
+    dayExpense = DayExpense(
+        userExpense.lastDateRecorded,
+        userExpense.lastDateFoodExpenseAmount,
+        userExpense.lastDateMiscellaneousExpenseAmount,
+        userExpense.lastDateTransportationExpenseAmount,
+        userExpense.lastDateLeisureExpenseAmount,
+        userExpense.lastDateUtilitiesExpenseAmount,
+        userExpense.lastDateTotalExpenseAmount);
+
+    weekExpense = WeekExpense(
+        userExpense.lastWeekRecorded,
+        userExpense.lastWeekFoodExpenseAmount,
+        userExpense.lastWeekMiscellaneousExpenseAmount,
+        userExpense.lastWeekTransportationExpenseAmount,
+        userExpense.lastWeekLeisureExpenseAmount,
+        userExpense.lastWeekUtilitiesExpenseAmount,
+        userExpense.lastWeekTotalExpenseAmount);
+
+    monthExpense = MonthExpense(
+        userExpense.lastMonthRecorded,
+        userExpense.lastMonthFoodExpenseAmount,
+        userExpense.lastMonthMiscellaneousExpenseAmount,
+        userExpense.lastMonthTransportationExpenseAmount,
+        userExpense.lastMonthLeisureExpenseAmount,
+        userExpense.lastMonthUtilitiesExpenseAmount,
+        userExpense.lastMonthTotalExpenseAmount);
   }
 
   void updateUserExpense(ExpenseItem expenseItem) {
@@ -431,7 +428,7 @@ class AppModel extends Model {
     if (userExpense.lastDateRecorded == "" ||
         date.day != DateTime.parse(userExpense.lastDateRecorded).day) {
       addDayExpense();
-      userExpense.resetDateRecords();
+      userExpense.resetDateRecords(date);
       // reset to 0
       // add the newly added expense item to category and total
 
@@ -439,7 +436,7 @@ class AppModel extends Model {
     if (userExpense.lastMonthRecorded == "" ||
         date.month != DateTime.parse(userExpense.lastDateRecorded).month) {
       addMonthExpense();
-      userExpense.resetMonthRecords();
+      userExpense.resetMonthRecords(date);
       userExpense.firstDayMonth = date.toIso8601String();
     }
 
