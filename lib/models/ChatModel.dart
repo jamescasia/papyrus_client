@@ -7,6 +7,9 @@ import 'package:papyrus_client/data_models/Message.dart';
 import 'package:papyrus_client/helpers/MessageBox.dart';
 
 import 'dart:math';
+import 'package:papyrus_client/data_models/DayExpense.dart';
+import 'package:papyrus_client/data_models/WeekExpense.dart';
+import 'package:papyrus_client/data_models/MonthExpense.dart';
 
 class ChatModel extends Model {
   AppModel appModel;
@@ -20,8 +23,7 @@ class ChatModel extends Model {
   List<String> choiceMessages = [
     "Tell me what you do.",
     "How is my spending?",
-    "How much more can I spend?"
-        "Can i buy this? ...",
+    "How much more can I spend?" ,
     "Are there any deals I am not aware of?",
     "I have a concern regarding something"
   ];
@@ -70,9 +72,53 @@ class ChatModel extends Model {
     List<String> responseToChoiceMessages = ["You spent ${appModel}"];
   }
 
+  // String get
+
   String getSpendingStatus() {
     var date = DateTime.now().toLocal();
-    return "You spent ${appModel.userExpense.lastDateTotalExpenseAmount} today. That's ${0}% ${(true) ? "higher" : "lower"} than your lifetime average day spend. You spent on these today";
+
+    var lifetimeAverageDaySpend;
+    try {
+      lifetimeAverageDaySpend =
+          appModel.userExpense.totalLifetimeExpenseAmount /
+              appModel.userExpense.numberOfRecordedDays;
+    } catch (e) {
+      lifetimeAverageDaySpend = appModel.userExpense.totalLifetimeExpenseAmount;
+    }
+    // DayExpense dayExpense = appModel.dayExpense;
+    var todayExpenseTotal = appModel.dayExpense.totalSpent;
+    var percntDiff;
+    try {
+      percntDiff = ((todayExpenseTotal - lifetimeAverageDaySpend) /
+              lifetimeAverageDaySpend) *
+          100;
+    } catch (e) {
+      percntDiff = 0.0;
+    }
+
+    var map = appModel.dayExpense.toJson();
+    var spends = "";
+
+    map.forEach((key, value) {
+      print("$key, $value");
+      if (key.contains("On")) {
+        spends += "${key.split("On")[1]}: $value\n";
+      }
+    });
+
+    print("SPENNT" + spends);
+    // return "hey";
+
+    return "You spent ${todayExpenseTotal} today. That's ${percntDiff}% ${(todayExpenseTotal >= lifetimeAverageDaySpend) ? "higher" : "lower"} than your lifetime average day spend which is $lifetimeAverageDaySpend. You spent on these today:\n" +
+        spends;
+
+    //  "dateTime": dateTime,
+    // "totalSpentOnFood": totalSpentOnFood,
+    // "totalSpentOnMiscellaneous": totalSpentOnMiscellaneous,
+    // "totalSpentOnTransportation": totalSpentOnTransportation,
+    // "totalSpentOnLeisure": totalSpentOnLeisure,
+    // "totalSpentOnNecessities": totalSpentOnNecessities,
+    // "totalSpent": totalSpent,
   }
 
   messageParserAndReplier(String msgText) async {
@@ -84,7 +130,7 @@ class ChatModel extends Model {
         msgText.toLowerCase().contains("what to do") ||
         msgText.toLowerCase().contains("help")) {
       reply = "Hey there ${appModel.user.email.split("@")[0]}! How you doing? I am Paypr, Papyrus's official chatbot 🤖. I like to plant trees!! 🌳 Aside from saving the earth and making retailers more competitive by providing digital receipts,  " +
-          "I am also tasked to:\n1. Informing you on GREAT EXCLUSIVE DEALS from partner stores tailored to your liking 🤑\n2. Assist and alert you on your spending and expense tracking ⚠,and\n3. Act as a readily available hotline for concerns on our partner stores. 📞\n So don't hesitate to message me anytime 🤙😉";
+          "I am also tasked to:\n1. Informing you on GREAT EXCLUSIVE DEALS from partner stores tailored to your liking 🤑\n2. Assist and alert you on your spending and expense tracking ⚠,and\n3. Act as a readily available hotline for concerns on our partner stores. 📞\n \nSo don't hesitate to message me anytime 🤙😉";
 
       // reply = responseToChoiceMessages[0];
     }
@@ -92,14 +138,18 @@ class ChatModel extends Model {
     if (msgText.toLowerCase() == choiceMessages[1].toLowerCase() ||
         msgText.toLowerCase().contains("spending") ||
         msgText.toLowerCase().contains("expenses")) {
+      print("query");
       reply = getSpendingStatus();
       // reply = responseToChoiceMessages[1];
     }
 
     await Future.delayed(Duration(
         milliseconds: Random().nextInt(1000) + 500 + reply.length * (2)));
-    replyMessage(reply, "");
     payprIsTyping = false;
+
+    await Future.delayed(Duration(milliseconds: 100));
+
+    replyMessage(reply, "");
     notifyListeners();
 
     await Future.delayed(Duration(milliseconds: 40));

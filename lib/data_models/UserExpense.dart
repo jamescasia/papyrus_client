@@ -11,7 +11,9 @@ class UserExpense {
   double necessitiesLifetimeExpenseAmount = 0;
   double miscellaneousLifetimeExpenseAmount = 0;
 
-  
+  int numberOfRecordedDays = 0;
+  int numberOfRecordedWeeks = 0;
+  int numberOfRecordedMonths = 0;
 
   String lastDateRecorded = "";
   String lastWeekRecorded = "";
@@ -33,7 +35,7 @@ class UserExpense {
   double lastMonthTotalExpenseAmount = 0;
   double lastMonthLeisureExpenseAmount = 0;
   double lastMonthFoodExpenseAmount = 0;
-  double lasMonthTransportationExpenseAmount = 0;
+  double lastMonthTransportationExpenseAmount = 0;
   double lastMonthNecessitiesExpenseAmount = 0;
   double lastMonthMiscellaneousExpenseAmount = 0;
 
@@ -61,7 +63,7 @@ class UserExpense {
     lastMonthTotalExpenseAmount = 0;
     lastMonthLeisureExpenseAmount = 0;
     lastMonthFoodExpenseAmount = 0;
-    lasMonthTransportationExpenseAmount = 0;
+    lastMonthTransportationExpenseAmount = 0;
     lastMonthNecessitiesExpenseAmount = 0;
     lastMonthMiscellaneousExpenseAmount = 0;
   }
@@ -99,13 +101,16 @@ class UserExpense {
         "lastMonthTotalExpenseAmount": lastMonthTotalExpenseAmount,
         "lastMonthLeisureExpenseAmount": lastMonthLeisureExpenseAmount,
         "lastMonthFoodExpenseAmount": lastMonthFoodExpenseAmount,
-        "lasMonthTransportationExpenseAmount":
-            lasMonthTransportationExpenseAmount,
+        "lastMonthTransportationExpenseAmount":
+            lastMonthTransportationExpenseAmount,
         "lastMonthNecessitiesExpenseAmount": lastMonthNecessitiesExpenseAmount,
         "lastMonthMiscellaneousExpenseAmount":
             lastMonthMiscellaneousExpenseAmount,
         "firstDayWeek": firstDayWeek,
-        "firstDayMonth": firstDayMonth
+        "firstDayMonth": firstDayMonth,
+        "numberOfRecordedDays": numberOfRecordedDays,
+        "numberOfRecordedWeeks": numberOfRecordedWeeks,
+        "numberOfRecordedMonths": numberOfRecordedMonths,
       };
 
   // factory UserExpense.fromJson(Map<String, dynamic> json) {
@@ -156,14 +161,17 @@ class UserExpense {
         lastMonthTotalExpenseAmount = json["lastMonthTotalExpenseAmount"],
         lastMonthLeisureExpenseAmount = json["lastMonthLeisureExpenseAmount"],
         lastMonthFoodExpenseAmount = json["lastMonthFoodExpenseAmount"],
-        lasMonthTransportationExpenseAmount =
-            json["lasMonthTransportationExpenseAmount"],
+        lastMonthTransportationExpenseAmount =
+            json["lastMonthTransportationExpenseAmount"],
         lastMonthNecessitiesExpenseAmount =
             json["lastMonthNecessitiesExpenseAmount"],
         lastMonthMiscellaneousExpenseAmount =
             json["lastMonthMiscellaneousExpenseAmount"],
         firstDayWeek = json['firstDayWeek'],
-        firstDayMonth = json['firstDayMonth'];
+        firstDayMonth = json['firstDayMonth'],
+        numberOfRecordedDays = json['numberOfRecordedDays'],
+        numberOfRecordedWeeks = json['numberOfRecordedWeeks'],
+        numberOfRecordedMonths = json['numberOfRecordedMonths'];
 }
 
 enum Category { LEISURE, FOOD, TRANSPORTATION, MISCELLANEOUS, NECESSITIES }

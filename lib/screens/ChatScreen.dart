@@ -29,6 +29,8 @@ class _ChatScreenState extends State<ChatScreen> {
 
   double slidePanelChoicesHeight = 0;
 
+  double chatHeight = h;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -51,10 +53,11 @@ class _ChatScreenState extends State<ChatScreen> {
     return Center(
       child: Stack(
         children: <Widget>[
-          Container(
+          AnimatedContainer(
+            duration: Duration(milliseconds: 300),
             // margin: EdgeInsets.symmetric(horizontal: sizeMulW*30, vertical: sizeMulH*30),
             width: w,
-            height: h,
+            height: chatHeight,
             // contentPadding: EdgeInsets.all(0),
 
             child: ScopedModelDescendant<AppModel>(
@@ -100,7 +103,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                         if (i ==
                                             appModel.allMessages.messages
                                                     .length -
-                                                1 )
+                                                1)
                                           // return SizedBox(
                                           //   width: 1,
                                           // );
@@ -438,9 +441,47 @@ class _ChatScreenState extends State<ChatScreen> {
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
                                           children: <Widget>[
-                                            SizedBox(
-                                              width: 0.05 * h,
-                                            ),
+                                            Container(
+                                                width: h * 0.1,
+                                                height: h * 0.1,
+                                                decoration: BoxDecoration(
+                                                  // color: Colors.green[700],
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(
+                                                              sizeMulW * 30)),
+                                                ),
+                                                child: InkWell(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(
+                                                              3000)),
+                                                  onTap: () {
+                                                    setState(() {
+                                                      if (slidePanelChoicesHeight ==
+                                                          0) {
+                                                        slidePanelChoicesHeight =
+                                                            h * 0.4;
+
+                                                        chatHeight = 0.5 * h;
+                                                      } else {
+                                                        chatHeight = 0;
+                                                        slidePanelChoicesHeight =
+                                                            0;
+                                                      }
+                                                    });
+                                                  },
+                                                  child: Icon(
+                                                    (slidePanelChoicesHeight ==
+                                                            0)
+                                                        ? FontAwesomeIcons
+                                                            .chevronCircleUp
+                                                        : FontAwesomeIcons
+                                                            .chevronCircleDown,
+                                                    color: Colors.white,
+                                                    size: sizeMulW * 30,
+                                                  ),
+                                                )),
                                             Expanded(
                                               child: EditableText(
                                                 backgroundCursorColor:
@@ -482,40 +523,42 @@ class _ChatScreenState extends State<ChatScreen> {
                                         ),
                                       ),
                                     ),
-                                    Positioned(
-                                        top: 0,
-                                        bottom: 0,
-                                        left: 0,
-                                        child: Container(
-                                            width: h * 0.1,
-                                            height: h * 0.1,
-                                            decoration: BoxDecoration(
-                                              // color: Colors.green[700],
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(
-                                                      sizeMulW * 30)),
-                                            ),
-                                            child: InkWell(
-                                              onTap: () {
-                                                setState(() {
-                                                  if (slidePanelChoicesHeight ==
-                                                      0)
-                                                    slidePanelChoicesHeight =
-                                                        h * 0.4;
-                                                  else
-                                                    slidePanelChoicesHeight = 0;
-                                                });
-                                              },
-                                              child: Icon(
-                                                (slidePanelChoicesHeight == 0)
-                                                    ? FontAwesomeIcons
-                                                        .chevronCircleUp
-                                                    : FontAwesomeIcons
-                                                        .chevronCircleDown,
-                                                color: Colors.white,
-                                                size: sizeMulW * 30,
-                                              ),
-                                            ))),
+                                    // Positioned(
+                                    //     top: 0,
+                                    //     bottom: 0,
+                                    //     left: 0,
+                                    //     child:
+
+                                    //      Container(
+                                    //         width: h * 0.1,
+                                    //         height: h * 0.1,
+                                    //         decoration: BoxDecoration(
+                                    //           // color: Colors.green[700],
+                                    //           borderRadius: BorderRadius.all(
+                                    //               Radius.circular(
+                                    //                   sizeMulW * 30)),
+                                    //         ),
+                                    //         child: InkWell(
+                                    //           onTap: () {
+                                    //             setState(() {
+                                    //               if (slidePanelChoicesHeight ==
+                                    //                   0)
+                                    //                 slidePanelChoicesHeight =
+                                    //                     h * 0.4;
+                                    //               else
+                                    //                 slidePanelChoicesHeight = 0;
+                                    //             });
+                                    //           },
+                                    //           child: Icon(
+                                    //             (slidePanelChoicesHeight == 0)
+                                    //                 ? FontAwesomeIcons
+                                    //                     .chevronCircleUp
+                                    //                 : FontAwesomeIcons
+                                    //                     .chevronCircleDown,
+                                    //             color: Colors.white,
+                                    //             size: sizeMulW * 30,
+                                    //           ),
+                                    //         ))),
                                   ],
                                 ),
                               )

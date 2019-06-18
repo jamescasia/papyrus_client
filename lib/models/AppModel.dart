@@ -57,6 +57,9 @@ class AppModel extends Model {
   bool receiptsLoaded = false;
   bool loadedMessages = false;
   String userExpenseJSONFilePath;
+  DayExpense dayExpense;
+  WeekExpense weekExpense;
+  MonthExpense monthExpense;
   // bool loaded
 
   List<FileSystemEntity> receiptFiles;
@@ -129,17 +132,10 @@ class AppModel extends Model {
     // var = await getExte
     await checkOrGenerateDirectories();
 
+    //  reset();
+    //  return;
 
-
-
-  //   await prepareMessageFile();
-  //   await deleteAllReceiptFiles();
-  //   deleteAllExpenseFiles();
-  // deleteMessages();
-
-
-
-
+  
 
     listFileNamesOfReceiptsFoundInStorageAndGenerateReceipts();
     await prepareExpenseFiles();
@@ -150,6 +146,14 @@ class AppModel extends Model {
 
     tempDir = await getTemporaryDirectory();
     generateImage();
+  }
+
+  void reset()async {
+     await prepareMessageFile();
+       deleteAllReceiptFiles();
+      deleteAllExpenseFiles();
+      deleteMessages();
+
   }
 
   void deleteAllExpenseFiles() async {
@@ -254,7 +258,6 @@ class AppModel extends Model {
   }
 
   void deleteMessages() {
-
     allMessages.messages = [];
     allMessagesFile.writeAsString(jsonEncode(allMessages.toJson()));
     List<int> toDelPos = [];
@@ -271,8 +274,8 @@ class AppModel extends Model {
   void passiveUpdateMessages() {
     List<int> toDelPos = [];
 
-    if(allMessages.messages.length>300) {
-      var start = allMessages.messages.length-300;
+    if (allMessages.messages.length > 300) {
+      var start = allMessages.messages.length - 300;
       allMessages.messages = allMessages.messages.sublist(start);
     }
 
@@ -317,6 +320,33 @@ class AppModel extends Model {
     print("lastweeks expense" +
         userExpense.lastWeekTotalExpenseAmount.toString());
 
+    dayExpense = DayExpense(
+        userExpense.lastDateRecorded,
+        userExpense.lastDateFoodExpenseAmount,
+        userExpense.lastDateMiscellaneousExpenseAmount,
+        userExpense.lastDateTransportationExpenseAmount,
+        userExpense.lastDateLeisureExpenseAmount,
+        userExpense.lastDateNecessitiesExpenseAmount,
+        userExpense.lastDateTotalExpenseAmount);
+
+    weekExpense = WeekExpense(
+        userExpense.lastWeekRecorded,
+        userExpense.lastWeekFoodExpenseAmount,
+        userExpense.lastWeekMiscellaneousExpenseAmount,
+        userExpense.lastWeekTransportationExpenseAmount,
+        userExpense.lastWeekLeisureExpenseAmount,
+        userExpense.lastWeekNecessitiesExpenseAmount,
+        userExpense.lastWeekTotalExpenseAmount);
+
+    monthExpense = MonthExpense(
+        userExpense.lastMonthRecorded,
+        userExpense.lastMonthFoodExpenseAmount,
+        userExpense.lastMonthMiscellaneousExpenseAmount,
+        userExpense.lastMonthTransportationExpenseAmount,
+        userExpense.lastMonthLeisureExpenseAmount,
+        userExpense.lastMonthNecessitiesExpenseAmount,
+        userExpense.lastMonthTotalExpenseAmount);
+
     userExpenseInit();
     // if(userE)
   }
@@ -345,7 +375,7 @@ class AppModel extends Model {
     if (category == "Transportation") {
       userExpense.lastDateTransportationExpenseAmount += total;
       userExpense.lastWeekTransportationExpenseAmount += total;
-      userExpense.lasMonthTransportationExpenseAmount += total;
+      userExpense.lastMonthTransportationExpenseAmount += total;
       userExpense.transportationLifetimeExpenseAmount += total;
     }
     if (category == "Miscellaneous") {
@@ -364,40 +394,16 @@ class AppModel extends Model {
   addDayExpense() async {
     // this shiet only get called when day closed
 
-    DayExpense dayExpense = DayExpense(
-        userExpense.lastDateRecorded,
-        userExpense.lastDateFoodExpenseAmount,
-        userExpense.lastDateMiscellaneousExpenseAmount,
-        userExpense.lastDateTransportationExpenseAmount,
-        userExpense.lastDateLeisureExpenseAmount,
-        userExpense.lastDateNecessitiesExpenseAmount,
-        userExpense.lastDateTotalExpenseAmount);
     await dayExpenseFile.writeAsString(jsonEncode(dayExpense.toJson()) + "\n",
         mode: FileMode.writeOnlyAppend);
   }
 
   addWeekExpense() async {
-    WeekExpense weekExpense = WeekExpense(
-        userExpense.lastWeekRecorded,
-        userExpense.lastWeekFoodExpenseAmount,
-        userExpense.lastWeekMiscellaneousExpenseAmount,
-        userExpense.lastWeekTransportationExpenseAmount,
-        userExpense.lastWeekLeisureExpenseAmount,
-        userExpense.lastWeekNecessitiesExpenseAmount,
-        userExpense.lastWeekTotalExpenseAmount);
     await dayExpenseFile.writeAsString(jsonEncode(weekExpense.toJson()) + "\n",
         mode: FileMode.writeOnlyAppend);
   }
 
   addMonthExpense() async {
-    MonthExpense monthExpense = MonthExpense(
-        userExpense.lastMonthRecorded,
-        userExpense.lastMonthFoodExpenseAmount,
-        userExpense.lastMonthMiscellaneousExpenseAmount,
-        userExpense.lasMonthTransportationExpenseAmount,
-        userExpense.lastMonthLeisureExpenseAmount,
-        userExpense.lastMonthNecessitiesExpenseAmount,
-        userExpense.lastMonthTotalExpenseAmount);
     await dayExpenseFile.writeAsString(jsonEncode(monthExpense.toJson()) + "\n",
         mode: FileMode.writeOnlyAppend);
   }
@@ -422,7 +428,6 @@ class AppModel extends Model {
         date.day != DateTime.parse(userExpense.lastDateRecorded).day) {
       addDayExpense();
       userExpense.resetDateRecords();
-      addToInvolvedExpenses(expenseItem.category, expenseItem.amount);
       // reset to 0
       // add the newly added expense item to category and total
 
@@ -431,18 +436,59 @@ class AppModel extends Model {
         date.month != DateTime.parse(userExpense.lastDateRecorded).month) {
       addMonthExpense();
       userExpense.resetMonthRecords();
-      addToInvolvedExpenses(expenseItem.category, expenseItem.amount);
       userExpense.firstDayMonth = date.toIso8601String();
     }
 
+    addToInvolvedExpenses(expenseItem.category, expenseItem.amount);
     userExpense.lastDateTotalExpenseAmount += expenseItem.amount;
     userExpense.lastMonthTotalExpenseAmount += expenseItem.amount;
     userExpense.lastWeekTotalExpenseAmount += expenseItem.amount;
+
+    updateDayExpense();
+    updateWeekExpense();
+    updateMonthExpense();
 
     userExpense.lastDateRecorded = date.toIso8601String();
     userExpense.lastMonthRecorded = date.month.toString();
     userExpenseJSONFile.writeAsString(jsonEncode(userExpense.toJson()));
     notifyListeners();
+  }
+
+  void updateDayExpense() {
+    dayExpense.totalSpent = userExpense.lastDateTotalExpenseAmount;
+    dayExpense.totalSpentOnFood = userExpense.lastDateFoodExpenseAmount;
+    dayExpense.totalSpentOnLeisure = userExpense.lastDateLeisureExpenseAmount;
+    dayExpense.totalSpentOnMiscellaneous =
+        userExpense.lastDateMiscellaneousExpenseAmount;
+    dayExpense.totalSpentOnNecessities =
+        userExpense.lastDateNecessitiesExpenseAmount;
+    dayExpense.totalSpentOnTransportation =
+        userExpense.lastDateTransportationExpenseAmount;
+  }
+
+  void updateWeekExpense() {
+    weekExpense.totalSpent = userExpense.lastWeekTotalExpenseAmount;
+    weekExpense.totalSpentOnFood = userExpense.lastWeekFoodExpenseAmount;
+    weekExpense.totalSpentOnLeisure = userExpense.lastWeekLeisureExpenseAmount;
+    weekExpense.totalSpentOnMiscellaneous =
+        userExpense.lastWeekMiscellaneousExpenseAmount;
+    weekExpense.totalSpentOnNecessities =
+        userExpense.lastWeekNecessitiesExpenseAmount;
+    weekExpense.totalSpentOnTransportation =
+        userExpense.lastWeekTransportationExpenseAmount;
+  }
+
+  void updateMonthExpense() {
+    monthExpense.totalSpent = userExpense.lastMonthTotalExpenseAmount;
+    monthExpense.totalSpentOnFood = userExpense.lastMonthFoodExpenseAmount;
+    monthExpense.totalSpentOnLeisure =
+        userExpense.lastMonthLeisureExpenseAmount;
+    monthExpense.totalSpentOnMiscellaneous =
+        userExpense.lastMonthMiscellaneousExpenseAmount;
+    monthExpense.totalSpentOnNecessities =
+        userExpense.lastMonthNecessitiesExpenseAmount;
+    monthExpense.totalSpentOnTransportation =
+        userExpense.lastMonthTransportationExpenseAmount;
   }
 
   void addExpenseItemToExpenseTxtFile(ExpenseItem expenseItem) async {
