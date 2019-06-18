@@ -83,46 +83,59 @@ class _ChatScreenState extends State<ChatScreen> {
                                   width: w,
                                   height: h * 0.9,
                                   color: Colors.white,
-                                  child: ListView.builder(
-                                    controller: cModel.scont,
-                                    scrollDirection: Axis.vertical,
-                                    padding: EdgeInsets.all(sizeMulW * 10),
-                                    itemCount:
-                                        appModel.allMessages.messages.length +
-                                            1,
-                                    itemBuilder: (BuildContext context, int i) {
-                                      if (i == 0)
-                                        return Container(
-                                          width: w,
-                                          height: h * 0.4,
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: <Widget>[
-                                              Icon(
-                                                FontAwesomeIcons.robot,
-                                                size: sizeMulW * 40,
-                                              ),
-                                              Text(
-                                                "Hello I am Paypr!",
-                                                style: TextStyle(
-                                                    fontSize: sizeMulW * 23),
-                                              )
-                                            ],
-                                          ),
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                        bottom: sizeMulW * 25,
+                                        top: sizeMulW * 50),
+                                    child: ListView.builder(
+                                      shrinkWrap: true,
+                                      reverse: true,
+                                      controller: cModel.scont,
+                                      scrollDirection: Axis.vertical,
+                                      padding: EdgeInsets.all(sizeMulW * 10),
+                                      itemCount:
+                                          appModel.allMessages.messages.length,
+                                      itemBuilder:
+                                          (BuildContext context, int i) {
+                                        if (i ==
+                                            appModel.allMessages.messages
+                                                    .length -
+                                                1 )
+                                          // return SizedBox(
+                                          //   width: 1,
+                                          // );
+                                          return Container(
+                                            width: w,
+                                            height: h * 0.4,
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: <Widget>[
+                                                Icon(
+                                                  FontAwesomeIcons.robot,
+                                                  size: sizeMulW * 40,
+                                                ),
+                                                Text(
+                                                  "Hello I am Paypr!",
+                                                  style: TextStyle(
+                                                      fontSize: sizeMulW * 23),
+                                                )
+                                              ],
+                                            ),
+                                          );
+                                        return Padding(
+                                          padding: EdgeInsets.only(
+                                              bottom: (i ==
+                                                      appModel.allMessages
+                                                              .messages.length -
+                                                          1)
+                                                  ? sizeMulW * 0
+                                                  : 0),
+                                          child: MessageBox(
+                                              appModel.allMessages.messages[i]),
                                         );
-                                      return Padding(
-                                        padding: EdgeInsets.only(
-                                            bottom: (i - 1 ==
-                                                    appModel.allMessages
-                                                            .messages.length -
-                                                        1)
-                                                ? sizeMulW * 30
-                                                : 0),
-                                        child: MessageBox(appModel
-                                            .allMessages.messages[i - 1]),
-                                      );
-                                    },
+                                      },
+                                    ),
                                   ),
                                 ),
                               ),
@@ -171,47 +184,61 @@ class _ChatScreenState extends State<ChatScreen> {
                                                 SizedBox(
                                                   width: sizeMulW * 20,
                                                 ),
-                                                CollectionSlideTransition(
-                                                  children: <Widget>[
-                                                    Container(
-                                                      margin: EdgeInsets.all(
-                                                          sizeMulW * 2),
-                                                      width: sizeMulW * 8,
-                                                      height: sizeMulW * 8,
-                                                      decoration: BoxDecoration(
-                                                          color: Colors.white,
-                                                          borderRadius:
-                                                              BorderRadius.all(
-                                                                  Radius.circular(
-                                                                      3000))),
-                                                    ),
-                                                    Container(
-                                                      margin: EdgeInsets.all(
-                                                          sizeMulW * 2),
-                                                      width: sizeMulW * 8,
-                                                      height: sizeMulW * 8,
-                                                      decoration: BoxDecoration(
-                                                          color: Colors.white,
-                                                          borderRadius:
-                                                              BorderRadius.all(
-                                                                  Radius.circular(
-                                                                      3000))),
-                                                    ),
-                                                    Container(
-                                                      margin: EdgeInsets.all(
-                                                          sizeMulW * 2),
-                                                      width: sizeMulW * 8,
-                                                      height: sizeMulW * 8,
-                                                      decoration: BoxDecoration(
-                                                          color: Colors.white,
-                                                          borderRadius:
-                                                              BorderRadius.all(
-                                                                  Radius.circular(
-                                                                      3000))),
-                                                    )
-                                                  ],
-                                                  // color: Colors.white,
-                                                ),
+                                                (cModel.payprIsTyping)
+                                                    ? CollectionSlideTransition(
+                                                        children: <Widget>[
+                                                          Container(
+                                                            margin:
+                                                                EdgeInsets.all(
+                                                                    sizeMulW *
+                                                                        2),
+                                                            width: sizeMulW * 8,
+                                                            height:
+                                                                sizeMulW * 8,
+                                                            decoration: BoxDecoration(
+                                                                color: Colors
+                                                                    .white,
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            3000))),
+                                                          ),
+                                                          Container(
+                                                            margin:
+                                                                EdgeInsets.all(
+                                                                    sizeMulW *
+                                                                        2),
+                                                            width: sizeMulW * 8,
+                                                            height:
+                                                                sizeMulW * 8,
+                                                            decoration: BoxDecoration(
+                                                                color: Colors
+                                                                    .white,
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            3000))),
+                                                          ),
+                                                          Container(
+                                                            margin:
+                                                                EdgeInsets.all(
+                                                                    sizeMulW *
+                                                                        2),
+                                                            width: sizeMulW * 8,
+                                                            height:
+                                                                sizeMulW * 8,
+                                                            decoration: BoxDecoration(
+                                                                color: Colors
+                                                                    .white,
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            3000))),
+                                                          )
+                                                        ],
+                                                        // color: Colors.white,
+                                                      )
+                                                    : SizedBox(width: 0.01),
                                               ],
                                             ),
                                           ),
@@ -254,109 +281,136 @@ class _ChatScreenState extends State<ChatScreen> {
                                 bottom: 0,
                                 child: AnimatedContainer(
                                   duration: Duration(milliseconds: 130),
+                                  width: w,
+                                  height: slidePanelChoicesHeight,
                                   child: Column(
                                     mainAxisSize: MainAxisSize.min,
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     children: <Widget>[
-                                      OutlineButton(
-                                        color: Colors.white,
-                                        borderSide:
-                                            BorderSide(color: Colors.blue),
-                                        onPressed: () {
-                                          setState(() {
-                                            if (slidePanelChoicesHeight == 0)
-                                              slidePanelChoicesHeight = h * 0.4;
-                                            else
-                                              slidePanelChoicesHeight = 0;
-                                          });
-                                          cModel.cont.text =
-                                              cModel.choiceMessages[0];
-                                          cModel.sendMessage();
-                                        },
-                                        child: Text(
-                                          cModel.choiceMessages[0],
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(sizeMulW * 30)),
-                                        ),
-                                      ),
-                                      OutlineButton(
-                                        color: Colors.white,
-                                        borderSide:
-                                            BorderSide(color: Colors.blue),
-                                        onPressed: () {
-                                          setState(() {
-                                            if (slidePanelChoicesHeight == 0)
-                                              slidePanelChoicesHeight = h * 0.4;
-                                            else
-                                              slidePanelChoicesHeight = 0;
-                                          });
-                                          cModel.cont.text =
-                                              cModel.choiceMessages[1];
-                                          cModel.sendMessage();
-                                        },
-                                        child: Text(
-                                          cModel.choiceMessages[1],
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(sizeMulW * 30)),
+                                      Container(
+                                        margin:
+                                            EdgeInsets.only(top: sizeMulW * 4),
+                                        height: sizeMulW * 35,
+                                        child: OutlineButton(
+                                          color: Colors.white,
+                                          borderSide:
+                                              BorderSide(color: Colors.blue),
+                                          onPressed: () {
+                                            setState(() {
+                                              if (slidePanelChoicesHeight == 0)
+                                                slidePanelChoicesHeight =
+                                                    h * 0.4;
+                                              else
+                                                slidePanelChoicesHeight = 0;
+                                            });
+                                            cModel.cont.text =
+                                                cModel.choiceMessages[0];
+                                            cModel.sendMessage();
+                                          },
+                                          child: Text(
+                                            cModel.choiceMessages[0],
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(sizeMulW * 30)),
+                                          ),
                                         ),
                                       ),
-                                      OutlineButton(
-                                        color: Colors.white,
-                                        borderSide:
-                                            BorderSide(color: Colors.blue),
-                                        onPressed: () {
-                                          setState(() {
-                                            if (slidePanelChoicesHeight == 0)
-                                              slidePanelChoicesHeight = h * 0.4;
-                                            else
-                                              slidePanelChoicesHeight = 0;
-                                          });
-                                          cModel.cont.text =
-                                              cModel.choiceMessages[2];
-                                          cModel.sendMessage();
-                                        },
-                                        child: Text(
-                                          cModel.choiceMessages[2],
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(sizeMulW * 30)),
+                                      Container(
+                                        margin:
+                                            EdgeInsets.only(top: sizeMulW * 4),
+                                        height: sizeMulW * 35,
+                                        child: OutlineButton(
+                                          color: Colors.white,
+                                          borderSide:
+                                              BorderSide(color: Colors.blue),
+                                          onPressed: () {
+                                            setState(() {
+                                              if (slidePanelChoicesHeight == 0)
+                                                slidePanelChoicesHeight =
+                                                    h * 0.4;
+                                              else
+                                                slidePanelChoicesHeight = 0;
+                                            });
+                                            cModel.cont.text =
+                                                cModel.choiceMessages[1];
+                                            cModel.sendMessage();
+                                          },
+                                          child: Text(
+                                            cModel.choiceMessages[1],
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(sizeMulW * 30)),
+                                          ),
                                         ),
                                       ),
-                                      OutlineButton(
-                                        color: Colors.white,
-                                        borderSide:
-                                            BorderSide(color: Colors.blue),
-                                        onPressed: () {
-                                          setState(() {
-                                            if (slidePanelChoicesHeight == 0)
-                                              slidePanelChoicesHeight = h * 0.4;
-                                            else
-                                              slidePanelChoicesHeight = 0;
-                                          });
-                                          cModel.cont.text =
-                                              cModel.choiceMessages[3];
-                                          cModel.sendMessage();
-                                        },
-                                        child: Text(
-                                          cModel.choiceMessages[3],
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500),
+                                      Container(
+                                        margin:
+                                            EdgeInsets.only(top: sizeMulW * 4),
+                                        height: sizeMulW * 35,
+                                        child: OutlineButton(
+                                          color: Colors.white,
+                                          borderSide:
+                                              BorderSide(color: Colors.blue),
+                                          onPressed: () {
+                                            setState(() {
+                                              if (slidePanelChoicesHeight == 0)
+                                                slidePanelChoicesHeight =
+                                                    h * 0.4;
+                                              else
+                                                slidePanelChoicesHeight = 0;
+                                            });
+                                            cModel.cont.text =
+                                                cModel.choiceMessages[2];
+                                            cModel.sendMessage();
+                                          },
+                                          child: Text(
+                                            cModel.choiceMessages[2],
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(sizeMulW * 30)),
+                                          ),
                                         ),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(sizeMulW * 30)),
+                                      ),
+                                      Container(
+                                        margin:
+                                            EdgeInsets.only(top: sizeMulW * 4),
+                                        height: sizeMulW * 35,
+                                        child: OutlineButton(
+                                          color: Colors.white,
+                                          borderSide:
+                                              BorderSide(color: Colors.blue),
+                                          onPressed: () {
+                                            setState(() {
+                                              if (slidePanelChoicesHeight == 0)
+                                                slidePanelChoicesHeight =
+                                                    h * 0.4;
+                                              else
+                                                slidePanelChoicesHeight = 0;
+                                            });
+                                            cModel.cont.text =
+                                                cModel.choiceMessages[3];
+                                            cModel.sendMessage();
+                                          },
+                                          child: Text(
+                                            cModel.choiceMessages[3],
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(sizeMulW * 30)),
+                                          ),
                                         ),
-                                      )
+                                      ),
                                     ],
                                   ),
                                   decoration: BoxDecoration(
@@ -367,8 +421,6 @@ class _ChatScreenState extends State<ChatScreen> {
                                         top: Radius.circular(sizeMulW * 30)),
                                   ),
 
-                                  width: w,
-                                  height: slidePanelChoicesHeight,
                                   // child: ,
                                 ),
                               ),

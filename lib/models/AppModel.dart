@@ -132,6 +132,7 @@ class AppModel extends Model {
 
 
 
+  //   await prepareMessageFile();
   //   await deleteAllReceiptFiles();
   //   deleteAllExpenseFiles();
   // deleteMessages();
@@ -247,12 +248,15 @@ class AppModel extends Model {
   }
 
   void addMessage(Message msg) {
-    allMessages.messages.add(msg);
+    allMessages.messages.insert(0, msg);
     allMessagesFile.writeAsString(jsonEncode(allMessages.toJson()));
     notifyListeners();
   }
 
   void deleteMessages() {
+
+    allMessages.messages = [];
+    allMessagesFile.writeAsString(jsonEncode(allMessages.toJson()));
     List<int> toDelPos = [];
 
     for (Message msg in allMessages.messages) {
@@ -267,8 +271,8 @@ class AppModel extends Model {
   void passiveUpdateMessages() {
     List<int> toDelPos = [];
 
-    if(allMessages.messages.length>100) {
-      var start = allMessages.messages.length-100;
+    if(allMessages.messages.length>300) {
+      var start = allMessages.messages.length-300;
       allMessages.messages = allMessages.messages.sublist(start);
     }
 

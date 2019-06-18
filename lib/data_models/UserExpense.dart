@@ -11,6 +11,8 @@ class UserExpense {
   double necessitiesLifetimeExpenseAmount = 0;
   double miscellaneousLifetimeExpenseAmount = 0;
 
+  
+
   String lastDateRecorded = "";
   String lastWeekRecorded = "";
   String lastMonthRecorded = "";

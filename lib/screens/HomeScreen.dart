@@ -977,6 +977,8 @@ class _HomeScreenBottomPartState extends State<HomeScreenBottomPart> {
 }
 
 showChat(BuildContext context, AppModel appModel) {
+
+  appModel.chatModel.init();
   showDialog(
       context: context,
       builder: (BuildContext context) {
