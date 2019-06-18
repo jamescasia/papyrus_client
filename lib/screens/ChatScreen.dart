@@ -39,12 +39,11 @@ class _ChatScreenState extends State<ChatScreen> {
     cModel.init();
 
     KeyboardVisibilityNotification().addNewListener(onChange: (bool visible) {
-      
       print(visible);
 
       setState(() {
-              keyBoardUp = visible;
-            });
+        keyBoardUp = visible;
+      });
     });
     super.initState();
   }
@@ -75,7 +74,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 duration: Duration(milliseconds: 100),
                 // margin: EdgeInsets.symmetric(horizontal: sizeMulW*30, vertical: sizeMulH*30),
                 width: w,
-                height: (!keyBoardUp)?h:0.55*h,
+                height: (!keyBoardUp) ? h : 0.55 * h,
                 // contentPadding: EdgeInsets.all(0),
 
                 child: ScopedModelDescendant<AppModel>(
@@ -313,153 +312,202 @@ class _ChatScreenState extends State<ChatScreen> {
                                   Positioned(
                                     left: 0,
                                     right: 0,
-                                    bottom: 0,
+                                    bottom: 0.05*h,
                                     child: AnimatedContainer(
-                                      duration: Duration(milliseconds: 130),
+                                      curve: Curves.bounceIn,
+                                      duration: Duration(milliseconds: 100),
                                       width: w,
                                       height: slidePanelChoicesHeight,
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: <Widget>[
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                                top: sizeMulW * 4),
-                                            height: sizeMulW * 35,
-                                            child: OutlineButton(
-                                              color: Colors.white,
-                                              borderSide: BorderSide(
-                                                  color: Colors.blue),
-                                              onPressed: () {
-                                                setState(() {
-                                                  if (slidePanelChoicesHeight ==
-                                                      0)
-                                                    slidePanelChoicesHeight =
-                                                        h * 0.4;
-                                                  else
-                                                    slidePanelChoicesHeight = 0;
-                                                });
-                                                cModel.cont.text =
-                                                    cModel.choiceMessages[0];
-                                                cModel.sendMessage();
-                                              },
-                                              child: Text(
-                                                cModel.choiceMessages[0],
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              ),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(
-                                                        sizeMulW * 30)),
-                                              ),
-                                            ),
-                                          ),
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                                top: sizeMulW * 4),
-                                            height: sizeMulW * 35,
-                                            child: OutlineButton(
-                                              color: Colors.white,
-                                              borderSide: BorderSide(
-                                                  color: Colors.blue),
-                                              onPressed: () {
-                                                setState(() {
-                                                  if (slidePanelChoicesHeight ==
-                                                      0)
-                                                    slidePanelChoicesHeight =
-                                                        h * 0.4;
-                                                  else
-                                                    slidePanelChoicesHeight = 0;
-                                                });
-                                                cModel.cont.text =
-                                                    cModel.choiceMessages[1];
-                                                cModel.sendMessage();
-                                              },
-                                              child: Text(
-                                                cModel.choiceMessages[1],
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              ),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(
-                                                        sizeMulW * 30)),
+                                      child: Container(
+                                        // height: h * 0.3,
+                                        width: w,
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: <Widget>[
+                                            Container(
+                                              // margin: EdgeInsets.only(
+                                              //     top: sizeMulW * 4),
+                                              // height: sizeMulW * 35,
+                                              child: OutlineButton(
+                                                color: Colors.white,
+                                                borderSide: BorderSide(
+                                                    color: Colors.blue),
+                                                onPressed: () {
+                                                  setState(() {
+                                                    if (slidePanelChoicesHeight ==
+                                                        0)
+                                                      slidePanelChoicesHeight =
+                                                          h*0.45;
+                                                    else
+                                                      slidePanelChoicesHeight =
+                                                          0;
+                                                  });
+                                                  cModel.cont.text =
+                                                      cModel.choiceMessages[0];
+                                                  cModel.sendMessage();
+                                                },
+                                                child: Text(
+                                                  cModel.choiceMessages[0],
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                ),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(
+                                                              sizeMulW * 30)),
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                                top: sizeMulW * 4),
-                                            height: sizeMulW * 35,
-                                            child: OutlineButton(
-                                              color: Colors.white,
-                                              borderSide: BorderSide(
-                                                  color: Colors.blue),
-                                              onPressed: () {
-                                                setState(() {
-                                                  if (slidePanelChoicesHeight ==
-                                                      0)
-                                                    slidePanelChoicesHeight =
-                                                        h * 0.4;
-                                                  else
-                                                    slidePanelChoicesHeight = 0;
-                                                });
-                                                cModel.cont.text =
-                                                    cModel.choiceMessages[2];
-                                                cModel.sendMessage();
-                                              },
-                                              child: Text(
-                                                cModel.choiceMessages[2],
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              ),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(
-                                                        sizeMulW * 30)),
-                                              ),
-                                            ),
-                                          ),
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                                top: sizeMulW * 4),
-                                            height: sizeMulW * 35,
-                                            child: OutlineButton(
-                                              color: Colors.white,
-                                              borderSide: BorderSide(
-                                                  color: Colors.blue),
-                                              onPressed: () {
-                                                setState(() {
-                                                  if (slidePanelChoicesHeight ==
-                                                      0)
-                                                    slidePanelChoicesHeight =
-                                                        h * 0.4;
-                                                  else
-                                                    slidePanelChoicesHeight = 0;
-                                                });
-                                                cModel.cont.text =
-                                                    cModel.choiceMessages[3];
-                                                cModel.sendMessage();
-                                              },
-                                              child: Text(
-                                                cModel.choiceMessages[3],
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              ),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(
-                                                        sizeMulW * 30)),
+                                            Container(
+                                              // margin: EdgeInsets.only(
+                                              //     top: sizeMulW * 4),
+                                              // height: sizeMulW * 35,
+                                              child: OutlineButton(
+                                                color: Colors.white,
+                                                borderSide: BorderSide(
+                                                    color: Colors.blue),
+                                                onPressed: () {
+                                                  setState(() {
+                                                    if (slidePanelChoicesHeight ==
+                                                        0)
+                                                      slidePanelChoicesHeight =
+                                                          h*0.45;
+                                                    else
+                                                      slidePanelChoicesHeight =
+                                                          0;
+                                                  });
+                                                  cModel.cont.text =
+                                                      cModel.choiceMessages[1];
+                                                  cModel.sendMessage();
+                                                },
+                                                child: Text(
+                                                  cModel.choiceMessages[1],
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                ),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(
+                                                              sizeMulW * 30)),
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ],
+                                            Container(
+                                              // margin: EdgeInsets.only(
+                                              //     top: sizeMulW * 4),
+                                              // height: sizeMulW * 35,
+                                              child: OutlineButton(
+                                                color: Colors.white,
+                                                borderSide: BorderSide(
+                                                    color: Colors.blue),
+                                                onPressed: () {
+                                                  setState(() {
+                                                    if (slidePanelChoicesHeight ==
+                                                        0)
+                                                      slidePanelChoicesHeight =
+                                                          h*0.45;
+                                                    else
+                                                      slidePanelChoicesHeight =
+                                                          0;
+                                                  });
+                                                  cModel.cont.text =
+                                                      cModel.choiceMessages[2];
+                                                  cModel.sendMessage();
+                                                },
+                                                child: Text(
+                                                  cModel.choiceMessages[2],
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                ),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(
+                                                              sizeMulW * 30)),
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              // margin: EdgeInsets.only(
+                                              //     top: sizeMulW * 4),
+                                              // height: sizeMulW * 35,
+                                              child: OutlineButton(
+                                                color: Colors.white,
+                                                borderSide: BorderSide(
+                                                    color: Colors.blue),
+                                                onPressed: () {
+                                                  setState(() {
+                                                    if (slidePanelChoicesHeight ==
+                                                        0)
+                                                      slidePanelChoicesHeight =
+                                                          h*0.45;
+                                                    else
+                                                      slidePanelChoicesHeight =
+                                                          0;
+                                                  });
+                                                  cModel.cont.text =
+                                                      cModel.choiceMessages[3];
+                                                  cModel.sendMessage();
+                                                },
+                                                child: Text(
+                                                  cModel.choiceMessages[3],
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                ),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(
+                                                              sizeMulW * 30)),
+                                                ),
+                                              ),
+                                            ), Container(
+                                              // margin: EdgeInsets.only(
+                                              //     top: sizeMulW * 4),
+                                              // height: sizeMulW * 35,
+                                              child: OutlineButton(
+                                                color: Colors.white,
+                                                borderSide: BorderSide(
+                                                    color: Colors.blue),
+                                                onPressed: () {
+                                                  setState(() {
+                                                    if (slidePanelChoicesHeight ==
+                                                        0)
+                                                      slidePanelChoicesHeight =
+                                                          h*0.45;
+                                                    else
+                                                      slidePanelChoicesHeight =
+                                                          0;
+                                                  });
+                                                  cModel.cont.text =
+                                                      cModel.choiceMessages[4];
+                                                  cModel.sendMessage();
+                                                },
+                                                child: Text(
+                                                  cModel.choiceMessages[4],
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                ),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(
+                                                              sizeMulW * 30)),
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(height: 20*sizeMulW,)
+                                          ],
+                                        ),
                                       ),
                                       decoration: BoxDecoration(
                                         border: Border.all(
@@ -507,8 +555,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                                           if (slidePanelChoicesHeight ==
                                                               0) {
                                                             slidePanelChoicesHeight =
-                                                                h * 0.4; 
-                                                          } else { 
+                                                                h*0.45;
+                                                          } else {
                                                             slidePanelChoicesHeight =
                                                                 0;
                                                           }

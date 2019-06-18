@@ -23,9 +23,9 @@ class ChatModel extends Model {
   List<String> choiceMessages = [
     "Tell me what you do.",
     "How is my spending?",
-    "How much more can I spend?" ,
+    "How much more can I spend?",
+    "I have a concern about something",
     "Are there any deals I am not aware of?",
-    "I have a concern regarding something"
   ];
 
   List<String> responseIfNotSure = ["I'm not sure if I understand..."];
@@ -133,14 +133,15 @@ class ChatModel extends Model {
           "I am also tasked to:\n\n1. Informing you on GREAT EXCLUSIVE DEALS from partner stores tailored to your liking 🤑\n2. Assist and alert you on your spending and expense tracking ⚠,and\n3. Act as a readily available hotline for concerns on our partner stores. 📞\n \nSo don't hesitate to message me anytime 🤙😉";
 
       // reply = responseToChoiceMessages[0];
-    }
-
-    if (msgText.toLowerCase() == choiceMessages[1].toLowerCase() ||
+    } else if (msgText.toLowerCase() == choiceMessages[1].toLowerCase() ||
         msgText.toLowerCase().contains("spending") ||
         msgText.toLowerCase().contains("expenses")) {
       print("query");
       reply = getSpendingStatus();
       // reply = responseToChoiceMessages[1];
+    } else {
+      reply =
+          "I'm not sure I understand, after all I'm still a teeny-tiny bot in this big world";
     }
 
     await Future.delayed(Duration(
