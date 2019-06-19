@@ -87,7 +87,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           color: Colors.white.withAlpha(0),
                           child: ClipRRect(
                             borderRadius: BorderRadius.all(
-                                Radius.circular(sizeMulW * 3000)),
+                                Radius.circular(sizeMulW * 30)),
                             child: new Container(
                               width: w,
                               height: h,
@@ -527,7 +527,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                       children: <Widget>[
                                         ClipRRect(
                                           borderRadius: BorderRadius.all(
-                                              Radius.circular(sizeMulW * 30)),
+                                              Radius.circular(sizeMulW * 3000)),
                                           child: Container(
                                             height: h * 0.1,
                                             width: w,
@@ -542,7 +542,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                                       // color: Colors.green[700],
                                                       borderRadius: BorderRadius
                                                           .all(Radius.circular(
-                                                              sizeMulW * 30)),
+                                                              sizeMulW * 3000)),
                                                     ),
                                                     child: InkWell(
                                                       borderRadius:
@@ -598,7 +598,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                                     borderRadius:
                                                         BorderRadius.all(
                                                             Radius.circular(
-                                                                sizeMulW * 30)),
+                                                                sizeMulW * 3000)),
                                                     splashColor: Colors.yellow,
                                                     highlightColor:
                                                         Colors.lightGreen,
