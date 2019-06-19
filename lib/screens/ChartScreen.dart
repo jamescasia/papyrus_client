@@ -747,7 +747,22 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                   ),
                                 ),
 
-                                // Text(data)
+                                Container(
+                                  margin: EdgeInsets.symmetric(
+                                      vertical: sizeMulW * 14),
+                                  child: Text(
+                                    (appModel.viewing_period == Period.DAILY)
+                                        ? "Previous Days"
+                                        : (appModel.viewing_period ==
+                                                Period.WEEKLY)
+                                            ? "Previous Weeks"
+                                            : "Previous Months",
+                                    style: TextStyle(
+                                        fontSize: sizeMulW * 23,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.grey[800]),
+                                  ),
+                                ),
 
                                 Container(
                                     padding: EdgeInsets.all(sizeMulW * 20),
@@ -775,6 +790,23 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                     // height: sizeMulW * 230,)
 
                                     ),
+
+                                Container(
+                                  margin: EdgeInsets.symmetric(
+                                      vertical: sizeMulW * 14),
+                                  child: Text(
+                                    (appModel.viewing_period == Period.DAILY)
+                                        ? "Lifetime Daily Totals"
+                                        : (appModel.viewing_period ==
+                                                Period.WEEKLY)
+                                            ? "Lifetime Weekly Totals"
+                                            : "Lifetime Monthly Totals",
+                                    style: TextStyle(
+                                        fontSize: sizeMulW * 23,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.grey[800]),
+                                  ),
+                                ),
                                 Container(
                                     padding: EdgeInsets.all(sizeMulW * 20),
                                     width: MediaQuery.of(context).size.width,
@@ -793,16 +825,6 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                               width: 1,
                                             );
                                         })),
-                                Container(
-                                    padding: EdgeInsets.all(sizeMulW * 20),
-                                    width: MediaQuery.of(context).size.width,
-                                    height: sizeMulW * 230,
-                                    child: GroupedBarChart.withSampleData()),
-                                Container(
-                                    padding: EdgeInsets.all(sizeMulW * 20),
-                                    width: MediaQuery.of(context).size.width,
-                                    height: sizeMulW * 230,
-                                    child: GroupedBarChart.withSampleData()),
                               ],
                             ),
                           ),
