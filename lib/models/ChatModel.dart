@@ -74,8 +74,7 @@ class ChatModel extends Model {
 
   // String get
 
-  String getSpendingStatus() {
-    var date = DateTime.now().toLocal();
+  String getSpendingStatus() { 
 
     var lifetimeAverageDaySpend;
     try {

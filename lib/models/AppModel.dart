@@ -317,7 +317,7 @@ class AppModel extends Model {
 
     userExpense = await loadUserExpense();
     loadedUserExpense = true;
-  notifyListeners();
+    notifyListeners();
     print("lastweeks expense" +
         userExpense.lastWeekTotalExpenseAmount.toString());
 
@@ -373,26 +373,17 @@ class AppModel extends Model {
   }
 
   addWeekExpense() async {
-    await dayExpenseFile.writeAsString(jsonEncode(weekExpense.toJson()) + "\n",
+    await weekExpenseFile.writeAsString(jsonEncode(weekExpense.toJson()) + "\n",
         mode: FileMode.writeOnlyAppend);
   }
 
   addMonthExpense() async {
-    await dayExpenseFile.writeAsString(jsonEncode(monthExpense.toJson()) + "\n",
+    await monthExpenseFile.writeAsString(
+        jsonEncode(monthExpense.toJson()) + "\n",
         mode: FileMode.writeOnlyAppend);
   }
 
-  void passiveUpdateUserExpense() {
-    var date = DateTime.now().toLocal();
-
-    if (userExpense.lastDateRecorded == "" ||
-        date.day != DateTime.parse(userExpense.lastDateRecorded).day) {
-      userExpense.resetDateRecords(date);
-    }
-    if (userExpense.lastMonthRecorded == "" ||
-        date.month != DateTime.parse(userExpense.lastDateRecorded).month) {
-      userExpense.resetMonthRecords(date);
-    }
+  void initializePeriodExpenses(){
 
     dayExpense = DayExpense(
         userExpense.lastDateRecorded,
@@ -422,6 +413,42 @@ class AppModel extends Model {
         userExpense.lastMonthTotalExpenseAmount);
   }
 
+  void passiveUpdateUserExpense() {
+    var date = DateTime.now().toLocal();
+
+    if (userExpense.lastDateRecorded == "" ||
+        date.day != DateTime.parse(userExpense.lastDateRecorded).day) {
+      userExpense.resetDateRecords(date);
+    }
+    if (userExpense.lastMonthRecorded == "" ||
+        date.month != DateTime.parse(userExpense.lastDateRecorded).month) {
+      userExpense.resetMonthRecords(date);
+      userExpense.firstDayMonth = date.toIso8601String();
+    } 
+    initializePeriodExpenses(); 
+    updateDayExpense();
+    updateWeekExpense();
+    updateMonthExpense();
+
+    ExpenseAverages.lifetimeAverageDaySpend =
+        userExpense.totalLifetimeExpenseAmount /
+            userExpense.numberOfRecordedDays;
+
+    ExpenseAverages.lifetimeAverageWeekSpend =
+        userExpense.totalLifetimeExpenseAmount /
+            userExpense.numberOfRecordedWeeks;
+
+    ExpenseAverages.lifetimeAverageMonthSpend =
+        userExpense.totalLifetimeExpenseAmount /
+            userExpense.numberOfRecordedMonths;
+
+    userExpense.lastDateRecorded = date.toIso8601String();
+    userExpense.lastMonthRecorded = date.month.toString();
+    userExpenseJSONFile.writeAsString(jsonEncode(userExpense.toJson()));
+
+    
+  }
+
   void updateUserExpense(ExpenseItem expenseItem) {
     var date = DateTime.now().toLocal();
 
@@ -448,6 +475,18 @@ class AppModel extends Model {
     updateDayExpense();
     updateWeekExpense();
     updateMonthExpense();
+
+    ExpenseAverages.lifetimeAverageDaySpend =
+        userExpense.totalLifetimeExpenseAmount /
+            userExpense.numberOfRecordedDays;
+
+    ExpenseAverages.lifetimeAverageWeekSpend =
+        userExpense.totalLifetimeExpenseAmount /
+            userExpense.numberOfRecordedWeeks;
+
+    ExpenseAverages.lifetimeAverageMonthSpend =
+        userExpense.totalLifetimeExpenseAmount /
+            userExpense.numberOfRecordedMonths;
 
     userExpense.lastDateRecorded = date.toIso8601String();
     userExpense.lastMonthRecorded = date.month.toString();

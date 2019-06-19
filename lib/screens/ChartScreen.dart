@@ -10,6 +10,9 @@ import 'package:papyrus_client/models/AppModel.dart';
 import 'package:papyrus_client/data_models/UserExpense.dart';
 import 'package:papyrus_client/models/ChartsScreenModel.dart';
 import 'package:flutter_circular_chart/flutter_circular_chart.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'package:flutter/cupertino.dart';
 
 class ChartScreen extends StatefulWidget {
   @override
@@ -151,6 +154,210 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                 // // // Text(),
 
                                 Container(
+                                  child: Column(
+                                    children: <Widget>[
+                                      Container(
+                              child: Column(
+                                children: <Widget>[
+                                  Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Text(
+                                        "TOTAL SPENT",
+                                        style: TextStyle(
+                                            fontSize: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.042,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.grey[800]),
+                                      ),
+                                      Material(
+                                        color: Colors.white.withOpacity(0),
+                                        child: InkWell(
+                                          splashColor:
+                                              Colors.white.withAlpha(0),
+                                          highlightColor:
+                                              Colors.black.withOpacity(0.1),
+                                          onTap: () {
+                                            // Navigator.push(
+                                            //     context,
+                                            //     CupertinoPageRoute(
+                                            //         builder: (context) =>
+                                            //             ShowQRScreen()));
+                                          },
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(3000)),
+                                          child: Icon(
+                                            Icons.keyboard_arrow_down,
+                                            // FontAwesomeIcons.dollarSign,
+                                            color:  Colors.grey[800],
+                                            size: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.05,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  ConstrainedBox(
+                                    constraints: new BoxConstraints(
+                                      // minHeight: 100*sizeMulW,
+                                      minWidth: 160 * sizeMulW,
+
+                                      // maxHeight: 30.0,
+                                      // maxWidth: 30.0,
+                                    ),
+                                    child: Material(
+                                      // shape: CircleBorder(),
+                                      color: Colors.white.withAlpha(0),
+                                      child: InkWell(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(15 * sizeMulW)),
+                                        onTap: () {
+                                          // print(result);
+                                        },
+                                        splashColor: Colors.greenAccent,
+                                        highlightColor: Colors.green,
+                                        child: Container(
+                                          // height: sizeMulW * 80,
+                                          padding: EdgeInsets.all(
+                                              MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.042),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.end,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: <Widget>[
+                                              (appModel.loadedUserExpense)?Text(
+                                                  ((appModel.viewing_period == Period.DAILY &&
+                                                              appModel
+                                                                  .loadedUserExpense)
+                                                          ? addCommas(int.parse(appModel
+                                                              .userExpense
+                                                              .lastDateTotalExpenseAmount
+                                                              .toStringAsFixed(
+                                                                  2)
+                                                              .split('.')[0]))
+                                                          : (appModel.viewing_period == Period.MONTHLY &&
+                                                                  appModel
+                                                                      .loadedUserExpense)
+                                                              ? addCommas(int.parse(appModel
+                                                                  .userExpense
+                                                                  .lastMonthTotalExpenseAmount
+                                                                  .toStringAsFixed(2)
+                                                                  .split('.')[0]))
+                                                              : (appModel.viewing_period == Period.WEEKLY && appModel.loadedUserExpense) ? addCommas(int.parse(appModel.userExpense.lastWeekTotalExpenseAmount.toStringAsFixed(2).split('.')[0])) : "0") +
+                                                      ".",
+                                                  style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.09, fontWeight: FontWeight.w600, color:  Colors.grey[800])):SizedBox(width: 0.001,),
+
+                                             (appModel.loadedUserExpense)? Container(
+                                                padding: EdgeInsets.only(
+                                                    bottom: 4 * sizeMulW),
+                                                child: Text(
+                                                    (appModel.viewing_period == Period.DAILY && appModel.loadedUserExpense &&
+                                                                    (int.parse(appModel.userExpense.lastWeekTotalExpenseAmount.toStringAsFixed(2).split('.')[1])) != 0)
+                                                        ? addCommas(int.parse(appModel
+                                                            .userExpense
+                                                            .lastDateTotalExpenseAmount
+                                                            .toStringAsFixed(2)
+                                                            .split('.')[1]))
+                                                        : (appModel.viewing_period == Period.MONTHLY && appModel.loadedUserExpense && 
+                                                                    (int.parse(appModel.userExpense.lastWeekTotalExpenseAmount.toStringAsFixed(2).split('.')[1])) != 0)
+                                                            ? addCommas(int.parse(appModel
+                                                                .userExpense
+                                                                .lastMonthTotalExpenseAmount
+                                                                .toStringAsFixed(
+                                                                    2)
+                                                                .split('.')[1]))
+                                                            : (appModel.viewing_period == Period.WEEKLY &&
+                                                                    appModel.loadedUserExpense &&
+                                                                    (int.parse(appModel.userExpense.lastWeekTotalExpenseAmount.toStringAsFixed(2).split('.')[1])) != 0)
+                                                                ? addCommas(int.parse(appModel.userExpense.lastWeekTotalExpenseAmount.toStringAsFixed(2).split('.')[1]))
+                                                                : "00",
+                                                    style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.05, fontWeight: FontWeight.bold, color: Colors.grey[800])),
+                                              ):SizedBox(width:0.001),
+                                              // ),
+                                            ],
+                                          ),
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(
+                                                      15 * sizeMulW)),
+                                              border: Border.all(
+                                                  color: Colors.white,
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.005)),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                                     
+
+                                      
+                                      Row(
+                                        children: <Widget>[
+                                          Icon(
+                                            FontAwesomeIcons.utensils,
+                                            size: sizeMulW * 24,
+                                            color: Color(0xfff4a735),
+                                          ),
+
+                                          Icon(FontAwesomeIcons.wineGlassAlt,
+                                          size: sizeMulW*24,
+                                          color:  Color(0xfffef09c), ),
+
+                                          Icon(
+                                            FontAwesomeIcons.campground,
+                                            size: sizeMulW * 24,
+                                            color:  Color(0xffee9698),
+                                          ),
+
+                                          Icon(FontAwesomeIcons.bus,
+                                          size: sizeMulW*24,
+                                          color: Color(0xff8ec8f8),  ),
+
+                                          Icon(FontAwesomeIcons.toiletPaper,
+                                          size: sizeMulW*24,
+                                          color:  Color(0xffa1d2a6), 
+                                          ), 
+                                          // Icon(
+                                          // if (receipt.category == "Transportation") iconColor = Color(0xff8ec8f8);
+                                          // if (receipt.category == "Miscellaneous") iconColor = Color(0xffee9698);
+                                          // if (receipt.category == "Utilities") iconColor = Color(0xffa1d2a6);
+                                          // if (receipt.category == "Leisure") iconColor = Color(0xfffef09c);
+                                          // if (receipt.category == "Food") iconColor = Color(0xfff4a735);
+                                          //                       (receipt.category == "Leisure")
+                                          //                           ? FontAwesomeIcons.wineGlassAlt
+                                          //                           : (receipt.category == "Transportation")
+                                          //                               ? FontAwesomeIcons.campground
+                                          //                               : (receipt.category == "Food")
+                                          //                                   ? FontAwesomeIcons.utensils
+                                          //                                   : (receipt.category == "Utilities")
+                                          //                                       ? FontAwesomeIcons.toiletPaper
+                                          //                                       : (receipt.category == "Miscellaneous")
+                                          //                                           ? FontAwesomeIcons.campground
+                                          //                                           : FontAwesomeIcons.file,
+                                          // size: sizeMulW * 26,
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
+
+                                Container(
                                     padding: EdgeInsets.all(sizeMulW * 20),
                                     width: MediaQuery.of(context).size.width,
                                     height: sizeMulW * 230,
@@ -245,7 +452,7 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                             ),
                                           ),
                                           Positioned(
-                                            left:34,
+                                            left: 34,
                                             right: 0,
                                             top: MediaQuery.of(context)
                                                     .size
@@ -253,8 +460,9 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                 0.91 *
                                                 0.09,
                                             child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              mainAxisSize: MainAxisSize.max,
                                               children: <Widget>[
                                                 // SizedBox(
                                                 //   width: MediaQuery.of(context).size.width * 0.05,

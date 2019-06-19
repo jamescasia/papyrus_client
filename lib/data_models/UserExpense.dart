@@ -179,6 +179,16 @@ class UserExpense {
 enum Category { LEISURE, FOOD, TRANSPORTATION, MISCELLANEOUS, UTILITIES }
 enum Period { MONTHLY, WEEKLY, DAILY }
 
+
+class ExpenseAverages {
+
+
+  static double lifetimeAverageDaySpend = 0;
+  static double lifetimeAverageWeekSpend = 0;
+  static double lifetimeAverageMonthSpend = 0;
+  
+
+}
 class ExpenseItem {
   String category;
   double amount;
