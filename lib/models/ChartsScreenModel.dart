@@ -86,8 +86,7 @@ class ChartsScreenModel extends Model {
     ];
   }
 
-  Future<List<charts.Series<DataBar, String>>> generateGroupedBarChartData(
-      Period period) async {
+  void loadExpensefiles() async {
     try {
       // print(await appModel.dayExpenseFile.readAsLines());
       dayExpenses = (await appModel.dayExpenseFile.readAsLines())
@@ -102,12 +101,17 @@ class ChartsScreenModel extends Model {
           .map((f) => MonthExpense.fromJson(jsonDecode(f)))
           .toList();
     } catch (e) {}
+  }
 
+  Future<List<charts.Series<DataBar, String>>> generateGroupedBarChartData(
+      Period period) async {
     var leisureTotalData;
     var foodTotalData;
     var transpoTotalData;
     var utilTotalData;
     var miscTotalData;
+
+    await loadExpensefiles();
     if (period == Period.DAILY) {
       foodTotalData = dayExpenses
           .sublist((dayExpenses.length >= 8) ? dayExpenses.length - 8 : 0)
@@ -330,6 +334,7 @@ class ChartsScreenModel extends Model {
 
   Future<List<charts.Series<DataPoint, DateTime>>> generateTimeSeriesChartData(
       Period period) async {
+    await loadExpensefiles();
     var totalSpentData;
     if (period == Period.DAILY) {
       totalSpentData = dayExpenses
