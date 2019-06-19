@@ -50,12 +50,13 @@ class UserExpense {
     lastDateTransportationExpenseAmount = 0;
     lastDateUtilitiesExpenseAmount = 0;
     lastDateMiscellaneousExpenseAmount = 0;
+    // firstDayMonth =
   }
 
   resetWeekRecords() {
-    
     DateTime date = DateTime.now().toLocal();
-    // lastWeekRecorded = date.w
+    firstDayWeek = date.subtract(Duration(days: date.weekday - 1)).toIso8601String();
+    lastWeekRecorded = firstDayWeek;
     lastWeekTotalExpenseAmount = 0;
     lastWeekLeisureExpenseAmount = 0;
     lastWeekFoodExpenseAmount = 0;
@@ -67,7 +68,8 @@ class UserExpense {
   resetMonthRecords() {
     DateTime date = DateTime.now().toLocal();
     lastMonthRecorded = date.month.toString();
-    print("RESETTED MONTH" + lastMonthRecorded);
+    firstDayMonth =
+        date.subtract(Duration(days: date.day - 1)).toIso8601String();
     lastMonthTotalExpenseAmount = 0;
     lastMonthLeisureExpenseAmount = 0;
     lastMonthFoodExpenseAmount = 0;

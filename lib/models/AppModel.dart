@@ -14,6 +14,7 @@ import 'package:ef_qrcode/ef_qrcode.dart';
 import 'ReceiveReceiptModel.dart';
 import 'ReceiptsScreenModel.dart';
 import 'package:papyrus_client/data_models/Receipt.dart';
+import 'package:intl/intl.dart';
 import 'dart:convert';
 import 'package:papyrus_client/data_models/UserExpense.dart';
 import 'package:papyrus_client/data_models/DayExpense.dart';
@@ -155,7 +156,7 @@ class AppModel extends Model {
     deleteAllReceiptFiles();
     deleteAllExpenseFiles();
     deleteMessages();
-     await File(allMessagesFilePath).delete();
+    await File(allMessagesFilePath).delete();
     await File(userExpenseJSONFilePath).delete();
     await File(userExpensesFilePath).delete();
     await File(dayExpenseFilePath).delete();
@@ -164,7 +165,6 @@ class AppModel extends Model {
   }
 
   void deleteAllExpenseFiles() async {
-
     List<FileSystemEntity> files;
     print("here are the files");
     files = Directory(dirMap['Expenses'])
@@ -176,8 +176,6 @@ class AppModel extends Model {
       } catch (e) {}
       print('ouyst');
     }
-    
-    
   }
 
   void deleteAllReceiptFiles() async {
@@ -364,25 +362,30 @@ class AppModel extends Model {
   }
 
   addDayExpense() async {
-    // if (dayExpense.dateTime != "") {
+    if (dayExpense.dateTime != "") {
       await dayExpenseFile.writeAsString(jsonEncode(dayExpense.toJson()) + "\n",
           mode: FileMode.writeOnlyAppend);
-    // }
+    }
 
     userExpense.numberOfRecordedDays++;
   }
 
   addWeekExpense() async {
-    await weekExpenseFile.writeAsString(jsonEncode(weekExpense.toJson()) + "\n",
-        mode: FileMode.writeOnlyAppend);
-
+    if (weekExpense.weekOfMonthNumber != "") {
+      await weekExpenseFile.writeAsString(
+          jsonEncode(weekExpense.toJson()) + "\n",
+          mode: FileMode.writeOnlyAppend);
+    }
     userExpense.numberOfRecordedWeeks++;
   }
 
   addMonthExpense() async {
-    await monthExpenseFile.writeAsString(
-        jsonEncode(monthExpense.toJson()) + "\n",
-        mode: FileMode.writeOnlyAppend);
+    if (monthExpense.monthOfYearNumber != "") {
+      await monthExpenseFile.writeAsString(
+          jsonEncode(monthExpense.toJson()) + "\n",
+          mode: FileMode.writeOnlyAppend);
+    }
+
     userExpense.numberOfRecordedMonths++;
   }
 
@@ -398,6 +401,7 @@ class AppModel extends Model {
 
     weekExpense = WeekExpense(
         userExpense.lastWeekRecorded,
+        userExpense.firstDayWeek,
         userExpense.lastWeekFoodExpenseAmount,
         userExpense.lastWeekMiscellaneousExpenseAmount,
         userExpense.lastWeekTransportationExpenseAmount,
@@ -407,6 +411,7 @@ class AppModel extends Model {
 
     monthExpense = MonthExpense(
         userExpense.lastMonthRecorded,
+        userExpense.firstDayMonth,
         userExpense.lastMonthFoodExpenseAmount,
         userExpense.lastMonthMiscellaneousExpenseAmount,
         userExpense.lastMonthTransportationExpenseAmount,
@@ -436,7 +441,7 @@ class AppModel extends Model {
     print("check new day mofos" +
         DateTime.now().toLocal().day.toString() +
         "vs" +
-         (userExpense.lastDateRecorded) );
+        (userExpense.lastDateRecorded));
     if (userExpense.lastDateRecorded == "" ||
         userExpense.lastDateRecorded == null) return true;
     return DateTime.now().toLocal().day !=
@@ -444,7 +449,14 @@ class AppModel extends Model {
   }
 
   bool isItANewWeek() {
-    return true;
+    if (userExpense.lastWeekRecorded == "" ||
+        userExpense.lastWeekRecorded == null) return true;
+
+    DateTime date = DateTime.now().toLocal();
+    return DateFormat('MM/dd/yyyy')
+            .format(date.subtract(Duration(days: date.weekday - 1))) !=
+        DateFormat('MM/dd/yyyy')
+            .format(DateTime.parse(userExpense.lastWeekRecorded));
   }
 
   bool isItANewMonth() {
@@ -481,12 +493,15 @@ class AppModel extends Model {
       addDayExpense();
       userExpense.resetDateRecords();
     }
-    if (isItANewWeek()) {}
+    if (isItANewWeek()) {
+      addWeekExpense();
+      userExpense.resetWeekRecords();
+    }
     if (isItANewMonth()) {
       addMonthExpense();
       userExpense.resetMonthRecords();
     }
-    
+
     updateDayExpense();
     updateWeekExpense();
     updateMonthExpense();
@@ -501,7 +516,10 @@ class AppModel extends Model {
     ExpenseAverages.lifetimeAverageMonthSpend =
         userExpense.totalLifetimeExpenseAmount /
             userExpense.numberOfRecordedMonths;
-    userExpenseJSONFile.writeAsString(jsonEncode(userExpense.toJson()), mode: FileMode.write);
+
+    // if(userExpense.)
+    userExpenseJSONFile.writeAsString(jsonEncode(userExpense.toJson()),
+        mode: FileMode.write);
     notifyListeners();
   }
 
@@ -533,7 +551,8 @@ class AppModel extends Model {
     ExpenseAverages.lifetimeAverageMonthSpend =
         userExpense.totalLifetimeExpenseAmount /
             userExpense.numberOfRecordedMonths;
-    userExpenseJSONFile.writeAsString(jsonEncode(userExpense.toJson()), mode: FileMode.write);
+    userExpenseJSONFile.writeAsString(jsonEncode(userExpense.toJson()),
+        mode: FileMode.write);
     // userExpenseJSONFile.writeAsString()
     notifyListeners();
 
@@ -541,6 +560,8 @@ class AppModel extends Model {
   }
 
   void updateDayExpense() {
+    // dayExpense.
+    dayExpense.dateTime = userExpense.lastDateRecorded;
     dayExpense.totalSpent = userExpense.lastDateTotalExpenseAmount;
     dayExpense.totalSpentOnFood = userExpense.lastDateFoodExpenseAmount;
     dayExpense.totalSpentOnLeisure = userExpense.lastDateLeisureExpenseAmount;
@@ -553,6 +574,7 @@ class AppModel extends Model {
   }
 
   void updateWeekExpense() {
+    weekExpense.dateOfFirstDayOfWeek = userExpense.firstDayWeek;
     weekExpense.totalSpent = userExpense.lastWeekTotalExpenseAmount;
     weekExpense.totalSpentOnFood = userExpense.lastWeekFoodExpenseAmount;
     weekExpense.totalSpentOnLeisure = userExpense.lastWeekLeisureExpenseAmount;
@@ -565,6 +587,7 @@ class AppModel extends Model {
   }
 
   void updateMonthExpense() {
+    monthExpense.dateOfFirstDayOfMonth = userExpense.firstDayMonth;
     monthExpense.totalSpent = userExpense.lastMonthTotalExpenseAmount;
     monthExpense.totalSpentOnFood = userExpense.lastMonthFoodExpenseAmount;
     monthExpense.totalSpentOnLeisure =
