@@ -314,7 +314,6 @@ class AppModel extends Model {
     weekExpenseFile = File(weekExpenseFilePath);
     monthExpenseFile = File(monthExpenseFilePath);
     userExpense = await loadUserExpense();
-    loadedUserExpense = true;
     notifyListeners();
     print("lastweeks expense" +
         userExpense.lastWeekTotalExpenseAmount.toString());
@@ -418,6 +417,9 @@ class AppModel extends Model {
         userExpense.lastMonthLeisureExpenseAmount,
         userExpense.lastMonthUtilitiesExpenseAmount,
         userExpense.lastMonthTotalExpenseAmount);
+
+        
+    loadedUserExpense = true;
   }
 
   // void newPeriodResetUserExpense() async {
