@@ -19,7 +19,7 @@ class SettingScreen extends StatefulWidget {
 class _SettingScreenState extends State<SettingScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold( 
+    return Scaffold(
       body: new Container(
         child: Column(
           children: <Widget>[
@@ -142,14 +142,13 @@ class _SettingScreenTopPartState extends State<SettingScreenTopPart> {
                               left: 0,
                               top: 24,
                               child: Container(
-                                width: sizeMulW*60,
+                                width: sizeMulW * 60,
                                 child: RaisedButton(
-                                  
                                   highlightElevation: 0,
                                   color: Colors.white.withOpacity(0),
                                   elevation: 0,
                                   splashColor: Colors.white.withAlpha(0),
-                                  highlightColor: Colors.black.withOpacity(0), 
+                                  highlightColor: Colors.black.withOpacity(0),
                                   onPressed: () {
                                     Navigator.pop(context);
                                   },
@@ -161,16 +160,18 @@ class _SettingScreenTopPartState extends State<SettingScreenTopPart> {
                                     // color: Colors.red,
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: <Widget>[
                                         Image.asset(
                                           'assets/icons/3x/back.png',
-                                          height:
-                                              MediaQuery.of(context).size.width *
-                                                  0.075,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.075,
                                         ),
-                                        
                                       ],
                                     ),
                                   ),
@@ -179,8 +180,10 @@ class _SettingScreenTopPartState extends State<SettingScreenTopPart> {
                             ),
                             Positioned(
                               left: sizeMulW * 30,
-                              top: MediaQuery.of(context).size.width * 0.38*0.45,
-                              child: Text("Settings", 
+                              top: MediaQuery.of(context).size.width *
+                                  0.38 *
+                                  0.45,
+                              child: Text("Settings",
                                   style: TextStyle(
                                     fontSize: sizeMulW * 35,
                                     color: Colors.white,
@@ -247,7 +250,7 @@ class SettingScreenBottomPart extends StatefulWidget {
 class _SettingScreenBottomPartState extends State<SettingScreenBottomPart> {
   @override
   Widget build(BuildContext context) {
-    return ScopedModelDescendant<AppModel>(builder: (context, child, model) {
+    return ScopedModelDescendant<AppModel>(builder: (context, child, appModel) {
       return Container(
         width: MediaQuery.of(context).size.width,
         // margin: EdgeInsets.symmetric(horizontal: sizeMulW*20),
@@ -280,7 +283,7 @@ class _SettingScreenBottomPartState extends State<SettingScreenBottomPart> {
                           child: Switch(
                             value: true,
                             onChanged: (bool value) {
-                              model.receiveUniquePromos = value;
+                              appModel.receiveUniquePromos = value;
                             },
                           ),
                         )
@@ -310,7 +313,7 @@ class _SettingScreenBottomPartState extends State<SettingScreenBottomPart> {
                           child: Switch(
                             value: true,
                             onChanged: (bool value) {
-                              model.receiveOpenToAllPromos = value;
+                              appModel.receiveOpenToAllPromos = value;
                             },
                           ),
                         )
@@ -323,18 +326,28 @@ class _SettingScreenBottomPartState extends State<SettingScreenBottomPart> {
                   height: sizeMulW * 65,
                   child: Padding(
                     padding: EdgeInsets.all(18.0 * sizeMulW),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          "Delete Account",
-                          style: TextStyle(
-                              color: Colors.red,
-                              fontSize: sizeMulW * 17,
-                              fontWeight: FontWeight.w500),
+                    child: Material(
+                      color: Colors.white.withAlpha(0),
+                      child: InkWell(
+                        splashColor: Colors.white.withAlpha(0),
+                        highlightColor: Colors.white.withAlpha(0),
+                        onTap: () {
+                          appModel.reset();
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              "Delete Account",
+                              style: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: sizeMulW * 17,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
