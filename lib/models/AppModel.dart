@@ -155,9 +155,16 @@ class AppModel extends Model {
     deleteAllReceiptFiles();
     deleteAllExpenseFiles();
     deleteMessages();
+     await File(allMessagesFilePath).delete();
+    await File(userExpenseJSONFilePath).delete();
+    await File(userExpensesFilePath).delete();
+    await File(dayExpenseFilePath).delete();
+    await File(weekExpenseFilePath).delete();
+    await File(monthExpenseFilePath).delete();
   }
 
   void deleteAllExpenseFiles() async {
+
     List<FileSystemEntity> files;
     print("here are the files");
     files = Directory(dirMap['Expenses'])
@@ -169,6 +176,8 @@ class AppModel extends Model {
       } catch (e) {}
       print('ouyst');
     }
+    
+    
   }
 
   void deleteAllReceiptFiles() async {
@@ -477,6 +486,10 @@ class AppModel extends Model {
       addMonthExpense();
       userExpense.resetMonthRecords();
     }
+    
+    updateDayExpense();
+    updateWeekExpense();
+    updateMonthExpense();
     ExpenseAverages.lifetimeAverageDaySpend =
         userExpense.totalLifetimeExpenseAmount /
             userExpense.numberOfRecordedDays;
