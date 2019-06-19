@@ -367,24 +367,29 @@ class AppModel extends Model {
 
   addDayExpense() async {
     // this shiet only get called when day closed
-
-    await dayExpenseFile.writeAsString(jsonEncode(dayExpense.toJson()) + "\n",
-        mode: FileMode.writeOnlyAppend);
+//  await userExpensesFile.writeAsString(
+//         jsonEncode(expenseItem.toJson()) + "\n",
+//         mode: FileMode.writeOnlyAppend);
+    if (dayExpense.dateTime != "") {
+      await dayExpenseFile.writeAsString(jsonEncode(dayExpense.toJson()) + "\n",
+          mode: FileMode.writeOnlyAppend);
+      await dayExpenseFile.writeAsString(jsonEncode(dayExpense.toJson()) + "\n",
+          mode: FileMode.writeOnlyAppend);
+    }
   }
 
   addWeekExpense() async {
     await weekExpenseFile.writeAsString(jsonEncode(weekExpense.toJson()) + "\n",
-        mode: FileMode.writeOnlyAppend);
+        mode: FileMode.append);
   }
 
   addMonthExpense() async {
     await monthExpenseFile.writeAsString(
         jsonEncode(monthExpense.toJson()) + "\n",
-        mode: FileMode.writeOnlyAppend);
+        mode: FileMode.append);
   }
 
-  void initializePeriodExpenses(){
-
+  void initializePeriodExpenses() {
     dayExpense = DayExpense(
         userExpense.lastDateRecorded,
         userExpense.lastDateFoodExpenseAmount,
@@ -413,27 +418,24 @@ class AppModel extends Model {
         userExpense.lastMonthTotalExpenseAmount);
   }
 
-  void newPeriodResetUserExpense(){
+  void newPeriodResetUserExpense() async {
     var date = DateTime.now().toLocal();
 
     if (userExpense.lastDateRecorded == "" ||
         date.day != DateTime.parse(userExpense.lastDateRecorded).day) {
-      addDayExpense();
-      userExpense.resetDateRecords(date); 
+      userExpense.resetDateRecords(date);
+      await addDayExpense();
     }
     if (userExpense.lastMonthRecorded == "" ||
         date.month != DateTime.parse(userExpense.lastDateRecorded).month) {
-      addMonthExpense();
       userExpense.resetMonthRecords(date);
       userExpense.firstDayMonth = date.toIso8601String();
+      await addMonthExpense();
     }
-
-
   }
 
-  void updateUserExpense(){ 
-    
-    var date = DateTime.now().toLocal(); 
+  void updateUserExpense() {
+    var date = DateTime.now().toLocal();
 
     updateDayExpense();
     updateWeekExpense();
@@ -455,8 +457,6 @@ class AppModel extends Model {
     userExpense.lastMonthRecorded = date.month.toString();
     userExpenseJSONFile.writeAsString(jsonEncode(userExpense.toJson()));
     notifyListeners();
-
-
   }
 
   void passiveUpdateUserExpense() {
@@ -473,8 +473,8 @@ class AppModel extends Model {
     //     date.month != DateTime.parse(userExpense.lastDateRecorded).month) {
     //   userExpense.resetMonthRecords(date);
     //   userExpense.firstDayMonth = date.toIso8601String();
-    // } 
-    // initializePeriodExpenses(); 
+    // }
+    // initializePeriodExpenses();
     // updateDayExpense();
     // updateWeekExpense();
     // updateMonthExpense();
@@ -494,13 +494,11 @@ class AppModel extends Model {
     // userExpense.lastDateRecorded = date.toIso8601String();
     // userExpense.lastMonthRecorded = date.month.toString();
     // userExpenseJSONFile.writeAsString(jsonEncode(userExpense.toJson()));
-
-    
   }
 
   void addToUserExpense(ExpenseItem expenseItem) {
     var date = DateTime.now().toLocal();
-  newPeriodResetUserExpense();
+    newPeriodResetUserExpense();
     // if (userExpense.lastDateRecorded == "" ||
     //     date.day != DateTime.parse(userExpense.lastDateRecorded).day) {
     //   addDayExpense();

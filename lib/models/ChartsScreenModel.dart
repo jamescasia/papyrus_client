@@ -5,7 +5,7 @@ import 'package:papyrus_client/helpers/TimeSeriesChart.dart';
 import 'package:papyrus_client/helpers/GroupBarChart.dart';
 import 'AppModel.dart';
 import 'package:flutter/material.dart';
-
+import 'package:intl/intl.dart';
 import 'package:papyrus_client/data_models/Message.dart';
 import 'package:flutter_circular_chart/flutter_circular_chart.dart';
 
@@ -18,18 +18,20 @@ import 'package:papyrus_client/data_models/DayExpense.dart';
 import 'package:papyrus_client/data_models/WeekExpense.dart';
 import 'package:papyrus_client/data_models/MonthExpense.dart';
 import 'dart:convert';
+import 'dart:io';
+import 'dart:async';
 
 class ChartsScreenModel extends Model {
   AppModel appModel;
   ChartsScreenModel(this.appModel);
+  List<DayExpense> dayExpenses;
 
-  launch() {}
+  launch() async {}
 
-  List<charts.Series<DataSegment, String>> generateChartData(Period period) {
+  List<charts.Series<DataSegment, String>> generateGaugeChartData(
+      Period period) {
     var data;
     if (period == Period.DAILY) {
-print("ADADA");
-      print(jsonEncode(appModel.dayExpense.toJson()));
       data = [
         new DataSegment("totalSpentOnFood",
             appModel.dayExpense.totalSpentOnFood, "#f4a735"),
@@ -82,26 +84,159 @@ print("ADADA");
     ];
   }
 
-  List<charts.Series<DataSegment, String>> createSampleData() {
-    var data = [
-      new DataSegment('a', 10, "#f4a735"),
-      new DataSegment('b', 20, "#fef09c"),
-      new DataSegment('c', 30, "#8ec8f8"),
-      new DataSegment('d', 35, "#a1d2a6"),
-      new DataSegment('e e', 5, "#ee9698"),
-      // new DataSegment('Highly Unusual', 20, "#ee9698"),
-    ];
+  Future<List<charts.Series<DataBar, String>>> generateGroupedBarChartData(
+      Period period) async {
+    try {
+
+      print(await appModel.dayExpenseFile.readAsLines());
+      dayExpenses = (await appModel.dayExpenseFile.readAsLines())
+          .map((f) => DayExpense.fromJson(jsonDecode(f)))
+          .toList();
+    } catch (e) {}
+    var leisureTotalData;
+    var foodTotalData;
+    var transpoTotalData;
+    var utilTotalData;
+    var miscTotalData;
+    if (period == Period.DAILY) {
+      foodTotalData = dayExpenses
+          .sublist((dayExpenses.length >= 6) ? dayExpenses.length - 6 : 0)
+          .map((f) => DataBar(
+              "food",
+              f.totalSpentOnFood,
+              "#f4a735",
+              DateFormat('MM dd yyyy').format(DateTime.parse(f.dateTime))
+
+              // f.dateTime
+              ))
+          .toList();
+      leisureTotalData = dayExpenses
+          .sublist((dayExpenses.length >= 6) ? dayExpenses.length - 6 : 0)
+          .map((f) => DataBar(
+              "leisure",
+              f.totalSpentOnLeisure,
+              "#fef09c",
+              DateFormat('MM dd yyyy').format(DateTime.parse(f.dateTime))
+              // f.dateTime
+              
+              ))
+          .toList();
+      transpoTotalData = dayExpenses
+          .sublist((dayExpenses.length >= 6) ? dayExpenses.length - 6 : 0)
+          .map((f) => DataBar(
+              "transportation",
+              f.totalSpentOnTransportation,
+              "#8ec8f8",
+              DateFormat('MM dd yyyy').format(DateTime.parse(f.dateTime))
+              // f.dateTime
+              
+              ))
+          .toList();
+
+      utilTotalData = dayExpenses
+          .sublist((dayExpenses.length >= 6) ? dayExpenses.length - 6 : 0)
+          .map((f) => DataBar(
+              "utilities",
+              f.totalSpentOnUtilities,
+              "#a1d2a6",
+              DateFormat('MM dd yyyy').format(DateTime.parse(f.dateTime))
+              // f.dateTime
+              
+              ))
+          .toList();
+
+      miscTotalData = dayExpenses
+          .sublist((dayExpenses.length >= 6) ? dayExpenses.length - 6 : 0)
+          .map((f) => DataBar(
+              "miscellaneous",
+              f.totalSpentOnMiscellaneous,
+              "#ee9698",
+              DateFormat('MM dd yyyy').format(DateTime.parse(f.dateTime))
+
+              // f.dateTime
+              ))
+          .toList();
+    }
 
     return [
-      new charts.Series<DataSegment, String>(
-        id: 'Segments',
-        domainFn: (DataSegment gd, _) => gd.name,
-        measureFn: (DataSegment gd, _) => gd.value,
-        colorFn: (DataSegment gd, _) => charts.Color.fromHex(code: gd.color),
-        data: data,
-      )
+      new charts.Series<DataBar, String>(
+        id: 'Food',
+        domainFn: (DataBar db, _) => db.date,
+        measureFn: (DataBar db, _) => db.value,
+        data: foodTotalData,
+        colorFn: (DataBar db, _) => charts.Color.fromHex(code: db.color),
+      ),
+      new charts.Series<DataBar, String>(
+        id: 'Leisure',
+        domainFn: (DataBar db, _) => db.date,
+        measureFn: (DataBar db, _) => db.value,
+        data: leisureTotalData,
+        colorFn: (DataBar db, _) => charts.Color.fromHex(code: db.color),
+      ),
+      new charts.Series<DataBar, String>(
+        id: 'Miscellaneous',
+        domainFn: (DataBar db, _) => db.date,
+        measureFn: (DataBar db, _) => db.value,
+        colorFn: (DataBar db, _) => charts.Color.fromHex(code: db.color),
+        data: miscTotalData,
+      ),
+      new charts.Series<DataBar, String>(
+        id: 'Transportation',
+        domainFn: (DataBar db, _) => db.date,
+        measureFn: (DataBar db, _) => db.value,
+        colorFn: (DataBar db, _) => charts.Color.fromHex(code: db.color),
+        data: transpoTotalData,
+      ),
+      new charts.Series<DataBar, String>(
+        id: 'Utilities',
+        domainFn: (DataBar db, _) => db.date,
+        measureFn: (DataBar db, _) => db.value,
+        colorFn: (DataBar db, _) => charts.Color.fromHex(code: db.color),
+        data: utilTotalData,
+      ),
     ];
+
+    // return [
+    //   new charts.Series<DataBar, String>(
+    //     id: 'Desktop',
+    //     domainFn: (DataBar sales, _) => sales.year,
+    //     measureFn: (DataBar sales, _) => sales.sales,
+    //     data: desktopSalesData,
+    //   ),
+    //   new charts.Series<OrdinalSales, String>(
+    //     id: 'Tablet',
+    //     domainFn: (DataBar sales, _) => sales.year,
+    //     measureFn: (DataBar sales, _) => sales.sales,
+    //     data: tableSalesData,
+    //   ),
+    //   new charts.Series<DataBar, String>(
+    //     id: 'Mobile',
+    //     domainFn: (DataBar sales, _) => sales.year,
+    //     measureFn: (DataBar sales, _) => sales.sales,
+    //     data: mobileSalesData,
+    //   ),
+    //    new charts.Series<DataBar, String>(
+    //     id: 'Mobile',
+    //     domainFn: (DataBar sales, _) => sales.year,
+    //     measureFn: (DataBar sales, _) => sales.sales,
+    //     data: mobileSalesData,
+    //   ),
+    //    new charts.Series<DataBar, String>(
+    //     id: 'Mobile',
+    //     domainFn: (DataBar sales, _) => sales.year,
+    //     measureFn: (DataBar sales, _) => sales.sales,
+    //     data: mobileSalesData,
+    //   ),
+    // ];
   }
+}
+
+class DataBar {
+  final String name;
+  final double value;
+  final String color;
+  final String date;
+  DataBar(this.name, this.value, this.color, this.date);
 }
 
 class DataSegment {

@@ -31,28 +31,7 @@ class GaugeChart extends StatelessWidget {
 }
  
 
-class GaugeChartLegend extends StatefulWidget {
-  double width;
-  double height;
-
-  GaugeChartLegend({this.width});
-  @override
-  _GaugeChartLegendState createState() =>
-      new _GaugeChartLegendState(width, height);
-}
-
-class _GaugeChartLegendState extends State<GaugeChartLegend> {
-  double width;
-  double height;
-  _GaugeChartLegendState(double width, double height);
-  @override
-  Widget build(BuildContext context) {
-    return new Container(
-      width: width,
-      height: this.height,
-    );
-  }
-}
+ 
 
 class GaugeChartLegendItem extends StatelessWidget {
   final String title;

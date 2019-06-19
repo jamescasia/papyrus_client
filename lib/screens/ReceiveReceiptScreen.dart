@@ -24,8 +24,8 @@ class _ReceiveReceiptScreenState extends State<ReceiveReceiptScreen> {
   void initState() {
     // TODO: implement initState
 
-    rrModel.launch();
     super.initState();
+    rrModel.launch();
   }
 
   @override

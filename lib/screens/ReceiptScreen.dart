@@ -30,8 +30,8 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
   @override
   void initState() {
     // TODO: implement initState
-    rsModel.launch();
     super.initState();
+    rsModel.launch();
   }
 
   @override

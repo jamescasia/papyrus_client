@@ -33,12 +33,13 @@ class _CameraQRScanTabState extends State<CameraQRScanTab> {
 
   @override
   void initState() {
+    
+    super.initState();
     print(
         "HHHHHHHHHHHHHHHHHHHHHHHHHHHHAAAAAAAAAAAAAAwhen is initstate called?");
     ccModel.launchQRScan();
     // initializeCameras(cs, this);
 
-    super.initState();
   }
 
   @override

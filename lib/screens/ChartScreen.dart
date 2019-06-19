@@ -15,11 +15,25 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/cupertino.dart';
 
 class ChartScreen extends StatefulWidget {
+  ChartsScreenModel chartsModel;
+
+  ChartScreen(this.chartsModel);
   @override
-  _ChartScreenState createState() => new _ChartScreenState();
+  _ChartScreenState createState() => new _ChartScreenState(chartsModel);
 }
 
 class _ChartScreenState extends State<ChartScreen> {
+  ChartsScreenModel chartsModel;
+
+  _ChartScreenState(this.chartsModel);
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    chartsModel.launch();
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(body: ChartScreenStack());
@@ -86,8 +100,10 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                 width: sizeMulW * 185,
                                                 height: sizeMulW * 185,
                                                 child: GaugeChart(
-                                                  chartsModel.generateChartData(
-                                                      appModel.viewing_period),
+                                                  chartsModel
+                                                      .generateGaugeChartData(
+                                                          appModel
+                                                              .viewing_period),
                                                   animate: true,
                                                 )),
                                           )),
@@ -157,210 +173,541 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                   child: Column(
                                     children: <Widget>[
                                       Container(
-                              child: Column(
-                                children: <Widget>[
-                                  Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: <Widget>[
-                                      Text(
-                                        "TOTAL SPENT",
-                                        style: TextStyle(
-                                            fontSize: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.042,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.grey[800]),
-                                      ),
-                                      Material(
-                                        color: Colors.white.withOpacity(0),
-                                        child: InkWell(
-                                          splashColor:
-                                              Colors.white.withAlpha(0),
-                                          highlightColor:
-                                              Colors.black.withOpacity(0.1),
-                                          onTap: () {
-                                            // Navigator.push(
-                                            //     context,
-                                            //     CupertinoPageRoute(
-                                            //         builder: (context) =>
-                                            //             ShowQRScreen()));
-                                          },
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(3000)),
-                                          child: Icon(
-                                            chevronTicker(appModel),
-                                            // FontAwesomeIcons.dollarSign,
-                                            color:  Colors.grey[800],
-                                            size: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.05,
-                                          ),
+                                        child: Column(
+                                          children: <Widget>[
+                                            ConstrainedBox(
+                                              constraints: new BoxConstraints(
+                                                // minHeight: 100*sizeMulW,
+                                                minWidth: 160 * sizeMulW,
+
+                                                // maxHeight: 30.0,
+                                                // maxWidth: 30.0,
+                                              ),
+                                              child: Material(
+                                                // shape: CircleBorder(),
+                                                color:
+                                                    Colors.white.withAlpha(0),
+                                                child: InkWell(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(
+                                                              15 * sizeMulW)),
+                                                  onTap: () {
+                                                    // print(result);
+                                                  },
+                                                  splashColor: Colors
+                                                      .greenAccent
+                                                      .withAlpha(0),
+                                                  highlightColor:
+                                                      Colors.green.withAlpha(0),
+                                                  child: Container(
+                                                    // height: sizeMulW * 80,
+                                                    // padding: EdgeInsets.all(
+                                                    //     MediaQuery.of(context)
+                                                    //             .size
+                                                    //             .width *
+                                                    //         0.042),
+                                                    child: Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.min,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .end,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: <Widget>[
+                                                        (appModel.loadedUserExpense)
+                                                            ? Text(((appModel.viewing_period == Period.DAILY && appModel.loadedUserExpense) ? addCommas(int.parse(appModel.userExpense.lastDateTotalExpenseAmount.toStringAsFixed(2).split('.')[0])) : (appModel.viewing_period == Period.MONTHLY && appModel.loadedUserExpense) ? addCommas(int.parse(appModel.userExpense.lastMonthTotalExpenseAmount.toStringAsFixed(2).split('.')[0])) : (appModel.viewing_period == Period.WEEKLY && appModel.loadedUserExpense) ? addCommas(int.parse(appModel.userExpense.lastWeekTotalExpenseAmount.toStringAsFixed(2).split('.')[0])) : "0") + ".",
+                                                                style: TextStyle(
+                                                                    fontSize: MediaQuery.of(context)
+                                                                            .size
+                                                                            .width *
+                                                                        0.09,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                    color: Colors.grey[
+                                                                        700]))
+                                                            : Text("0 ",
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        MediaQuery.of(context).size.width *
+                                                                            0.09,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                    color: Colors
+                                                                        .grey[700])),
+
+                                                        (appModel
+                                                                .loadedUserExpense)
+                                                            ? Container(
+                                                                padding: EdgeInsets.only(
+                                                                    bottom: 4 *
+                                                                        sizeMulW),
+                                                                child: Text(
+                                                                    decimalDigits(
+                                                                        appModel),
+                                                                    style: TextStyle(
+                                                                        fontSize:
+                                                                            MediaQuery.of(context).size.width *
+                                                                                0.05,
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .bold,
+                                                                        color: Colors
+                                                                            .grey[700])),
+                                                              )
+                                                            : Container(
+                                                                padding: EdgeInsets.only(
+                                                                    bottom: 4 *
+                                                                        sizeMulW),
+                                                                child: Text(
+                                                                    "00",
+                                                                    style: TextStyle(
+                                                                        fontSize:
+                                                                            MediaQuery.of(context).size.width *
+                                                                                0.05,
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .bold,
+                                                                        color: Colors
+                                                                            .grey[700])),
+                                                              ),
+
+                                                        // ),
+                                                      ],
+                                                    ),
+                                                    decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius
+                                                            .all(Radius
+                                                                .circular(15 *
+                                                                    sizeMulW)),
+                                                        border: Border.all(
+                                                            color: Colors.white,
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.005)),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: <Widget>[
+                                                Text(
+                                                  "TOTAL SPENT",
+                                                  style: TextStyle(
+                                                      fontSize:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.042,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: Colors.grey[800]),
+                                                ),
+                                                Material(
+                                                  color: Colors.white
+                                                      .withOpacity(0),
+                                                  child: InkWell(
+                                                    splashColor: Colors.white
+                                                        .withAlpha(0),
+                                                    highlightColor: Colors.black
+                                                        .withOpacity(0.1),
+                                                    onTap: () {
+                                                      // chartsModel.readFile();
+                                                      // Navigator.push(
+                                                      //     context,
+                                                      //     CupertinoPageRoute(
+                                                      //         builder: (context) =>
+                                                      //             ShowQRScreen()));
+                                                    },
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                3000)),
+                                                    child: Icon(
+                                                      chevronTicker(appModel),
+                                                      // FontAwesomeIcons.dollarSign,
+                                                      color: Colors.grey[800],
+                                                      size:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.05,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                  ConstrainedBox(
-                                    constraints: new BoxConstraints(
-                                      // minHeight: 100*sizeMulW,
-                                      minWidth: 160 * sizeMulW,
-
-                                      // maxHeight: 30.0,
-                                      // maxWidth: 30.0,
-                                    ),
-                                    child: Material(
-                                      // shape: CircleBorder(),
-                                      color: Colors.white.withAlpha(0),
-                                      child: InkWell(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(15 * sizeMulW)),
-                                        onTap: () {
-                                          // print(result);
-                                        },
-                                        splashColor: Colors.greenAccent,
-                                        highlightColor: Colors.green,
-                                        child: Container(
-                                          // height: sizeMulW * 80,
-                                          padding: EdgeInsets.all(
-                                              MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.042),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.end,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                      SizedBox(
+                                        height: sizeMulW * 24,
+                                      ),
+                                      Wrap(
+                                        // mainAxisSize: MainAxisSize.max,
+                                        // mainAxisAlignment:
+                                            // MainAxisAlignment.spaceEvenly,
+                                        children: <Widget>[
+                                          Column(
                                             children: <Widget>[
-                                              (appModel.loadedUserExpense)
-                                                  ? Text(
-                                                      ((appModel.viewing_period == Period.DAILY && appModel.loadedUserExpense) ? addCommas(int.parse(appModel.userExpense.lastDateTotalExpenseAmount.toStringAsFixed(2).split('.')[0])) : (appModel.viewing_period == Period.MONTHLY && appModel.loadedUserExpense) ? addCommas(int.parse(appModel.userExpense.lastMonthTotalExpenseAmount.toStringAsFixed(2).split('.')[0])) : (appModel.viewing_period == Period.WEEKLY && appModel.loadedUserExpense) ? addCommas(int.parse(appModel.userExpense.lastWeekTotalExpenseAmount.toStringAsFixed(2).split('.')[0])) : "0") +
-                                                          ".",
-                                                      style: TextStyle(
-                                                          fontSize: MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width *
-                                                              0.09,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                          color: Colors.grey[700]))
-                                                  : Text("0 ",
-                                                      style: TextStyle(
-                                                          fontSize: MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width *
-                                                              0.09,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                          color:Colors.grey[700])),
-
-                                              (appModel.loadedUserExpense)
-                                                  ? Container(
-                                                      padding: EdgeInsets.only(
-                                                          bottom: 4 * sizeMulW),
-                                                      child: Text(
-                                                          decimalDigits(
-                                                              appModel),
-                                                          style: TextStyle(
-                                                              fontSize: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width *
-                                                                  0.05,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color: Colors.grey[700])),
-                                                    )
-                                                  : Container(
-                                                      padding: EdgeInsets.only(
-                                                          bottom: 4 * sizeMulW),
-                                                      child: Text("00",
-                                                          style: TextStyle(
-                                                              fontSize: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width *
-                                                                  0.05,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color: Colors.grey[700]
-                                                                  )),
-                                                    ),
-                                              // ),
+                                              Icon(
+                                                FontAwesomeIcons.utensils,
+                                                size: sizeMulW * 34,
+                                                color: Color(0xfff4a735),
+                                              ),
+                                              SizedBox(
+                                                height: sizeMulW * 3,
+                                              ),
+                                              Text(
+                                                ((appModel.viewing_period ==
+                                                            Period.DAILY)
+                                                        ? appModel.dayExpense
+                                                            .totalSpentOnFood
+                                                        : (appModel.viewing_period ==
+                                                                Period.MONTHLY)
+                                                            ? appModel
+                                                                .monthExpense
+                                                                .totalSpentOnFood
+                                                            : appModel
+                                                                .weekExpense
+                                                                .totalSpentOnFood)
+                                                    .toString(),
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 16 * sizeMulW,
+                                                    color: Colors.grey[600]),
+                                              ),
+                                              SizedBox(
+                                                height: sizeMulW * 1,
+                                              ),
+                                              Text(
+                                                (100 *
+                                                            ((appModel.viewing_period ==
+                                                                    Period
+                                                                        .DAILY)
+                                                                ? appModel
+                                                                        .dayExpense
+                                                                        .totalSpentOnFood /
+                                                                    appModel
+                                                                        .dayExpense
+                                                                        .totalSpent
+                                                                : (appModel
+                                                                            .viewing_period ==
+                                                                        Period
+                                                                            .MONTHLY)
+                                                                    ? appModel
+                                                                            .monthExpense
+                                                                            .totalSpentOnFood /
+                                                                        appModel
+                                                                            .monthExpense
+                                                                            .totalSpent
+                                                                    : appModel
+                                                                            .weekExpense
+                                                                            .totalSpentOnFood /
+                                                                        appModel
+                                                                            .weekExpense
+                                                                            .totalSpent))
+                                                        .toStringAsFixed(0) +
+                                                    "%",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 16 * sizeMulW,
+                                                    color: Colors.grey[500]),
+                                              ),
                                             ],
                                           ),
-                                          decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(
-                                                      15 * sizeMulW)),
-                                              border: Border.all(
-                                                  color: Colors.white,
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.005)),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                                     
-
-                                      
-                                      Row(
-                                        children: <Widget>[
-                                          Icon(
-                                            FontAwesomeIcons.utensils,
-                                            size: sizeMulW * 24,
-                                            color: Color(0xfff4a735),
+                                          Column(
+                                            children: <Widget>[
+                                              Icon(
+                                                FontAwesomeIcons.wineGlassAlt,
+                                                size: sizeMulW * 34,
+                                                color: Color(0xfffef09c),
+                                              ),
+                                              SizedBox(
+                                                height: sizeMulW * 3,
+                                              ),
+                                              Text(
+                                                ((appModel.viewing_period ==
+                                                            Period.DAILY)
+                                                        ? appModel.dayExpense
+                                                            .totalSpentOnLeisure
+                                                        : (appModel.viewing_period ==
+                                                                Period.MONTHLY)
+                                                            ? appModel
+                                                                .monthExpense
+                                                                .totalSpentOnLeisure
+                                                            : appModel
+                                                                .weekExpense
+                                                                .totalSpentOnLeisure)
+                                                    .toString(),
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 16 * sizeMulW,
+                                                    color: Colors.grey[600]),
+                                              ),
+                                              SizedBox(
+                                                height: sizeMulW * 1,
+                                              ),
+                                              Text(
+                                                (100 *
+                                                            ((appModel.viewing_period ==
+                                                                    Period
+                                                                        .DAILY)
+                                                                ? appModel
+                                                                        .dayExpense
+                                                                        .totalSpentOnLeisure /
+                                                                    appModel
+                                                                        .dayExpense
+                                                                        .totalSpent
+                                                                : (appModel
+                                                                            .viewing_period ==
+                                                                        Period
+                                                                            .MONTHLY)
+                                                                    ? appModel
+                                                                            .monthExpense
+                                                                            .totalSpentOnLeisure /
+                                                                        appModel
+                                                                            .monthExpense
+                                                                            .totalSpent
+                                                                    : appModel
+                                                                            .weekExpense
+                                                                            .totalSpentOnLeisure /
+                                                                        appModel
+                                                                            .weekExpense
+                                                                            .totalSpent))
+                                                        .toStringAsFixed(0) +
+                                                    "%",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 16 * sizeMulW,
+                                                    color: Colors.grey[500]),
+                                              ),
+                                            ],
                                           ),
-
-                                          Icon(FontAwesomeIcons.wineGlassAlt,
-                                          size: sizeMulW*24,
-                                          color:  Color(0xfffef09c), ),
-
-                                          Icon(
-                                            FontAwesomeIcons.campground,
-                                            size: sizeMulW * 24,
-                                            color:  Color(0xffee9698),
+                                          Column(
+                                            children: <Widget>[
+                                              Icon(
+                                                FontAwesomeIcons.campground,
+                                                size: sizeMulW * 34,
+                                                color: Color(0xffee9698),
+                                              ),
+                                              SizedBox(
+                                                height: sizeMulW * 3,
+                                              ),
+                                              Text(
+                                                ((appModel.viewing_period ==
+                                                            Period.DAILY)
+                                                        ? appModel.dayExpense
+                                                            .totalSpentOnMiscellaneous
+                                                        : (appModel.viewing_period ==
+                                                                Period.MONTHLY)
+                                                            ? appModel
+                                                                .monthExpense
+                                                                .totalSpentOnMiscellaneous
+                                                            : appModel
+                                                                .weekExpense
+                                                                .totalSpentOnMiscellaneous)
+                                                    .toString(),
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 16 * sizeMulW,
+                                                    color: Colors.grey[600]),
+                                              ),
+                                              SizedBox(
+                                                height: sizeMulW * 1,
+                                              ),
+                                              Text(
+                                                (100 *
+                                                            ((appModel.viewing_period ==
+                                                                    Period
+                                                                        .DAILY)
+                                                                ? appModel
+                                                                        .dayExpense
+                                                                        .totalSpentOnMiscellaneous /
+                                                                    appModel
+                                                                        .dayExpense
+                                                                        .totalSpent
+                                                                : (appModel
+                                                                            .viewing_period ==
+                                                                        Period
+                                                                            .MONTHLY)
+                                                                    ? appModel
+                                                                            .monthExpense
+                                                                            .totalSpentOnMiscellaneous /
+                                                                        appModel
+                                                                            .monthExpense
+                                                                            .totalSpent
+                                                                    : appModel
+                                                                            .weekExpense
+                                                                            .totalSpentOnMiscellaneous /
+                                                                        appModel
+                                                                            .weekExpense
+                                                                            .totalSpent))
+                                                        .toStringAsFixed(0) +
+                                                    "%",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 16 * sizeMulW,
+                                                    color: Colors.grey[500]),
+                                              ),
+                                            ],
                                           ),
-
-                                          Icon(FontAwesomeIcons.bus,
-                                          size: sizeMulW*24,
-                                          color: Color(0xff8ec8f8),  ),
-
-                                          Icon(FontAwesomeIcons.toiletPaper,
-                                          size: sizeMulW*24,
-                                          color:  Color(0xffa1d2a6), 
-                                          ), 
-                                          // Icon(
-                                          // if (receipt.category == "Transportation") iconColor = Color(0xff8ec8f8);
-                                          // if (receipt.category == "Miscellaneous") iconColor = Color(0xffee9698);
-                                          // if (receipt.category == "Utilities") iconColor = Color(0xffa1d2a6);
-                                          // if (receipt.category == "Leisure") iconColor = Color(0xfffef09c);
-                                          // if (receipt.category == "Food") iconColor = Color(0xfff4a735);
-                                          //                       (receipt.category == "Leisure")
-                                          //                           ? FontAwesomeIcons.wineGlassAlt
-                                          //                           : (receipt.category == "Transportation")
-                                          //                               ? FontAwesomeIcons.campground
-                                          //                               : (receipt.category == "Food")
-                                          //                                   ? FontAwesomeIcons.utensils
-                                          //                                   : (receipt.category == "Utilities")
-                                          //                                       ? FontAwesomeIcons.toiletPaper
-                                          //                                       : (receipt.category == "Miscellaneous")
-                                          //                                           ? FontAwesomeIcons.campground
-                                          //                                           : FontAwesomeIcons.file,
-                                          // size: sizeMulW * 26,
+                                          Column(
+                                            children: <Widget>[
+                                              Icon(
+                                                FontAwesomeIcons.bus,
+                                                size: sizeMulW * 34,
+                                                color: Color(0xff8ec8f8),
+                                              ),
+                                              SizedBox(
+                                                height: sizeMulW * 3,
+                                              ),
+                                              Text(
+                                                ((appModel.viewing_period ==
+                                                            Period.DAILY)
+                                                        ? appModel.dayExpense
+                                                            .totalSpentOnTransportation
+                                                        : (appModel.viewing_period ==
+                                                                Period.MONTHLY)
+                                                            ? appModel
+                                                                .monthExpense
+                                                                .totalSpentOnTransportation
+                                                            : appModel
+                                                                .weekExpense
+                                                                .totalSpentOnTransportation)
+                                                    .toString(),
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 16 * sizeMulW,
+                                                    color: Colors.grey[600]),
+                                              ),
+                                              SizedBox(
+                                                height: sizeMulW * 1,
+                                              ),
+                                              Text(
+                                                (100 *
+                                                            ((appModel.viewing_period ==
+                                                                    Period
+                                                                        .DAILY)
+                                                                ? appModel
+                                                                        .dayExpense
+                                                                        .totalSpentOnTransportation /
+                                                                    appModel
+                                                                        .dayExpense
+                                                                        .totalSpent
+                                                                : (appModel
+                                                                            .viewing_period ==
+                                                                        Period
+                                                                            .MONTHLY)
+                                                                    ? appModel
+                                                                            .monthExpense
+                                                                            .totalSpentOnTransportation /
+                                                                        appModel
+                                                                            .monthExpense
+                                                                            .totalSpent
+                                                                    : appModel
+                                                                            .weekExpense
+                                                                            .totalSpentOnTransportation /
+                                                                        appModel
+                                                                            .weekExpense
+                                                                            .totalSpent))
+                                                        .toStringAsFixed(0) +
+                                                    "%",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 16 * sizeMulW,
+                                                    color: Colors.grey[500]),
+                                              ),
+                                            ],
+                                          ),
+                                          Column(
+                                            children: <Widget>[
+                                              Icon(
+                                                FontAwesomeIcons.toiletPaper,
+                                                size: sizeMulW * 34,
+                                                color: Color(0xffa1d2a6),
+                                              ),
+                                              SizedBox(
+                                                height: sizeMulW * 3,
+                                              ),
+                                              Text(
+                                                ((appModel.viewing_period ==
+                                                            Period.DAILY)
+                                                        ? appModel.dayExpense
+                                                            .totalSpentOnUtilities
+                                                        : (appModel.viewing_period ==
+                                                                Period.MONTHLY)
+                                                            ? appModel
+                                                                .monthExpense
+                                                                .totalSpentOnFood
+                                                            : appModel
+                                                                .weekExpense
+                                                                .totalSpentOnFood)
+                                                    .toString(),
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 16 * sizeMulW,
+                                                    color: Colors.grey[600]),
+                                              ),
+                                              SizedBox(
+                                                height: sizeMulW * 1,
+                                              ),
+                                              Text(
+                                                (100 *
+                                                            ((appModel.viewing_period ==
+                                                                    Period
+                                                                        .DAILY)
+                                                                ? appModel
+                                                                        .dayExpense
+                                                                        .totalSpentOnUtilities /
+                                                                    appModel
+                                                                        .dayExpense
+                                                                        .totalSpent
+                                                                : (appModel
+                                                                            .viewing_period ==
+                                                                        Period
+                                                                            .MONTHLY)
+                                                                    ? appModel
+                                                                            .monthExpense
+                                                                            .totalSpentOnUtilities /
+                                                                        appModel
+                                                                            .monthExpense
+                                                                            .totalSpent
+                                                                    : appModel
+                                                                            .weekExpense
+                                                                            .totalSpentOnUtilities /
+                                                                        appModel
+                                                                            .weekExpense
+                                                                            .totalSpent))
+                                                        .toStringAsFixed(0) +
+                                                    "%",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 16 * sizeMulW,
+                                                    color: Colors.grey[500]),
+                                              ),
+                                            ],
+                                          ),
                                         ],
                                       )
                                     ],
@@ -371,7 +718,26 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                     padding: EdgeInsets.all(sizeMulW * 20),
                                     width: MediaQuery.of(context).size.width,
                                     height: sizeMulW * 230,
-                                    child: GroupedBarChart.withSampleData()),
+                                    child:
+                                        //  (chartsModel.barChartDataLoaded)?
+
+                                        FutureBuilder(
+                                            future: chartsModel
+                                                .generateGroupedBarChartData(
+                                                    appModel.viewing_period),
+                                            builder: (context, snapshot) {
+                                              if (snapshot.connectionState ==
+                                                  ConnectionState.done) {
+                                                return GroupedBarChart(
+                                                    snapshot.data);
+                                              } else
+                                                return CircularProgressIndicator();
+                                            })
+
+                                    //         :SizedBox(width: MediaQuery.of(context).size.width,
+                                    // height: sizeMulW * 230,)
+
+                                    ),
                                 Container(
                                     padding: EdgeInsets.all(sizeMulW * 20),
                                     width: MediaQuery.of(context).size.width,

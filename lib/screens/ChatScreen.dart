@@ -36,6 +36,7 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     // TODO: implement initState
+    super.initState();
     cModel.init();
 
     KeyboardVisibilityNotification().addNewListener(onChange: (bool visible) {
@@ -45,7 +46,6 @@ class _ChatScreenState extends State<ChatScreen> {
         keyBoardUp = visible;
       });
     });
-    super.initState();
   }
 
   @override

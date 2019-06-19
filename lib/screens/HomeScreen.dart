@@ -745,7 +745,7 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                       Navigator.push(
                           context,
                           CupertinoPageRoute(
-                              builder: (context) => ChartScreen()));
+                              builder: (context) => ChartScreen(appModel.chartsScreenModel)));
                     },
                     child: Column(
                       mainAxisSize: MainAxisSize.max,

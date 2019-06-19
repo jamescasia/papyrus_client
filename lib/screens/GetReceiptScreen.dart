@@ -28,6 +28,7 @@ class _GetReceiptScreenState extends State<GetReceiptScreen>
   @override
   void initState() {
     // TODO: implement initState
+    super.initState();
     ccModel.launch();
     tabController = TabController(
       length: 3,
@@ -35,7 +36,6 @@ class _GetReceiptScreenState extends State<GetReceiptScreen>
     );
 
     tabController.addListener(_handleTabSelection);
-    super.initState();
   }
 
   void _handleTabSelection() {

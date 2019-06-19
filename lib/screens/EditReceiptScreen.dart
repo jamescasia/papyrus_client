@@ -226,9 +226,9 @@ class _EditReceiptScreenBottomPartState
   String catChoice = "Food";
   @override
   void initState() {
+    super.initState();
     merchant_controller.text = editReceiptScreenModel.receipt.merchant;
     date_controller.text = editReceiptScreenModel.receipt.dateTime;
-    super.initState();
   }
 
   @override
@@ -904,10 +904,10 @@ class _EditItemState extends State<EditItem> {
 
   @override
   void initState() {
+    super.initState();
     name_controller.text = receiptItem.name;
     qty_controller.text = receiptItem.qty.toString();
     price_controller.text = receiptItem.price.toString();
-    super.initState();
   }
 
   @override
