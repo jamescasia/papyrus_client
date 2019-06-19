@@ -191,7 +191,7 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(3000)),
                                           child: Icon(
-                                            Icons.keyboard_arrow_down,
+                                            chevronTicker(appModel),
                                             // FontAwesomeIcons.dollarSign,
                                             color:  Colors.grey[800],
                                             size: MediaQuery.of(context)
@@ -236,54 +236,64 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             children: <Widget>[
-                                              (appModel.loadedUserExpense)?Text(
-                                                  ((appModel.viewing_period == Period.DAILY &&
-                                                              appModel
-                                                                  .loadedUserExpense)
-                                                          ? addCommas(int.parse(appModel
-                                                              .userExpense
-                                                              .lastDateTotalExpenseAmount
-                                                              .toStringAsFixed(
-                                                                  2)
-                                                              .split('.')[0]))
-                                                          : (appModel.viewing_period == Period.MONTHLY &&
-                                                                  appModel
-                                                                      .loadedUserExpense)
-                                                              ? addCommas(int.parse(appModel
-                                                                  .userExpense
-                                                                  .lastMonthTotalExpenseAmount
-                                                                  .toStringAsFixed(2)
-                                                                  .split('.')[0]))
-                                                              : (appModel.viewing_period == Period.WEEKLY && appModel.loadedUserExpense) ? addCommas(int.parse(appModel.userExpense.lastWeekTotalExpenseAmount.toStringAsFixed(2).split('.')[0])) : "0") +
-                                                      ".",
-                                                  style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.09, fontWeight: FontWeight.w600, color:  Colors.grey[800])):SizedBox(width: 0.001,),
+                                              (appModel.loadedUserExpense)
+                                                  ? Text(
+                                                      ((appModel.viewing_period == Period.DAILY && appModel.loadedUserExpense) ? addCommas(int.parse(appModel.userExpense.lastDateTotalExpenseAmount.toStringAsFixed(2).split('.')[0])) : (appModel.viewing_period == Period.MONTHLY && appModel.loadedUserExpense) ? addCommas(int.parse(appModel.userExpense.lastMonthTotalExpenseAmount.toStringAsFixed(2).split('.')[0])) : (appModel.viewing_period == Period.WEEKLY && appModel.loadedUserExpense) ? addCommas(int.parse(appModel.userExpense.lastWeekTotalExpenseAmount.toStringAsFixed(2).split('.')[0])) : "0") +
+                                                          ".",
+                                                      style: TextStyle(
+                                                          fontSize: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.09,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          color: Colors.grey[700]))
+                                                  : Text("0 ",
+                                                      style: TextStyle(
+                                                          fontSize: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.09,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          color:Colors.grey[700])),
 
-                                             (appModel.loadedUserExpense)? Container(
-                                                padding: EdgeInsets.only(
-                                                    bottom: 4 * sizeMulW),
-                                                child: Text(
-                                                    (appModel.viewing_period == Period.DAILY && appModel.loadedUserExpense &&
-                                                                    (int.parse(appModel.userExpense.lastWeekTotalExpenseAmount.toStringAsFixed(2).split('.')[1])) != 0)
-                                                        ? addCommas(int.parse(appModel
-                                                            .userExpense
-                                                            .lastDateTotalExpenseAmount
-                                                            .toStringAsFixed(2)
-                                                            .split('.')[1]))
-                                                        : (appModel.viewing_period == Period.MONTHLY && appModel.loadedUserExpense && 
-                                                                    (int.parse(appModel.userExpense.lastWeekTotalExpenseAmount.toStringAsFixed(2).split('.')[1])) != 0)
-                                                            ? addCommas(int.parse(appModel
-                                                                .userExpense
-                                                                .lastMonthTotalExpenseAmount
-                                                                .toStringAsFixed(
-                                                                    2)
-                                                                .split('.')[1]))
-                                                            : (appModel.viewing_period == Period.WEEKLY &&
-                                                                    appModel.loadedUserExpense &&
-                                                                    (int.parse(appModel.userExpense.lastWeekTotalExpenseAmount.toStringAsFixed(2).split('.')[1])) != 0)
-                                                                ? addCommas(int.parse(appModel.userExpense.lastWeekTotalExpenseAmount.toStringAsFixed(2).split('.')[1]))
-                                                                : "00",
-                                                    style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.05, fontWeight: FontWeight.bold, color: Colors.grey[800])),
-                                              ):SizedBox(width:0.001),
+                                              (appModel.loadedUserExpense)
+                                                  ? Container(
+                                                      padding: EdgeInsets.only(
+                                                          bottom: 4 * sizeMulW),
+                                                      child: Text(
+                                                          decimalDigits(
+                                                              appModel),
+                                                          style: TextStyle(
+                                                              fontSize: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.05,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              color: Colors.grey[700])),
+                                                    )
+                                                  : Container(
+                                                      padding: EdgeInsets.only(
+                                                          bottom: 4 * sizeMulW),
+                                                      child: Text("00",
+                                                          style: TextStyle(
+                                                              fontSize: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.05,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              color: Colors.grey[700]
+                                                                  )),
+                                                    ),
                                               // ),
                                             ],
                                           ),

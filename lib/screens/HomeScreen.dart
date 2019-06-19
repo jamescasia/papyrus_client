@@ -78,7 +78,7 @@ class PapyrusCustomer extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Papyrus - Expense Management',
           theme: ThemeData(
-            primaryColorDark:const Color(0xFF61C350),
+            primaryColorDark: const Color(0xFF61C350),
             // fon
             fontFamily: 'Montserrat',
 
@@ -197,14 +197,10 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
   @override
   Widget build(BuildContext context) {
     TextStyle headerStyle = TextStyle(
-        fontSize: 17,
-        fontWeight: FontWeight.w500,
-        color: Colors.white);
+        fontSize: 17, fontWeight: FontWeight.w500, color: Colors.white);
 
     TextStyle headerStyleSelected = TextStyle(
-        fontSize:18 ,
-        fontWeight: FontWeight.bold,
-        color: Colors.green[700]);
+        fontSize: 18, fontWeight: FontWeight.bold, color: Colors.green[700]);
 
     return ScopedModelDescendant<AppModel>(builder: (context, child, appModel) {
       return Stack(
@@ -244,7 +240,6 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                         right: 0,
                         top: MediaQuery.of(context).size.width * 0.91 * 0.16,
                         child: Row(
-
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           mainAxisSize: MainAxisSize.max,
                           children: <Widget>[
@@ -430,7 +425,7 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(3000)),
                                           child: Icon(
-                                            Icons.keyboard_arrow_down,
+                                            chevronTicker(appModel),
                                             // FontAwesomeIcons.dollarSign,
                                             color: Colors.white,
                                             size: MediaQuery.of(context)
@@ -475,54 +470,65 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             children: <Widget>[
-                                              (appModel.loadedUserExpense)?Text(
-                                                  ((appModel.viewing_period == Period.DAILY &&
-                                                              appModel
-                                                                  .loadedUserExpense)
-                                                          ? addCommas(int.parse(appModel
-                                                              .userExpense
-                                                              .lastDateTotalExpenseAmount
-                                                              .toStringAsFixed(
-                                                                  2)
-                                                              .split('.')[0]))
-                                                          : (appModel.viewing_period == Period.MONTHLY &&
-                                                                  appModel
-                                                                      .loadedUserExpense)
-                                                              ? addCommas(int.parse(appModel
-                                                                  .userExpense
-                                                                  .lastMonthTotalExpenseAmount
-                                                                  .toStringAsFixed(2)
-                                                                  .split('.')[0]))
-                                                              : (appModel.viewing_period == Period.WEEKLY && appModel.loadedUserExpense) ? addCommas(int.parse(appModel.userExpense.lastWeekTotalExpenseAmount.toStringAsFixed(2).split('.')[0])) : "0") +
-                                                      ".",
-                                                  style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.09, fontWeight: FontWeight.w600, color: Colors.white)):SizedBox(width: 0.001,),
+                                              (appModel.loadedUserExpense)
+                                                  ? Text(
+                                                      ((appModel.viewing_period == Period.DAILY && appModel.loadedUserExpense) ? addCommas(int.parse(appModel.userExpense.lastDateTotalExpenseAmount.toStringAsFixed(2).split('.')[0])) : (appModel.viewing_period == Period.MONTHLY && appModel.loadedUserExpense) ? addCommas(int.parse(appModel.userExpense.lastMonthTotalExpenseAmount.toStringAsFixed(2).split('.')[0])) : (appModel.viewing_period == Period.WEEKLY && appModel.loadedUserExpense) ? addCommas(int.parse(appModel.userExpense.lastWeekTotalExpenseAmount.toStringAsFixed(2).split('.')[0])) : "0") +
+                                                          ".",
+                                                      style: TextStyle(
+                                                          fontSize: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.09,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          color: Colors.white))
+                                                  : Text("0 ",
+                                                      style: TextStyle(
+                                                          fontSize: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.09,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          color: Colors.white)),
 
-                                             (appModel.loadedUserExpense)? Container(
-                                                padding: EdgeInsets.only(
-                                                    bottom: 4 * sizeMulW),
-                                                child: Text(
-                                                    (appModel.viewing_period == Period.DAILY && appModel.loadedUserExpense &&
-                                                                    (int.parse(appModel.userExpense.lastWeekTotalExpenseAmount.toStringAsFixed(2).split('.')[1])) != 0)
-                                                        ? addCommas(int.parse(appModel
-                                                            .userExpense
-                                                            .lastDateTotalExpenseAmount
-                                                            .toStringAsFixed(2)
-                                                            .split('.')[1]))
-                                                        : (appModel.viewing_period == Period.MONTHLY && appModel.loadedUserExpense && 
-                                                                    (int.parse(appModel.userExpense.lastWeekTotalExpenseAmount.toStringAsFixed(2).split('.')[1])) != 0)
-                                                            ? addCommas(int.parse(appModel
-                                                                .userExpense
-                                                                .lastMonthTotalExpenseAmount
-                                                                .toStringAsFixed(
-                                                                    2)
-                                                                .split('.')[1]))
-                                                            : (appModel.viewing_period == Period.WEEKLY &&
-                                                                    appModel.loadedUserExpense &&
-                                                                    (int.parse(appModel.userExpense.lastWeekTotalExpenseAmount.toStringAsFixed(2).split('.')[1])) != 0)
-                                                                ? addCommas(int.parse(appModel.userExpense.lastWeekTotalExpenseAmount.toStringAsFixed(2).split('.')[1]))
-                                                                : "00",
-                                                    style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.05, fontWeight: FontWeight.bold, color: Colors.white)),
-                                              ):SizedBox(width:0.001),
+                                              (appModel.loadedUserExpense)
+                                                  ? Container(
+                                                      padding: EdgeInsets.only(
+                                                          bottom: 4 * sizeMulW),
+                                                      child: Text(
+                                                          decimalDigits(
+                                                              appModel),
+                                                          style: TextStyle(
+                                                              fontSize: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.05,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              color: Colors
+                                                                  .white)),
+                                                    )
+                                                  : Container(
+                                                      padding: EdgeInsets.only(
+                                                          bottom: 4 * sizeMulW),
+                                                      child: Text("00",
+                                                          style: TextStyle(
+                                                              fontSize: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.05,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              color: Colors
+                                                                  .white)),
+                                                    ),
                                               // ),
                                             ],
                                           ),
@@ -640,7 +646,7 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                           borderRadius: BorderRadius.all(Radius.circular(3000)),
                           radius: sizeMulW * 45,
                           onTap: () {
-                            showChat(context,appModel);
+                            showChat(context, appModel);
                             // Navigator.push(
                             //     context,
                             //     CupertinoPageRoute(
@@ -651,7 +657,7 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                             children: <Widget>[
                               InkWell(
                                 onTap: () {
-                                  showChat(context,appModel);
+                                  showChat(context, appModel);
                                   // Navigator.push(
                                   //     context,
                                   //     CupertinoPageRoute(
@@ -980,7 +986,6 @@ class _HomeScreenBottomPartState extends State<HomeScreenBottomPart> {
 }
 
 showChat(BuildContext context, AppModel appModel) {
-
   appModel.chatModel.init();
   showDialog(
       context: context,
@@ -993,9 +998,56 @@ showChat(BuildContext context, AppModel appModel) {
       });
 }
 
+IconData chevronTicker(AppModel appModel) {
+  if (appModel.viewing_period == Period.DAILY) {
+    if (ExpenseAverages.lifetimeAverageDaySpend <
+        appModel.dayExpense.totalSpent) return Icons.keyboard_arrow_up;
+    return Icons.keyboard_arrow_down;
+  } else if (appModel.viewing_period == Period.WEEKLY) {
+    if (ExpenseAverages.lifetimeAverageWeekSpend <
+        appModel.weekExpense.totalSpent) return Icons.keyboard_arrow_up;
+    return Icons.keyboard_arrow_down;
+  } else if (appModel.viewing_period == Period.MONTHLY) {
+    if (ExpenseAverages.lifetimeAverageMonthSpend <
+        appModel.monthExpense.totalSpent) return Icons.keyboard_arrow_up;
+    return Icons.keyboard_arrow_down;
+  }
+}
+
 String addCommas(int nums) {
   return nums.toString().replaceAllMapped(
       new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},');
+}
+
+String decimalDigits(AppModel appModel) {
+  // print("Sda" +
+  //     (appModel.dayExpense.totalSpent)
+  //         .toStringAsFixed(2)
+  //         .split(".")
+  //         .toString());
+  if(appModel.viewing_period == Period.DAILY){
+  if (((appModel.dayExpense.totalSpent).toStringAsFixed(2).split(".")[1]) ==
+      "00") {
+    return "00";
+  }
+  return (appModel.dayExpense.totalSpent).toStringAsFixed(2).split(".")[1];}
+
+  if(appModel.viewing_period == Period.WEEKLY){
+  if (((appModel.weekExpense.totalSpent).toStringAsFixed(2).split(".")[1]) ==
+      "00") {
+    return "00";
+  }
+  return (appModel.weekExpense.totalSpent).toStringAsFixed(2).split(".")[1];}
+
+  if(appModel.viewing_period == Period.MONTHLY){
+  if (((appModel.monthExpense.totalSpent).toStringAsFixed(2).split(".")[1]) ==
+      "00") {
+    return "00";
+  }
+  return (appModel.monthExpense.totalSpent).toStringAsFixed(2).split(".")[1];}
+
+
+
 }
 
 List<Widget> bottomChildren(AppModel appModel, BuildContext context) {
