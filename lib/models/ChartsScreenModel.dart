@@ -110,49 +110,49 @@ class ChartsScreenModel extends Model {
     var miscTotalData;
     if (period == Period.DAILY) {
       foodTotalData = dayExpenses
-          .sublist((dayExpenses.length >= 6) ? dayExpenses.length - 6 : 0)
+          .sublist((dayExpenses.length >= 8) ? dayExpenses.length - 8 : 0)
           .map((f) => DataBar("food", f.totalSpentOnFood, "#f4a735",
-              DateFormat('MM dd yyyy').format(DateTime.parse(f.dateTime))
+              DateFormat('MM dd, yyyy').format(DateTime.parse(f.dateTime))
 
               // f.dateTime
               ))
           .toList();
       leisureTotalData = dayExpenses
-          .sublist((dayExpenses.length >= 6) ? dayExpenses.length - 6 : 0)
+          .sublist((dayExpenses.length >= 8) ? dayExpenses.length -8 : 0)
           .map((f) => DataBar("leisure", f.totalSpentOnLeisure, "#fef09c",
-              DateFormat('MM dd yyyy').format(DateTime.parse(f.dateTime))
+              DateFormat('MM dd, yyyy').format(DateTime.parse(f.dateTime))
               // f.dateTime
 
               ))
           .toList();
       transpoTotalData = dayExpenses
-          .sublist((dayExpenses.length >= 6) ? dayExpenses.length - 6 : 0)
+          .sublist((dayExpenses.length >= 8) ? dayExpenses.length - 8 : 0)
           .map((f) => DataBar(
               "transportation",
               f.totalSpentOnTransportation,
               "#8ec8f8",
-              DateFormat('MM dd yyyy').format(DateTime.parse(f.dateTime))
+              DateFormat('MM dd, yyyy').format(DateTime.parse(f.dateTime))
               // f.dateTime
 
               ))
           .toList();
 
       utilTotalData = dayExpenses
-          .sublist((dayExpenses.length >= 6) ? dayExpenses.length - 6 : 0)
+          .sublist((dayExpenses.length >= 8) ? dayExpenses.length - 8 : 0)
           .map((f) => DataBar("utilities", f.totalSpentOnUtilities, "#a1d2a6",
-              DateFormat('MM dd yyyy').format(DateTime.parse(f.dateTime))
+              DateFormat('MM dd, yyyy').format(DateTime.parse(f.dateTime))
               // f.dateTime
 
               ))
           .toList();
 
       miscTotalData = dayExpenses
-          .sublist((dayExpenses.length >= 6) ? dayExpenses.length - 6 : 0)
+          .sublist((dayExpenses.length >= 8) ? dayExpenses.length - 8 : 0)
           .map((f) => DataBar(
               "miscellaneous",
               f.totalSpentOnMiscellaneous,
               "#ee9698",
-              DateFormat('MM dd yyyy').format(DateTime.parse(f.dateTime))
+              DateFormat('MM dd, yyyy').format(DateTime.parse(f.dateTime))
 
               // f.dateTime
               ))
@@ -161,49 +161,49 @@ class ChartsScreenModel extends Model {
 
     if (period == Period.WEEKLY) {
       foodTotalData = weekExpenses
-          .sublist((weekExpenses.length >= 6) ? weekExpenses.length - 6 : 0)
+          .sublist((weekExpenses.length >= 5) ? weekExpenses.length - 5 : 0)
           .map((f) => DataBar("food", f.totalSpentOnFood, "#f4a735",
-              DateFormat('MM dd yyyy').format(DateTime.parse(f.dateOfFirstDayOfWeek))
+              DateFormat('MM dd, yyyy').format(DateTime.parse(f.dateOfFirstDayOfWeek))
 
               // f.dateTime
               ))
           .toList();
       leisureTotalData = weekExpenses
-          .sublist((weekExpenses.length >= 6) ? weekExpenses.length - 6 : 0)
+          .sublist((weekExpenses.length >= 5) ? weekExpenses.length - 5 : 0)
           .map((f) => DataBar("leisure", f.totalSpentOnLeisure, "#fef09c",
-              DateFormat('MM dd yyyy').format(DateTime.parse(f.dateOfFirstDayOfWeek))
+              DateFormat('MM dd, yyyy').format(DateTime.parse(f.dateOfFirstDayOfWeek))
               // f.dateTime
 
               ))
           .toList();
       transpoTotalData = weekExpenses
-          .sublist((weekExpenses.length >= 6) ? weekExpenses.length - 6 : 0)
+          .sublist((weekExpenses.length >=5) ? weekExpenses.length - 5 : 0)
           .map((f) => DataBar(
               "transportation",
               f.totalSpentOnTransportation,
               "#8ec8f8",
-              DateFormat('MM dd yyyy').format(DateTime.parse(f.dateOfFirstDayOfWeek))
+              DateFormat('MM dd, yyyy').format(DateTime.parse(f.dateOfFirstDayOfWeek))
               // f.dateTime
 
               ))
           .toList();
 
       utilTotalData = weekExpenses
-          .sublist((weekExpenses.length >= 6) ? weekExpenses.length - 6 : 0)
+          .sublist((weekExpenses.length >=5) ? weekExpenses.length - 5 : 0)
           .map((f) => DataBar("utilities", f.totalSpentOnUtilities, "#a1d2a6",
-              DateFormat('MM dd yyyy').format(DateTime.parse(f.dateOfFirstDayOfWeek))
+              DateFormat('MM dd, yyyy').format(DateTime.parse(f.dateOfFirstDayOfWeek))
               // f.dateTime
 
               ))
           .toList();
 
       miscTotalData = weekExpenses
-          .sublist((weekExpenses.length >= 6) ? weekExpenses.length - 6 : 0)
+          .sublist((weekExpenses.length >= 5) ? weekExpenses.length -5 : 0)
           .map((f) => DataBar(
               "miscellaneous",
               f.totalSpentOnMiscellaneous,
               "#ee9698",
-              DateFormat('MM dd yyyy').format(DateTime.parse(f.dateOfFirstDayOfWeek))
+              DateFormat('MM dd, yyyy').format(DateTime.parse(f.dateOfFirstDayOfWeek))
 
               // f.dateTime
               ))
@@ -214,7 +214,7 @@ class ChartsScreenModel extends Model {
       foodTotalData = monthExpenses
           .sublist((monthExpenses.length >= 6) ? monthExpenses.length - 6 : 0)
           .map((f) => DataBar("food", f.totalSpentOnFood, "#f4a735",
-              DateFormat('MM dd yyyy').format(DateTime.parse(f.dateOfFirstDayOfMonth))
+              DateFormat('MM dd, yyyy').format(DateTime.parse(f.dateOfFirstDayOfMonth))
 
               // f.dateTime
               ))
@@ -222,7 +222,7 @@ class ChartsScreenModel extends Model {
       leisureTotalData = monthExpenses
           .sublist((monthExpenses.length >= 6) ? monthExpenses.length - 6 : 0)
           .map((f) => DataBar("leisure", f.totalSpentOnLeisure, "#fef09c",
-              DateFormat('MM dd yyyy').format(DateTime.parse(f.dateOfFirstDayOfMonth))
+              DateFormat('MM dd, yyyy').format(DateTime.parse(f.dateOfFirstDayOfMonth))
               // f.dateTime
 
               ))
@@ -233,7 +233,7 @@ class ChartsScreenModel extends Model {
               "transportation",
               f.totalSpentOnTransportation,
               "#8ec8f8",
-              DateFormat('MM dd yyyy').format(DateTime.parse(f.dateOfFirstDayOfMonth))
+              DateFormat('MM dd, yyyy').format(DateTime.parse(f.dateOfFirstDayOfMonth))
               // f.dateTime
 
               ))
@@ -242,7 +242,7 @@ class ChartsScreenModel extends Model {
       utilTotalData = monthExpenses
           .sublist((monthExpenses.length >= 6) ? monthExpenses.length - 6 : 0)
           .map((f) => DataBar("utilities", f.totalSpentOnUtilities, "#a1d2a6",
-              DateFormat('MM dd yyyy').format(DateTime.parse(f.dateOfFirstDayOfMonth))
+              DateFormat('MM dd, yyyy').format(DateTime.parse(f.dateOfFirstDayOfMonth))
               // f.dateTime
 
               ))
@@ -254,7 +254,7 @@ class ChartsScreenModel extends Model {
               "miscellaneous",
               f.totalSpentOnMiscellaneous,
               "#ee9698",
-              DateFormat('MM dd yyyy').format(DateTime.parse(f.dateOfFirstDayOfMonth))
+              DateFormat('MM dd, yyyy').format(DateTime.parse(f.dateOfFirstDayOfMonth))
 
               // f.dateTime
               ))

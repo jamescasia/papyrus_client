@@ -74,8 +74,7 @@ class ChatModel extends Model {
 
   // String get
 
-  String getSpendingStatus() { 
-
+  String getSpendingStatus() {
     var lifetimeAverageDaySpend;
     try {
       lifetimeAverageDaySpend =
@@ -91,6 +90,8 @@ class ChatModel extends Model {
       percntDiff = ((todayExpenseTotal - lifetimeAverageDaySpend) /
               lifetimeAverageDaySpend) *
           100;
+
+      percntDiff = sqrt(percntDiff * percntDiff);
     } catch (e) {
       percntDiff = 0.0;
     }

@@ -353,366 +353,401 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                       SizedBox(
                                         height: sizeMulW * 24,
                                       ),
-                                      Wrap(
-                                        // mainAxisSize: MainAxisSize.max,
-                                        // mainAxisAlignment:
-                                            // MainAxisAlignment.spaceEvenly,
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
                                         children: <Widget>[
-                                          Column(
-                                            children: <Widget>[
-                                              Icon(
-                                                FontAwesomeIcons.utensils,
-                                                size: sizeMulW * 34,
-                                                color: Color(0xfff4a735),
-                                              ),
-                                              SizedBox(
-                                                height: sizeMulW * 3,
-                                              ),
-                                              Text(
-                                                ((appModel.viewing_period ==
-                                                            Period.DAILY)
-                                                        ? appModel.dayExpense
-                                                            .totalSpentOnFood
-                                                        : (appModel.viewing_period ==
-                                                                Period.MONTHLY)
-                                                            ? appModel
-                                                                .monthExpense
-                                                                .totalSpentOnFood
-                                                            : appModel
-                                                                .weekExpense
-                                                                .totalSpentOnFood)
-                                                    .toString(),
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 16 * sizeMulW,
-                                                    color: Colors.grey[600]),
-                                              ),
-                                              SizedBox(
-                                                height: sizeMulW * 1,
-                                              ),
-                                              Text(
-                                                (100 *
-                                                            ((appModel.viewing_period ==
-                                                                    Period
-                                                                        .DAILY)
-                                                                ? appModel
-                                                                        .dayExpense
-                                                                        .totalSpentOnFood /
-                                                                    appModel
-                                                                        .dayExpense
-                                                                        .totalSpent
-                                                                : (appModel
-                                                                            .viewing_period ==
-                                                                        Period
-                                                                            .MONTHLY)
-                                                                    ? appModel
-                                                                            .monthExpense
-                                                                            .totalSpentOnFood /
-                                                                        appModel
-                                                                            .monthExpense
-                                                                            .totalSpent
-                                                                    : appModel
-                                                                            .weekExpense
-                                                                            .totalSpentOnFood /
-                                                                        appModel
-                                                                            .weekExpense
-                                                                            .totalSpent))
-                                                        .toStringAsFixed(0) +
-                                                    "%",
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 16 * sizeMulW,
-                                                    color: Colors.grey[500]),
-                                              ),
-                                            ],
+                                          Tooltip(
+                                            message: "Food",
+                                            child: Column(
+                                              children: <Widget>[
+                                                Icon(
+                                                  FontAwesomeIcons.utensils,
+                                                  size: sizeMulW * 34,
+                                                  color: Color(0xfff4a735),
+                                                ),
+                                                SizedBox(
+                                                  height: sizeMulW * 3,
+                                                ),
+                                                Text(
+                                                  ((appModel.viewing_period ==
+                                                              Period.DAILY)
+                                                          ? appModel.dayExpense
+                                                              .totalSpentOnFood
+                                                          : (appModel.viewing_period ==
+                                                                  Period
+                                                                      .MONTHLY)
+                                                              ? appModel
+                                                                  .monthExpense
+                                                                  .totalSpentOnFood
+                                                              : appModel
+                                                                  .weekExpense
+                                                                  .totalSpentOnFood)
+                                                      .toString(),
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontSize: 16 * sizeMulW,
+                                                      color: Colors.grey[600]),
+                                                ),
+                                                SizedBox(
+                                                  height: sizeMulW * 1,
+                                                ),
+                                                Text(
+                                                  (100 *
+                                                              ((appModel
+                                                                          .viewing_period ==
+                                                                      Period
+                                                                          .DAILY)
+                                                                  ? appModel
+                                                                          .dayExpense
+                                                                          .totalSpentOnFood /
+                                                                      appModel
+                                                                          .dayExpense
+                                                                          .totalSpent
+                                                                  : (appModel.viewing_period ==
+                                                                          Period
+                                                                              .MONTHLY)
+                                                                      ? appModel
+                                                                              .monthExpense
+                                                                              .totalSpentOnFood /
+                                                                          appModel
+                                                                              .monthExpense
+                                                                              .totalSpent
+                                                                      : appModel
+                                                                              .weekExpense
+                                                                              .totalSpentOnFood /
+                                                                          appModel
+                                                                              .weekExpense
+                                                                              .totalSpent))
+                                                          .toStringAsFixed(0) +
+                                                      "%",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontSize: 16 * sizeMulW,
+                                                      color: Colors.grey[500]),
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                          Column(
-                                            children: <Widget>[
-                                              Icon(
-                                                FontAwesomeIcons.wineGlassAlt,
-                                                size: sizeMulW * 34,
-                                                color: Color(0xfffef09c),
-                                              ),
-                                              SizedBox(
-                                                height: sizeMulW * 3,
-                                              ),
-                                              Text(
-                                                ((appModel.viewing_period ==
-                                                            Period.DAILY)
-                                                        ? appModel.dayExpense
-                                                            .totalSpentOnLeisure
-                                                        : (appModel.viewing_period ==
-                                                                Period.MONTHLY)
-                                                            ? appModel
-                                                                .monthExpense
-                                                                .totalSpentOnLeisure
-                                                            : appModel
-                                                                .weekExpense
-                                                                .totalSpentOnLeisure)
-                                                    .toString(),
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 16 * sizeMulW,
-                                                    color: Colors.grey[600]),
-                                              ),
-                                              SizedBox(
-                                                height: sizeMulW * 1,
-                                              ),
-                                              Text(
-                                                (100 *
-                                                            ((appModel.viewing_period ==
-                                                                    Period
-                                                                        .DAILY)
-                                                                ? appModel
-                                                                        .dayExpense
-                                                                        .totalSpentOnLeisure /
-                                                                    appModel
-                                                                        .dayExpense
-                                                                        .totalSpent
-                                                                : (appModel
-                                                                            .viewing_period ==
-                                                                        Period
-                                                                            .MONTHLY)
-                                                                    ? appModel
-                                                                            .monthExpense
-                                                                            .totalSpentOnLeisure /
-                                                                        appModel
-                                                                            .monthExpense
-                                                                            .totalSpent
-                                                                    : appModel
-                                                                            .weekExpense
-                                                                            .totalSpentOnLeisure /
-                                                                        appModel
-                                                                            .weekExpense
-                                                                            .totalSpent))
-                                                        .toStringAsFixed(0) +
-                                                    "%",
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 16 * sizeMulW,
-                                                    color: Colors.grey[500]),
-                                              ),
-                                            ],
+                                          Tooltip(
+                                            message: "Leisure",
+                                            child: Column(
+                                              children: <Widget>[
+                                                Icon(
+                                                  FontAwesomeIcons.wineGlassAlt,
+                                                  size: sizeMulW * 34,
+                                                  color: Color(0xfffef09c),
+                                                ),
+                                                SizedBox(
+                                                  height: sizeMulW * 3,
+                                                ),
+                                                Text(
+                                                  ((appModel.viewing_period ==
+                                                              Period.DAILY)
+                                                          ? appModel.dayExpense
+                                                              .totalSpentOnLeisure
+                                                          : (appModel.viewing_period ==
+                                                                  Period
+                                                                      .MONTHLY)
+                                                              ? appModel
+                                                                  .monthExpense
+                                                                  .totalSpentOnLeisure
+                                                              : appModel
+                                                                  .weekExpense
+                                                                  .totalSpentOnLeisure)
+                                                      .toString(),
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontSize: 16 * sizeMulW,
+                                                      color: Colors.grey[600]),
+                                                ),
+                                                SizedBox(
+                                                  height: sizeMulW * 1,
+                                                ),
+                                                Text(
+                                                  (100 *
+                                                              ((appModel
+                                                                          .viewing_period ==
+                                                                      Period
+                                                                          .DAILY)
+                                                                  ? appModel
+                                                                          .dayExpense
+                                                                          .totalSpentOnLeisure /
+                                                                      appModel
+                                                                          .dayExpense
+                                                                          .totalSpent
+                                                                  : (appModel.viewing_period ==
+                                                                          Period
+                                                                              .MONTHLY)
+                                                                      ? appModel
+                                                                              .monthExpense
+                                                                              .totalSpentOnLeisure /
+                                                                          appModel
+                                                                              .monthExpense
+                                                                              .totalSpent
+                                                                      : appModel
+                                                                              .weekExpense
+                                                                              .totalSpentOnLeisure /
+                                                                          appModel
+                                                                              .weekExpense
+                                                                              .totalSpent))
+                                                          .toStringAsFixed(0) +
+                                                      "%",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontSize: 16 * sizeMulW,
+                                                      color: Colors.grey[500]),
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                          Column(
-                                            children: <Widget>[
-                                              Icon(
-                                                FontAwesomeIcons.campground,
-                                                size: sizeMulW * 34,
-                                                color: Color(0xffee9698),
-                                              ),
-                                              SizedBox(
-                                                height: sizeMulW * 3,
-                                              ),
-                                              Text(
-                                                ((appModel.viewing_period ==
-                                                            Period.DAILY)
-                                                        ? appModel.dayExpense
-                                                            .totalSpentOnMiscellaneous
-                                                        : (appModel.viewing_period ==
-                                                                Period.MONTHLY)
-                                                            ? appModel
-                                                                .monthExpense
-                                                                .totalSpentOnMiscellaneous
-                                                            : appModel
-                                                                .weekExpense
-                                                                .totalSpentOnMiscellaneous)
-                                                    .toString(),
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 16 * sizeMulW,
-                                                    color: Colors.grey[600]),
-                                              ),
-                                              SizedBox(
-                                                height: sizeMulW * 1,
-                                              ),
-                                              Text(
-                                                (100 *
-                                                            ((appModel.viewing_period ==
-                                                                    Period
-                                                                        .DAILY)
-                                                                ? appModel
-                                                                        .dayExpense
-                                                                        .totalSpentOnMiscellaneous /
-                                                                    appModel
-                                                                        .dayExpense
-                                                                        .totalSpent
-                                                                : (appModel
-                                                                            .viewing_period ==
-                                                                        Period
-                                                                            .MONTHLY)
-                                                                    ? appModel
-                                                                            .monthExpense
-                                                                            .totalSpentOnMiscellaneous /
-                                                                        appModel
-                                                                            .monthExpense
-                                                                            .totalSpent
-                                                                    : appModel
-                                                                            .weekExpense
-                                                                            .totalSpentOnMiscellaneous /
-                                                                        appModel
-                                                                            .weekExpense
-                                                                            .totalSpent))
-                                                        .toStringAsFixed(0) +
-                                                    "%",
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 16 * sizeMulW,
-                                                    color: Colors.grey[500]),
-                                              ),
-                                            ],
+                                          Tooltip(
+                                            message: "Miscellaneous",
+                                            child: Column(
+                                              children: <Widget>[
+                                                Icon(
+                                                  FontAwesomeIcons.campground,
+                                                  size: sizeMulW * 34,
+                                                  color: Color(0xffee9698),
+                                                ),
+                                                SizedBox(
+                                                  height: sizeMulW * 3,
+                                                ),
+                                                Text(
+                                                  ((appModel.viewing_period ==
+                                                              Period.DAILY)
+                                                          ? appModel.dayExpense
+                                                              .totalSpentOnMiscellaneous
+                                                          : (appModel.viewing_period ==
+                                                                  Period
+                                                                      .MONTHLY)
+                                                              ? appModel
+                                                                  .monthExpense
+                                                                  .totalSpentOnMiscellaneous
+                                                              : appModel
+                                                                  .weekExpense
+                                                                  .totalSpentOnMiscellaneous)
+                                                      .toString(),
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontSize: 16 * sizeMulW,
+                                                      color: Colors.grey[600]),
+                                                ),
+                                                SizedBox(
+                                                  height: sizeMulW * 1,
+                                                ),
+                                                Text(
+                                                  (100 *
+                                                              ((appModel
+                                                                          .viewing_period ==
+                                                                      Period
+                                                                          .DAILY)
+                                                                  ? appModel
+                                                                          .dayExpense
+                                                                          .totalSpentOnMiscellaneous /
+                                                                      appModel
+                                                                          .dayExpense
+                                                                          .totalSpent
+                                                                  : (appModel.viewing_period ==
+                                                                          Period
+                                                                              .MONTHLY)
+                                                                      ? appModel
+                                                                              .monthExpense
+                                                                              .totalSpentOnMiscellaneous /
+                                                                          appModel
+                                                                              .monthExpense
+                                                                              .totalSpent
+                                                                      : appModel
+                                                                              .weekExpense
+                                                                              .totalSpentOnMiscellaneous /
+                                                                          appModel
+                                                                              .weekExpense
+                                                                              .totalSpent))
+                                                          .toStringAsFixed(0) +
+                                                      "%",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontSize: 16 * sizeMulW,
+                                                      color: Colors.grey[500]),
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                          Column(
-                                            children: <Widget>[
-                                              Icon(
-                                                FontAwesomeIcons.bus,
-                                                size: sizeMulW * 34,
-                                                color: Color(0xff8ec8f8),
-                                              ),
-                                              SizedBox(
-                                                height: sizeMulW * 3,
-                                              ),
-                                              Text(
-                                                ((appModel.viewing_period ==
-                                                            Period.DAILY)
-                                                        ? appModel.dayExpense
-                                                            .totalSpentOnTransportation
-                                                        : (appModel.viewing_period ==
-                                                                Period.MONTHLY)
-                                                            ? appModel
-                                                                .monthExpense
-                                                                .totalSpentOnTransportation
-                                                            : appModel
-                                                                .weekExpense
-                                                                .totalSpentOnTransportation)
-                                                    .toString(),
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 16 * sizeMulW,
-                                                    color: Colors.grey[600]),
-                                              ),
-                                              SizedBox(
-                                                height: sizeMulW * 1,
-                                              ),
-                                              Text(
-                                                (100 *
-                                                            ((appModel.viewing_period ==
-                                                                    Period
-                                                                        .DAILY)
-                                                                ? appModel
-                                                                        .dayExpense
-                                                                        .totalSpentOnTransportation /
-                                                                    appModel
-                                                                        .dayExpense
-                                                                        .totalSpent
-                                                                : (appModel
-                                                                            .viewing_period ==
-                                                                        Period
-                                                                            .MONTHLY)
-                                                                    ? appModel
-                                                                            .monthExpense
-                                                                            .totalSpentOnTransportation /
-                                                                        appModel
-                                                                            .monthExpense
-                                                                            .totalSpent
-                                                                    : appModel
-                                                                            .weekExpense
-                                                                            .totalSpentOnTransportation /
-                                                                        appModel
-                                                                            .weekExpense
-                                                                            .totalSpent))
-                                                        .toStringAsFixed(0) +
-                                                    "%",
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 16 * sizeMulW,
-                                                    color: Colors.grey[500]),
-                                              ),
-                                            ],
+                                          Tooltip(
+                                            message: "Transportation",
+                                            child: Column(
+                                              children: <Widget>[
+                                                Icon(
+                                                  FontAwesomeIcons.bus,
+                                                  size: sizeMulW * 34,
+                                                  color: Color(0xff8ec8f8),
+                                                ),
+                                                SizedBox(
+                                                  height: sizeMulW * 3,
+                                                ),
+                                                Text(
+                                                  ((appModel.viewing_period ==
+                                                              Period.DAILY)
+                                                          ? appModel.dayExpense
+                                                              .totalSpentOnTransportation
+                                                          : (appModel.viewing_period ==
+                                                                  Period
+                                                                      .MONTHLY)
+                                                              ? appModel
+                                                                  .monthExpense
+                                                                  .totalSpentOnTransportation
+                                                              : appModel
+                                                                  .weekExpense
+                                                                  .totalSpentOnTransportation)
+                                                      .toString(),
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontSize: 16 * sizeMulW,
+                                                      color: Colors.grey[600]),
+                                                ),
+                                                SizedBox(
+                                                  height: sizeMulW * 1,
+                                                ),
+                                                Text(
+                                                  (100 *
+                                                              ((appModel
+                                                                          .viewing_period ==
+                                                                      Period
+                                                                          .DAILY)
+                                                                  ? appModel
+                                                                          .dayExpense
+                                                                          .totalSpentOnTransportation /
+                                                                      appModel
+                                                                          .dayExpense
+                                                                          .totalSpent
+                                                                  : (appModel.viewing_period ==
+                                                                          Period
+                                                                              .MONTHLY)
+                                                                      ? appModel
+                                                                              .monthExpense
+                                                                              .totalSpentOnTransportation /
+                                                                          appModel
+                                                                              .monthExpense
+                                                                              .totalSpent
+                                                                      : appModel
+                                                                              .weekExpense
+                                                                              .totalSpentOnTransportation /
+                                                                          appModel
+                                                                              .weekExpense
+                                                                              .totalSpent))
+                                                          .toStringAsFixed(0) +
+                                                      "%",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontSize: 16 * sizeMulW,
+                                                      color: Colors.grey[500]),
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                          Column(
-                                            children: <Widget>[
-                                              Icon(
-                                                FontAwesomeIcons.toiletPaper,
-                                                size: sizeMulW * 34,
-                                                color: Color(0xffa1d2a6),
-                                              ),
-                                              SizedBox(
-                                                height: sizeMulW * 3,
-                                              ),
-                                              Text(
-                                                ((appModel.viewing_period ==
-                                                            Period.DAILY)
-                                                        ? appModel.dayExpense
-                                                            .totalSpentOnUtilities
-                                                        : (appModel.viewing_period ==
-                                                                Period.MONTHLY)
-                                                            ? appModel
-                                                                .monthExpense
-                                                                .totalSpentOnFood
-                                                            : appModel
-                                                                .weekExpense
-                                                                .totalSpentOnFood)
-                                                    .toString(),
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 16 * sizeMulW,
-                                                    color: Colors.grey[600]),
-                                              ),
-                                              SizedBox(
-                                                height: sizeMulW * 1,
-                                              ),
-                                              Text(
-                                                (100 *
-                                                            ((appModel.viewing_period ==
-                                                                    Period
-                                                                        .DAILY)
-                                                                ? appModel
-                                                                        .dayExpense
-                                                                        .totalSpentOnUtilities /
-                                                                    appModel
-                                                                        .dayExpense
-                                                                        .totalSpent
-                                                                : (appModel
-                                                                            .viewing_period ==
-                                                                        Period
-                                                                            .MONTHLY)
-                                                                    ? appModel
-                                                                            .monthExpense
-                                                                            .totalSpentOnUtilities /
-                                                                        appModel
-                                                                            .monthExpense
-                                                                            .totalSpent
-                                                                    : appModel
-                                                                            .weekExpense
-                                                                            .totalSpentOnUtilities /
-                                                                        appModel
-                                                                            .weekExpense
-                                                                            .totalSpent))
-                                                        .toStringAsFixed(0) +
-                                                    "%",
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 16 * sizeMulW,
-                                                    color: Colors.grey[500]),
-                                              ),
-                                            ],
+                                          Tooltip(
+                                            message: "Utilities",
+                                            child: Column(
+                                              children: <Widget>[
+                                                Icon(
+                                                  FontAwesomeIcons.toiletPaper,
+                                                  size: sizeMulW * 34,
+                                                  color: Color(0xffa1d2a6),
+                                                ),
+                                                SizedBox(
+                                                  height: sizeMulW * 3,
+                                                ),
+                                                Text(
+                                                  ((appModel.viewing_period ==
+                                                              Period.DAILY)
+                                                          ? appModel.dayExpense
+                                                              .totalSpentOnUtilities
+                                                          : (appModel.viewing_period ==
+                                                                  Period
+                                                                      .MONTHLY)
+                                                              ? appModel
+                                                                  .monthExpense
+                                                                  .totalSpentOnFood
+                                                              : appModel
+                                                                  .weekExpense
+                                                                  .totalSpentOnFood)
+                                                      .toString(),
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontSize: 16 * sizeMulW,
+                                                      color: Colors.grey[600]),
+                                                ),
+                                                SizedBox(
+                                                  height: sizeMulW * 1,
+                                                ),
+                                                Text(
+                                                  (100 *
+                                                              ((appModel
+                                                                          .viewing_period ==
+                                                                      Period
+                                                                          .DAILY)
+                                                                  ? appModel
+                                                                          .dayExpense
+                                                                          .totalSpentOnUtilities /
+                                                                      appModel
+                                                                          .dayExpense
+                                                                          .totalSpent
+                                                                  : (appModel.viewing_period ==
+                                                                          Period
+                                                                              .MONTHLY)
+                                                                      ? appModel
+                                                                              .monthExpense
+                                                                              .totalSpentOnUtilities /
+                                                                          appModel
+                                                                              .monthExpense
+                                                                              .totalSpent
+                                                                      : appModel
+                                                                              .weekExpense
+                                                                              .totalSpentOnUtilities /
+                                                                          appModel
+                                                                              .weekExpense
+                                                                              .totalSpent))
+                                                          .toStringAsFixed(0) +
+                                                      "%",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontSize: 16 * sizeMulW,
+                                                      color: Colors.grey[500]),
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ],
+                                      ),
+                                      Row(
+                                        children: <Widget>[],
                                       )
                                     ],
                                   ),
                                 ),
+
+                                // Text(data)
 
                                 Container(
                                     padding: EdgeInsets.all(sizeMulW * 20),
@@ -731,7 +766,9 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                 return GroupedBarChart(
                                                     snapshot.data);
                                               } else
-                                                return CircularProgressIndicator();
+                                                return SizedBox(
+                                                  width: 1,
+                                                );
                                             })
 
                                     //         :SizedBox(width: MediaQuery.of(context).size.width,
