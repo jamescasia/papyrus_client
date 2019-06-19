@@ -89,7 +89,7 @@ class UserExpense {
             miscellaneousLifetimeExpenseAmount,
         "lastDateRecorded": lastDateRecorded,
         "lastWeekRecorded": lastWeekRecorded,
-        lastMonthRecorded: lastMonthRecorded,
+        "lastMonthRecorded": lastMonthRecorded,
         "lastDateTotalExpenseAmount": lastDateTotalExpenseAmount,
         "lastDateLeisureExpenseAmount": lastDateLeisureExpenseAmount,
         "lastDateFoodExpenseAmount": lastDateFoodExpenseAmount,

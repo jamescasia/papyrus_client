@@ -365,7 +365,7 @@ class AppModel extends Model {
 
   addWeekExpense() async {
     await weekExpenseFile.writeAsString(jsonEncode(weekExpense.toJson()) + "\n",
-        mode: FileMode.append);
+        mode: FileMode.writeOnlyAppend);
 
     userExpense.numberOfRecordedWeeks++;
   }
@@ -373,7 +373,7 @@ class AppModel extends Model {
   addMonthExpense() async {
     await monthExpenseFile.writeAsString(
         jsonEncode(monthExpense.toJson()) + "\n",
-        mode: FileMode.append);
+        mode: FileMode.writeOnlyAppend);
     userExpense.numberOfRecordedMonths++;
   }
 
@@ -488,7 +488,7 @@ class AppModel extends Model {
     ExpenseAverages.lifetimeAverageMonthSpend =
         userExpense.totalLifetimeExpenseAmount /
             userExpense.numberOfRecordedMonths;
-    userExpenseJSONFile.writeAsString(jsonEncode(userExpense.toJson()));
+    userExpenseJSONFile.writeAsString(jsonEncode(userExpense.toJson()), mode: FileMode.write);
     notifyListeners();
   }
 
@@ -520,7 +520,8 @@ class AppModel extends Model {
     ExpenseAverages.lifetimeAverageMonthSpend =
         userExpense.totalLifetimeExpenseAmount /
             userExpense.numberOfRecordedMonths;
-    userExpenseJSONFile.writeAsString(jsonEncode(userExpense.toJson()));
+    userExpenseJSONFile.writeAsString(jsonEncode(userExpense.toJson()), mode: FileMode.write);
+    // userExpenseJSONFile.writeAsString()
     notifyListeners();
 
     // updateUserExpense();
