@@ -779,8 +779,20 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                     padding: EdgeInsets.all(sizeMulW * 20),
                                     width: MediaQuery.of(context).size.width,
                                     height: sizeMulW * 230,
-                                    child:
-                                        SimpleTimeSeriesChart.withSampleData()),
+                                    child: FutureBuilder(
+                                        future: chartsModel
+                                            .generateTimeSeriesChartData(
+                                                appModel.viewing_period),
+                                        builder: (context, snapshot) {
+                                          if (snapshot.connectionState ==
+                                              ConnectionState.done) {
+                                            return SimpleTimeSeriesChart(
+                                                snapshot.data);
+                                          } else
+                                            return SizedBox(
+                                              width: 1,
+                                            );
+                                        })),
                                 Container(
                                     padding: EdgeInsets.all(sizeMulW * 20),
                                     width: MediaQuery.of(context).size.width,
