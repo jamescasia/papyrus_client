@@ -136,8 +136,8 @@ class AppModel extends Model {
     // var = await getExte
     await checkOrGenerateDirectories();
 
-    //  reset();
-    //  return;
+     reset();
+     return;
 
     listFileNamesOfReceiptsFoundInStorageAndGenerateReceipts();
     await prepareExpenseFiles();
@@ -373,8 +373,6 @@ class AppModel extends Model {
     if (dayExpense.dateTime != "") {
       await dayExpenseFile.writeAsString(jsonEncode(dayExpense.toJson()) + "\n",
           mode: FileMode.writeOnlyAppend);
-      await dayExpenseFile.writeAsString(jsonEncode(dayExpense.toJson()) + "\n",
-          mode: FileMode.writeOnlyAppend);
     }
   }
 
@@ -426,8 +424,7 @@ class AppModel extends Model {
       userExpense.resetDateRecords(date);
       await addDayExpense();
     }
-    if (userExpense.lastMonthRecorded == "" ||
-        date.month != DateTime.parse(userExpense.lastDateRecorded).month) {
+    if (userExpense.lastMonthRecorded == "" || date.day == 1) {
       userExpense.resetMonthRecords(date);
       userExpense.firstDayMonth = date.toIso8601String();
       await addMonthExpense();
