@@ -136,8 +136,8 @@ class AppModel extends Model {
     // var = await getExte
     await checkOrGenerateDirectories();
 
-     reset();
-     return;
+    // reset();
+    // return;
 
     listFileNamesOfReceiptsFoundInStorageAndGenerateReceipts();
     await prepareExpenseFiles();
@@ -306,26 +306,12 @@ class AppModel extends Model {
     dayExpenseFile = File(dayExpenseFilePath);
     weekExpenseFile = File(weekExpenseFilePath);
     monthExpenseFile = File(monthExpenseFilePath);
-    // try {
-    //   Map map = jsonDecode(await userExpenseJSONFile.readAsString());
-    //   userExpense = UserExpense.fromJson(map);
-    // } catch (e) {}
-
-    // print("READ ALOUD");
-    // print("json current" + jsonEncode(userExpense.toJson()));
-    // print(userExpensesFile.readAsString());
-
     userExpense = await loadUserExpense();
     loadedUserExpense = true;
     notifyListeners();
     print("lastweeks expense" +
         userExpense.lastWeekTotalExpenseAmount.toString());
-
-    userExpenseInit();
-    // if(userE)
   }
-
-  userExpenseInit() {}
 
   void addToInvolvedExpenses(String category, double total) {
     if (category == "Food") {
@@ -360,31 +346,35 @@ class AppModel extends Model {
     }
 
     userExpense.totalLifetimeExpenseAmount += total;
+    userExpense.lastDateTotalExpenseAmount += total;
+    userExpense.lastMonthTotalExpenseAmount += total;
+    userExpense.lastWeekTotalExpenseAmount += total;
 
     print(
         "TOOOOOOOOOOTALL" + userExpense.totalLifetimeExpenseAmount.toString());
   }
 
   addDayExpense() async {
-    // this shiet only get called when day closed
-//  await userExpensesFile.writeAsString(
-//         jsonEncode(expenseItem.toJson()) + "\n",
-//         mode: FileMode.writeOnlyAppend);
-    if (dayExpense.dateTime != "") {
+    // if (dayExpense.dateTime != "") {
       await dayExpenseFile.writeAsString(jsonEncode(dayExpense.toJson()) + "\n",
           mode: FileMode.writeOnlyAppend);
-    }
+    // }
+
+    userExpense.numberOfRecordedDays++;
   }
 
   addWeekExpense() async {
     await weekExpenseFile.writeAsString(jsonEncode(weekExpense.toJson()) + "\n",
         mode: FileMode.append);
+
+    userExpense.numberOfRecordedWeeks++;
   }
 
   addMonthExpense() async {
     await monthExpenseFile.writeAsString(
         jsonEncode(monthExpense.toJson()) + "\n",
         mode: FileMode.append);
+    userExpense.numberOfRecordedMonths++;
   }
 
   void initializePeriodExpenses() {
@@ -416,28 +406,77 @@ class AppModel extends Model {
         userExpense.lastMonthTotalExpenseAmount);
   }
 
-  void newPeriodResetUserExpense() async {
-    var date = DateTime.now().toLocal();
+  // void newPeriodResetUserExpense() async {
+  //   var date = DateTime.now().toLocal();
 
+  //   if (userExpense.lastDateRecorded == "" ||
+  //       date.day != DateTime.parse(userExpense.lastDateRecorded).day) {
+  //     userExpense.resetDateRecords(date);
+  //     await addDayExpense();
+  //   }
+  //   if (userExpense.lastMonthRecorded == "" ||
+  //       (userExpense.lastMonthRecorded != date.month.toString())) {
+  //     userExpense.resetMonthRecords(date);
+  //     userExpense.firstDayMonth = date.toIso8601String();
+  //     // finally write the month summary to records appen it
+  //     await addMonthExpense();
+  //   }
+  // }
+
+  bool isItANewDay() {
+    print("check new day mofos" +
+        DateTime.now().toLocal().day.toString() +
+        "vs" +
+         (userExpense.lastDateRecorded) );
     if (userExpense.lastDateRecorded == "" ||
-        date.day != DateTime.parse(userExpense.lastDateRecorded).day) {
-      userExpense.resetDateRecords(date);
-      await addDayExpense();
-    }
-    if (userExpense.lastMonthRecorded == "" || date.day == 1) {
-      userExpense.resetMonthRecords(date);
-      userExpense.firstDayMonth = date.toIso8601String();
-      await addMonthExpense();
-    }
+        userExpense.lastDateRecorded == null) return true;
+    return DateTime.now().toLocal().day !=
+        DateTime.parse(userExpense.lastDateRecorded).day;
   }
 
-  void updateUserExpense() {
-    var date = DateTime.now().toLocal();
+  bool isItANewWeek() {
+    return true;
+  }
 
-    updateDayExpense();
-    updateWeekExpense();
-    updateMonthExpense();
+  bool isItANewMonth() {
+    print(
+        "check new mo mofos ${userExpense.lastMonthRecorded} vs    ${DateTime.now().toLocal().month.toString()}");
+    if (userExpense.lastMonthRecorded == "" ||
+        userExpense.lastMonthRecorded == null) return true;
+    return DateTime.now().toLocal().month.toString() !=
+        userExpense.lastMonthRecorded;
+  }
 
+  // void updateUserExpense() {
+  //   var date = DateTime.now().toLocal();
+
+  //   ExpenseAverages.lifetimeAverageDaySpend =
+  //       userExpense.totalLifetimeExpenseAmount /
+  //           userExpense.numberOfRecordedDays;
+
+  //   ExpenseAverages.lifetimeAverageWeekSpend =
+  //       userExpense.totalLifetimeExpenseAmount /
+  //           userExpense.numberOfRecordedWeeks;
+
+  //   ExpenseAverages.lifetimeAverageMonthSpend =
+  //       userExpense.totalLifetimeExpenseAmount /
+  //           userExpense.numberOfRecordedMonths;
+
+  //   notifyListeners();
+  // }
+
+  void passiveUpdateUserExpense() {
+    initializePeriodExpenses();
+    // inits the DayExpense, WeekExpense, MonthExpense, based on userExpense records
+    if (isItANewDay()) {
+      addDayExpense();
+      userExpense.resetDateRecords();
+    }
+    if (isItANewWeek()) {}
+    if (isItANewMonth()) {
+      addMonthExpense();
+      userExpense.resetMonthRecords();
+    }
     ExpenseAverages.lifetimeAverageDaySpend =
         userExpense.totalLifetimeExpenseAmount /
             userExpense.numberOfRecordedDays;
@@ -449,95 +488,42 @@ class AppModel extends Model {
     ExpenseAverages.lifetimeAverageMonthSpend =
         userExpense.totalLifetimeExpenseAmount /
             userExpense.numberOfRecordedMonths;
-
-    userExpense.lastDateRecorded = date.toIso8601String();
-    userExpense.lastMonthRecorded = date.month.toString();
     userExpenseJSONFile.writeAsString(jsonEncode(userExpense.toJson()));
     notifyListeners();
   }
 
-  void passiveUpdateUserExpense() {
-    initializePeriodExpenses();
-    newPeriodResetUserExpense();
-    updateUserExpense();
-    // var date = DateTime.now().toLocal();
-
-    // if (userExpense.lastDateRecorded == "" ||
-    //     date.day != DateTime.parse(userExpense.lastDateRecorded).day) {
-    //   userExpense.resetDateRecords(date);
-    // }
-    // if (userExpense.lastMonthRecorded == "" ||
-    //     date.month != DateTime.parse(userExpense.lastDateRecorded).month) {
-    //   userExpense.resetMonthRecords(date);
-    //   userExpense.firstDayMonth = date.toIso8601String();
-    // }
-    // initializePeriodExpenses();
-    // updateDayExpense();
-    // updateWeekExpense();
-    // updateMonthExpense();
-
-    // ExpenseAverages.lifetimeAverageDaySpend =
-    //     userExpense.totalLifetimeExpenseAmount /
-    //         userExpense.numberOfRecordedDays;
-
-    // ExpenseAverages.lifetimeAverageWeekSpend =
-    //     userExpense.totalLifetimeExpenseAmount /
-    //         userExpense.numberOfRecordedWeeks;
-
-    // ExpenseAverages.lifetimeAverageMonthSpend =
-    //     userExpense.totalLifetimeExpenseAmount /
-    //         userExpense.numberOfRecordedMonths;
-
-    // userExpense.lastDateRecorded = date.toIso8601String();
-    // userExpense.lastMonthRecorded = date.month.toString();
-    // userExpenseJSONFile.writeAsString(jsonEncode(userExpense.toJson()));
-  }
-
   void addToUserExpense(ExpenseItem expenseItem) {
-    var date = DateTime.now().toLocal();
-    newPeriodResetUserExpense();
-    // if (userExpense.lastDateRecorded == "" ||
-    //     date.day != DateTime.parse(userExpense.lastDateRecorded).day) {
-    //   addDayExpense();
-    //   userExpense.resetDateRecords(date);
-    //   // reset to 0
-    //   // add the newly added expense item to category and total
+    // basically add shit to userexpense
 
-    // }
-    // if (userExpense.lastMonthRecorded == "" ||
-    //     date.month != DateTime.parse(userExpense.lastDateRecorded).month) {
-    //   addMonthExpense();
-    //   userExpense.resetMonthRecords(date);
-    //   userExpense.firstDayMonth = date.toIso8601String();
-    // }
+    if (isItANewDay()) {
+      addDayExpense();
+      userExpense.resetDateRecords();
+    }
+    if (isItANewWeek()) {}
+    if (isItANewMonth()) {
+      addMonthExpense();
+      userExpense.resetMonthRecords();
+    }
 
     addToInvolvedExpenses(expenseItem.category, expenseItem.amount);
-    userExpense.lastDateTotalExpenseAmount += expenseItem.amount;
-    userExpense.lastMonthTotalExpenseAmount += expenseItem.amount;
-    userExpense.lastWeekTotalExpenseAmount += expenseItem.amount;
+    updateDayExpense();
+    updateWeekExpense();
+    updateMonthExpense();
+    ExpenseAverages.lifetimeAverageDaySpend =
+        userExpense.totalLifetimeExpenseAmount /
+            userExpense.numberOfRecordedDays;
 
-    updateUserExpense();
+    ExpenseAverages.lifetimeAverageWeekSpend =
+        userExpense.totalLifetimeExpenseAmount /
+            userExpense.numberOfRecordedWeeks;
 
-    // updateDayExpense();
-    // updateWeekExpense();
-    // updateMonthExpense();
+    ExpenseAverages.lifetimeAverageMonthSpend =
+        userExpense.totalLifetimeExpenseAmount /
+            userExpense.numberOfRecordedMonths;
+    userExpenseJSONFile.writeAsString(jsonEncode(userExpense.toJson()));
+    notifyListeners();
 
-    // ExpenseAverages.lifetimeAverageDaySpend =
-    //     userExpense.totalLifetimeExpenseAmount /
-    //         userExpense.numberOfRecordedDays;
-
-    // ExpenseAverages.lifetimeAverageWeekSpend =
-    //     userExpense.totalLifetimeExpenseAmount /
-    //         userExpense.numberOfRecordedWeeks;
-
-    // ExpenseAverages.lifetimeAverageMonthSpend =
-    //     userExpense.totalLifetimeExpenseAmount /
-    //         userExpense.numberOfRecordedMonths;
-
-    // userExpense.lastDateRecorded = date.toIso8601String();
-    // userExpense.lastMonthRecorded = date.month.toString();
-    // userExpenseJSONFile.writeAsString(jsonEncode(userExpense.toJson()));
-    // notifyListeners();
+    // updateUserExpense();
   }
 
   void updateDayExpense() {

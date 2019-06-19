@@ -41,7 +41,8 @@ class UserExpense {
 
   UserExpense() {}
 
-  resetDateRecords(DateTime date) {
+  resetDateRecords() {
+    DateTime date = DateTime.now().toLocal();
     lastDateRecorded = date.toIso8601String();
     lastDateTotalExpenseAmount = 0;
     lastDateLeisureExpenseAmount = 0;
@@ -52,6 +53,9 @@ class UserExpense {
   }
 
   resetWeekRecords() {
+    
+    DateTime date = DateTime.now().toLocal();
+    // lastWeekRecorded = date.w
     lastWeekTotalExpenseAmount = 0;
     lastWeekLeisureExpenseAmount = 0;
     lastWeekFoodExpenseAmount = 0;
@@ -60,8 +64,10 @@ class UserExpense {
     lastWeekMiscellaneousExpenseAmount = 0;
   }
 
-  resetMonthRecords(DateTime date) {
+  resetMonthRecords() {
+    DateTime date = DateTime.now().toLocal();
     lastMonthRecorded = date.month.toString();
+    print("RESETTED MONTH" + lastMonthRecorded);
     lastMonthTotalExpenseAmount = 0;
     lastMonthLeisureExpenseAmount = 0;
     lastMonthFoodExpenseAmount = 0;
@@ -147,8 +153,7 @@ class UserExpense {
         lastDateFoodExpenseAmount = json["lastDateFoodExpenseAmount"],
         lastDateTransportationExpenseAmount =
             json["lastDateTransportationExpenseAmount"],
-        lastDateUtilitiesExpenseAmount =
-            json["lastDateUtilitiesExpenseAmount"],
+        lastDateUtilitiesExpenseAmount = json["lastDateUtilitiesExpenseAmount"],
         lastDateMiscellaneousExpenseAmount =
             json["lastDateMiscellaneousExpenseAmount"],
         lastWeekTotalExpenseAmount = json["lastWeekTotalExpenseAmount"],
@@ -156,8 +161,7 @@ class UserExpense {
         lastWeekFoodExpenseAmount = json["lastWeekFoodExpenseAmount"],
         lastWeekTransportationExpenseAmount =
             json["lastWeekTransportationExpenseAmount"],
-        lastWeekUtilitiesExpenseAmount =
-            json["lastWeekUtilitiesExpenseAmount"],
+        lastWeekUtilitiesExpenseAmount = json["lastWeekUtilitiesExpenseAmount"],
         lastWeekMiscellaneousExpenseAmount =
             json["lastWeekMiscellaneousExpenseAmount"],
         lastMonthTotalExpenseAmount = json["lastMonthTotalExpenseAmount"],
@@ -179,16 +183,12 @@ class UserExpense {
 enum Category { LEISURE, FOOD, TRANSPORTATION, MISCELLANEOUS, UTILITIES }
 enum Period { MONTHLY, WEEKLY, DAILY }
 
-
 class ExpenseAverages {
-
-
   static double lifetimeAverageDaySpend = 0;
   static double lifetimeAverageWeekSpend = 0;
   static double lifetimeAverageMonthSpend = 0;
-  
-
 }
+
 class ExpenseItem {
   String category;
   double amount;
