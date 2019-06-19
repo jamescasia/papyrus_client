@@ -455,10 +455,11 @@ class AppModel extends Model {
         userExpense.lastWeekRecorded == null) return true;
 
     DateTime date = DateTime.now().toLocal();
+    DateTime otherDate = (DateTime.parse(userExpense.lastWeekRecorded));
     return DateFormat('MM/dd/yyyy')
             .format(date.subtract(Duration(days: date.weekday - 1))) !=
         DateFormat('MM/dd/yyyy')
-            .format(DateTime.parse(userExpense.lastWeekRecorded));
+            .format(otherDate.subtract(Duration(days: otherDate.weekday-1)));
   }
 
   bool isItANewMonth() {
@@ -576,7 +577,7 @@ class AppModel extends Model {
   }
 
   void updateWeekExpense() {
-    weekExpense.dateOfFirstDayOfWeek = userExpense.firstDayWeek;
+    // weekExpense.dateOfFirstDayOfWeek = userExpense.firstDayWeek;
     weekExpense.totalSpent = userExpense.lastWeekTotalExpenseAmount;
     weekExpense.totalSpentOnFood = userExpense.lastWeekFoodExpenseAmount;
     weekExpense.totalSpentOnLeisure = userExpense.lastWeekLeisureExpenseAmount;
@@ -589,7 +590,7 @@ class AppModel extends Model {
   }
 
   void updateMonthExpense() {
-    monthExpense.dateOfFirstDayOfMonth = userExpense.firstDayMonth;
+    // monthExpense.dateOfFirstDayOfMonth = userExpense.firstDayMonth;
     monthExpense.totalSpent = userExpense.lastMonthTotalExpenseAmount;
     monthExpense.totalSpentOnFood = userExpense.lastMonthFoodExpenseAmount;
     monthExpense.totalSpentOnLeisure =
@@ -646,7 +647,7 @@ class AppModel extends Model {
     dayExpenseFilePath = "${dirMap['Expenses/Period']}DayExpense.txt";
     weekExpenseFilePath = "${dirMap['Expenses/Period']}WeekExpense.txt";
     monthExpenseFilePath = "${dirMap['Expenses/Period']}MonthExpense.txt";
-    allMessagesFilePath = "${dirMap['Messages']}MonthExpense.json";
+    allMessagesFilePath = "${dirMap['Messages']}Messages.json";
 
     await File(allMessagesFilePath).create();
     await File(userExpenseJSONFilePath).create();

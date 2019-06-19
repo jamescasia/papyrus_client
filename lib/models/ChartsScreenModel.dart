@@ -25,6 +25,8 @@ class ChartsScreenModel extends Model {
   AppModel appModel;
   ChartsScreenModel(this.appModel);
   List<DayExpense> dayExpenses;
+  List<WeekExpense> weekExpenses;
+  List<MonthExpense> monthExpenses;
 
   launch() async {}
 
@@ -87,12 +89,20 @@ class ChartsScreenModel extends Model {
   Future<List<charts.Series<DataBar, String>>> generateGroupedBarChartData(
       Period period) async {
     try {
-
-      print(await appModel.dayExpenseFile.readAsLines());
+      // print(await appModel.dayExpenseFile.readAsLines());
       dayExpenses = (await appModel.dayExpenseFile.readAsLines())
           .map((f) => DayExpense.fromJson(jsonDecode(f)))
           .toList();
+
+      weekExpenses = (await appModel.weekExpenseFile.readAsLines())
+          .map((f) => WeekExpense.fromJson(jsonDecode(f)))
+          .toList();
+
+      monthExpenses = (await appModel.monthExpenseFile.readAsLines())
+          .map((f) => MonthExpense.fromJson(jsonDecode(f)))
+          .toList();
     } catch (e) {}
+
     var leisureTotalData;
     var foodTotalData;
     var transpoTotalData;
@@ -101,10 +111,7 @@ class ChartsScreenModel extends Model {
     if (period == Period.DAILY) {
       foodTotalData = dayExpenses
           .sublist((dayExpenses.length >= 6) ? dayExpenses.length - 6 : 0)
-          .map((f) => DataBar(
-              "food",
-              f.totalSpentOnFood,
-              "#f4a735",
+          .map((f) => DataBar("food", f.totalSpentOnFood, "#f4a735",
               DateFormat('MM dd yyyy').format(DateTime.parse(f.dateTime))
 
               // f.dateTime
@@ -112,13 +119,10 @@ class ChartsScreenModel extends Model {
           .toList();
       leisureTotalData = dayExpenses
           .sublist((dayExpenses.length >= 6) ? dayExpenses.length - 6 : 0)
-          .map((f) => DataBar(
-              "leisure",
-              f.totalSpentOnLeisure,
-              "#fef09c",
+          .map((f) => DataBar("leisure", f.totalSpentOnLeisure, "#fef09c",
               DateFormat('MM dd yyyy').format(DateTime.parse(f.dateTime))
               // f.dateTime
-              
+
               ))
           .toList();
       transpoTotalData = dayExpenses
@@ -129,19 +133,16 @@ class ChartsScreenModel extends Model {
               "#8ec8f8",
               DateFormat('MM dd yyyy').format(DateTime.parse(f.dateTime))
               // f.dateTime
-              
+
               ))
           .toList();
 
       utilTotalData = dayExpenses
           .sublist((dayExpenses.length >= 6) ? dayExpenses.length - 6 : 0)
-          .map((f) => DataBar(
-              "utilities",
-              f.totalSpentOnUtilities,
-              "#a1d2a6",
+          .map((f) => DataBar("utilities", f.totalSpentOnUtilities, "#a1d2a6",
               DateFormat('MM dd yyyy').format(DateTime.parse(f.dateTime))
               // f.dateTime
-              
+
               ))
           .toList();
 
@@ -152,6 +153,108 @@ class ChartsScreenModel extends Model {
               f.totalSpentOnMiscellaneous,
               "#ee9698",
               DateFormat('MM dd yyyy').format(DateTime.parse(f.dateTime))
+
+              // f.dateTime
+              ))
+          .toList();
+    }
+
+    if (period == Period.WEEKLY) {
+      foodTotalData = weekExpenses
+          .sublist((weekExpenses.length >= 6) ? weekExpenses.length - 6 : 0)
+          .map((f) => DataBar("food", f.totalSpentOnFood, "#f4a735",
+              DateFormat('MM dd yyyy').format(DateTime.parse(f.dateOfFirstDayOfWeek))
+
+              // f.dateTime
+              ))
+          .toList();
+      leisureTotalData = weekExpenses
+          .sublist((weekExpenses.length >= 6) ? weekExpenses.length - 6 : 0)
+          .map((f) => DataBar("leisure", f.totalSpentOnLeisure, "#fef09c",
+              DateFormat('MM dd yyyy').format(DateTime.parse(f.dateOfFirstDayOfWeek))
+              // f.dateTime
+
+              ))
+          .toList();
+      transpoTotalData = weekExpenses
+          .sublist((weekExpenses.length >= 6) ? weekExpenses.length - 6 : 0)
+          .map((f) => DataBar(
+              "transportation",
+              f.totalSpentOnTransportation,
+              "#8ec8f8",
+              DateFormat('MM dd yyyy').format(DateTime.parse(f.dateOfFirstDayOfWeek))
+              // f.dateTime
+
+              ))
+          .toList();
+
+      utilTotalData = weekExpenses
+          .sublist((weekExpenses.length >= 6) ? weekExpenses.length - 6 : 0)
+          .map((f) => DataBar("utilities", f.totalSpentOnUtilities, "#a1d2a6",
+              DateFormat('MM dd yyyy').format(DateTime.parse(f.dateOfFirstDayOfWeek))
+              // f.dateTime
+
+              ))
+          .toList();
+
+      miscTotalData = weekExpenses
+          .sublist((weekExpenses.length >= 6) ? weekExpenses.length - 6 : 0)
+          .map((f) => DataBar(
+              "miscellaneous",
+              f.totalSpentOnMiscellaneous,
+              "#ee9698",
+              DateFormat('MM dd yyyy').format(DateTime.parse(f.dateOfFirstDayOfWeek))
+
+              // f.dateTime
+              ))
+          .toList();
+    }
+
+     if (period == Period.MONTHLY) {
+      foodTotalData = monthExpenses
+          .sublist((monthExpenses.length >= 6) ? monthExpenses.length - 6 : 0)
+          .map((f) => DataBar("food", f.totalSpentOnFood, "#f4a735",
+              DateFormat('MM dd yyyy').format(DateTime.parse(f.dateOfFirstDayOfMonth))
+
+              // f.dateTime
+              ))
+          .toList();
+      leisureTotalData = monthExpenses
+          .sublist((monthExpenses.length >= 6) ? monthExpenses.length - 6 : 0)
+          .map((f) => DataBar("leisure", f.totalSpentOnLeisure, "#fef09c",
+              DateFormat('MM dd yyyy').format(DateTime.parse(f.dateOfFirstDayOfMonth))
+              // f.dateTime
+
+              ))
+          .toList();
+      transpoTotalData = monthExpenses
+          .sublist((monthExpenses.length >= 6) ? monthExpenses.length - 6 : 0)
+          .map((f) => DataBar(
+              "transportation",
+              f.totalSpentOnTransportation,
+              "#8ec8f8",
+              DateFormat('MM dd yyyy').format(DateTime.parse(f.dateOfFirstDayOfMonth))
+              // f.dateTime
+
+              ))
+          .toList();
+
+      utilTotalData = monthExpenses
+          .sublist((monthExpenses.length >= 6) ? monthExpenses.length - 6 : 0)
+          .map((f) => DataBar("utilities", f.totalSpentOnUtilities, "#a1d2a6",
+              DateFormat('MM dd yyyy').format(DateTime.parse(f.dateOfFirstDayOfMonth))
+              // f.dateTime
+
+              ))
+          .toList();
+
+      miscTotalData = monthExpenses
+          .sublist((monthExpenses.length >= 6) ? monthExpenses.length - 6 : 0)
+          .map((f) => DataBar(
+              "miscellaneous",
+              f.totalSpentOnMiscellaneous,
+              "#ee9698",
+              DateFormat('MM dd yyyy').format(DateTime.parse(f.dateOfFirstDayOfMonth))
 
               // f.dateTime
               ))
@@ -195,39 +298,6 @@ class ChartsScreenModel extends Model {
         data: utilTotalData,
       ),
     ];
-
-    // return [
-    //   new charts.Series<DataBar, String>(
-    //     id: 'Desktop',
-    //     domainFn: (DataBar sales, _) => sales.year,
-    //     measureFn: (DataBar sales, _) => sales.sales,
-    //     data: desktopSalesData,
-    //   ),
-    //   new charts.Series<OrdinalSales, String>(
-    //     id: 'Tablet',
-    //     domainFn: (DataBar sales, _) => sales.year,
-    //     measureFn: (DataBar sales, _) => sales.sales,
-    //     data: tableSalesData,
-    //   ),
-    //   new charts.Series<DataBar, String>(
-    //     id: 'Mobile',
-    //     domainFn: (DataBar sales, _) => sales.year,
-    //     measureFn: (DataBar sales, _) => sales.sales,
-    //     data: mobileSalesData,
-    //   ),
-    //    new charts.Series<DataBar, String>(
-    //     id: 'Mobile',
-    //     domainFn: (DataBar sales, _) => sales.year,
-    //     measureFn: (DataBar sales, _) => sales.sales,
-    //     data: mobileSalesData,
-    //   ),
-    //    new charts.Series<DataBar, String>(
-    //     id: 'Mobile',
-    //     domainFn: (DataBar sales, _) => sales.year,
-    //     measureFn: (DataBar sales, _) => sales.sales,
-    //     data: mobileSalesData,
-    //   ),
-    // ];
   }
 }
 

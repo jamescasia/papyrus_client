@@ -1019,12 +1019,8 @@ String addCommas(int nums) {
       new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},');
 }
 
-String decimalDigits(AppModel appModel) {
-  // print("Sda" +
-  //     (appModel.dayExpense.totalSpent)
-  //         .toStringAsFixed(2)
-  //         .split(".")
-  //         .toString());
+String decimalDigits(AppModel appModel) { 
+  if(!appModel.loadedUserExpense) return "00";
   if(appModel.viewing_period == Period.DAILY){
   if (((appModel.dayExpense.totalSpent).toStringAsFixed(2).split(".")[1]) ==
       "00") {
