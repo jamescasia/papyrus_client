@@ -31,6 +31,7 @@ import 'package:papyrus_client/data_models/Receipt.dart';
 import 'package:papyrus_client/data_models/UserExpense.dart';
 import 'dart:convert';
 import 'dart:io';
+import 'package:simple_gesture_detector/simple_gesture_detector.dart';
 import 'dart:core';
 import 'package:papyrus_client/helpers/CustomIcons.dart';
 
@@ -164,8 +165,37 @@ class _HomeScreenState extends State<HomeScreen> {
       // body: SingleChildScrollView(
       primary: true,
 
-      body: Column(
-        children: <Widget>[HomeScreenTopPart(), HomeScreenBottomPart()],
+      body: ScopedModelDescendant<AppModel>(
+        
+        builder: (context, child, appModel) {
+          return SimpleGestureDetector(
+             onHorizontalSwipe: (dir) {
+                    print("dragged");
+
+                    if (dir == SwipeDirection.left) {
+                      print("swipedrr");
+                      if (appModel.viewing_period == Period.MONTHLY)
+                        appModel.viewing_period = Period.WEEKLY;
+                      else if (appModel.viewing_period == Period.WEEKLY)
+                        appModel.viewing_period = Period.DAILY;
+                    }
+
+                   else  if (dir == SwipeDirection.right) {
+                      print("swipedrr");
+                      if (appModel.viewing_period == Period.DAILY)
+                        appModel.viewing_period = Period.WEEKLY;
+                      else if (appModel.viewing_period == Period.WEEKLY)
+                        appModel.viewing_period = Period.MONTHLY;
+                    }
+
+
+
+                  },
+                  child: Column(
+              children: <Widget>[HomeScreenTopPart(), HomeScreenBottomPart()],
+            ),
+          );
+        }
       ),
       // ),
     );

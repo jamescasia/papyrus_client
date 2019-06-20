@@ -6,8 +6,7 @@ import 'package:papyrus_client/helpers/GroupBarChart.dart';
 import 'AppModel.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:papyrus_client/data_models/Message.dart';
-import 'package:flutter_circular_chart/flutter_circular_chart.dart';
+import 'package:papyrus_client/data_models/Message.dart'; 
 
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:papyrus_client/helpers/MessageBox.dart';
