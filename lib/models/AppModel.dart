@@ -118,7 +118,8 @@ class AppModel extends Model {
     }
     user = await mAuth.currentUser();
 
-    if (user != null) init();
+    // if (user != null) 
+    init();
   }
   void firebaseInit(){
     database = FirebaseDatabase.instance;

@@ -705,10 +705,10 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                                         .MONTHLY)
                                                                 ? appModel
                                                                     .monthExpense
-                                                                    .totalSpentOnFood
+                                                                    .totalSpentOnUtilities
                                                                 : appModel
                                                                     .weekExpense
-                                                                    .totalSpentOnFood)
+                                                                    .totalSpentOnUtilities)
                                                         .toString(),
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(

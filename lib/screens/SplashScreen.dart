@@ -28,8 +28,9 @@ class SplashScreen extends StatelessWidget {
           appModel.mAuth.currentUser(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              if (snapshot.data != null)
-                return HomeScreen();
+              if (snapshot.data != null){ 
+              
+                return HomeScreen();}
               else
                 return LogInScreen();
             } else if(snapshot.connectionState == ConnectionState.active || snapshot.connectionState == ConnectionState.waiting)

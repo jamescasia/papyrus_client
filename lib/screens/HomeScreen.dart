@@ -227,7 +227,7 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
   @override
   Widget build(BuildContext context) {
     TextStyle headerStyle = TextStyle(
-        fontSize: 17, fontWeight: FontWeight.w500, color: Colors.white);
+        fontSize: 17, fontWeight: FontWeight.w600, color: Colors.white);
 
     TextStyle headerStyleSelected = TextStyle(
         fontSize: 18, fontWeight: FontWeight.bold, color: Colors.green[700]);
