@@ -9,17 +9,8 @@ class Receipt {
   bool _isPapyrus = false;
   String _imagePath = "";
   String _address = "";
-  List<ReceiptItem> _items = [
-    // new ReceiptItem("Im Nayeon", 2, 1500.0),
-    // new ReceiptItem("Yoo Jeongyeon", 2, 1500.0),
-    // new ReceiptItem("Hirai Momo", 2, 1500.0),
-    // new ReceiptItem("Minatozaki Sana", 2, 1500.0),
-    // new ReceiptItem("Park Jihyo", 2, 1500.0),
-    // new ReceiptItem("Myoui Mina", 2, 1500.0),
-    // new ReceiptItem("Kim Dahyun", 2, 1500.0),
-    // new ReceiptItem("Son Chaeyoung", 2, 1500.0),
-    // new ReceiptItem("Chou Tzuyu", 2, 1500.0),
-  ];
+  String retailerId = "";
+  List<ReceiptItem> _items = [];
 
   // Receipt(this._recpt_id, this._uid, this._time_stamp, this._merchant, this._category, this._dateTime,this._isPapyrus,this._items ){
   //   updateReceipt();
@@ -86,6 +77,7 @@ class Receipt {
   Map<String, dynamic> toJson() => {
         'recpt_id': _recpt_id,
         'uid': _uid,
+        'retailerId': retailerId,
         'time_stamp': _time_stamp,
         "total": _total,
         "merchant": _merchant,
@@ -94,12 +86,13 @@ class Receipt {
         "isPapyrus": _isPapyrus,
         "imagePath": _imagePath,
         "address": _address,
-        "items": _items.map((f)=>f.toJson() ).toList(),
+        "items": _items.map((f) => f.toJson()).toList(),
       };
   factory Receipt.fromJson(Map<String, dynamic> json) {
     var r = Receipt()
       ..recpt_id = json['recpt_id']
       ..uid = json['uid']
+      ..retailerId = json['retailerId']
       ..time_stamp = json['time_stamp']
       ..total = json['total']
       ..merchant = json['merchant']
@@ -112,9 +105,9 @@ class Receipt {
     if (list.length > 0) {
       List<ReceiptItem> rList =
           list.map((i) => ReceiptItem.fromJson(i)).toList();
-          r.items = rList;
-    }
-    else r.items = <ReceiptItem> [] ;
+      r.items = rList;
+    } else
+      r.items = <ReceiptItem>[];
     // r.items = rList;
     return r;
   }
@@ -126,11 +119,12 @@ class Receipt {
 }
 
 class ReceiptItem {
+  String item_num;
   String _name;
   int _qty;
   double _price;
   double _total;
-  ReceiptItem(this._name, this._qty, this._price) {
+  ReceiptItem(this._name, this._qty, this._price, this.item_num) {
     // print('what'+name);
     this._total = this._price * this._qty;
   }
@@ -138,6 +132,7 @@ class ReceiptItem {
   Map<String, dynamic> toJson() => {
         "name": _name,
         "qty": _qty,
+        "item_num": item_num,
         "price": _price,
         "total": _total,
       };
@@ -145,6 +140,7 @@ class ReceiptItem {
   ReceiptItem.fromJson(Map<String, dynamic> json)
       : _name = json["name"],
         _qty = json['qty'],
+        item_num = json['item_num'],
         _price = json['price'],
         _total = json['total'];
 

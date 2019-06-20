@@ -642,7 +642,7 @@ class _EditReceiptScreenBottomPartState
                                         builder: (BuildContext context) {
                                           return EditItem(
                                               context,
-                                              ReceiptItem("", 0, 0),
+                                              ReceiptItem("", 0, 0,"false"),
                                               true,
                                               editReceiptScreenModel);
                                         });
@@ -711,8 +711,8 @@ class _EditReceiptScreenBottomPartState
                                           });
                                     } else {
                                       erModel.saveReceipt();
-                                      appModel.editReceiptScreenModel =
-                                          EditReceiptScreenModel(appModel);
+                                      // appModel.editReceiptScreenModel =
+                                      //     EditReceiptScreenModel(appModel);
 
                                       Navigator.pushReplacement(context,
                                           CupertinoPageRoute(
@@ -760,7 +760,7 @@ class ReceiptItemLine extends StatelessWidget {
   TextEditingController name_controller = TextEditingController();
   TextEditingController price_controller = TextEditingController();
   TextEditingController qty_controller = TextEditingController();
-  ReceiptItem receiptItem = new ReceiptItem("", 0, 0);
+  ReceiptItem receiptItem = new ReceiptItem("", 0, 0, "false");
   EditReceiptScreenModel editReceiptScreenModel;
 
   // FocusNode f = FocusNode();

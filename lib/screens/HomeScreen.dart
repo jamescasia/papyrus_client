@@ -455,7 +455,8 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(3000)),
                                           child: Icon(
-                                            chevronTicker(appModel),
+
+                                            (appModel.loadedUserExpense)?chevronTicker(appModel): Icons.keyboard_arrow_up,
                                             // FontAwesomeIcons.dollarSign,
                                             color: Colors.white,
                                             size: MediaQuery.of(context)

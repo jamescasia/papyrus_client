@@ -4,6 +4,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:async';
+import 'package:firebase_database/firebase_database.dart';
 import 'EditReceiptScreenModel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:simple_permissions/simple_permissions.dart';
@@ -66,7 +67,10 @@ class AppModel extends Model {
   bool imageQrLoaded = false;
   WeekExpense weekExpense;
   MonthExpense monthExpense;
+  FirebaseDatabase database;
+  DatabaseReference userRef;
   // bool loaded
+
 
   List<FileSystemEntity> receiptFiles;
   Map<String, String> dirMap = {
@@ -115,6 +119,13 @@ class AppModel extends Model {
     user = await mAuth.currentUser();
 
     if (user != null) init();
+  }
+  void firebaseInit(){
+    database = FirebaseDatabase.instance;
+    userRef = database.reference().child('private/users/${user.uid}');
+
+
+
   }
 
   void init() async {

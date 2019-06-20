@@ -305,14 +305,16 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                               .all(Radius
                                                                   .circular(15 *
                                                                       sizeMulW)),
-                                                          border: Border.all(
-                                                              color:
-                                                                  Colors.white,
-                                                              width: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width *
-                                                                  0.005)),
+                                                          // border: Border.all(
+                                                          //     color:
+                                                          //         Colors.white,
+                                                          //     width: MediaQuery.of(
+                                                          //                 context)
+                                                          //             .size
+                                                          //             .width *
+                                                          //         0.005)
+                                                                  
+                                                                  ),
                                                     ),
                                                   ),
                                                 ),
