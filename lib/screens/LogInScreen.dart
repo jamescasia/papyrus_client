@@ -37,8 +37,8 @@ class _LogInScreenStackState extends State<LogInScreenStack> {
   FocusNode email_focus = FocusNode();
   FocusNode pass_focus = FocusNode();
   bool isLoading = false;
-  bool isEmailValid = false;
-  bool isPassValid = false;
+  bool isEmailValid = true;
+  bool isPassValid = true;
   StreamSubscription sub;
   @override
   Widget build(BuildContext context) {
@@ -86,12 +86,12 @@ class _LogInScreenStackState extends State<LogInScreenStack> {
                     new BoxShadow(
                       blurRadius: 20 * sizeMulW,
                       color: Colors.black12,
-                      offset: new Offset(20 * sizeMulW, 20 * sizeMulW),
+                      offset: new Offset(13 * sizeMulW, 13 * sizeMulW),
                     ),
                     new BoxShadow(
                       blurRadius: 20 * sizeMulW,
                       color: Colors.black12,
-                      offset: new Offset(-20 * sizeMulW, -20 * sizeMulW),
+                      offset: new Offset(-13 * sizeMulW, -13 * sizeMulW),
                     ),
                   ],
                 ),
@@ -100,7 +100,7 @@ class _LogInScreenStackState extends State<LogInScreenStack> {
                   children: <Widget>[
                     Container(
                       // height: sizeMulW*100,
-                      // margin: EdgeInsets.only(bottom: sizeMulW * 20),
+                      margin: EdgeInsets.only(bottom: sizeMulW * 5),
                       child: TextField(
                         controller: email_controller,
                         style: TextStyle(fontSize: sizeMulW * 19),
@@ -125,7 +125,7 @@ class _LogInScreenStackState extends State<LogInScreenStack> {
                     ),
                     Container(
                       // height: sizeMulW*100,
-                      // margin: EdgeInsets.only(bottom: sizeMulW * 20),
+                      margin: EdgeInsets.only(bottom: sizeMulW * 5),
                       child: TextField(
                         controller: pass_controller,
                         style: TextStyle(fontSize: sizeMulW * 19),
@@ -159,27 +159,29 @@ class _LogInScreenStackState extends State<LogInScreenStack> {
                       greeny.colors[0],
                       sizeMulW * 9,
                       () {
-                        setState(() {
-                          isLoading = true;
-                        });
-                        try {
-                          sub = appModel
-                              .login(
-                                  email_controller.text, pass_controller.text)
-                              .asStream()
-                              .listen((data) {
-                            if (data.email != null) {
-                              Navigator.pushReplacement(context,
-                                  CupertinoPageRoute(builder: (context) {
-                                isLoading = false;
-                                return HomeScreen();
-                              }));
-                            }
+                        if ( isPassValid && isEmailValid && email_controller.text!="" && pass_controller.text!="") {
+                          setState(() {
+                            isLoading = true;
                           });
-                        } catch (a) {
-                          Scaffold.of(context).showSnackBar(SnackBar(
-                            content: Text("Failed to login ${a.toString()}"),
-                          ));
+                          try {
+                            sub = appModel
+                                .login(
+                                    email_controller.text, pass_controller.text)
+                                .asStream()
+                                .listen((data) {
+                              if (data.email != null) {
+                                Navigator.pushReplacement(context,
+                                    CupertinoPageRoute(builder: (context) {
+                                  isLoading = false;
+                                  return HomeScreen();
+                                }));
+                              }
+                            });
+                          } catch (a) {
+                            Scaffold.of(context).showSnackBar(SnackBar(
+                              content: Text("Failed to login ${a.toString()}"),
+                            ));
+                          }
                         }
                       },
                       Center(
