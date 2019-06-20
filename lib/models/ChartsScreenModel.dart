@@ -116,7 +116,7 @@ class ChartsScreenModel extends Model {
       foodTotalData = dayExpenses
           .sublist((dayExpenses.length >= 8) ? dayExpenses.length - 8 : 0)
           .map((f) => DataBar("food", f.totalSpentOnFood, "#f4a735",
-              DateFormat('MM dd, yyyy').format(DateTime.parse(f.dateTime))
+              DateFormat('MM/dd').format(DateTime.parse(f.dateTime))
 
               // f.dateTime
               ))
@@ -124,7 +124,7 @@ class ChartsScreenModel extends Model {
       leisureTotalData = dayExpenses
           .sublist((dayExpenses.length >= 8) ? dayExpenses.length - 8 : 0)
           .map((f) => DataBar("leisure", f.totalSpentOnLeisure, "#fef09c",
-              DateFormat('MM dd, yyyy').format(DateTime.parse(f.dateTime))
+              DateFormat('MM/dd').format(DateTime.parse(f.dateTime))
               // f.dateTime
 
               ))
@@ -135,7 +135,7 @@ class ChartsScreenModel extends Model {
               "transportation",
               f.totalSpentOnTransportation,
               "#8ec8f8",
-              DateFormat('MM dd, yyyy').format(DateTime.parse(f.dateTime))
+              DateFormat('MM/dd').format(DateTime.parse(f.dateTime))
               // f.dateTime
 
               ))
@@ -144,7 +144,7 @@ class ChartsScreenModel extends Model {
       utilTotalData = dayExpenses
           .sublist((dayExpenses.length >= 8) ? dayExpenses.length - 8 : 0)
           .map((f) => DataBar("utilities", f.totalSpentOnUtilities, "#a1d2a6",
-              DateFormat('MM dd, yyyy').format(DateTime.parse(f.dateTime))
+              DateFormat('MM/dd').format(DateTime.parse(f.dateTime))
               // f.dateTime
 
               ))
@@ -156,7 +156,7 @@ class ChartsScreenModel extends Model {
               "miscellaneous",
               f.totalSpentOnMiscellaneous,
               "#ee9698",
-              DateFormat('MM dd, yyyy').format(DateTime.parse(f.dateTime))
+              DateFormat('MM/dd').format(DateTime.parse(f.dateTime))
 
               // f.dateTime
               ))
@@ -170,7 +170,7 @@ class ChartsScreenModel extends Model {
               "food",
               f.totalSpentOnFood,
               "#f4a735",
-              DateFormat('MM dd, yyyy')
+              DateFormat('MM/dd')
                   .format(DateTime.parse(f.dateOfFirstDayOfWeek))
 
               // f.dateTime
@@ -182,7 +182,7 @@ class ChartsScreenModel extends Model {
               "leisure",
               f.totalSpentOnLeisure,
               "#fef09c",
-              DateFormat('MM dd, yyyy')
+              DateFormat('MM/dd')
                   .format(DateTime.parse(f.dateOfFirstDayOfWeek))
               // f.dateTime
 
@@ -194,7 +194,7 @@ class ChartsScreenModel extends Model {
               "transportation",
               f.totalSpentOnTransportation,
               "#8ec8f8",
-              DateFormat('MM dd, yyyy')
+              DateFormat('MM/dd')
                   .format(DateTime.parse(f.dateOfFirstDayOfWeek))
               // f.dateTime
 
@@ -207,7 +207,7 @@ class ChartsScreenModel extends Model {
               "utilities",
               f.totalSpentOnUtilities,
               "#a1d2a6",
-              DateFormat('MM dd, yyyy')
+              DateFormat('MM/dd')
                   .format(DateTime.parse(f.dateOfFirstDayOfWeek))
               // f.dateTime
 
@@ -220,7 +220,7 @@ class ChartsScreenModel extends Model {
               "miscellaneous",
               f.totalSpentOnMiscellaneous,
               "#ee9698",
-              DateFormat('MM dd, yyyy')
+              DateFormat('MM/dd')
                   .format(DateTime.parse(f.dateOfFirstDayOfWeek))
 
               // f.dateTime
@@ -235,7 +235,7 @@ class ChartsScreenModel extends Model {
               "food",
               f.totalSpentOnFood,
               "#f4a735",
-              DateFormat('MM dd, yyyy')
+              DateFormat('MMM')
                   .format(DateTime.parse(f.dateOfFirstDayOfMonth))
 
               // f.dateTime
@@ -247,7 +247,7 @@ class ChartsScreenModel extends Model {
               "leisure",
               f.totalSpentOnLeisure,
               "#fef09c",
-              DateFormat('MM dd, yyyy')
+              DateFormat('MMM')
                   .format(DateTime.parse(f.dateOfFirstDayOfMonth))
               // f.dateTime
 
@@ -259,7 +259,7 @@ class ChartsScreenModel extends Model {
               "transportation",
               f.totalSpentOnTransportation,
               "#8ec8f8",
-              DateFormat('MM dd, yyyy')
+              DateFormat('MMM')
                   .format(DateTime.parse(f.dateOfFirstDayOfMonth))
               // f.dateTime
 
@@ -272,7 +272,7 @@ class ChartsScreenModel extends Model {
               "utilities",
               f.totalSpentOnUtilities,
               "#a1d2a6",
-              DateFormat('MM dd, yyyy')
+              DateFormat('MMM')
                   .format(DateTime.parse(f.dateOfFirstDayOfMonth))
               // f.dateTime
 
@@ -285,7 +285,7 @@ class ChartsScreenModel extends Model {
               "miscellaneous",
               f.totalSpentOnMiscellaneous,
               "#ee9698",
-              DateFormat('MM dd, yyyy')
+              DateFormat('MMM')
                   .format(DateTime.parse(f.dateOfFirstDayOfMonth))
 
               // f.dateTime
