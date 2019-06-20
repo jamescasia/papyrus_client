@@ -50,6 +50,7 @@ class AppModel extends Model {
   File dayExpenseFile;
   File weekExpenseFile;
   File monthExpenseFile;
+  File qrCodeFile;
   String allMessagesFilePath;
   File allMessagesFile;
   AllMessages allMessages;
@@ -62,6 +63,7 @@ class AppModel extends Model {
   bool loadedMessages = false;
   String userExpenseJSONFilePath;
   DayExpense dayExpense;
+  bool imageQrLoaded = false;
   WeekExpense weekExpense;
   MonthExpense monthExpense;
   // bool loaded
@@ -418,7 +420,6 @@ class AppModel extends Model {
         userExpense.lastMonthUtilitiesExpenseAmount,
         userExpense.lastMonthTotalExpenseAmount);
 
-        
     loadedUserExpense = true;
   }
 
@@ -459,7 +460,7 @@ class AppModel extends Model {
     return DateFormat('MM/dd/yyyy')
             .format(date.subtract(Duration(days: date.weekday - 1))) !=
         DateFormat('MM/dd/yyyy')
-            .format(otherDate.subtract(Duration(days: otherDate.weekday-1)));
+            .format(otherDate.subtract(Duration(days: otherDate.weekday - 1)));
   }
 
   bool isItANewMonth() {
@@ -648,12 +649,12 @@ class AppModel extends Model {
     weekExpenseFilePath = "${dirMap['Expenses/Period']}WeekExpense.txt";
     monthExpenseFilePath = "${dirMap['Expenses/Period']}MonthExpense.txt";
     allMessagesFilePath = "${dirMap['Messages']}Messages.json";
-
-    await File(allMessagesFilePath).create();
-    await File(userExpenseJSONFilePath).create();
-    await File(userExpensesFilePath).create();
-    await File(dayExpenseFilePath).create();
-    await File(weekExpenseFilePath).create();
+    File(allMessagesFilePath).create();
+    File(userExpenseJSONFilePath).create();
+    File(userExpensesFilePath).create();
+    File(dayExpenseFilePath).create();
+    File(weekExpenseFilePath).create();
+    qrCodeFile = await File("${dirMap['UserData']}${user.uid}.jpg").create();
     await File(monthExpenseFilePath).create();
 
     // b.delete();
@@ -664,19 +665,20 @@ class AppModel extends Model {
   void findAllReceipts() async {}
 
   void generateImage() async {
-    if (!await File("${dirMap['UserData']}/${user.email}.jpg").exists()) {
-      try {
-        var imageFile = await EfQrcode.generate(user.uid, "#ffffff", "#000000");
-        userQRPath = "${dirMap['UserData']}/${user.email}.jpg";
-        imageFile.copy(userQRPath);
-        print('done file');
-        // imageFile.pat
-        // await imageFile.rename( userQRPath);
-        //  file.writeAsBytes(imageFile);
+    try {
+      var imageFile = await EfQrcode.generate(user.uid, "#ffffff", "#000000");
+      userQRPath = "${dirMap['UserData']}${user.uid}.jpg";
 
-      } catch (e) {
-        print(e);
-      }
+      print("THEEEEEEEDAMMMMMMMMMMMMMMMMMNNTRUUUTHH" + userQRPath);
+
+      await imageFile.copy(userQRPath);
+      await qrCodeFile.writeAsBytes(await imageFile.readAsBytes());
+      print('done file');
+      imageQrLoaded = true;
+
+      notifyListeners();
+    } catch (e) {
+      print(e);
     }
   }
 

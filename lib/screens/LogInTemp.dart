@@ -7,9 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:papyrus_client/models/AppModel.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'dart:async';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/services.dart';
-import 'package:papyrus_client/helpers/LongButton.dart';
 
 class LogInScreen extends StatefulWidget {
   @override
@@ -21,11 +19,6 @@ class _LogInScreenState extends State<LogInScreen> {
   @override
   Widget build(BuildContext context) {
     sizeMulW = MediaQuery.of(context).size.width / 411.4;
-
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
-      statusBarColor: Colors.white,
-      // #61C350
-    ));
     return Scaffold(
       body: LogInScreenStack(),
     );
@@ -43,6 +36,7 @@ class _LogInScreenStackState extends State<LogInScreenStack> {
   FocusNode email_focus = FocusNode();
   FocusNode pass_focus = FocusNode();
   bool isLoading = false;
+  bool isValid = false;
   StreamSubscription sub;
   @override
   Widget build(BuildContext context) {
@@ -62,161 +56,224 @@ class _LogInScreenStackState extends State<LogInScreenStack> {
         child: new Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
-          // decoration: BoxDecoration(
+          decoration: BoxDecoration(
 
-          //     // gradient: greeny,
-          //     color: Colors.green
-
-          //     ),
-
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
+              // gradient: greeny,
+              color: Colors.green),
+          child: Stack(
             children: <Widget>[
-              Image.asset(
-                "assets/icons/3x/papygreen.png",
-                width: sizeMulW * 50,
+              ClipShadowPath(
+                  shadow: Shadow(
+                      blurRadius: 10 * sizeMulW,
+                      offset: Offset(0, sizeMulW),
+                      color: Colors.black38.withAlpha(0)),
+                  clipper: CustomShapeClipper(
+                      sizeMulW: sizeMulW,
+                      maxWidth: MediaQuery.of(context).size.width,
+                      maxHeight: MediaQuery.of(context).size.width * 0.91),
+                  child: Container(
+                    color: Colors.white,
+                    width: MediaQuery.of(context).size.width,
+                    height: double.infinity,
+                  )),
+              Positioned(
+                child: Text(
+                  "Log in\nto start saving",
+                  style: TextStyle(
+                      fontSize: sizeMulW * 40, fontWeight: FontWeight.w900),
+                ),
               ),
-              Text(
-                "Sign in \nto Papyrus.",
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                    fontSize: sizeMulW * 50,
-                    color: Colors.grey[700],
-                    fontWeight: FontWeight.w900),
-              ),
-
-              TextField(),
-              LongButton(
-                greeny.colors[1],
-                300 * sizeMulW,
-                60 * sizeMulW,
-                sizeMulW * 3,
-                Colors.green,
-                greeny.colors[0],
-                sizeMulW * 9,
-                () {},
-                Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        "SIGN IN",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w900,
-                            fontSize: sizeMulW * 25),
-                      ),
-                      SizedBox(
-                        width: sizeMulW * 5,
-                      ),
-                      Icon(
-                        Icons.chevron_right,
-                        color: Colors.white,
-                        size: sizeMulW * 35,
-                      )
-                    ],
+              Positioned(
+                top: sizeMulW * 226,
+                // right: MediaQuery.of(context).size.width * 0.073,
+                left: homeButtonDist,
+                child: Material(
+                  color: Colors.white.withAlpha(0),
+                  child: InkWell(
+                    onTap: () {
+                      appModel.logOut();
+                      // appModel.logOut().then(() => Navigator.push(
+                      //     context,
+                      //     CupertinoPageRoute(
+                      //         builder: (context) => HomeScreen())));
+                    },
+                    child: Image.asset(
+                      "assets/icons/3x/papygreen.png",
+                      width: 70 * sizeMulW,
+                    ),
                   ),
                 ),
-                // null
               ),
-
-              Container(
-                // margin: EdgeInsets.all(sizeMulW*10),
-                width: sizeMulW * 360,
-                height: sizeMulW * 60,
-                decoration: BoxDecoration(
-                    color: Colors.grey[100],
-                    borderRadius:
-                        BorderRadius.all(Radius.circular(sizeMulW * 10))),
-                child: Stack(
-                  children: <Widget>[
-                    Positioned(
-                        top: 0,
-                        bottom: 0,
-                        left: sizeMulW * 20,
-                        child: Icon(
-                          FontAwesomeIcons.user,
-                          color: Colors.grey[500],
-                        )),
-                    Positioned(
-                      left: sizeMulW * 55,
-                      top: 0,
-                      bottom: 0,
-                      child: Container(
-                        padding: EdgeInsets.all(sizeMulW * 18.0),
+              Positioned(
+                bottom: 0,
+                left: 0,
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height / 2,
+                  padding: EdgeInsets.all(sizeMulW * 20),
+                  child: Column(
+                    children: <Widget>[
+                      SizedBox(
+                        height: sizeMulW * 30,
+                      ),
+                      TextField(
+                        // colo
+                        // style: Theme.of(context).textTheme.display1,
+                        onChanged: (String val) {
+                          setState(() {
+                            if (val.length % 2 == 0)
+                              isValid = false;
+                            else
+                              isValid = true;
+                          });
+                        },
+                        decoration: InputDecoration(
+                            fillColor: Colors.white,
+                            labelText: "emal",
+                            errorText: isValid ? null : "please",
+                            border: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(30)))),
+                      ),
+                      Container(
+                        width: sizeMulW * 260,
+                        height: sizeMulW * 50,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: sizeMulW * 15),
+                        decoration: BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(3000)),
+                            border: Border.all(
+                                color: Colors.white, width: sizeMulW * 2)),
                         child: Center(
                           child: EditableText(
-                            controller: email_controller,
-                            focusNode: email_focus,
+                            textAlign: TextAlign.start,
                             style: TextStyle(
-                                color: Colors.grey[700],
-                                fontSize: sizeMulW * 30),
-                            cursorColor: Colors.pinkAccent,
+                                color: Colors.white, fontSize: sizeMulW * 23),
                             backgroundCursorColor: Colors.red,
+                            cursorColor: Colors.pinkAccent,
+                            focusNode: email_focus,
+                            controller: email_controller,
                           ),
                         ),
                       ),
-                    )
-                  ],
+                      SizedBox(
+                        height: sizeMulW * 30,
+                      ),
+                      Container(
+                        width: sizeMulW * 260,
+                        height: sizeMulW * 50,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: sizeMulW * 15),
+                        decoration: BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(3000)),
+                            border: Border.all(
+                                color: Colors.white, width: sizeMulW * 2)),
+                        child: Center(
+                          child: EditableText(
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                                color: Colors.white, fontSize: sizeMulW * 23),
+                            backgroundCursorColor: Colors.red,
+                            cursorColor: Colors.pinkAccent,
+                            focusNode: pass_focus,
+                            controller: pass_controller,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: sizeMulW * 30,
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        padding: EdgeInsets.symmetric(vertical: sizeMulW * 14),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(sizeMulW * 35))),
+                        child: OutlineButton(
+                          highlightedBorderColor: Colors.white,
+                          highlightColor: Colors.green,
+                          textColor: Colors.white,
+                          disabledBorderColor: Colors.white,
+                          color: Colors.white,
+                          borderSide: BorderSide(
+                              color: Colors.white, width: sizeMulW * 2),
+                          child: Text(
+                            "Log in",
+                            style: TextStyle(fontSize: sizeMulW * 19),
+                          ),
+                          splashColor: Colors.greenAccent,
+                          highlightElevation: 5,
+                          clipBehavior: Clip.none,
+                          onPressed: () {
+                            setState(() {
+                              isLoading = true;
+                            });
+                            try {
+                              sub = appModel
+                                  .login("user@user.com", "useruser")
+                                  .asStream()
+                                  .listen((data) {
+                                if (data.email != null) {
+                                  Navigator.pushReplacement(context,
+                                      CupertinoPageRoute(builder: (context) {
+                                    isLoading = false;
+                                    return HomeScreen();
+                                  }));
+                                }
+                              });
+                            } catch (a) {
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                content:
+                                    Text("Failed to login ${a.toString()}"),
+                              ));
+                            }
+
+                            //     .then((user) {
+                            //   if (user.uid != null) {
+                            //     // Navigator.
+                            //     Navigator.push(
+                            //         context,
+                            //         CupertinoPageRoute(
+                            //             builder: (context) => HomeScreen()));
+                            //   }
+                            // });
+
+                            // Navigator.push(
+                            //     context,
+                            //     CupertinoPageRoute(
+                            //         builder: (context) => FutureBuilder(
+                            //             future: appModel.login(
+                            //                 "user@user.com", "useruser"),
+                            //             builder: (context, snapshot) {
+                            //               if (snapshot.connectionState ==
+                            //                   ConnectionState.done) {
+                            //                 if (snapshot.data != null)
+                            //                   return HomeScreen();
+                            //                 else
+                            //                   return LogInScreen();
+                            //               }
+                            //               // else {
+                            //               //   setState(() {
+                            //               //     isLoading = true;
+                            //               //   });
+                            //               //   return null;
+                            //               // }
+                            //             })));
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              )
-              // Container(
-              //   height: sizeMulW * 300,
-              //   width: MediaQuery.of(context).size.width,
-              //   margin: EdgeInsets.symmetric(
-              //       horizontal: sizeMulW * 30, vertical: sizeMulW * 30),
-              //   child: Card(
-              //     color: Colors.green,
-              //     elevation: 0,
-              //     shape: RoundedRectangleBorder(
-              //         borderRadius:
-              //             BorderRadius.all(Radius.circular(30 * sizeMulW))),
-              //     child: Column(
-              //       children: <Widget>[
-              //         Container(
-              //           width: sizeMulW * 300,
-              //           height: sizeMulW * 60,
-              //           decoration: BoxDecoration(
-              //               color: Colors.grey[200],
-              //               borderRadius: BorderRadius.all(
-              //                   Radius.circular(sizeMulW * 10))),
-              //           child: Stack(
-              //             children: <Widget>[
-              //               Positioned(
-              //                   top: 0,
-              //                   bottom: 0,
-              //                   left: sizeMulW * 20,
-              //                   child: Icon(
-              //                     FontAwesomeIcons.user,
-              //                     color: Colors.grey[500],
-              //                   )),
-              //               Positioned(
-              //                 left: sizeMulW * 55,
-              //                 top: 0,
-              //                 bottom: 0,
-              //                 child: Container(
-              //                   padding:   EdgeInsets.all(sizeMulW*18.0),
-              //                   child: Center(
-              //                     child: EditableText(
-              //                       controller: email_controller,
-              //                       focusNode: email_focus,
-              //                       style: TextStyle(
-              //                           color: Colors.grey[700],
-              //                           fontSize: sizeMulW * 30),
-              //                       cursorColor: Colors.pinkAccent,
-              //                       backgroundCursorColor: Colors.red,
-              //                     ),
-              //                   ),
-              //                 ),
-              //               )
-              //             ],
-              //           ),
-              //         )
-              //       ],
-              //     ),
-              //   ),
-              // )
+              ),
+              (isLoading)
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : SizedBox(width: 1)
             ],
           ),
         ),
@@ -256,13 +313,3 @@ void _showDialog(BuildContext context) {
     },
   );
 }
-
-
-
-
-
-
-
-
-
-

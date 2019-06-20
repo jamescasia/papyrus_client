@@ -28,8 +28,6 @@ class ShowQRTabStack extends StatefulWidget {
 }
 
 class _ShowQRTabStackState extends State<ShowQRTabStack> {
-
-  
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant<AppModel>(
@@ -82,7 +80,17 @@ class _ShowQRTabStackState extends State<ShowQRTabStack> {
                   child: ClipRRect(
                     borderRadius:
                         BorderRadius.all(Radius.circular(sizeMulW * 55)),
-                    child: Image.file(File(appModel.userQRPath), scale: 1.05,),
+                    child: Center(
+                      child: (appModel.imageQrLoaded)
+                          ? Image.file(
+                              appModel.qrCodeFile,
+                              scale: 1.05,
+                            )
+                          : Text(
+                              "File does not exist",
+                              style: TextStyle(fontSize: sizeMulW * 23),
+                            ),
+                    ),
 
                     // Image.asset(
                     //   'assets/pictures/sampleqrcode.png',
