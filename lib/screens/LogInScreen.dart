@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:papyrus_client/models/AppModel.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'dart:async';
+import 'package:papyrus_client/helpers/LongButton.dart';
 import 'package:flutter/services.dart';
 
 class LogInScreen extends StatefulWidget {
@@ -36,7 +37,8 @@ class _LogInScreenStackState extends State<LogInScreenStack> {
   FocusNode email_focus = FocusNode();
   FocusNode pass_focus = FocusNode();
   bool isLoading = false;
-  bool isValid = false;
+  bool isEmailValid = false;
+  bool isPassValid = false;
   StreamSubscription sub;
   @override
   Widget build(BuildContext context) {
@@ -57,225 +59,221 @@ class _LogInScreenStackState extends State<LogInScreenStack> {
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           decoration: BoxDecoration(
+            gradient: greeny.scale(01),
+            // color: Colors.green
+          ),
 
-              // gradient: greeny,
-              color: Colors.green),
-          child: Stack(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              ClipShadowPath(
-                  shadow: Shadow(
-                      blurRadius: 10 * sizeMulW,
-                      offset: Offset(0, sizeMulW),
-                      color: Colors.black38.withAlpha(0)),
-                  clipper: CustomShapeClipper(
-                      sizeMulW: sizeMulW,
-                      maxWidth: MediaQuery.of(context).size.width,
-                      maxHeight: MediaQuery.of(context).size.width * 0.91),
-                  child: Container(
-                    color: Colors.white,
-                    width: MediaQuery.of(context).size.width,
-                    height: double.infinity,
-                  )),
-              Positioned(
-                child: Text(
-                  "Log in\nto start saving",
-                  style: TextStyle(
-                      fontSize: sizeMulW * 40, fontWeight: FontWeight.w900),
-                ),
+              Text(
+                "Log in\nto start saving",
+                style: TextStyle(
+                    fontSize: sizeMulW * 40,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white),
               ),
-              Positioned(
-                top: sizeMulW * 226,
-                // right: MediaQuery.of(context).size.width * 0.073,
-                left: homeButtonDist,
-                child: Material(
-                  color: Colors.white.withAlpha(0),
-                  child: InkWell(
-                    onTap: () {
-                      appModel.logOut();
-                      // appModel.logOut().then(() => Navigator.push(
-                      //     context,
-                      //     CupertinoPageRoute(
-                      //         builder: (context) => HomeScreen())));
-                    },
-                    child: Image.asset(
-                      "assets/icons/3x/papygreen.png",
-                      width: 70 * sizeMulW,
+              Container(
+                // height: sizeMulW * 330,
+                margin: EdgeInsets.all(sizeMulW * 30),
+                padding: EdgeInsets.all(sizeMulW * 30),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius:
+                      BorderRadius.all(Radius.circular(30 * sizeMulW)),
+                  boxShadow: [
+                    new BoxShadow(
+                      blurRadius: 20 * sizeMulW,
+                      color: Colors.black12,
+                      offset: new Offset(20 * sizeMulW, 20 * sizeMulW),
                     ),
-                  ),
+                    new BoxShadow(
+                      blurRadius: 20 * sizeMulW,
+                      color: Colors.black12,
+                      offset: new Offset(-20 * sizeMulW, -20 * sizeMulW),
+                    ),
+                  ],
                 ),
-              ),
-              Positioned(
-                bottom: 0,
-                left: 0,
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height / 2,
-                  padding: EdgeInsets.all(sizeMulW * 20),
-                  child: Column(
-                    children: <Widget>[
-                      SizedBox(
-                        height: sizeMulW * 30,
-                      ),
-                      TextField(
-                        // colo
-                        // style: Theme.of(context).textTheme.display1,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Container(
+                      // height: sizeMulW*100,
+                      // margin: EdgeInsets.only(bottom: sizeMulW * 20),
+                      child: TextField(
+                        controller: email_controller,
+                        style: TextStyle(fontSize: sizeMulW * 19),
                         onChanged: (String val) {
                           setState(() {
-                            if (val.length % 2 == 0)
-                              isValid = false;
+                            if (val.contains("@") && val.contains("."))
+                              isEmailValid = true;
                             else
-                              isValid = true;
+                              isEmailValid = false;
                           });
                         },
                         decoration: InputDecoration(
                             fillColor: Colors.white,
-                            labelText: "emal",
-                            errorText: isValid ? null : "please",
+                            labelText: "email",
+                            errorText:
+                                isEmailValid ? null : "Input valid email",
                             border: OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.white),
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(30)))),
+                                    BorderRadius.all(Radius.circular(10)))),
                       ),
-                      Container(
-                        width: sizeMulW * 260,
-                        height: sizeMulW * 50,
-                        padding:
-                            EdgeInsets.symmetric(horizontal: sizeMulW * 15),
-                        decoration: BoxDecoration(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(3000)),
-                            border: Border.all(
-                                color: Colors.white, width: sizeMulW * 2)),
-                        child: Center(
-                          child: EditableText(
-                            textAlign: TextAlign.start,
-                            style: TextStyle(
-                                color: Colors.white, fontSize: sizeMulW * 23),
-                            backgroundCursorColor: Colors.red,
-                            cursorColor: Colors.pinkAccent,
-                            focusNode: email_focus,
-                            controller: email_controller,
-                          ),
-                        ),
+                    ),
+                    Container(
+                      // height: sizeMulW*100,
+                      // margin: EdgeInsets.only(bottom: sizeMulW * 20),
+                      child: TextField(
+                        controller: pass_controller,
+                        style: TextStyle(fontSize: sizeMulW * 19),
+                        onChanged: (String val) {
+                          setState(() {
+                            if (val.length <= 5)
+                              isPassValid = false;
+                            else
+                              isPassValid = true;
+                          });
+                        },
+                        obscureText: true,
+                        decoration: InputDecoration(
+                            fillColor: Colors.white,
+                            labelText: "password",
+                            errorText: isPassValid
+                                ? null
+                                : "Password must be at least 6 characters",
+                            border: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)))),
                       ),
-                      SizedBox(
-                        height: sizeMulW * 30,
-                      ),
-                      Container(
-                        width: sizeMulW * 260,
-                        height: sizeMulW * 50,
-                        padding:
-                            EdgeInsets.symmetric(horizontal: sizeMulW * 15),
-                        decoration: BoxDecoration(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(3000)),
-                            border: Border.all(
-                                color: Colors.white, width: sizeMulW * 2)),
-                        child: Center(
-                          child: EditableText(
-                            textAlign: TextAlign.start,
-                            style: TextStyle(
-                                color: Colors.white, fontSize: sizeMulW * 23),
-                            backgroundCursorColor: Colors.red,
-                            cursorColor: Colors.pinkAccent,
-                            focusNode: pass_focus,
-                            controller: pass_controller,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: sizeMulW * 30,
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        padding: EdgeInsets.symmetric(vertical: sizeMulW * 14),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(
-                                Radius.circular(sizeMulW * 35))),
-                        child: OutlineButton(
-                          highlightedBorderColor: Colors.white,
-                          highlightColor: Colors.green,
-                          textColor: Colors.white,
-                          disabledBorderColor: Colors.white,
-                          color: Colors.white,
-                          borderSide: BorderSide(
-                              color: Colors.white, width: sizeMulW * 2),
-                          child: Text(
-                            "Log in",
-                            style: TextStyle(fontSize: sizeMulW * 19),
-                          ),
-                          splashColor: Colors.greenAccent,
-                          highlightElevation: 5,
-                          clipBehavior: Clip.none,
-                          onPressed: () {
-                            setState(() {
-                              isLoading = true;
-                            });
-                            try {
-                              sub = appModel
-                                  .login("user@user.com", "useruser")
-                                  .asStream()
-                                  .listen((data) {
-                                if (data.email != null) {
-                                  Navigator.pushReplacement(context,
-                                      CupertinoPageRoute(builder: (context) {
-                                    isLoading = false;
-                                    return HomeScreen();
-                                  }));
-                                }
-                              });
-                            } catch (a) {
-                              Scaffold.of(context).showSnackBar(SnackBar(
-                                content:
-                                    Text("Failed to login ${a.toString()}"),
-                              ));
+                    ),
+                    LongButton(
+                      greeny.colors[1],
+                      333 * sizeMulW,
+                      69 * sizeMulW,
+                      sizeMulW * 3,
+                      Colors.green,
+                      greeny.colors[0],
+                      sizeMulW * 9,
+                      () {
+                        setState(() {
+                          isLoading = true;
+                        });
+                        try {
+                          sub = appModel
+                              .login(
+                                  email_controller.text, pass_controller.text)
+                              .asStream()
+                              .listen((data) {
+                            if (data.email != null) {
+                              Navigator.pushReplacement(context,
+                                  CupertinoPageRoute(builder: (context) {
+                                isLoading = false;
+                                return HomeScreen();
+                              }));
                             }
-
-                            //     .then((user) {
-                            //   if (user.uid != null) {
-                            //     // Navigator.
-                            //     Navigator.push(
-                            //         context,
-                            //         CupertinoPageRoute(
-                            //             builder: (context) => HomeScreen()));
-                            //   }
-                            // });
-
-                            // Navigator.push(
-                            //     context,
-                            //     CupertinoPageRoute(
-                            //         builder: (context) => FutureBuilder(
-                            //             future: appModel.login(
-                            //                 "user@user.com", "useruser"),
-                            //             builder: (context, snapshot) {
-                            //               if (snapshot.connectionState ==
-                            //                   ConnectionState.done) {
-                            //                 if (snapshot.data != null)
-                            //                   return HomeScreen();
-                            //                 else
-                            //                   return LogInScreen();
-                            //               }
-                            //               // else {
-                            //               //   setState(() {
-                            //               //     isLoading = true;
-                            //               //   });
-                            //               //   return null;
-                            //               // }
-                            //             })));
-                          },
+                          });
+                        } catch (a) {
+                          Scaffold.of(context).showSnackBar(SnackBar(
+                            content: Text("Failed to login ${a.toString()}"),
+                          ));
+                        }
+                      },
+                      Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              "LOG IN",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  //
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: sizeMulW * 20),
+                            ),
+                            SizedBox(
+                              width: sizeMulW * 5,
+                            ),
+                            Icon(
+                              Icons.chevron_right,
+                              color: Colors.white,
+                              size: sizeMulW * 35,
+                            )
+                          ],
                         ),
                       ),
-                    ],
-                  ),
+                      // null
+                    )
+                  ],
                 ),
               ),
-              (isLoading)
-                  ? Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : SizedBox(width: 1)
+              Material(
+                color: Colors.white.withAlpha(0),
+                child: InkWell(
+                  highlightColor: Colors.white.withAlpha(0),
+                  splashColor: Colors.white.withAlpha(0),
+                  onTap: () {},
+                  child: Container(
+                    height: sizeMulW * 100,
+                    margin: EdgeInsets.symmetric(horizontal: sizeMulW * 30),
+                    padding: EdgeInsets.all(sizeMulW * 30),
+                    decoration: BoxDecoration(
+                        color: Colors.black.withAlpha(30),
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(sizeMulW * 20))),
+                    child: InkWell(
+                      child: Center(
+                        child: Text(
+                          "Don't have an account?",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: sizeMulW * 18,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              )
             ],
           ),
+
+          // child: Stack(
+          //   children: <Widget>[
+          //     Positioned(
+          //       child: Text(
+          //         "Log in\nto start saving",
+          //         style: TextStyle(
+          //             fontSize: sizeMulW * 40, fontWeight: FontWeight.w600, color: Colors.white),
+          //       ),
+          //     ),
+          //     Positioned(
+          //       top: sizeMulW * 226,
+          //       left: homeButtonDist,
+          //       child: Material(
+          //         color: Colors.white.withAlpha(0),
+          //         child: InkWell(
+          //           onTap: () {
+          //             appModel.logOut();
+          //           },
+          //           child: Image.asset(
+          //             "assets/icons/3x/papygreen.png",
+          //             width: 70 * sizeMulW,
+          //           ),
+          //         ),
+          //       ),
+          //     ),
+
+          //     (isLoading)
+          //         ? Center(
+          //             child: CircularProgressIndicator(),
+          //           )
+          //         : SizedBox(width: 1)
+          //   ],
+          // ),
         ),
       );
     });
