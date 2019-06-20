@@ -1,7 +1,3 @@
-
-
-
-
 import 'package:flutter/material.dart';
 import 'HomeScreen.dart';
 import 'package:papyrus_client/helpers/ClipShadowPath.dart';
@@ -40,6 +36,7 @@ class _LogInScreenStackState extends State<LogInScreenStack> {
   FocusNode email_focus = FocusNode();
   FocusNode pass_focus = FocusNode();
   bool isLoading = false;
+  bool isValid = false;
   StreamSubscription sub;
   @override
   Widget build(BuildContext context) {
@@ -119,10 +116,31 @@ class _LogInScreenStackState extends State<LogInScreenStack> {
                       SizedBox(
                         height: sizeMulW * 30,
                       ),
+                      TextField(
+                        // colo
+                        // style: Theme.of(context).textTheme.display1,
+                        onChanged: (String val) {
+                          setState(() {
+                            if (val.length % 2 == 0)
+                              isValid = false;
+                            else
+                              isValid = true;
+                          });
+                        },
+                        decoration: InputDecoration(
+                            fillColor: Colors.white,
+                            labelText: "emal",
+                            errorText: isValid ? null : "please",
+                            border: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(30)))),
+                      ),
                       Container(
                         width: sizeMulW * 260,
                         height: sizeMulW * 50,
-                        padding: EdgeInsets.symmetric(horizontal: sizeMulW * 15),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: sizeMulW * 15),
                         decoration: BoxDecoration(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(3000)),
@@ -146,7 +164,8 @@ class _LogInScreenStackState extends State<LogInScreenStack> {
                       Container(
                         width: sizeMulW * 260,
                         height: sizeMulW * 50,
-                        padding: EdgeInsets.symmetric(horizontal: sizeMulW * 15),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: sizeMulW * 15),
                         decoration: BoxDecoration(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(3000)),
@@ -188,7 +207,7 @@ class _LogInScreenStackState extends State<LogInScreenStack> {
                           splashColor: Colors.greenAccent,
                           highlightElevation: 5,
                           clipBehavior: Clip.none,
-                          onPressed: () { 
+                          onPressed: () {
                             setState(() {
                               isLoading = true;
                             });

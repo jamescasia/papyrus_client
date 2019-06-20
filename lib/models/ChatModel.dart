@@ -109,7 +109,7 @@ class ChatModel extends Model {
     print("SPENNT" + spends);
     // return "hey";
 
-    return "You spent ${todayExpenseTotal} today. That's ${percntDiff}% ${(todayExpenseTotal >= lifetimeAverageDaySpend) ? "higher" : "lower"} than your lifetime average day spend which is $lifetimeAverageDaySpend. You spent on these today:\n\n" +
+    return "You spent ${todayExpenseTotal.toStringAsFixed(2)} today. That's ${percntDiff.toStringAsFixed(2)}% ${(todayExpenseTotal >= lifetimeAverageDaySpend) ? "higher" : "lower"} than your lifetime average day spend which is ${lifetimeAverageDaySpend.toStringAsFixed(2)}. You spent on these today:\n\n" +
         spends;
 
     //  "dateTime": dateTime,
