@@ -12,6 +12,7 @@ import 'dart:io';
 import 'ChatModel.dart';
 import 'CameraCaptureModel.dart';
 import 'package:ef_qrcode/ef_qrcode.dart';
+import 'package:papyrus_client/data_models/Promo.dart';
 import 'ReceiveReceiptModel.dart';
 import 'ReceiptsScreenModel.dart';
 import 'package:papyrus_client/data_models/Receipt.dart';
@@ -69,8 +70,12 @@ class AppModel extends Model {
   MonthExpense monthExpense;
   FirebaseDatabase database;
   DatabaseReference userRef;
-  // bool loaded
+  DatabaseReference receiptsRef;
+  DatabaseReference promosRef;
+  DatabaseReference messagesFromAdminRef;
+  DatabaseReference allReceiptsRef;
 
+  // bool loaded
 
   List<FileSystemEntity> receiptFiles;
   Map<String, String> dirMap = {
@@ -112,18 +117,46 @@ class AppModel extends Model {
     chartsScreenModel = ChartsScreenModel(this);
     chatModel = ChatModel(this);
 
-    for (Permission p in perms) { 
+    for (Permission p in perms) {
       perm_results[p] = await SimplePermissions.requestPermission(p);
     }
     user = await mAuth.currentUser();
 
-    // if (user != null) 
+    // if (user != null)
     init();
   }
-  void firebaseInit(){
+
+  void firebaseInit() {
     database = FirebaseDatabase.instance;
     userRef = database.reference().child('private/users/${user.uid}');
+    promosRef = userRef.child('promos');
+    messagesFromAdminRef = userRef.child('messages');
+    allReceiptsRef = database.reference().child('private/receipts');
+    receiptsRef = userRef.child("receipts");
 
+
+    receiptsRef.onChildAdded.listen((child) {
+      String ruid = child.snapshot.key;
+      allReceiptsRef.child(ruid).once().then((data) {
+        Map map = jsonDecode(data.value);
+        var receipt = Receipt.fromJson(map);
+        addReceiptandSaveToStorage(receipt);
+      });
+    });
+
+    promosRef.once().then((data){
+
+      Map map = jsonDecode(data.value);
+      var promo = Promo.fromJson(map);
+
+      Message msg = Message("I've got a promo for you!! 😱🤑🤑\n\n${promo.value*100}% off of your favourite ${promo.item_name}!!. Click on this message to view the promo", DateTime.now().toLocal().toIso8601String() , "null", promo.retailer_id, false);
+
+
+    addMessage(msg);
+
+
+
+    });
 
 
   }
@@ -137,7 +170,7 @@ class AppModel extends Model {
     // cameraCaptureModel = CameraCaptureModel(this);
     // receiveReceiptModel = ReceiveReceiptModel(this);
     // receiptsScreenModel = ReceiptsScreenModel(this);
-    // if (user == null) return;
+    // if (user == null) return;add
     // try {
     //   platformVersion = await SimplePermissions.platformVersion;
     // } catch (e) {
@@ -162,6 +195,7 @@ class AppModel extends Model {
 
     tempDir = await getTemporaryDirectory();
     generateImage();
+    firebaseInit();
   }
 
   void reset() async {

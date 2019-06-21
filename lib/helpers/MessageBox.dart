@@ -4,8 +4,10 @@ import 'package:intl/intl.dart';
 import 'package:papyrus_client/data_models/Message.dart';
 
 class MessageBox extends StatelessWidget {
+
+  Widget child= SizedBox(width: 0.001,);
   Message msg;
-  MessageBox(this.msg);
+  MessageBox(this.msg , {this.child  });
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -47,6 +49,7 @@ class MessageBox extends StatelessWidget {
                             ? Colors.white
                             : Colors.grey[600]),
                   ),
+                  
                   (!msg.iAmTheSender && msg.imagePath != "")
                       ? Image(
                           image: NetworkImage(msg.imagePath),

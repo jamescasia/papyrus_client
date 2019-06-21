@@ -446,11 +446,11 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                                           highlightColor:
                                               Colors.black.withOpacity(0.1),
                                           onTap: () {
-                                            Navigator.push(
-                                                context,
-                                                CupertinoPageRoute(
-                                                    builder: (context) =>
-                                                        ShowQRScreen()));
+                                            // Navigator.push(
+                                            //     context,
+                                            //     CupertinoPageRoute(
+                                            //         builder: (context) =>
+                                            //             ShowQRScreen()));
                                           },
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(3000)),

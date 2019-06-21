@@ -3,6 +3,8 @@ class Message {
   String dateTime = "";
   String imagePath = "";
   String sender = "";
+  String type = "";
+  // promoMessage, richMessage, normal
   bool iAmTheSender = false;
 
   Message(this.message, this.dateTime, this.imagePath, this.sender,
@@ -13,6 +15,7 @@ class Message {
         "dateTime": dateTime,
         "imagePath": imagePath,
         "sender": sender,
+        "type": type,
         "iAmTheSender": iAmTheSender,
       };
 
@@ -21,6 +24,7 @@ class Message {
         dateTime = json['dateTime'],
         imagePath = json['imagePath'],
         iAmTheSender = json['iAmTheSender'],
+        type = json['type'],
         sender = json['sender'];
 }
 
