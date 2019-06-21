@@ -9,6 +9,7 @@ import 'package:scoped_model/scoped_model.dart';
 import 'dart:async';
 import 'package:flutter/services.dart';
 import 'HomeScreen.dart';
+import 'package:toast/toast.dart';
 import 'LogInScreen.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -20,24 +21,35 @@ class SplashScreen extends StatelessWidget {
     //       CupertinoPageRoute(
     //           builder: (context) =>
 
-    return ScopedModelDescendant<AppModel>(rebuildOnChange: false,builder: (context, child, appModel) {
-      
-      return FutureBuilder(
-          future: 
-          // Future.delayed(Duration(seconds: 3),(){}),
-          appModel.mAuth.currentUser(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              if (snapshot.data != null){ 
-              
-                return HomeScreen();}
-              else
-                return LogInScreen();
-            } else if(snapshot.connectionState == ConnectionState.active || snapshot.connectionState == ConnectionState.waiting)
-                                       
-              return SplashFrame();
-          });
-    });
+    return ScopedModelDescendant<AppModel>(
+        rebuildOnChange: false,
+        builder: (context, child, appModel) {
+          return FutureBuilder(
+              future:
+                  // Future.delayed(Duration(seconds: 3),(){}),
+                  appModel.mAuth.currentUser(),
+              builder: (context, snapshot) {
+
+
+                if (snapshot.connectionState == ConnectionState.done) {
+
+
+
+
+                  if (snapshot.data != null) {
+                    print(snapshot.data.email + "+++++++++++++++ASDDDDDDDDDDDDDDDDDD");
+                    
+                  appModel.user = snapshot.data; 
+
+                      Toast.show("damn user: ${appModel.user}", context, duration: Toast.LENGTH_LONG);
+                    return HomeScreen();
+                  } else
+                    return LogInScreen();
+                } else if (snapshot.connectionState == ConnectionState.active ||
+                    snapshot.connectionState == ConnectionState.waiting)
+                  return SplashFrame();
+              });
+        });
 
     // ));
     // });
@@ -54,7 +66,8 @@ class SplashFrame extends StatelessWidget {
         color: Colors.green,
         child: Center(
             child: Image.asset(
-          'assets/icons/3x/papygreen.png',color: Colors.white,
+          'assets/icons/3x/papygreen.png',
+          color: Colors.white,
           height: sizeMulW * 100,
           width: sizeMulW * 100,
         )),

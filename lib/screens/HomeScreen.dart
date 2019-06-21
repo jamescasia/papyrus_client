@@ -446,11 +446,11 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                                           highlightColor:
                                               Colors.black.withOpacity(0.1),
                                           onTap: () {
-                                            Navigator.push(
-                                                context,
-                                                CupertinoPageRoute(
-                                                    builder: (context) =>
-                                                        ShowQRScreen()));
+                                            // Navigator.push(
+                                            //     context,
+                                            //     CupertinoPageRoute(
+                                            //         builder: (context) =>
+                                            //             ShowQRScreen()));
                                           },
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(3000)),
@@ -891,7 +891,7 @@ class _HomeScreenBottomPartState extends State<HomeScreenBottomPart> {
               Row(
                 children: <Widget>[
                   Text(
-                    "  Last Receipts",
+                    "  Last Receipts"+appModel.user.email,
                     style: TextStyle(
                         fontSize: 26 * sizeMulW,
                         color: Colors.black.withOpacity(0.8),
