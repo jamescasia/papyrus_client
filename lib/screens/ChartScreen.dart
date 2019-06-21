@@ -50,10 +50,10 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
   @override
   Widget build(BuildContext context) {
     TextStyle headerStyle = TextStyle(
-        fontSize: 18, fontWeight: FontWeight.w500, color: Colors.white);
+        fontSize: 17.4, fontWeight: FontWeight.w500, color: Colors.white);
 
     TextStyle headerStyleSelected = TextStyle(
-        fontSize: 19, fontWeight: FontWeight.bold, color: Colors.green[700]);
+        fontSize: 18.4, fontWeight: FontWeight.bold, color: Colors.green[700]);
     return ScopedModelDescendant<AppModel>(builder: (context, child, appModel) {
       return ScopedModel<ChartsScreenModel>(
           model: appModel.chartsScreenModel,

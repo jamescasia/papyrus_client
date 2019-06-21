@@ -117,15 +117,22 @@ class AppModel extends Model {
     receiptsScreenModel = ReceiptsScreenModel(this);
     chartsScreenModel = ChartsScreenModel(this);
     chatModel = ChatModel(this);
+    // if(await SimplePermissions.platformVersion > SimplePermissions.platformVersion.)
 
-    for (Permission p in perms) {
-      perm_results[p] = await SimplePermissions.requestPermission(p);
+    var version = int.parse(await SimplePermissions.platformVersion);
+
+    if (version >= 23) {
+      for (Permission p in perms) {
+        perm_results[p] = await SimplePermissions.requestPermission(p);
+      }
     }
-    
+
     user = await mAuth.currentUser();
     init();
 
-    print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n"+user.email);
+    print(
+        "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n" +
+            user.email);
 
     // if (user != null)
   }
@@ -138,7 +145,6 @@ class AppModel extends Model {
     allReceiptsRef = database.reference().child('private/receipts');
     receiptsRef = userRef.child("receipts");
 
-
     receiptsRef.onChildAdded.listen((child) {
       String ruid = child.snapshot.key;
       allReceiptsRef.child(ruid).once().then((data) {
@@ -148,21 +154,19 @@ class AppModel extends Model {
       });
     });
 
-    promosRef.once().then((data){
-
+    promosRef.once().then((data) {
       Map map = jsonDecode(data.value);
       var promo = Promo.fromJson(map);
 
-      Message msg = Message("I've got a promo for you!! 😱🤑🤑\n\n${promo.value*100}% off of your favourite ${promo.item_name}!!. Click on this message to view the promo", DateTime.now().toLocal().toIso8601String() , "null", promo.retailer_id, false);
+      Message msg = Message(
+          "I've got a promo for you!! 😱🤑🤑\n\n${promo.value * 100}% off of your favourite ${promo.item_name}!!. Click on this message to view the promo",
+          DateTime.now().toLocal().toIso8601String(),
+          "null",
+          promo.retailer_id,
+          false);
 
-
-    addMessage(msg);
-
-
-
+      addMessage(msg);
     });
-
-
   }
 
   void init() async {

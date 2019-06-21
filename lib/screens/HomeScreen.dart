@@ -227,10 +227,10 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
   @override
   Widget build(BuildContext context) {
     TextStyle headerStyle = TextStyle(
-        fontSize: 18,   color: Colors.white);
+        fontSize: 17.4,   color: Colors.white);
 
     TextStyle headerStyleSelected = TextStyle(
-        fontSize: 19, fontWeight: FontWeight.bold, color: Colors.green[700]);
+        fontSize: 18.4, fontWeight: FontWeight.bold, color: Colors.green[700]);
 
     return ScopedModelDescendant<AppModel>(builder: (context, child, appModel) {
       return Stack(
@@ -873,9 +873,11 @@ class _HomeScreenBottomPartState extends State<HomeScreenBottomPart> {
         // ),
         // color: Colors.black26,
         width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height -
-            0.942 * MediaQuery.of(context).size.width -
-            24 * sizeMulW,
+        // height:
+        
+        //  MediaQuery.of(context).size.height -
+        //     0.942 * MediaQuery.of(context).size.width -
+        //     24 * sizeMulW,
         color: Colors.white.withAlpha(0),
         padding: EdgeInsets.symmetric(horizontal: sizeMulW * 35),
         child: Center(
@@ -891,7 +893,7 @@ class _HomeScreenBottomPartState extends State<HomeScreenBottomPart> {
               Row(
                 children: <Widget>[
                   Text(
-                    "  Last Receipts"+appModel.user.email,
+                    "  Last Receipts",
                     style: TextStyle(
                         fontSize: 26 * sizeMulW,
                         color: Colors.black.withOpacity(0.8),

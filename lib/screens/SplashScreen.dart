@@ -41,7 +41,7 @@ class SplashScreen extends StatelessWidget {
                     
                   appModel.user = snapshot.data; 
 
-                      Toast.show("damn user: ${appModel.user}", context, duration: Toast.LENGTH_LONG);
+                      // Toast.show("damn user: ${appModel.user}", context, duration: Toast.LENGTH_LONG);
                     return HomeScreen();
                   } else
                     return LogInScreen();
