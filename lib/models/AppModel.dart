@@ -105,6 +105,7 @@ class AppModel extends Model {
   bool get receiveOpenToAllPromos => _receiveOpenToAllPromos;
 
   AppModel() {
+    // init();
     launch();
   }
 
@@ -120,10 +121,11 @@ class AppModel extends Model {
     for (Permission p in perms) {
       perm_results[p] = await SimplePermissions.requestPermission(p);
     }
+    
+    init();
     user = await mAuth.currentUser();
 
     // if (user != null)
-    init();
   }
 
   void firebaseInit() {
