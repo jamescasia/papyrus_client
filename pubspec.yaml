@@ -23,7 +23,12 @@ dependencies:
   zoomable_image: ^1.3.1 
   simple_permissions: ^0.1.9
   path_provider: ^0.4.1
-  camera: ^0.2.9+1 
+  camera: ^0.3.0
+  # camera:
+  #   git:
+  #     url: git://github.com/kmorkos/plugins.git
+  #     ref: camera/crash-fix
+  #     path: packages/camera/  
   scoped_model: 
   firebase_core: ^0.2.5+1
   firebase_auth: ^0.7.0

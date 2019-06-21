@@ -89,9 +89,9 @@ class CameraCaptureModel extends Model {
     }
   }
 
-  void stopCapturingFrames() {
-    cameraScreenState.controller.stopImageStream();
-  }
+  // void stopCapturingFrames() {
+  //   cameraScreenState.controller.stopImageStream();
+  // }
 
   Future<bool> captureQRPhoto() async {
     String tempImagePath =

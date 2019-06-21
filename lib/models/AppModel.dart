@@ -112,8 +112,7 @@ class AppModel extends Model {
     chartsScreenModel = ChartsScreenModel(this);
     chatModel = ChatModel(this);
 
-    for (Permission p in perms) {
-      // perm_results.addEntries(p:null);
+    for (Permission p in perms) { 
       perm_results[p] = await SimplePermissions.requestPermission(p);
     }
     user = await mAuth.currentUser();

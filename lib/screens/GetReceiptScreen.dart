@@ -47,6 +47,8 @@ class _GetReceiptScreenState extends State<GetReceiptScreen>
   @override
   void dispose() {
     globalController.dispose();
+
+    // ccModel.cameraScreenState.controller.dispose();
     // TODO: implement dispose
     super.dispose();
   }
