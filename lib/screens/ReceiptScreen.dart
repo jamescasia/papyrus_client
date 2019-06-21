@@ -204,7 +204,7 @@ class _ReceiptScreenBottomPartState extends State<ReceiptScreenBottomPart> {
             return Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
-              margin: EdgeInsets.symmetric(horizontal: sizeMulW * 40),
+              margin: EdgeInsets.symmetric(horizontal: sizeMulW * 37),
               child: (true)
                   ? ListView.builder(
                       // reverse: true,

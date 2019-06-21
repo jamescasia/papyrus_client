@@ -59,9 +59,10 @@ class GaugeChartLegendItem extends StatelessWidget {
             
             title,
             overflow: TextOverflow.ellipsis,
+            textScaleFactor: 1.1,
             style: TextStyle(
               fontWeight: FontWeight.w600,
-              fontSize: 15 * sizeMulW,
+              // fontSize: 15 * sizeMulW,
             ),
           )
         ],

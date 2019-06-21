@@ -446,11 +446,11 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                                           highlightColor:
                                               Colors.black.withOpacity(0.1),
                                           onTap: () {
-                                            // Navigator.push(
-                                            //     context,
-                                            //     CupertinoPageRoute(
-                                            //         builder: (context) =>
-                                            //             ShowQRScreen()));
+                                            Navigator.push(
+                                                context,
+                                                CupertinoPageRoute(
+                                                    builder: (context) =>
+                                                        ShowQRScreen()));
                                           },
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(3000)),
@@ -885,7 +885,7 @@ class _HomeScreenBottomPartState extends State<HomeScreenBottomPart> {
               // SizedBox(width: 30 * MediaQuery.of(context).size.width / 400),
               Column(
             mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Row(

@@ -412,11 +412,12 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                                     .weekExpense
                                                                     .totalSpentOnFood)
                                                         .toString(),
+                                                        textScaleFactor: 1.1,
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.w600,
-                                                        fontSize: 16 * sizeMulW,
+                                                        // fontSize: 16 * sizeMulW,
                                                         color:
                                                             Colors.grey[600]),
                                                   ),
@@ -446,12 +447,12 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                                                 .weekExpense.totalSpent))
                                                             .toStringAsFixed(
                                                                 0) +
-                                                        "%",
+                                                        "%",textScaleFactor: 1.1,
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.w600,
-                                                        fontSize: 16 * sizeMulW,
+                                                        // fontSize: 16 * sizeMulW,
                                                         color:
                                                             Colors.grey[500]),
                                                   ),
@@ -487,11 +488,12 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                                     .weekExpense
                                                                     .totalSpentOnLeisure)
                                                         .toString(),
+                                                        textScaleFactor: 1.1,
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.w600,
-                                                        fontSize: 16 * sizeMulW,
+                                                        // fontSize: 16 * sizeMulW,
                                                         color:
                                                             Colors.grey[600]),
                                                   ),
@@ -522,11 +524,12 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                             .toStringAsFixed(
                                                                 0) +
                                                         "%",
+                                                        textScaleFactor: 1.1,
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.w600,
-                                                        fontSize: 16 * sizeMulW,
+                                                        // fontSize: 16 * sizeMulW,
                                                         color:
                                                             Colors.grey[500]),
                                                   ),
@@ -561,11 +564,12 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                                     .weekExpense
                                                                     .totalSpentOnMiscellaneous)
                                                         .toString(),
+                                                        textScaleFactor: 1.1,
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.w600,
-                                                        fontSize: 16 * sizeMulW,
+                                                        // fontSize: 16 * sizeMulW,
                                                         color:
                                                             Colors.grey[600]),
                                                   ),
@@ -595,12 +599,12 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                                                 .weekExpense.totalSpent))
                                                             .toStringAsFixed(
                                                                 0) +
-                                                        "%",
+                                                        "%",textScaleFactor: 1.1,
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.w600,
-                                                        fontSize: 16 * sizeMulW,
+                                                        // fontSize: 16 * sizeMulW,
                                                         color:
                                                             Colors.grey[500]),
                                                   ),
@@ -635,11 +639,12 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                                     .weekExpense
                                                                     .totalSpentOnTransportation)
                                                         .toString(),
+                                                        textScaleFactor: 1.1,
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.w600,
-                                                        fontSize: 16 * sizeMulW,
+                                                        // fontSize: 16 * sizeMulW,
                                                         color:
                                                             Colors.grey[600]),
                                                   ),
@@ -669,12 +674,12 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                                                 .weekExpense.totalSpent))
                                                             .toStringAsFixed(
                                                                 0) +
-                                                        "%",
+                                                        "%",textScaleFactor: 1.1,
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.w600,
-                                                        fontSize: 16 * sizeMulW,
+                                                        // fontSize: 16 * sizeMulW,
                                                         color:
                                                             Colors.grey[500]),
                                                   ),
@@ -710,11 +715,12 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                                     .weekExpense
                                                                     .totalSpentOnUtilities)
                                                         .toString(),
+                                                        textScaleFactor: 1.1,
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.w600,
-                                                        fontSize: 16 * sizeMulW,
+                                                        // fontSize: 16 * sizeMulW,
                                                         color:
                                                             Colors.grey[600]),
                                                   ),
@@ -744,12 +750,12 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                                                 .weekExpense.totalSpent))
                                                             .toStringAsFixed(
                                                                 0) +
-                                                        "%",
+                                                        "%",textScaleFactor: 1.1,
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.w600,
-                                                        fontSize: 16 * sizeMulW,
+                                                        // fontSize: 16 * sizeMulW,
                                                         color:
                                                             Colors.grey[500]),
                                                   ),
@@ -775,8 +781,10 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                   Period.WEEKLY)
                                               ? "Previous Weeks"
                                               : "Previous Months",
+
+                                              textScaleFactor: 1.6,
                                       style: TextStyle(
-                                          fontSize: sizeMulW * 23,
+                                          // fontSize: sizeMulW * 23,
                                           fontWeight: FontWeight.w600,
                                           color: Colors.grey[800]),
                                     ),
@@ -819,8 +827,9 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                   Period.WEEKLY)
                                               ? "Lifetime Weekly Totals"
                                               : "Lifetime Monthly Totals",
+                                              textScaleFactor: 1.6,
                                       style: TextStyle(
-                                          fontSize: sizeMulW * 23,
+                                          // fontSize: sizeMulW * 23,
                                           fontWeight: FontWeight.w600,
                                           color: Colors.grey[800]),
                                     ),

@@ -50,11 +50,7 @@ class _ShowReceiptScreenStackState extends State<ShowReceiptScreenStack> {
 
   
   @override
-  Widget build(BuildContext context) {
-    TextStyle headerStyle = TextStyle(
-        fontSize: MediaQuery.of(context).size.width * 0.045,
-        fontWeight: FontWeight.normal,
-        color: Colors.white);
+  Widget build(BuildContext context) { 
         Color iconColor; 
 
   if (receipt.category == "Transportation") iconColor = Color(0xff8ec8f8); 
@@ -62,11 +58,7 @@ class _ShowReceiptScreenStackState extends State<ShowReceiptScreenStack> {
   if (receipt.category == "Utilities") iconColor = Color(0xffa1d2a6); 
   if (receipt.category == "Leisure") iconColor = Color(0xfffef09c); 
   if (receipt.category == "Food") iconColor = Color(0xfff4a735);
-
-    TextStyle headerStyleSelected = TextStyle(
-        fontSize: MediaQuery.of(context).size.width * 0.05,
-        fontWeight: FontWeight.bold,
-        color: Colors.green[700]);
+ 
     return ScopedModelDescendant<AppModel>(
         // stream: null,
         builder: (context, child, appModel) {
@@ -95,8 +87,9 @@ class _ShowReceiptScreenStackState extends State<ShowReceiptScreenStack> {
                               // "Jollibee Foods Corporation",
                               maxLines: 2,
                               textAlign: TextAlign.center,
+                              textScaleFactor: 1.8,
                               style: TextStyle(
-                                  fontSize: 26 * sizeMulH,
+                                  // fontSize: 26 * sizeMulH,
                                   fontWeight: FontWeight.w700),
                             ),
                           ),
@@ -123,10 +116,13 @@ class _ShowReceiptScreenStackState extends State<ShowReceiptScreenStack> {
                                               DateTime.parse(receipt.dateTime))
                                           .toString(),
                                       textAlign: TextAlign.center,
+                                      textScaleFactor:1 ,
                                       style: TextStyle(
                                           color: Colors.black,
                                           // fontWeight: FontWeight.w600,
-                                          fontSize: sizeMulW * 17),
+                                          // fontSize: sizeMulW * 17
+                                          
+                                          ),
                                     ),
                                   ],
                                 ),
@@ -139,10 +135,13 @@ class _ShowReceiptScreenStackState extends State<ShowReceiptScreenStack> {
                                 child: Text(
                                   "ITEMS",
                                   textAlign: TextAlign.center,
+                                  textScaleFactor: 1.4,
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.w600,
-                                      fontSize: sizeMulW * 20),
+                                      // fontSize: sizeMulW * 20
+                                      
+                                      ),
                                 ),
                               ),
                               SizedBox(
@@ -162,10 +161,14 @@ class _ShowReceiptScreenStackState extends State<ShowReceiptScreenStack> {
                                         flex: 3,
                                         child: Text(
                                           "NAME",
+                                          textScaleFactor: 1.2,
                                           style: TextStyle(
                                               color: Colors.black,
                                               fontWeight: FontWeight.w700,
-                                              fontSize: sizeMulW * 18),
+                                              // fontSize: 
+                                              // sizeMulW * 18
+                                              
+                                              ),
                                         ),
                                       ),
                                       // SizedBox(
@@ -177,21 +180,28 @@ class _ShowReceiptScreenStackState extends State<ShowReceiptScreenStack> {
                                           "QTY",
                                           textAlign: TextAlign.center,
                                           overflow: TextOverflow.fade,
+                                          textScaleFactor: 1.2,
                                           style: TextStyle(
                                               color: Colors.black,
                                               fontWeight: FontWeight.w700,
-                                              fontSize: sizeMulW * 18),
+                                              // fontSize: sizeMulW * 18
+                                              
+                                              ),
                                         ),
                                       ),
                                       Expanded(
                                         flex: 2,
                                         child: Text(
                                           " PRICE",
+                                          textScaleFactor: 1.2,
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               color: Colors.black,
                                               fontWeight: FontWeight.w700,
-                                              fontSize: sizeMulW * 18),
+
+                                              // fontSize: sizeMulW * 18
+                                              
+                                              ),
                                         ),
                                       ),
                                       // SizedBox(
@@ -201,10 +211,11 @@ class _ShowReceiptScreenStackState extends State<ShowReceiptScreenStack> {
                                         flex: 2,
                                         child: Text("TOTAL",
                                             textAlign: TextAlign.end,
+                                            textScaleFactor: 1.2,
                                             style: TextStyle(
                                               color: Colors.black,
                                               fontWeight: FontWeight.w700,
-                                              fontSize: sizeMulW * 18,
+                                              // fontSize: sizeMulW * 18,
                                             )),
                                       )
                                     ],
@@ -240,9 +251,10 @@ class _ShowReceiptScreenStackState extends State<ShowReceiptScreenStack> {
                                   children: <Widget>[
                                     Text(
                                       "TOTAL",
+                                      textScaleFactor: 1.2,
                                       style: TextStyle(
                                         color: Colors.black,
-                                        fontSize: 17 * sizeMulW,
+                                        // fontSize: 17 * sizeMulW,
                                         // fontWeight: FontWeight.bold
                                       ),
                                     ),
@@ -258,9 +270,10 @@ class _ShowReceiptScreenStackState extends State<ShowReceiptScreenStack> {
                                                   null)
                                               ? ".${receipt.total.toStringAsFixed(2).split('.')[1]}"
                                               : ""),
+                                              textScaleFactor: 1.2,
                                       style: TextStyle(
                                           color: Colors.black,
-                                          fontSize: 17 * sizeMulW,
+                                          // fontSize: 17 * sizeMulW,
                                           fontWeight: FontWeight.w400),
                                     ),
                                   ],
@@ -274,18 +287,18 @@ class _ShowReceiptScreenStackState extends State<ShowReceiptScreenStack> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               mainAxisSize: MainAxisSize.max,
                               children: <Widget>[
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: Text(
-                                    "CONTINUE",
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 17 * sizeMulW,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
+                                // InkWell(
+                                //   onTap: () {
+                                //     Navigator.pop(context);
+                                //   },
+                                //   child: Text(
+                                //     "CONTINUE",
+                                //     style: TextStyle(
+                                //         color: Colors.black,
+                                //         fontSize: 17 * sizeMulW,
+                                //         fontWeight: FontWeight.bold),
+                                //   ),
+                                // ),
                               ],
                             ),
                           ),
@@ -293,10 +306,7 @@ class _ShowReceiptScreenStackState extends State<ShowReceiptScreenStack> {
                             height: sizeMulW * 30,
                           ),
 
-                          Text(
-                            "Made with ❤ \nby AetherApps",
-                            textAlign: TextAlign.center,
-                          ),
+                         
                           SizedBox(
                             height: sizeMulW * 50,
                           ),
@@ -369,6 +379,7 @@ class _ShowReceiptScreenStackState extends State<ShowReceiptScreenStack> {
                                       left: sizeMulW * 30,
                               top: MediaQuery.of(context).size.width * 0.38*0.45,
                                       child: Text("Receipt",
+                                      // textScaleFactor: 2.5,
                                           style: TextStyle(
                                             fontSize: sizeMulW * 35,
                                             color: Colors.white,
@@ -426,11 +437,7 @@ class ReceiptItemLine extends StatelessWidget {
   ReceiptItemLine(this.receiptItem);
 
   @override
-  Widget build(BuildContext context) {
-    TextStyle style = TextStyle(
-        fontSize: sizeMulW * 19,
-        color: Colors.black,
-        fontWeight: FontWeight.w300);
+  Widget build(BuildContext context) { 
 
     return Container(
       padding: EdgeInsets.symmetric(
@@ -443,10 +450,13 @@ class ReceiptItemLine extends StatelessWidget {
             flex: 3,
             child: Text(
               receiptItem.name,
+              textScaleFactor: 1,
               style: TextStyle(
                   color: Colors.black,
                   // fontWeight: FontWeight.w900,
-                  fontSize: sizeMulW * 16),
+                  // fontSize: sizeMulW * 16
+                  
+                  ),
             ),
           ),
           // SizedBox(
@@ -455,13 +465,17 @@ class ReceiptItemLine extends StatelessWidget {
           Expanded(
             flex: 1,
             child: Text(
+              
               addCommas(receiptItem.qty).toString(),
               textAlign: TextAlign.center,
+              textScaleFactor: 1,
               overflow: TextOverflow.fade,
               style: TextStyle(
                   color: Colors.black,
                   // fontWeight: FontWeight.w900,
-                  fontSize: sizeMulW * 16),
+                  // fontSize: sizeMulW * 16
+                  
+                  ),
             ),
           ),
           Expanded(
@@ -473,10 +487,13 @@ class ReceiptItemLine extends StatelessWidget {
                       ? ".${receiptItem.price.toStringAsFixed(2).split('.')[1]}"
                       : ""),
               textAlign: TextAlign.center,
+              textScaleFactor: 1,
               style: TextStyle(
                   color: Colors.black,
                   // fontWeight: FontWeight.w900,
-                  fontSize: sizeMulW * 16),
+                  // fontSize: sizeMulW * 16
+                  
+                  ),
             ),
           ),
           // SizedBox(
@@ -490,11 +507,14 @@ class ReceiptItemLine extends StatelessWidget {
                   ((receiptItem.total.toStringAsFixed(2).split('.')[1] != null)
                       ? ".${receiptItem.total.toStringAsFixed(2).split('.')[1]}"
                       : ""),
+                      textScaleFactor: 1,
               textAlign: TextAlign.end,
               style: TextStyle(
                   color: Colors.black,
                   // fontWeight: FontWeight.w900,
-                  fontSize: sizeMulW * 16),
+                  // fontSize: sizeMulW * 16
+                  
+                  ),
             ),
           )
         ],

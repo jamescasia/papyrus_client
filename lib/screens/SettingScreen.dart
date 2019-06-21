@@ -41,16 +41,7 @@ class SettingScreenTopPart extends StatefulWidget {
 class _SettingScreenTopPartState extends State<SettingScreenTopPart> {
   bool isLoading = false;
   @override
-  Widget build(BuildContext context) {
-    TextStyle headerStyle = TextStyle(
-        fontSize: MediaQuery.of(context).size.width * 0.045,
-        fontWeight: FontWeight.normal,
-        color: Colors.white);
-
-    TextStyle headerStyleSelected = TextStyle(
-        fontSize: MediaQuery.of(context).size.width * 0.05,
-        fontWeight: FontWeight.bold,
-        color: Colors.green[700]);
+  Widget build(BuildContext context) { 
     return ScopedModelDescendant<AppModel>(builder: (context, child, appModel) {
       return Container(
         height: MediaQuery.of(context).size.height,
@@ -97,7 +88,9 @@ class _SettingScreenTopPartState extends State<SettingScreenTopPart> {
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w900,
-                                fontSize: sizeMulW * 20),
+                                fontSize: sizeMulW * 20
+                                
+                                ),
                           ),
                           SizedBox(
                             width: sizeMulW * 10,
@@ -273,8 +266,9 @@ class _SettingScreenBottomPartState extends State<SettingScreenBottomPart> {
                       children: <Widget>[
                         Text(
                           "Get notified of unique promos",
+                          textScaleFactor: 1,
                           style: TextStyle(
-                              fontSize: sizeMulW * 17,
+                              // fontSize: sizeMulW * 17,
                               fontWeight: FontWeight.w500),
                         ),
                         Container(
@@ -303,8 +297,9 @@ class _SettingScreenBottomPartState extends State<SettingScreenBottomPart> {
                         Text(
                           "Get notified of open-to-all promos",
                           overflow: TextOverflow.fade,
+                          textScaleFactor: 1,
                           style: TextStyle(
-                              fontSize: sizeMulW * 17,
+                              // fontSize: sizeMulW * 17,
                               fontWeight: FontWeight.w500),
                         ),
                         Container(
@@ -340,9 +335,11 @@ class _SettingScreenBottomPartState extends State<SettingScreenBottomPart> {
                           children: <Widget>[
                             Text(
                               "Delete Account",
+                              textScaleFactor:1 ,
                               style: TextStyle(
                                   color: Colors.red,
-                                  fontSize: sizeMulW * 17,
+                                  // fontSize: sizeMulW * 17,
+
                                   fontWeight: FontWeight.w500),
                             ),
                           ],
