@@ -223,9 +223,13 @@ class _SettingScreenTopPartState extends State<SettingScreenTopPart> {
           ),
           (isLoading)
               ? Center(
-                  child: CircularProgressIndicator(
-                    backgroundColor: Colors.red,
-                  ),
+                  child: 
+                  SizedBox(width: 0.0001,)
+                  
+                  
+                  // CircularProgressIndicator(
+                  //   backgroundColor: Colors.red,
+                  // ),
                 )
               : SizedBox(width: 1)
         ]),

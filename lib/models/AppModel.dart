@@ -122,8 +122,10 @@ class AppModel extends Model {
       perm_results[p] = await SimplePermissions.requestPermission(p);
     }
     
-    init();
     user = await mAuth.currentUser();
+    init();
+
+    print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n"+user.email);
 
     // if (user != null)
   }
@@ -468,6 +470,7 @@ class AppModel extends Model {
         userExpense.lastMonthTotalExpenseAmount);
 
     loadedUserExpense = true;
+    notifyListeners();
   }
 
   // void newPeriodResetUserExpense() async {
