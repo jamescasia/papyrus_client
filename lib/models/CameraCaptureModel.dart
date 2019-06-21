@@ -6,6 +6,7 @@ import 'package:mlkit/mlkit.dart';
 import 'dart:io';
 import 'dart:async';
 import 'package:flutter/services.dart';
+import 'package:simple_permissions/simple_permissions.dart';
 import 'package:flutter/material.dart'; 
 
 class CameraScreenState {
@@ -32,7 +33,7 @@ class CameraCaptureModel extends Model {
 
     cameraScreenState = CameraScreenState();
 
-    getController();
+    // getController();
   }
 
   launchQRScan() async {
@@ -63,6 +64,10 @@ class CameraCaptureModel extends Model {
   Future<CameraController> getController() async {
     CameraDescription cam;
     cameraScreenState.cameras = await availableCameras();
+
+    // await SimplePermissions.requestPermission(Permission.Camera);
+
+    
     // cameraScreenState.controller.
     print("the available cameras");
     for (int i = 0; i < cameraScreenState.cameras.length; i++) {
