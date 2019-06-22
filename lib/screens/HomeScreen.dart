@@ -11,7 +11,7 @@ import 'package:papyrus_client/helpers/CustomShapeClipper.dart';
 import 'package:papyrus_client/screens/ReceiptScreen.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'ChartScreen.dart';
-import 'PromoScreen.dart'; 
+import 'PromoScreen.dart';
 import 'SettingScreen.dart';
 import 'package:papyrus_client/helpers/CustomShowDialog.dart';
 import 'package:papyrus_client/helpers/LongButton.dart';
@@ -86,7 +86,6 @@ class PapyrusCustomer extends StatelessWidget {
             primarySwatch: Colors.lightGreen,
           ),
           home: SplashScreen(),
-     
         ));
   }
 }
@@ -113,8 +112,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
-  int currentPage = 1;
+  int currentPage = 0;
   // var ShapeBorder s = new ShapeBorder();
 
   @override
@@ -142,30 +140,29 @@ class _HomeScreenState extends State<HomeScreen> {
       body:
           ScopedModelDescendant<AppModel>(builder: (context, child, appModel) {
         return SimpleGestureDetector(
-          onHorizontalSwipe: (dir) {
-            print("dragged");
+            onHorizontalSwipe: (dir) {
+              print("dragged");
 
-            if (dir == SwipeDirection.left) {
-              print("swipedrr");
-              if (appModel.viewing_period == Period.MONTHLY)
-                appModel.viewing_period = Period.WEEKLY;
-              else if (appModel.viewing_period == Period.WEEKLY)
-                appModel.viewing_period = Period.DAILY;
-            } else if (dir == SwipeDirection.right) {
-              print("swipedrr");
-              if (appModel.viewing_period == Period.DAILY)
-                appModel.viewing_period = Period.WEEKLY;
-              else if (appModel.viewing_period == Period.WEEKLY)
-                appModel.viewing_period = Period.MONTHLY;
-            }
-          },
-          child:  Column(
-                children: <Widget>[
-                  HomeScreenTopPart(  this),  HomeScreenBottomPart( this) 
-                ],
-              ) 
-            
-        );
+              if (dir == SwipeDirection.left) {
+                print("swipedrr");
+                if (appModel.viewing_period == Period.MONTHLY)
+                  appModel.viewing_period = Period.WEEKLY;
+                else if (appModel.viewing_period == Period.WEEKLY)
+                  appModel.viewing_period = Period.DAILY;
+              } else if (dir == SwipeDirection.right) {
+                print("swipedrr");
+                if (appModel.viewing_period == Period.DAILY)
+                  appModel.viewing_period = Period.WEEKLY;
+                else if (appModel.viewing_period == Period.WEEKLY)
+                  appModel.viewing_period = Period.MONTHLY;
+              }
+            },
+            child: Column(
+              children: <Widget>[
+                HomeScreenTopPart(this),
+                HomeScreenBottomPart(this)
+              ],
+            ));
       }),
       // ),
     );
@@ -173,19 +170,15 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class HomeScreenTopPart extends StatefulWidget {
- 
   _HomeScreenState parent;
-  HomeScreenTopPart(  this.parent);
+  HomeScreenTopPart(this.parent);
   @override
-  _HomeScreenTopPartState createState() => new _HomeScreenTopPartState(  parent);
+  _HomeScreenTopPartState createState() => new _HomeScreenTopPartState(parent);
 }
 
 class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
-
-  
-   
   _HomeScreenState parent;
-  _HomeScreenTopPartState(  this.parent);
+  _HomeScreenTopPartState(this.parent);
   static const platform = const MethodChannel('flutter.native/helper');
   String _responseFromNativeCode = 'Waiting for Response...';
   Future<void> responseFromNativeCode() async {
@@ -573,29 +566,6 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
               decoration: BoxDecoration(
                 color: Colors.red,
                 gradient: greeny,
-//                LinearGradient(
-//   begin: Alignment.topCenter,
-
-//   end: Alignment.bottomCenter,
-//   colors: [
-//     const Color(0xFF6DC749),
-//     const Color(0xFF1BA977),
-//     const Color(0xFF1BA9BB),
-//   ],
-//   tileMode: TileMode.repeated,
-// )
-                //  LinearGradient(
-                //   begin: Alignment.topCenter,
-                //   end: Alignment.bottomCenter,
-                //   colors: [
-                //     const Color(0xFF61C34F),
-                //     const Color(0xFF20AB50),
-                //     // const Color(0xFF61C350),
-                //     // // const Color(0x1BA9774),
-                //     // const Color.fromARGB(255, 27, 169, 119)
-                //   ],
-                //   tileMode: TileMode.repeated,
-                // ),
               ),
 
               // color: Colors.red,
@@ -685,36 +655,6 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                                 size: sizeMulW * 30,
                                 color: Colors.white,
                               ),
-                              // Positioned()
-                              // Container(
-                              //   margin: EdgeInsets.all(sizeMulW*2),
-                              //   child: Image.asset(
-                              //     'assets/icons/3x/bell.png',
-                              //     height:
-                              //         MediaQuery.of(context).size.width * 0.1,
-                              //   ),
-                              // ),
-                              // Positioned(
-                              //   top: 14 * sizeMulW,
-                              //   right: 5 * sizeMulW,
-                              //   child: Container(
-                              //     width: sizeMulW * 20,
-                              //     height: sizeMulW * 20,
-                              //     child: Center(
-                              //       child: Text(
-                              //         "12",
-                              //         style: TextStyle(
-                              //             fontSize: 12 * sizeMulW,
-                              //             color: Colors.white,
-                              //             fontWeight: FontWeight.w900),
-                              //       ),
-                              //     ),
-                              //     decoration: BoxDecoration(
-                              //         color: Colors.red,
-                              //         borderRadius: BorderRadius.all(
-                              //             Radius.circular(3000))),
-                              //   ),
-                              // )
                             ],
                           ),
 
@@ -831,18 +771,19 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
             bottom: 0,
             left: 0,
             right: 0,
-            child: Center(child:  DotsIndicator(
-                dotsCount: 3,
-                position: parent.currentPage,
-                decorator: DotsDecorator(
-                  activeColor: Colors.green,
-                  size: const Size.square(12.0),
-                  activeSize: const Size(24, 12.0),
-                  activeShape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0)),
-                ),
-              ) 
-            ),
+            child: Center(
+                child: DotsIndicator(
+              dotsCount: 3,
+              position: parent.currentPage,
+              decorator: DotsDecorator(
+                color: Colors.grey[300],
+                activeColor: Colors.green,
+                size: const Size.square(12.0),
+                activeSize: const Size(24, 12.0),
+                activeShape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0)),
+              ),
+            )),
           )
         ],
       );
@@ -851,36 +792,29 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
 }
 
 class HomeScreenBottomPart extends StatefulWidget {
-
-  _HomeScreenState parent; 
-  HomeScreenBottomPart(  this.parent);
+  _HomeScreenState parent;
+  HomeScreenBottomPart(this.parent);
   @override
   _HomeScreenBottomPartState createState() =>
-      new _HomeScreenBottomPartState(  parent);
+      new _HomeScreenBottomPartState(parent);
 }
-
- 
 
 class _HomeScreenBottomPartState extends State<HomeScreenBottomPart>
     with SingleTickerProviderStateMixin {
-  _HomeScreenState parent; 
-  _HomeScreenBottomPartState(  this.parent);
+  _HomeScreenState parent;
+  _HomeScreenBottomPartState(this.parent);
   goToReceiptsScreen() {}
   TabController tabController;
 
   void _handleTabSelection() {
-    print("TAAAAAAAAAAABSS" + tabController.index.toString()); 
-    parent. setState(() {
+    print("TAAAAAAAAAAABSS" + tabController.index.toString());
+    parent.setState(() {
       parent.currentPage = tabController.index;
-      
-          
-        });
-    
+    });
   }
 
   @override
   void initState() {
-   
     // TODO: implement initState
     super.initState();
     tabController = TabController(
@@ -919,146 +853,13 @@ class _HomeScreenBottomPartState extends State<HomeScreenBottomPart>
                 // SizedBox(width: 30 * MediaQuery.of(context).size.width / 400),
                 DefaultTabController(
               length: 3,
-              initialIndex: 1,
+              initialIndex: 0,
               child: TabBarView(
                 controller: tabController,
                 children: <Widget>[
-                  Container(
-                    color: Colors.blue,
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: sizeMulW * 35),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            Text(
-                              "  Last Receipts",
-                              style: TextStyle(
-                                  fontSize: 26 * sizeMulW,
-                                  color: Colors.black.withOpacity(0.8),
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            SizedBox(
-                              width: sizeMulW * 10,
-                            ),
-                            Icon(
-                              FontAwesomeIcons.file,
-                              size: MediaQuery.of(context).size.width * 0.062,
-                              color: Colors.green,
-                            )
-                          ],
-                        ),
-                        // SizedBox(
-                        //   height: sizeMulW * 1,
-                        // ),
-                        Container(
-                          height: MediaQuery.of(context).size.height -
-                              0.942 * MediaQuery.of(context).size.width -
-                              24 * sizeMulW -
-                              (34 * sizeMulW),
-                          width: MediaQuery.of(context).size.width,
-                          // color: Colors.red,
-
-                          child: Flex(
-                            direction: Axis.vertical,
-                            children: (appModel.receiptsLoaded)
-                                ? bottomChildren(appModel, context)
-                                : [SizedBox(width: 1)],
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: (appModel.receiptsLoaded &&
-                                    appModel.receiptFiles.length != 0)
-                                ? MainAxisAlignment.spaceEvenly
-                                : MainAxisAlignment.end,
-                          ),
-                        )
-                        // child: FutureBuilder(
-                        //     future: bottomChildren(appModel, context),
-                        //     builder: (context, snapshot) {
-                        //       if (snapshot.connectionState == ConnectionState.active)
-                        //         return CircularProgressIndicator();
-                        //       // return Container(
-                        //       //   // width: MediaQuery.of(context).size.width,
-                        //       //   // height: 300,
-                        //       //   child: Shimmer.fromColors(
-                        //       //     baseColor: Colors.grey[200],
-                        //       //     highlightColor: Colors.white,
-                        //       //     child: Column(
-                        //       //       mainAxisSize: MainAxisSize.max,
-                        //       //       mainAxisAlignment:
-                        //       //           MainAxisAlignment.spaceEvenly,
-                        //       //       children: List<int>.generate(
-                        //       //               ((MediaQuery.of(context).size.height -
-                        //       //                           0.942 *
-                        //       //                               MediaQuery.of(context)
-                        //       //                                   .size
-                        //       //                                   .width -
-                        //       //                           (34 * sizeMulW)) /
-                        //       //                       (81 * sizeMulW))
-                        //       //                   .floor(),
-                        //       //               (i) => i)
-                        //       //           .toList()
-                        //       //           .map((f) => Container(
-                        //       //                 width: 333 * sizeMulW,
-                        //       //                 height: 72 * sizeMulW,
-                        //       //                 decoration: BoxDecoration(
-                        //       //                     color: Colors.green,
-                        //       //                     // border: Border.all(
-                        //       //                     //     color: Colors.red,
-                        //       //                     //     width: 1 * sizeMulW),
-                        //       //                     // boxShadow: [
-                        //       //                     //   new BoxShadow(
-                        //       //                     //     blurRadius: 2 * sizeMulW,
-                        //       //                     //     color: Colors.black12,
-                        //       //                     //     offset: new Offset(
-                        //       //                     //         0, 0.4 * sizeMulW),
-                        //       //                     //   ),
-                        //       //                     // ],
-                        //       //                     borderRadius: BorderRadius.all(
-                        //       //                         Radius.circular(
-                        //       //                             9 * sizeMulW))),
-                        //       //               ))
-                        //       //           .toList(),
-                        //       //     ),
-                        //       //   ),
-                        //       // );
-                        //       else if (snapshot.connectionState ==
-                        //           ConnectionState.done) {
-                        //         return Column(
-                        //           mainAxisSize: MainAxisSize.max,
-                        //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        //           children: (snapshot.data.first != null)
-                        //               ? snapshot.data
-                        //               : [
-                        //                   SizedBox(
-                        //                     width: 1,
-                        //                   )
-                        //                 ],
-                        //         );
-                        //       } else
-                        //         return Column(
-                        //           mainAxisSize: MainAxisSize.max,
-                        //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        //           children: [
-                        //             SizedBox(
-                        //               width: 1,
-                        //             )
-                        //           ],
-                        //         );
-                        //     }))
-
-                        // ReceiptCard("May 19, 2019", 99, "mainItem", "imagePath"),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    color: Colors.red,
-                    height: 300,
-                    width: 300,
-                  )
+                  ReceiptsTab(),
+                  PromosTab(),
+                  NewsTab()
                 ],
               ),
             ),
@@ -1068,6 +869,190 @@ class _HomeScreenBottomPartState extends State<HomeScreenBottomPart>
         ),
       );
     });
+  }
+}
+
+class PromosTab extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: sizeMulW * 35),
+      child:
+          ScopedModelDescendant<AppModel>(builder: (context, child, appModel) {
+        return Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Text(
+                  "  Last Promos",
+                  style: TextStyle(
+                      fontSize: 26 * sizeMulW,
+                      color: Colors.black.withOpacity(0.8),
+                      fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  width: sizeMulW * 10,
+                ),
+                Icon(
+                  FontAwesomeIcons.tag,
+                  size: MediaQuery.of(context).size.width * 0.062,
+                  color: Colors.green,
+                )
+              ],
+            ),
+            // SizedBox(
+            //   height: sizeMulW * 1,
+            // ),
+            Container(
+              height: MediaQuery.of(context).size.height -
+                  0.942 * MediaQuery.of(context).size.width -
+                  24 * sizeMulW -
+                  (34 * sizeMulW),
+              width: MediaQuery.of(context).size.width,
+              // color: Colors.red,
+
+              child: Flex(
+                direction: Axis.vertical,
+                children: (appModel.receiptsLoaded)
+                    ? bottomChildren(appModel, context)
+                    : [SizedBox(width: 1)],
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: (appModel.receiptsLoaded &&
+                        appModel.receiptFiles.length != 0)
+                    ? MainAxisAlignment.spaceEvenly
+                    : MainAxisAlignment.end,
+              ),
+            )
+          ],
+        );
+      }),
+    );
+  }
+}
+class NewsTab extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+                    padding: EdgeInsets.symmetric(horizontal: sizeMulW * 35),
+                    child: ScopedModelDescendant<AppModel>(
+                      
+                      builder: (context, child, appModel) {
+                        return Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Row(
+                              children: <Widget>[
+                                Text(
+                                  "  News Feed",
+                                  style: TextStyle(
+                                      fontSize: 26 * sizeMulW,
+                                      color: Colors.black.withOpacity(0.8),
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(
+                                  width: sizeMulW * 10,
+                                ),
+                                Icon(
+                                  FontAwesomeIcons.newspaper,
+                                  size: MediaQuery.of(context).size.width * 0.062,
+                                  color: Colors.green,
+                                )
+                              ],
+                            ),
+                            // SizedBox(
+                            //   height: sizeMulW * 1,
+                            // ),
+                            Container(
+                              height: MediaQuery.of(context).size.height -
+                                  0.942 * MediaQuery.of(context).size.width -
+                                  24 * sizeMulW -
+                                  (34 * sizeMulW),
+                              width: MediaQuery.of(context).size.width,
+                              // color: Colors.red,
+
+                              child: Flex(
+                                direction: Axis.vertical,
+                                children: (appModel.receiptsLoaded)
+                                    ? bottomChildren(appModel, context)
+                                    : [SizedBox(width: 1)],
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: (appModel.receiptsLoaded &&
+                                        appModel.receiptFiles.length != 0)
+                                    ? MainAxisAlignment.spaceEvenly
+                                    : MainAxisAlignment.end,
+                              ),
+                            )
+                            
+                          ],
+                        );
+                      }
+                    ),
+                  );
+  }
+}
+class ReceiptsTab extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return new Container(
+      padding: EdgeInsets.symmetric(horizontal: sizeMulW * 35),
+      child:
+          ScopedModelDescendant<AppModel>(builder: (context, child, appModel) {
+        return Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Text(
+                  "  Last Receipts",
+                  style: TextStyle(
+                      fontSize: 26 * sizeMulW,
+                      color: Colors.black.withOpacity(0.8),
+                      fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  width: sizeMulW * 10,
+                ),
+                Icon(
+                  FontAwesomeIcons.file,
+                  size: MediaQuery.of(context).size.width * 0.062,
+                  color: Colors.green,
+                )
+              ],
+            ),
+            // SizedBox(
+            //   height: sizeMulW * 1,
+            // ),
+            Container(
+              height: MediaQuery.of(context).size.height -
+                  0.942 * MediaQuery.of(context).size.width -
+                  24 * sizeMulW -
+                  (34 * sizeMulW),
+              width: MediaQuery.of(context).size.width,
+              // color: Colors.red,
+
+              child: Flex(
+                direction: Axis.vertical,
+                children: (appModel.receiptsLoaded)
+                    ? bottomChildren(appModel, context)
+                    : [SizedBox(width: 1)],
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: (appModel.receiptsLoaded &&
+                        appModel.receiptFiles.length != 0)
+                    ? MainAxisAlignment.spaceEvenly
+                    : MainAxisAlignment.end,
+              ),
+            )
+          ],
+        );
+      }),
+    );
   }
 }
 
