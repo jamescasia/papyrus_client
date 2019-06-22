@@ -89,10 +89,14 @@ class _ShowReceiptScreenStackState extends State<ShowReceiptScreenStack> {
                                   fontWeight: FontWeight.w700),
                             ),
                           ),
-                          Text(
-                            receipt.address,
-                            textScaleFactor: 1.1,
-                            textAlign: TextAlign.center,
+                          SizedBox(height: 3,),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                            child: Text(
+                              receipt.address,
+                              textScaleFactor: 1.1,
+                              textAlign: TextAlign.center,
+                            ),
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,

@@ -252,12 +252,15 @@ class AppModel extends Model {
     deleteAllReceiptFiles();
     deleteAllExpenseFiles();
     deleteMessages();
+    userRef.set(null);
     await File(allMessagesFilePath).delete();
     await File(userExpenseJSONFilePath).delete();
     await File(userExpensesFilePath).delete();
     await File(dayExpenseFilePath).delete();
     await File(weekExpenseFilePath).delete();
     await File(monthExpenseFilePath).delete();
+
+
   }
 
   void deleteAllExpenseFiles() async {
