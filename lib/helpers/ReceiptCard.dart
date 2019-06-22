@@ -91,7 +91,7 @@ Widget ReceiptCard(BuildContext context, Receipt receipt, index) {
                           overflow: TextOverflow.fade,
                           textAlign: TextAlign.center,
                           maxLines: 2,
-                          textScaleFactor: 1,
+                          textScaleFactor: 0.9,
                           style: TextStyle(
                               // fontSize: 11 * sizeMulW,
                               fontWeight: FontWeight.w600),
@@ -109,7 +109,7 @@ Widget ReceiptCard(BuildContext context, Receipt receipt, index) {
                         child: Text(
                           receipt.items.first.name,
                           textAlign: TextAlign.center,
-                          textScaleFactor: 1,
+                          textScaleFactor: 0.9,
                           style: TextStyle(
                               // fontSize: 16 * sizeMulW,
                               fontWeight: FontWeight.w600),
@@ -119,7 +119,7 @@ Widget ReceiptCard(BuildContext context, Receipt receipt, index) {
                         "" +
                             DateFormat("MMM dd, yyyy")
                                 .format(DateTime.parse(receipt.dateTime)),
-                                textScaleFactor: 0.95,
+                                textScaleFactor: 0.85,
                         // DateTime.parse( receipt.dateTime).month.toString().substring(1,4) +" " + DateTime.parse( receipt.dateTime).day.toString() +", "+  DateTime.parse( receipt.dateTime).year.toString(),
                         // style: TextStyle(fontSize: 11 * sizeMulW),
                       )
@@ -136,7 +136,7 @@ Widget ReceiptCard(BuildContext context, Receipt receipt, index) {
                         child: Text(
                           "${addCommas((receipt.total.floor()))}.",
                           overflow: TextOverflow.ellipsis,
-                          textScaleFactor: 1.2,
+                          textScaleFactor: 1 ,
                           style: TextStyle(
                               color: Colors.red,
                               fontWeight: FontWeight.bold,
@@ -146,14 +146,14 @@ Widget ReceiptCard(BuildContext context, Receipt receipt, index) {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(bottom: 1),
+                        padding: EdgeInsets.only(bottom: 0),
                         child: Text(
                           // "",
                           (receipt.total.toString().split(".")[1] != "0")
                               ? "${receipt.total.toStringAsFixed(2).split(".")[1]}"
                               : "00",
                           overflow: TextOverflow.ellipsis,
-                          textScaleFactor: 0.9,
+                          textScaleFactor: 0.7,
                           style: TextStyle(
                               color: Colors.red,
                               fontWeight: FontWeight.bold,

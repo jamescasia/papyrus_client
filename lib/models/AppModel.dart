@@ -51,6 +51,7 @@ class AppModel extends Model {
   List<String> dirList;
   File userExpenseJSONFile;
   File userExpensesFile;
+  List<Promo> promoList = [];
   File dayExpenseFile;
   File weekExpenseFile;
   File monthExpenseFile;
@@ -141,17 +142,8 @@ class AppModel extends Model {
     //
   }
 
-  void firebaseInit() {
-    print("inited");
-    database = FirebaseDatabase.instance;
-    userRef = database.reference().child('private/accounts/users/${user.uid}');
-    print(user.uid + "could be wrong? no");
-    promosRef = userRef.child('promos');
-    messagesFromAdminRef = userRef.child('messages');
-    allReceiptsRef = database.reference().child('private/receipts');
-    receiptsRef = userRef.child("receipts");
-
-    receiptsRef.onChildAdded.listen((child) {
+  listenForReceipts(){
+     receiptsRef.onChildAdded.listen((child) {
       print("someoned added receipts");
       String ruid = child.snapshot.key;
       allReceiptsRef.child(ruid).once().then((data) {
@@ -170,15 +162,7 @@ class AppModel extends Model {
       d.forEach((k, value) {
         var found = false;
 
-        for (FileSystemEntity rFile in receiptFiles) {
-          // var tokens = rFile.path.split("/");
-          // var rFileName = tokens.last.split(".")[0];
-
-          // print(k + "   vs  " + rFileName);
-
-          // found = (k.toString().toLowerCase() == rFileName ||
-          //     rFileName.toLowerCase().contains(k.toString().toLowerCase()) ||
-          //     k.toString().toLowerCase().contains(rFileName.toLowerCase()));
+        for (FileSystemEntity rFile in receiptFiles) { 
 
           found = receiptRuids.contains(k.toString());
           if (found) break;
@@ -195,7 +179,13 @@ class AppModel extends Model {
       });
     });
 
+
+  }
+
+  listenForPromos(){
     promosRef.once().then((data) {
+
+      
       Map map = jsonDecode(data.value);
       var promo = Promo.fromJson(map);
 
@@ -208,6 +198,23 @@ class AppModel extends Model {
 
       addMessage(msg);
     });
+  }
+
+  void firebaseInit() {
+    print("inited");
+    database = FirebaseDatabase.instance;
+    userRef = database.reference().child('private/accounts/users/${user.uid}');
+    print(user.uid + "could be wrong? no");
+    promosRef = userRef.child('promos');
+    messagesFromAdminRef = userRef.child('messages');
+    allReceiptsRef = database.reference().child('private/receipts');
+    receiptsRef = userRef.child("receipts");
+
+    listenForReceipts();
+
+   
+
+    
   }
 
   void init() async {

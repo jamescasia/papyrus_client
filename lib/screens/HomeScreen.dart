@@ -165,38 +165,31 @@ class _HomeScreenState extends State<HomeScreen> {
       // body: SingleChildScrollView(
       primary: true,
 
-      body: ScopedModelDescendant<AppModel>(
-        
-        builder: (context, child, appModel) {
-          return SimpleGestureDetector(
-             onHorizontalSwipe: (dir) {
-                    print("dragged");
+      body:
+          ScopedModelDescendant<AppModel>(builder: (context, child, appModel) {
+        return SimpleGestureDetector(
+          onHorizontalSwipe: (dir) {
+            print("dragged");
 
-                    if (dir == SwipeDirection.left) {
-                      print("swipedrr");
-                      if (appModel.viewing_period == Period.MONTHLY)
-                        appModel.viewing_period = Period.WEEKLY;
-                      else if (appModel.viewing_period == Period.WEEKLY)
-                        appModel.viewing_period = Period.DAILY;
-                    }
-
-                   else  if (dir == SwipeDirection.right) {
-                      print("swipedrr");
-                      if (appModel.viewing_period == Period.DAILY)
-                        appModel.viewing_period = Period.WEEKLY;
-                      else if (appModel.viewing_period == Period.WEEKLY)
-                        appModel.viewing_period = Period.MONTHLY;
-                    }
-
-
-
-                  },
-                  child: Column(
-              children: <Widget>[HomeScreenTopPart(), HomeScreenBottomPart()],
-            ),
-          );
-        }
-      ),
+            if (dir == SwipeDirection.left) {
+              print("swipedrr");
+              if (appModel.viewing_period == Period.MONTHLY)
+                appModel.viewing_period = Period.WEEKLY;
+              else if (appModel.viewing_period == Period.WEEKLY)
+                appModel.viewing_period = Period.DAILY;
+            } else if (dir == SwipeDirection.right) {
+              print("swipedrr");
+              if (appModel.viewing_period == Period.DAILY)
+                appModel.viewing_period = Period.WEEKLY;
+              else if (appModel.viewing_period == Period.WEEKLY)
+                appModel.viewing_period = Period.MONTHLY;
+            }
+          },
+          child: Column(
+            children: <Widget>[HomeScreenTopPart(), HomeScreenBottomPart()],
+          ),
+        );
+      }),
       // ),
     );
   }
@@ -226,8 +219,7 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
 
   @override
   Widget build(BuildContext context) {
-    TextStyle headerStyle = TextStyle(
-        fontSize: 17.4,   color: Colors.white);
+    TextStyle headerStyle = TextStyle(fontSize: 17.4, color: Colors.white);
 
     TextStyle headerStyleSelected = TextStyle(
         fontSize: 18.4, fontWeight: FontWeight.bold, color: Colors.green[700]);
@@ -455,8 +447,9 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(3000)),
                                           child: Icon(
-
-                                            (appModel.loadedUserExpense)?chevronTicker(appModel): Icons.keyboard_arrow_up,
+                                            (appModel.loadedUserExpense)
+                                                ? chevronTicker(appModel)
+                                                : Icons.keyboard_arrow_up,
                                             // FontAwesomeIcons.dollarSign,
                                             color: Colors.white,
                                             size: MediaQuery.of(context)
@@ -776,7 +769,8 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                       Navigator.push(
                           context,
                           CupertinoPageRoute(
-                              builder: (context) => ChartScreen(appModel.chartsScreenModel)));
+                              builder: (context) =>
+                                  ChartScreen(appModel.chartsScreenModel)));
                     },
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
@@ -874,7 +868,7 @@ class _HomeScreenBottomPartState extends State<HomeScreenBottomPart> {
         // color: Colors.black26,
         width: MediaQuery.of(context).size.width,
         // height:
-        
+
         //  MediaQuery.of(context).size.height -
         //     0.942 * MediaQuery.of(context).size.width -
         //     24 * sizeMulW,
@@ -1052,31 +1046,31 @@ String addCommas(int nums) {
       new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},');
 }
 
-String decimalDigits(AppModel appModel) { 
-  if(!appModel.loadedUserExpense) return "00";
-  if(appModel.viewing_period == Period.DAILY){
-  if (((appModel.dayExpense.totalSpent).toStringAsFixed(2).split(".")[1]) ==
-      "00") {
-    return "00";
+String decimalDigits(AppModel appModel) {
+  if (!appModel.loadedUserExpense) return "00";
+  if (appModel.viewing_period == Period.DAILY) {
+    if (((appModel.dayExpense.totalSpent).toStringAsFixed(2).split(".")[1]) ==
+        "00") {
+      return "00";
+    }
+    return (appModel.dayExpense.totalSpent).toStringAsFixed(2).split(".")[1];
   }
-  return (appModel.dayExpense.totalSpent).toStringAsFixed(2).split(".")[1];}
 
-  if(appModel.viewing_period == Period.WEEKLY){
-  if (((appModel.weekExpense.totalSpent).toStringAsFixed(2).split(".")[1]) ==
-      "00") {
-    return "00";
+  if (appModel.viewing_period == Period.WEEKLY) {
+    if (((appModel.weekExpense.totalSpent).toStringAsFixed(2).split(".")[1]) ==
+        "00") {
+      return "00";
+    }
+    return (appModel.weekExpense.totalSpent).toStringAsFixed(2).split(".")[1];
   }
-  return (appModel.weekExpense.totalSpent).toStringAsFixed(2).split(".")[1];}
 
-  if(appModel.viewing_period == Period.MONTHLY){
-  if (((appModel.monthExpense.totalSpent).toStringAsFixed(2).split(".")[1]) ==
-      "00") {
-    return "00";
+  if (appModel.viewing_period == Period.MONTHLY) {
+    if (((appModel.monthExpense.totalSpent).toStringAsFixed(2).split(".")[1]) ==
+        "00") {
+      return "00";
+    }
+    return (appModel.monthExpense.totalSpent).toStringAsFixed(2).split(".")[1];
   }
-  return (appModel.monthExpense.totalSpent).toStringAsFixed(2).split(".")[1];}
-
-
-
 }
 
 List<Widget> bottomChildren(AppModel appModel, BuildContext context) {
