@@ -52,6 +52,7 @@ class AppModel extends Model {
   File userExpenseJSONFile;
   File userExpensesFile;
   List<Promo> promoList = [];
+  List<String> promoCodes = [];
   File dayExpenseFile;
   File weekExpenseFile;
   File monthExpenseFile;
@@ -142,8 +143,8 @@ class AppModel extends Model {
     //
   }
 
-  listenForReceipts(){
-     receiptsRef.onChildAdded.listen((child) {
+  listenForReceipts() {
+    receiptsRef.onChildAdded.listen((child) {
       print("someoned added receipts");
       String ruid = child.snapshot.key;
       allReceiptsRef.child(ruid).once().then((data) {
@@ -162,8 +163,7 @@ class AppModel extends Model {
       d.forEach((k, value) {
         var found = false;
 
-        for (FileSystemEntity rFile in receiptFiles) { 
-
+        for (FileSystemEntity rFile in receiptFiles) {
           found = receiptRuids.contains(k.toString());
           if (found) break;
         }
@@ -178,26 +178,38 @@ class AppModel extends Model {
         }
       });
     });
-
-
   }
 
-  listenForPromos(){
+  listenForPromos() {
+    print("PRdsfffffffffffffffffffffffffffffffOMOOOS");
     promosRef.once().then((data) {
+      var d = data.value;
+      print("the data" + d.toString());
 
-      
-      Map map = jsonDecode(data.value);
-      var promo = Promo.fromJson(map);
+      d.forEach((k, value) {
+        Map map = jsonDecode(value);
+        var promo = Promo.fromJson(map);
+        // print("NAAAAAAAAAAME: " + promo.item_name);
+        promoList.insert(0, promo);
+        promoCodes.insert(0, k.toString());
+        print("COOOOOOOODE");
+        print(promoCodes);
+      });
 
-      Message msg = Message(
-          "I've got a promo for you!! 😱🤑🤑\n\n${promo.value * 100}% off of your favourite ${promo.item_name}!!. Click on this message to view the promo",
-          DateTime.now().toLocal().toIso8601String(),
-          "null",
-          promo.retailer_id,
-          false);
-
-      addMessage(msg);
+      notifyListeners();
     });
+
+    promosRef.onChildAdded.listen((child) {
+      if (!promoCodes.contains(child.snapshot.key)) {
+        Map map = jsonDecode(child.snapshot.value);
+        var promo = Promo.fromJson(map);
+        promoList.insert(0, promo);
+        promoCodes.insert(0, child.snapshot.key);
+        notifyListeners();
+      }
+    });
+
+    print(promoList);
   }
 
   void firebaseInit() {
@@ -211,10 +223,7 @@ class AppModel extends Model {
     receiptsRef = userRef.child("receipts");
 
     listenForReceipts();
-
-   
-
-    
+    listenForPromos();
   }
 
   void init() async {
@@ -266,8 +275,6 @@ class AppModel extends Model {
     await File(dayExpenseFilePath).delete();
     await File(weekExpenseFilePath).delete();
     await File(monthExpenseFilePath).delete();
-
-
   }
 
   void deleteAllExpenseFiles() async {

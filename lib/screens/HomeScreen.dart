@@ -912,19 +912,27 @@ class PromosTab extends StatelessWidget {
                   24 * sizeMulW -
                   (34 * sizeMulW),
               width: MediaQuery.of(context).size.width,
+
+              child: (appModel.promoList.length>0)?Row(children: appModel.promoList.map((f){
+                  print("from HHHHHHHHHHHHHHHHHHHHOOOMEME");
+                print(f);
+                return PromoSquareCard(f.image_path ,f.expiry_date, f.expiry_date, (f.value));
+
+
+              }).toList(),):SizedBox(width:0.001)
               // color: Colors.red,
 
-              child: Flex(
-                direction: Axis.vertical,
-                children: (appModel.receiptsLoaded)
-                    ? bottomChildren(appModel, context)
-                    : [SizedBox(width: 1)],
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: (appModel.receiptsLoaded &&
-                        appModel.receiptFiles.length != 0)
-                    ? MainAxisAlignment.spaceEvenly
-                    : MainAxisAlignment.end,
-              ),
+              // child: Flex(
+              //   direction: Axis.vertical,
+              //   children: (appModel.receiptsLoaded)
+              //       ? bottomChildrenReceipts(appModel, context)
+              //       : [SizedBox(width: 1)],
+              //   mainAxisSize: MainAxisSize.max,
+              //   mainAxisAlignment: (appModel.receiptsLoaded &&
+              //           appModel.receiptFiles.length != 0)
+              //       ? MainAxisAlignment.spaceEvenly
+              //       : MainAxisAlignment.end,
+              // ),
             )
           ],
         );
@@ -938,7 +946,7 @@ class NewsTab extends StatelessWidget {
     return Container(
                     padding: EdgeInsets.symmetric(horizontal: sizeMulW * 35),
                     child: ScopedModelDescendant<AppModel>(
-                      
+                       
                       builder: (context, child, appModel) {
                         return Column(
                           mainAxisSize: MainAxisSize.max,
@@ -978,7 +986,7 @@ class NewsTab extends StatelessWidget {
                               child: Flex(
                                 direction: Axis.vertical,
                                 children: (appModel.receiptsLoaded)
-                                    ? bottomChildren(appModel, context)
+                                    ? bottomChildrenReceipts(appModel, context)
                                     : [SizedBox(width: 1)],
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: (appModel.receiptsLoaded &&
@@ -1040,7 +1048,7 @@ class ReceiptsTab extends StatelessWidget {
               child: Flex(
                 direction: Axis.vertical,
                 children: (appModel.receiptsLoaded)
-                    ? bottomChildren(appModel, context)
+                    ? bottomChildrenReceipts(appModel, context)
                     : [SizedBox(width: 1)],
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: (appModel.receiptsLoaded &&
@@ -1117,7 +1125,7 @@ String decimalDigits(AppModel appModel) {
   }
 }
 
-List<Widget> bottomChildren(AppModel appModel, BuildContext context) {
+List<Widget> bottomChildrenReceipts(AppModel appModel, BuildContext context) {
   List<Widget> bc = [
     LongButton(
       greeny.colors[1],
@@ -1238,4 +1246,80 @@ List<Widget> bottomChildren(AppModel appModel, BuildContext context) {
   }
 
   return bc;
+}
+class PromoSquareCard extends StatelessWidget {
+  final String imagePath, itemName, expiryDate; double  discount;
+  PromoSquareCard(this.imagePath, this.itemName, this.expiryDate, this.discount,
+      );
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: ClipRRect(
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+        child: Stack(
+          children: <Widget>[
+            Container(
+              height: 210,
+              width: 160,
+              // margin: EdgeInsets.symmetric(horizontal: 10),
+              child: Image.network(
+                imagePath,
+                fit: BoxFit.cover,
+                // width: 25,
+              ),
+            ),
+            Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Container(
+                  width: double.infinity,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    
+                      gradient:  
+                      
+                      LinearGradient(
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.topCenter,
+                          colors: [greeny.colors[1],greeny.colors[0],
+                      ])
+                      
+                      ),
+                )),
+            Positioned(
+              left: 10,
+              bottom: 10,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    padding:
+                        EdgeInsets.only(top: 3, bottom: 3, left: 8, right: 8),
+                    child: Text(
+                      (discount*100).toString() + " % OFF!",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(30))),
+                  ),
+                  Text(
+                    itemName,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
 }
