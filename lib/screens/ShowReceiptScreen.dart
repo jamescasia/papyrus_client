@@ -21,13 +21,37 @@ class ShowReceiptScreen extends StatefulWidget {
 
 class _ShowReceiptScreenState extends State<ShowReceiptScreen> {
   Receipt receipt;
+
+  double fabSize = (0.5 * (sizeMulW + sizeMulH)) * 74.052;
+  bool checked = false;
   _ShowReceiptScreenState(this.receipt);
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-      ),
+      floatingActionButton: AnimatedContainer(
+          duration: Duration(milliseconds: 200),
+          curve: Curves.decelerate,
+          width: (checked) ? 0 : fabSize,
+          height: (checked) ? 0 : fabSize,
+          child: RawMaterialButton(
+            fillColor: greeny.colors[1],
+            shape: new CircleBorder(),
+            splashColor: Colors.lightGreen,
+            highlightColor: Colors.greenAccent,
+            elevation: 5,
+            child: new Icon(
+              Icons.check,
+              color: Colors.white,
+              size: 40 * sizeMulW,
+            ),
+            onPressed: () {
+              setState(() {
+                checked = true;
+              });
+
+              Navigator.pop(context);
+            },
+          )),
       body: ShowReceiptScreenStack(receipt),
     );
   }
@@ -89,9 +113,12 @@ class _ShowReceiptScreenStackState extends State<ShowReceiptScreenStack> {
                                   fontWeight: FontWeight.w700),
                             ),
                           ),
-                          SizedBox(height: 3,),
+                          SizedBox(
+                            height: 3,
+                          ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 4.0),
                             child: Text(
                               receipt.address,
                               textScaleFactor: 1.1,
@@ -301,7 +328,6 @@ class _ShowReceiptScreenStackState extends State<ShowReceiptScreenStack> {
                           SizedBox(
                             height: sizeMulW * 30,
                           ),
-
                           SizedBox(
                             height: sizeMulW * 50,
                           ),
@@ -415,14 +441,18 @@ class _ShowReceiptScreenStackState extends State<ShowReceiptScreenStack> {
                     ),
                   ],
                 ),
-                (receipt.isPapyrus)
-                    ? Image.asset(
-                        "assets/icons/3x/papygreen.png",
-                        width: sizeMulW * 19,
-                      )
-                    : SizedBox(
-                        width: 1,
-                      )
+                Tooltip(
+                  message:
+                      "No trees were harmed in the making of this receipt.\nSo you can track your expenses guilt-free.",
+                  child: (receipt.isPapyrus)
+                      ? Image.asset(
+                          "assets/icons/3x/papygreen.png",
+                          width: sizeMulW * 40,
+                        )
+                      : SizedBox(
+                          width: 1,
+                        ),
+                )
               ],
             ),
           ),
