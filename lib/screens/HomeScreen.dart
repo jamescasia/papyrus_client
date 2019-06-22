@@ -9,9 +9,10 @@ import 'package:shimmer/shimmer.dart';
 import 'package:papyrus_client/helpers/ScrollBehaviour.dart';
 import 'package:papyrus_client/helpers/CustomShapeClipper.dart';
 import 'package:papyrus_client/screens/ReceiptScreen.dart';
-
+import 'package:dots_indicator/dots_indicator.dart';
 import 'ChartScreen.dart';
 import 'PromoScreen.dart';
+import 'package:papyrus_client/models/TabberModel.dart';
 import 'SettingScreen.dart';
 import 'package:papyrus_client/helpers/CustomShowDialog.dart';
 import 'package:papyrus_client/helpers/LongButton.dart';
@@ -144,6 +145,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   // var ShapeBorder s = new ShapeBorder();
+
   @override
   Widget build(BuildContext context) {
     sizeMulW = MediaQuery.of(context).size.width / 411.4;
@@ -159,6 +161,7 @@ class _HomeScreenState extends State<HomeScreen> {
       systemNavigationBarColor: const Color(0xFF1BA977),
       // #61C350
     ));
+
     return Scaffold(
       // bottomNavigationBar: CustomAppBar(),
       appBar: EmptyAppBar(),
@@ -185,9 +188,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 appModel.viewing_period = Period.MONTHLY;
             }
           },
-          child: Column(
-            children: <Widget>[HomeScreenTopPart(), HomeScreenBottomPart()],
-          ),
+          child: ScopedModel<TabberModel>(
+              model: TabberModel(),
+              child: ScopedModelDescendant<TabberModel>( 
+                builder: (context, child, tabModel) {
+                  return Column(
+                    children: <Widget>[
+                      HomeScreenTopPart(tabModel),  HomeScreenBottomPart(tabModel) 
+                    ],
+                  );
+                }
+              )),
         );
       }),
       // ),
@@ -196,11 +207,17 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class HomeScreenTopPart extends StatefulWidget {
+
+  TabberModel tabModel;
+  HomeScreenTopPart(this.tabModel);
   @override
-  _HomeScreenTopPartState createState() => new _HomeScreenTopPartState();
+  _HomeScreenTopPartState createState() => new _HomeScreenTopPartState(tabModel);
 }
 
 class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
+  
+  TabberModel tabModel;
+  _HomeScreenTopPartState(this.tabModel);
   static const platform = const MethodChannel('flutter.native/helper');
   String _responseFromNativeCode = 'Waiting for Response...';
   Future<void> responseFromNativeCode() async {
@@ -841,6 +858,27 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                     color: Colors.white,
                   ),
                 )),
+          ),
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Center(child:  Container(
+              color: (tabModel.currentPage<100)?Colors.white.withAlpha(0):Colors.white.withAlpha(0),
+              child: DotsIndicator(
+                  dotsCount: 3,
+                  position: tabModel.currentPage,
+                  decorator: DotsDecorator(
+                    color: Colors.grey[300],
+                    activeColor: Colors.green,
+                    size: const Size.square(12.0),
+                    activeSize: const Size(24, 12.0),
+                    activeShape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0)),
+                  ),
+                ),
+            ) 
+            ),
           )
         ],
       );
@@ -849,163 +887,235 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
 }
 
 class HomeScreenBottomPart extends StatefulWidget {
+  TabberModel tabModel;
+  HomeScreenBottomPart(this.tabModel);
   @override
-  _HomeScreenBottomPartState createState() => new _HomeScreenBottomPartState();
+  _HomeScreenBottomPartState createState() =>
+      new _HomeScreenBottomPartState(tabModel);
 }
 
-class _HomeScreenBottomPartState extends State<HomeScreenBottomPart> {
+// class CustomTabIndicator extends StatefulWidget {
+//   @override
+//   _CustomTabIndicatorState createState() => new _CustomTabIndicatorState();
+// }
+
+// class _CustomTabIndicatorState extends State<CustomTabIndicator> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return ScopedModelDescendant<TabberModel>(
+//         builder: (context, child, tabModel) {
+//       return new DotsIndicator(
+//         dotsCount: 3,
+//         position: tabModel.currentPage,
+//         decorator: DotsDecorator(
+//           size: const Size.square(12.0),
+//           activeSize: const Size(24, 12.0),
+//           activeShape:
+//               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+//         ),
+//       );
+//     });
+//   }
+// }
+
+class _HomeScreenBottomPartState extends State<HomeScreenBottomPart>
+    with SingleTickerProviderStateMixin {
+  TabberModel tabModel;
+  _HomeScreenBottomPartState(this.tabModel);
   goToReceiptsScreen() {}
+  TabController tabController;
+
+  void _handleTabSelection() {
+    print("TAAAAAAAAAAABSS" + tabController.index.toString());
+    tabModel.changeCurrentPage(tabController.index);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    tabController = TabController(
+      length: 3,
+      vsync: this,
+    );
+
+    tabController.addListener(_handleTabSelection);
+  }
 
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant<AppModel>(builder: (context, child, appModel) {
-      return new Container(
-        // constraints: BoxConstraints(
-        //   minHeight: MediaQuery.of(context).size.height -
-        //     0.942 * MediaQuery.of(context).size.width,
-        //     minWidth:  MediaQuery.of(context).size.width,
-        // ),
-        // color: Colors.black26,
-        width: MediaQuery.of(context).size.width,
-        // height:
+      return Expanded(
+        child: new Container(
+          // constraints: BoxConstraints(
+          //   minHeight: MediaQuery.of(context).size.height -
+          //     0.942 * MediaQuery.of(context).size.width,
+          //     minWidth:  MediaQuery.of(context).size.width,
+          // ),
+          // color: Colors.black26,
+          width: MediaQuery.of(context).size.width,
+          // height:
 
-        //  MediaQuery.of(context).size.height -
-        //     0.942 * MediaQuery.of(context).size.width -
-        //     24 * sizeMulW,
-        color: Colors.white.withAlpha(0),
-        padding: EdgeInsets.symmetric(horizontal: sizeMulW * 35),
-        child: Center(
-          // mainAxisAlignment: MainAxisAlignment.center,
-          // children: <Widget>[
-          child:
-              // SizedBox(width: 30 * MediaQuery.of(context).size.width / 400),
-              Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Row(
+          // // double.infinity,
+
+          //  MediaQuery.of(context).size.height -
+          //     0.942 * MediaQuery.of(context).size.width -
+          //     0
+          //     ,
+          color: Colors.white.withAlpha(0),
+          child: Center(
+            // mainAxisAlignment: MainAxisAlignment.center,
+            // children: <Widget>[
+            child:
+                // SizedBox(width: 30 * MediaQuery.of(context).size.width / 400),
+                DefaultTabController(
+              length: 3,
+              initialIndex: 1,
+              child: TabBarView(
+                controller: tabController,
                 children: <Widget>[
-                  Text(
-                    "  Last Receipts",
-                    style: TextStyle(
-                        fontSize: 26 * sizeMulW,
-                        color: Colors.black.withOpacity(0.8),
-                        fontWeight: FontWeight.bold),
+                  Container(
+                    color: Colors.blue,
                   ),
-                  SizedBox(
-                    width: sizeMulW * 10,
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: sizeMulW * 35),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Row(
+                          children: <Widget>[
+                            Text(
+                              "  Last Receipts",
+                              style: TextStyle(
+                                  fontSize: 26 * sizeMulW,
+                                  color: Colors.black.withOpacity(0.8),
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(
+                              width: sizeMulW * 10,
+                            ),
+                            Icon(
+                              FontAwesomeIcons.file,
+                              size: MediaQuery.of(context).size.width * 0.062,
+                              color: Colors.green,
+                            )
+                          ],
+                        ),
+                        // SizedBox(
+                        //   height: sizeMulW * 1,
+                        // ),
+                        Container(
+                          height: MediaQuery.of(context).size.height -
+                              0.942 * MediaQuery.of(context).size.width -
+                              24 * sizeMulW -
+                              (34 * sizeMulW),
+                          width: MediaQuery.of(context).size.width,
+                          // color: Colors.red,
+
+                          child: Flex(
+                            direction: Axis.vertical,
+                            children: (appModel.receiptsLoaded)
+                                ? bottomChildren(appModel, context)
+                                : [SizedBox(width: 1)],
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: (appModel.receiptsLoaded &&
+                                    appModel.receiptFiles.length != 0)
+                                ? MainAxisAlignment.spaceEvenly
+                                : MainAxisAlignment.end,
+                          ),
+                        )
+                        // child: FutureBuilder(
+                        //     future: bottomChildren(appModel, context),
+                        //     builder: (context, snapshot) {
+                        //       if (snapshot.connectionState == ConnectionState.active)
+                        //         return CircularProgressIndicator();
+                        //       // return Container(
+                        //       //   // width: MediaQuery.of(context).size.width,
+                        //       //   // height: 300,
+                        //       //   child: Shimmer.fromColors(
+                        //       //     baseColor: Colors.grey[200],
+                        //       //     highlightColor: Colors.white,
+                        //       //     child: Column(
+                        //       //       mainAxisSize: MainAxisSize.max,
+                        //       //       mainAxisAlignment:
+                        //       //           MainAxisAlignment.spaceEvenly,
+                        //       //       children: List<int>.generate(
+                        //       //               ((MediaQuery.of(context).size.height -
+                        //       //                           0.942 *
+                        //       //                               MediaQuery.of(context)
+                        //       //                                   .size
+                        //       //                                   .width -
+                        //       //                           (34 * sizeMulW)) /
+                        //       //                       (81 * sizeMulW))
+                        //       //                   .floor(),
+                        //       //               (i) => i)
+                        //       //           .toList()
+                        //       //           .map((f) => Container(
+                        //       //                 width: 333 * sizeMulW,
+                        //       //                 height: 72 * sizeMulW,
+                        //       //                 decoration: BoxDecoration(
+                        //       //                     color: Colors.green,
+                        //       //                     // border: Border.all(
+                        //       //                     //     color: Colors.red,
+                        //       //                     //     width: 1 * sizeMulW),
+                        //       //                     // boxShadow: [
+                        //       //                     //   new BoxShadow(
+                        //       //                     //     blurRadius: 2 * sizeMulW,
+                        //       //                     //     color: Colors.black12,
+                        //       //                     //     offset: new Offset(
+                        //       //                     //         0, 0.4 * sizeMulW),
+                        //       //                     //   ),
+                        //       //                     // ],
+                        //       //                     borderRadius: BorderRadius.all(
+                        //       //                         Radius.circular(
+                        //       //                             9 * sizeMulW))),
+                        //       //               ))
+                        //       //           .toList(),
+                        //       //     ),
+                        //       //   ),
+                        //       // );
+                        //       else if (snapshot.connectionState ==
+                        //           ConnectionState.done) {
+                        //         return Column(
+                        //           mainAxisSize: MainAxisSize.max,
+                        //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        //           children: (snapshot.data.first != null)
+                        //               ? snapshot.data
+                        //               : [
+                        //                   SizedBox(
+                        //                     width: 1,
+                        //                   )
+                        //                 ],
+                        //         );
+                        //       } else
+                        //         return Column(
+                        //           mainAxisSize: MainAxisSize.max,
+                        //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        //           children: [
+                        //             SizedBox(
+                        //               width: 1,
+                        //             )
+                        //           ],
+                        //         );
+                        //     }))
+
+                        // ReceiptCard("May 19, 2019", 99, "mainItem", "imagePath"),
+                      ],
+                    ),
                   ),
-                  Icon(
-                    FontAwesomeIcons.file,
-                    size: MediaQuery.of(context).size.width * 0.062,
-                    color: Colors.green,
+                  Container(
+                    color: Colors.red,
+                    height: 300,
+                    width: 300,
                   )
                 ],
               ),
-              // SizedBox(
-              //   height: sizeMulW * 1,
-              // ),
-              Container(
-                height: MediaQuery.of(context).size.height -
-                    0.942 * MediaQuery.of(context).size.width -
-                    24 * sizeMulW -
-                    (34 * sizeMulW),
-                width: MediaQuery.of(context).size.width,
-                // color: Colors.red,
-
-                child: Flex(
-                  direction: Axis.vertical,
-                  children: (appModel.receiptsLoaded)
-                      ? bottomChildren(appModel, context)
-                      : [SizedBox(width: 1)],
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: (appModel.receiptsLoaded &&
-                          appModel.receiptFiles.length != 0)
-                      ? MainAxisAlignment.spaceEvenly
-                      : MainAxisAlignment.end,
-                ),
-              )
-              // child: FutureBuilder(
-              //     future: bottomChildren(appModel, context),
-              //     builder: (context, snapshot) {
-              //       if (snapshot.connectionState == ConnectionState.active)
-              //         return CircularProgressIndicator();
-              //       // return Container(
-              //       //   // width: MediaQuery.of(context).size.width,
-              //       //   // height: 300,
-              //       //   child: Shimmer.fromColors(
-              //       //     baseColor: Colors.grey[200],
-              //       //     highlightColor: Colors.white,
-              //       //     child: Column(
-              //       //       mainAxisSize: MainAxisSize.max,
-              //       //       mainAxisAlignment:
-              //       //           MainAxisAlignment.spaceEvenly,
-              //       //       children: List<int>.generate(
-              //       //               ((MediaQuery.of(context).size.height -
-              //       //                           0.942 *
-              //       //                               MediaQuery.of(context)
-              //       //                                   .size
-              //       //                                   .width -
-              //       //                           (34 * sizeMulW)) /
-              //       //                       (81 * sizeMulW))
-              //       //                   .floor(),
-              //       //               (i) => i)
-              //       //           .toList()
-              //       //           .map((f) => Container(
-              //       //                 width: 333 * sizeMulW,
-              //       //                 height: 72 * sizeMulW,
-              //       //                 decoration: BoxDecoration(
-              //       //                     color: Colors.green,
-              //       //                     // border: Border.all(
-              //       //                     //     color: Colors.red,
-              //       //                     //     width: 1 * sizeMulW),
-              //       //                     // boxShadow: [
-              //       //                     //   new BoxShadow(
-              //       //                     //     blurRadius: 2 * sizeMulW,
-              //       //                     //     color: Colors.black12,
-              //       //                     //     offset: new Offset(
-              //       //                     //         0, 0.4 * sizeMulW),
-              //       //                     //   ),
-              //       //                     // ],
-              //       //                     borderRadius: BorderRadius.all(
-              //       //                         Radius.circular(
-              //       //                             9 * sizeMulW))),
-              //       //               ))
-              //       //           .toList(),
-              //       //     ),
-              //       //   ),
-              //       // );
-              //       else if (snapshot.connectionState ==
-              //           ConnectionState.done) {
-              //         return Column(
-              //           mainAxisSize: MainAxisSize.max,
-              //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              //           children: (snapshot.data.first != null)
-              //               ? snapshot.data
-              //               : [
-              //                   SizedBox(
-              //                     width: 1,
-              //                   )
-              //                 ],
-              //         );
-              //       } else
-              //         return Column(
-              //           mainAxisSize: MainAxisSize.max,
-              //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              //           children: [
-              //             SizedBox(
-              //               width: 1,
-              //             )
-              //           ],
-              //         );
-              //     }))
-
-              // ReceiptCard("May 19, 2019", 99, "mainItem", "imagePath"),
-            ],
+            ),
+            // SizedBox(width: 30 * MediaQuery.of(context).size.width / 400),
+            // ],
           ),
-          // SizedBox(width: 30 * MediaQuery.of(context).size.width / 400),
-          // ],
         ),
       );
     });
