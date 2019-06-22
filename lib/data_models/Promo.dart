@@ -8,6 +8,7 @@ class Promo {
   String offer_date;
   String expiry_date;
   String item_name;
+  String image_path;
 
   bool collected;
   bool expired;
@@ -26,6 +27,7 @@ class Promo {
         "promo_code": promo_code,
         "expired": expired,
         "collected": collected,
+        "image_path": image_path,
         "value": value,
       };
 
@@ -36,6 +38,7 @@ class Promo {
         expiry_date = json['expiry_date'],
         offer_date = json['offer_date'],
         customer_id = json['customer_id'],
+        image_path = json['image_path'],
         promo_code = json['promo_code'],
         collected = json['collected'],
         expired = json['expired'],
