@@ -55,6 +55,7 @@ class AppModel extends Model {
   File weekExpenseFile;
   File monthExpenseFile;
   File qrCodeFile;
+  List<String> receiptRuids = [];
   String allMessagesFilePath;
   File allMessagesFile;
   AllMessages allMessages;
@@ -141,19 +142,56 @@ class AppModel extends Model {
   }
 
   void firebaseInit() {
+    print("inited");
     database = FirebaseDatabase.instance;
-    userRef = database.reference().child('private/users/${user.uid}');
+    userRef = database.reference().child('private/accounts/users/${user.uid}');
+    print(user.uid + "could be wrong? no");
     promosRef = userRef.child('promos');
     messagesFromAdminRef = userRef.child('messages');
     allReceiptsRef = database.reference().child('private/receipts');
     receiptsRef = userRef.child("receipts");
 
     receiptsRef.onChildAdded.listen((child) {
+      print("someoned added receipts");
       String ruid = child.snapshot.key;
       allReceiptsRef.child(ruid).once().then((data) {
-        Map map = jsonDecode(data.value);
-        var receipt = Receipt.fromJson(map);
-        addReceiptandSaveToStorage(receipt);
+        if (!receiptRuids.contains(ruid)) {
+          Map map = jsonDecode(data.value);
+          var receipt = Receipt.fromJson(map);
+          addReceiptandSaveToStorage(receipt);
+        }
+      });
+    });
+
+    receiptsRef.once().then((data) {
+      var d = data.value;
+      print("the data" + d.toString());
+
+      d.forEach((k, value) {
+        var found = false;
+
+        for (FileSystemEntity rFile in receiptFiles) {
+          // var tokens = rFile.path.split("/");
+          // var rFileName = tokens.last.split(".")[0];
+
+          // print(k + "   vs  " + rFileName);
+
+          // found = (k.toString().toLowerCase() == rFileName ||
+          //     rFileName.toLowerCase().contains(k.toString().toLowerCase()) ||
+          //     k.toString().toLowerCase().contains(rFileName.toLowerCase()));
+
+          found = receiptRuids.contains(k.toString());
+          if (found) break;
+        }
+
+        if (!found) {
+          String ruid = k.toString();
+          allReceiptsRef.child(ruid).once().then((data) {
+            Map map = jsonDecode(data.value);
+            var receipt = Receipt.fromJson(map);
+            addReceiptandSaveToStorage(receipt);
+          });
+        }
       });
     });
 
@@ -298,13 +336,15 @@ class AppModel extends Model {
   }
 
   void addReceiptandSaveToStorage(Receipt r) {
-    String path = '${dirMap['Receipts']}/${r.time_stamp}.json';
+    String path = '${dirMap['Receipts']}/r_uid${r.time_stamp}.json';
     File file = new File(path);
     file.writeAsString(jsonEncode(r.toJson()));
 
+    receiptRuids.insert(0, "r_uid${r.time_stamp}");
+
     ExpenseItem e = ExpenseItem(r.category, r.total, r.dateTime);
 
-    print("made expenseItem" + e.amount.toString());
+    // print("made expenseItem" + e.amount.toString());
 
     addExpenseItemToExpenseTxtFile(e);
     // print("The encodedd is tadaa" + jsonEncode(r.toJson()));
@@ -414,8 +454,8 @@ class AppModel extends Model {
     userExpense.lastMonthTotalExpenseAmount += total;
     userExpense.lastWeekTotalExpenseAmount += total;
 
-    print(
-        "TOOOOOOOOOOTALL" + userExpense.totalLifetimeExpenseAmount.toString());
+    // print(
+    //     "TOOOOOOOOOOTALL" + userExpense.totalLifetimeExpenseAmount.toString());
   }
 
   addDayExpense() async {
@@ -498,10 +538,10 @@ class AppModel extends Model {
   // }
 
   bool isItANewDay() {
-    print("check new day mofos" +
-        DateTime.now().toLocal().day.toString() +
-        "vs" +
-        (userExpense.lastDateRecorded));
+    // print("check new day mofos" +
+    //     DateTime.now().toLocal().day.toString() +
+    //     "vs" +
+    //     (userExpense.lastDateRecorded));
     if (userExpense.lastDateRecorded == "" ||
         userExpense.lastDateRecorded == null) return true;
     return DateTime.now().toLocal().day !=
@@ -521,8 +561,8 @@ class AppModel extends Model {
   }
 
   bool isItANewMonth() {
-    print(
-        "check new mo mofos ${userExpense.lastMonthRecorded} vs    ${DateTime.now().toLocal().month.toString()}");
+    // print(
+    //     "check new mo mofos ${userExpense.lastMonthRecorded} vs    ${DateTime.now().toLocal().month.toString()}");
     if (userExpense.lastMonthRecorded == "" ||
         userExpense.lastMonthRecorded == null) return true;
     return DateTime.now().toLocal().month.toString() !=
@@ -682,6 +722,12 @@ class AppModel extends Model {
 
     receiptFiles = receiptFiles.reversed.toList();
 
+    receiptRuids = receiptFiles.map((f) {
+      var tokens = f.path.split("/");
+      var rFileName = tokens.last.split(".")[0];
+      return rFileName;
+    }).toList();
+
     receiptsLoaded = true;
     notifyListeners();
   }
@@ -750,9 +796,9 @@ class AppModel extends Model {
 
     UserUpdateInfo info = new UserUpdateInfo();
     info.displayName = name;
-    
+
     await user.updateProfile(info);
-    
+
     await user.reload();
     init();
     // } catch (a) {
