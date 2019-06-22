@@ -750,7 +750,9 @@ class AppModel extends Model {
 
     UserUpdateInfo info = new UserUpdateInfo();
     info.displayName = name;
-    user.updateProfile(info);
+    
+    await user.updateProfile(info);
+    await user.reload();
     init();
     // } catch (a) {
     //   Toast.show("Failed to register: ${a.toString()}", context,

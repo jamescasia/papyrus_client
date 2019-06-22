@@ -317,6 +317,8 @@ class _LogInScreenStackState extends State<LogInScreenStack> {
                                           pass_controller.text)
                                       .asStream()
                                       .listen((data) {
+
+                                        
                                     if (data.email != null) {
                                       Navigator.pushReplacement(context,
                                           CupertinoPageRoute(

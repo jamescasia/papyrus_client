@@ -51,7 +51,7 @@ class ChatModel extends Model {
 
     await Future.delayed(Duration(milliseconds: 40));
     scont.animateTo(0,
-        duration: const Duration(milliseconds: 100), curve: Curves.easeOut);
+        duration: const Duration(milliseconds: 150), curve: Curves.decelerate);
   }
 
   void replyMessage(String msgText, String imagePath) async {
