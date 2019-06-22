@@ -752,6 +752,7 @@ class AppModel extends Model {
     info.displayName = name;
     
     await user.updateProfile(info);
+    
     await user.reload();
     init();
     // } catch (a) {
