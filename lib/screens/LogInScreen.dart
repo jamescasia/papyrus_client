@@ -10,6 +10,8 @@ import 'dart:async';
 import 'package:papyrus_client/helpers/LongButton.dart';
 import 'package:flutter/services.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:toast/toast.dart';
 
 class LogInScreen extends StatefulWidget {
   @override
@@ -35,13 +37,18 @@ class LogInScreenStack extends StatefulWidget {
 class _LogInScreenStackState extends State<LogInScreenStack> {
   TextEditingController email_controller = TextEditingController();
   TextEditingController pass_controller = TextEditingController();
+
+  TextEditingController name_controller = TextEditingController();
   FocusNode email_focus = FocusNode();
   FocusNode pass_focus = FocusNode();
+  FocusNode name_focus = FocusNode();
   bool isLoading = false;
+  bool isNameValid = true;
   bool isEmailValid = true;
   bool isPassValid = true;
   bool keyBoardUp = false;
-ScrollController sc  = ScrollController();
+  bool loggingIn = true;
+  ScrollController sc = ScrollController();
   StreamSubscription sub;
 
   @override
@@ -52,13 +59,11 @@ ScrollController sc  = ScrollController();
 
       setState(() {
         keyBoardUp = visible;
-        if(keyBoardUp) {
-          Future.delayed(Duration(milliseconds: 40)).then((_){
-
-
-          sc.animateTo(sc.position.maxScrollExtent/2, duration: Duration(milliseconds: 100), curve:  Curves.easeOut);
+        if (keyBoardUp) {
+          Future.delayed(Duration(milliseconds: 40)).then((_) {
+            sc.animateTo(sc.position.maxScrollExtent / 2,
+                duration: Duration(milliseconds: 100), curve: Curves.easeOut);
           });
-          
         }
       });
     });
@@ -100,7 +105,7 @@ ScrollController sc  = ScrollController();
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       Text(
-                        "Log in\nto start saving",
+                        (loggingIn) ? "Log in" : "Register",
                         style: TextStyle(
                             fontSize: sizeMulW * 40,
                             fontWeight: FontWeight.w600,
@@ -109,8 +114,10 @@ ScrollController sc  = ScrollController();
                     ],
                   ),
                 ),
-                Container(
-                  height: 275,
+                AnimatedContainer(
+                  duration: Duration(milliseconds: 100),
+                  height: (loggingIn) ? 275 : 368,
+                  curve: Curves.bounceIn,
                   margin: EdgeInsets.all(20),
                   padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                   decoration: BoxDecoration(
@@ -132,8 +139,47 @@ ScrollController sc  = ScrollController();
                   child: Stack(
                     // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
+                      (loggingIn)
+                          ? Container(
+                              height: 0,
+                              // width: 0,
+                            )
+                          : Positioned(
+                              top: 0,
+                              right: 0,
+                              left: 0,
+                              child: Container(
+                                height: 80,
+                                margin: EdgeInsets.only(bottom: sizeMulW * 5),
+                                child: TextField(
+                                  controller: name_controller,
+                                  style: TextStyle(fontSize: sizeMulW * 19),
+                                  onChanged: (String val) {
+                                    setState(() {
+                                      if (val.length < 5)
+                                        isNameValid = false;
+                                      else
+                                        isNameValid = true;
+                                    });
+                                  },
+                                  decoration: InputDecoration(
+                                      disabledBorder: OutlineInputBorder(),
+                                      // filled: isEmailValid,
+                                      fillColor: Color(0xffBFFF00),
+                                      labelText: "name",
+                                      errorText: isNameValid
+                                          ? null
+                                          : "Name must be at least 5 characters",
+                                      border: OutlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: Colors.white),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(30)))),
+                                ),
+                              ),
+                            ),
                       Positioned(
-                        top: 0,
+                        top: (loggingIn) ? 0 : 85,
                         right: 0,
                         left: 0,
                         child: Container(
@@ -165,7 +211,7 @@ ScrollController sc  = ScrollController();
                         ),
                       ),
                       Positioned(
-                        top: 85,
+                        top: (loggingIn) ? 85 : 170,
                         left: 0,
                         right: 0,
                         child: Container(
@@ -215,59 +261,112 @@ ScrollController sc  = ScrollController();
                               : Colors.red,
                           sizeMulW * 3000,
                           () {
-                            if (isPassValid &&
-                                isEmailValid &&
-                                email_controller.text != "" &&
-                                pass_controller.text != "") {
-                              setState(() {
-                                isLoading = true;
-                              });
-                              try {
-                                FocusScope.of(context)
-                                    .requestFocus(new FocusNode());
-                                sub = appModel
-                                    .login(email_controller.text,
-                                        pass_controller.text)
-                                    .asStream()
-                                    .listen((data) {
-                                  if (data.email != null) {
-                                    Navigator.pushReplacement(context,
-                                        CupertinoPageRoute(builder: (context) {
-                                      isLoading = false;
-                                      return HomeScreen();
-                                    }));
-                                  }
+                            if (loggingIn) {
+                              if (isPassValid &&
+                                  isEmailValid &&
+                                  email_controller.text != "" &&
+                                  pass_controller.text != "") {
+                                setState(() {
+                                  isLoading = true;
                                 });
-                              } catch (a) {
-                                Scaffold.of(context).showSnackBar(SnackBar(
-                                  content:
-                                      Text("Failed to login ${a.toString()}"),
-                                ));
+                                try {
+                                  FocusScope.of(context)
+                                      .requestFocus(new FocusNode());
+                                  sub = appModel
+                                      .login(email_controller.text,
+                                          pass_controller.text)
+                                      .asStream()
+                                      .listen((data) {
+                                    if (data.email != null) {
+                                      Navigator.pushReplacement(context,
+                                          CupertinoPageRoute(
+                                              builder: (context) {
+                                        isLoading = false;
+                                        return HomeScreen();
+                                      }));
+                                    }
+                                  });
+                                } catch (a) {
+                                  Toast.show(
+                                      "Failed to log in: ${a.toString()}",
+                                      context,
+                                      duration: Toast.LENGTH_SHORT);
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    content:
+                                        Text("Failed to login ${a.toString()}"),
+                                  ));
+                                }
+                              }
+                            } else {
+                              if (isPassValid &&
+                                  isEmailValid &&
+                                  isNameValid &&
+                                  email_controller.text != "" &&
+                                  pass_controller.text != "" &&
+                                  name_controller.text.length >= 5) {
+                                setState(() {
+                                  isLoading = true;
+                                });
+                                try {
+                                  FocusScope.of(context)
+                                      .requestFocus(new FocusNode());
+                                  sub = appModel
+                                      .registerUser(
+                                          email_controller.text,
+                                          name_controller.text,
+                                          pass_controller.text)
+                                      .asStream()
+                                      .listen((data) {
+                                    if (data.email != null) {
+                                      Navigator.pushReplacement(context,
+                                          CupertinoPageRoute(
+                                              builder: (context) {
+                                        isLoading = false;
+                                        return HomeScreen();
+                                      }));
+                                    }
+                                  });
+                                } catch (a) {
+                                  print(
+                                      "uyyyyyyyyyyyyyyyyAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+
+                                  Toast.show(
+                                      "Failed to register: ${a.toString()}",
+                                      context,
+                                      duration: Toast.LENGTH_SHORT);
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    content:
+                                        Text("Failed to login ${a.toString()}"),
+                                  ));
+                                }
                               }
                             }
                           },
                           Center(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Text(
-                                  "LOG IN",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      //
-                                      fontWeight: FontWeight.w900,
-                                      fontSize: sizeMulW * 20),
-                                ),
-                                SizedBox(
-                                  width: sizeMulW * 5,
-                                ),
-                                Icon(
-                                  Icons.chevron_right,
-                                  color: Colors.white,
-                                  size: sizeMulW * 35,
-                                )
-                              ],
-                            ),
+                            child: (!isLoading)
+                                ? Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Text(
+                                        (loggingIn) ? "LOG IN" : "REGISTER",
+                                        textAlign: TextAlign.start,
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            //
+                                            fontWeight: FontWeight.w900,
+                                            fontSize: sizeMulW * 20),
+                                      ),
+                                      SizedBox(
+                                        width: sizeMulW * 5,
+                                      ),
+                                      Icon(
+                                        Icons.chevron_right,
+                                        color: Colors.white,
+                                        size: sizeMulW * 35,
+                                      )
+                                    ],
+                                  )
+                                : CircularProgressIndicator(),
                           ),
                           // null
                         ),
@@ -285,11 +384,15 @@ ScrollController sc  = ScrollController();
                         child: InkWell(
                           highlightColor: Colors.white.withAlpha(0),
                           splashColor: Colors.white.withAlpha(0),
-                          onTap: () {},
+                          onTap: () {
+                            setState(() {
+                              loggingIn = !loggingIn;
+                              isLoading = false;
+                            });
+                          },
                           child: Container(
                             height: sizeMulW * 100,
-                            margin:
-                                EdgeInsets.symmetric(horizontal:  25),
+                            margin: EdgeInsets.symmetric(horizontal: 25),
                             padding: EdgeInsets.all(sizeMulW * 30),
                             decoration: BoxDecoration(
                                 color: Colors.black.withAlpha(30),
@@ -298,7 +401,9 @@ ScrollController sc  = ScrollController();
                             child: InkWell(
                               child: Center(
                                 child: Text(
-                                  "Don't have an account?",
+                                  (loggingIn)
+                                      ? "Don't have an account?"
+                                      : "Already have an account?",
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: sizeMulW * 18,

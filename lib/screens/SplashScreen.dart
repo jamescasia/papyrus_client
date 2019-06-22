@@ -29,19 +29,14 @@ class SplashScreen extends StatelessWidget {
                   // Future.delayed(Duration(seconds: 3),(){}),
                   appModel.mAuth.currentUser(),
               builder: (context, snapshot) {
-
-
                 if (snapshot.connectionState == ConnectionState.done) {
-
-
-
-
                   if (snapshot.data != null) {
-                    print(snapshot.data.email + "+++++++++++++++ASDDDDDDDDDDDDDDDDDD");
-                    
-                  appModel.user = snapshot.data; 
+                    print(snapshot.data.email +
+                        "+++++++++++++++ASDDDDDDDDDDDDDDDDDD");
 
-                      // Toast.show("damn user: ${appModel.user}", context, duration: Toast.LENGTH_LONG);
+                    // appModel.user = snapshot.data;
+
+                    // Toast.show("damn user: ${appModel.user}", context, duration: Toast.LENGTH_LONG);
                     return HomeScreen();
                   } else
                     return LogInScreen();

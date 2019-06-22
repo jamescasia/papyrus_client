@@ -9,6 +9,7 @@ import 'EditReceiptScreenModel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:simple_permissions/simple_permissions.dart';
 import 'dart:io';
+import 'package:flutter/material.dart';
 import 'ChatModel.dart';
 import 'CameraCaptureModel.dart';
 import 'package:ef_qrcode/ef_qrcode.dart';
@@ -24,6 +25,7 @@ import 'package:papyrus_client/data_models/WeekExpense.dart';
 import 'package:papyrus_client/data_models/MonthExpense.dart';
 import 'package:papyrus_client/data_models/Message.dart';
 import 'package:papyrus_client/models/ChartsScreenModel.dart';
+import 'package:toast/toast.dart';
 
 class AppModel extends Model {
   // User _user;
@@ -96,7 +98,7 @@ class AppModel extends Model {
   ];
   Map<Permission, PermissionStatus> perm_results =
       new Map<Permission, PermissionStatus>();
-  // BuildContext context;
+  BuildContext context;
 
   // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   bool get alsoReceivePromosThruEmail => _alsoReceivePromosThruEmail;
@@ -104,7 +106,7 @@ class AppModel extends Model {
   bool get receiveUniquePromos => _receiveUniquePromos;
   bool get receiveOpenToAllPromos => _receiveOpenToAllPromos;
 
-  AppModel() {
+  AppModel(this.context) {
     // init();
     launch();
   }
@@ -128,13 +130,14 @@ class AppModel extends Model {
     }
 
     user = await mAuth.currentUser();
+    // if (user != null)
     init();
 
     print(
         "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n" +
             user.email);
 
-    // if (user != null)
+    //
   }
 
   void firebaseInit() {
@@ -736,10 +739,36 @@ class AppModel extends Model {
     }
   }
 
+  Future<FirebaseUser> registerUser(
+      String email, String name, String password) async {
+    user = await mAuth.createUserWithEmailAndPassword(
+        email: email, password: password);
+    //     .then((data) {
+    //   user = data;
+
+    // });
+
+    UserUpdateInfo info = new UserUpdateInfo();
+    info.displayName = name;
+    user.updateProfile(info);
+    init();
+    // } catch (a) {
+    //   Toast.show("Failed to register: ${a.toString()}", context,
+    //       duration: Toast.LENGTH_SHORT);
+    // }
+
+    return user;
+  }
+
   Future<FirebaseUser> login(String email, String password) async {
+    // try {
     user = await mAuth.signInWithEmailAndPassword(
         email: email, password: password);
-    print("The user is ${user.toString()}");
+    // } catch (a) {
+    //   Toast.show("Failed to log in: ${a.toString()}", context,
+    //       duration: Toast.LENGTH_SHORT);
+    // }
+
     init();
     return user;
   }

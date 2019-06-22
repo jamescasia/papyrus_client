@@ -66,7 +66,7 @@ class PapyrusCustomer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScopedModel<AppModel>(
-        model: AppModel(),
+        model: AppModel(context),
         child: MaterialApp(
           builder: (context, child) {
             return ScrollConfiguration(
