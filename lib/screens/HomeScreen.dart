@@ -11,8 +11,7 @@ import 'package:papyrus_client/helpers/CustomShapeClipper.dart';
 import 'package:papyrus_client/screens/ReceiptScreen.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'ChartScreen.dart';
-import 'PromoScreen.dart';
-import 'package:papyrus_client/models/TabberModel.dart';
+import 'PromoScreen.dart'; 
 import 'SettingScreen.dart';
 import 'package:papyrus_client/helpers/CustomShowDialog.dart';
 import 'package:papyrus_client/helpers/LongButton.dart';
@@ -87,37 +86,7 @@ class PapyrusCustomer extends StatelessWidget {
             primarySwatch: Colors.lightGreen,
           ),
           home: SplashScreen(),
-          // FutureBuilder(
-          //     future: appModel.mAuth.currentUser(),
-          //     builder: (context, snapshot) {
-          //       if (snapshot.connectionState == ConnectionState.done) {
-          //         if (snapshot.data != null)
-          //           return HomeScreen();
-          //         else
-          //           return LogInScreen();
-          //       } else
-          //         return Container(
-          //             width: MediaQuery.of(context).size.width,
-          //             height: MediaQuery.of(context).size.height,
-          //             color: Colors.red,
-          //             child: Stack(
-          //               children: <Widget>[
-          //                 LogInScreen(),
-          //                 Container(
-          //                   color: Colors.black12,
-          //                   width: MediaQuery.of(context).size.width,
-          //                   height: MediaQuery.of(context).size.height,
-          //                   child: Center(
-          //                     child: CircularProgressIndicator(),
-          //                   ),
-          //                 )
-          //               ],
-          //             ));
-          //     });
-          // }),
-          // routes: <String, WidgetBuilder>{
-          //   '/': (context) =>HomeScreen(),
-          // },
+     
         ));
   }
 }
@@ -144,6 +113,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+  int currentPage = 1;
   // var ShapeBorder s = new ShapeBorder();
 
   @override
@@ -188,17 +159,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 appModel.viewing_period = Period.MONTHLY;
             }
           },
-          child: ScopedModel<TabberModel>(
-              model: TabberModel(),
-              child: ScopedModelDescendant<TabberModel>( 
-                builder: (context, child, tabModel) {
-                  return Column(
-                    children: <Widget>[
-                      HomeScreenTopPart(tabModel),  HomeScreenBottomPart(tabModel) 
-                    ],
-                  );
-                }
-              )),
+          child:  Column(
+                children: <Widget>[
+                  HomeScreenTopPart(  this),  HomeScreenBottomPart( this) 
+                ],
+              ) 
+            
         );
       }),
       // ),
@@ -207,17 +173,19 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class HomeScreenTopPart extends StatefulWidget {
-
-  TabberModel tabModel;
-  HomeScreenTopPart(this.tabModel);
+ 
+  _HomeScreenState parent;
+  HomeScreenTopPart(  this.parent);
   @override
-  _HomeScreenTopPartState createState() => new _HomeScreenTopPartState(tabModel);
+  _HomeScreenTopPartState createState() => new _HomeScreenTopPartState(  parent);
 }
 
 class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
+
   
-  TabberModel tabModel;
-  _HomeScreenTopPartState(this.tabModel);
+   
+  _HomeScreenState parent;
+  _HomeScreenTopPartState(  this.parent);
   static const platform = const MethodChannel('flutter.native/helper');
   String _responseFromNativeCode = 'Waiting for Response...';
   Future<void> responseFromNativeCode() async {
@@ -863,21 +831,17 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
             bottom: 0,
             left: 0,
             right: 0,
-            child: Center(child:  Container(
-              color: (tabModel.currentPage<100)?Colors.white.withAlpha(0):Colors.white.withAlpha(0),
-              child: DotsIndicator(
-                  dotsCount: 3,
-                  position: tabModel.currentPage,
-                  decorator: DotsDecorator(
-                    color: Colors.grey[300],
-                    activeColor: Colors.green,
-                    size: const Size.square(12.0),
-                    activeSize: const Size(24, 12.0),
-                    activeShape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0)),
-                  ),
+            child: Center(child:  DotsIndicator(
+                dotsCount: 3,
+                position: parent.currentPage,
+                decorator: DotsDecorator(
+                  activeColor: Colors.green,
+                  size: const Size.square(12.0),
+                  activeSize: const Size(24, 12.0),
+                  activeShape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0)),
                 ),
-            ) 
+              ) 
             ),
           )
         ],
@@ -887,51 +851,36 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
 }
 
 class HomeScreenBottomPart extends StatefulWidget {
-  TabberModel tabModel;
-  HomeScreenBottomPart(this.tabModel);
+
+  _HomeScreenState parent; 
+  HomeScreenBottomPart(  this.parent);
   @override
   _HomeScreenBottomPartState createState() =>
-      new _HomeScreenBottomPartState(tabModel);
+      new _HomeScreenBottomPartState(  parent);
 }
 
-// class CustomTabIndicator extends StatefulWidget {
-//   @override
-//   _CustomTabIndicatorState createState() => new _CustomTabIndicatorState();
-// }
-
-// class _CustomTabIndicatorState extends State<CustomTabIndicator> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return ScopedModelDescendant<TabberModel>(
-//         builder: (context, child, tabModel) {
-//       return new DotsIndicator(
-//         dotsCount: 3,
-//         position: tabModel.currentPage,
-//         decorator: DotsDecorator(
-//           size: const Size.square(12.0),
-//           activeSize: const Size(24, 12.0),
-//           activeShape:
-//               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-//         ),
-//       );
-//     });
-//   }
-// }
+ 
 
 class _HomeScreenBottomPartState extends State<HomeScreenBottomPart>
     with SingleTickerProviderStateMixin {
-  TabberModel tabModel;
-  _HomeScreenBottomPartState(this.tabModel);
+  _HomeScreenState parent; 
+  _HomeScreenBottomPartState(  this.parent);
   goToReceiptsScreen() {}
   TabController tabController;
 
   void _handleTabSelection() {
-    print("TAAAAAAAAAAABSS" + tabController.index.toString());
-    tabModel.changeCurrentPage(tabController.index);
+    print("TAAAAAAAAAAABSS" + tabController.index.toString()); 
+    parent. setState(() {
+      parent.currentPage = tabController.index;
+      
+          
+        });
+    
   }
 
   @override
   void initState() {
+   
     // TODO: implement initState
     super.initState();
     tabController = TabController(
