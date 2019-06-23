@@ -189,9 +189,13 @@ class AppModel extends Model {
       d.forEach((k, value) {
         Map map = jsonDecode(value);
         var promo = Promo.fromJson(map);
+        
+        print("expiry" + DateTime.parse(promo.expiry_date).toIso8601String());
         // print("NAAAAAAAAAAME: " + promo.item_name);
-        promoList.insert(0, promo);
-        promoCodes.insert(0, k.toString());
+        if (DateTime.now().toLocal().compareTo(DateTime.parse(promo.expiry_date)) <=0  ) {
+          promoList.insert(0, promo);
+          promoCodes.insert(0, k.toString());
+        }
         print("COOOOOOOODE");
         print(promoCodes);
       });
@@ -203,8 +207,12 @@ class AppModel extends Model {
       if (!promoCodes.contains(child.snapshot.key)) {
         Map map = jsonDecode(child.snapshot.value);
         var promo = Promo.fromJson(map);
-        promoList.insert(0, promo);
-        promoCodes.insert(0, child.snapshot.key);
+
+        print("expiry" + DateTime.parse(promo.expiry_date).toIso8601String());
+        if (DateTime.now().toLocal().compareTo(DateTime.parse(promo.expiry_date)) <=0) {
+          promoList.insert(0, promo);
+          promoCodes.insert(0, child.snapshot.key);
+        }
         notifyListeners();
       }
     });

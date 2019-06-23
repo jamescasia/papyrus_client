@@ -73,7 +73,7 @@ class _SettingScreenTopPartState extends State<SettingScreenTopPart> {
                         isLoading = true;
                       });
                       appModel.mAuth.signOut().then((a) {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                             context,
                             CupertinoPageRoute(
                                 builder: (context) => LogInScreen()));

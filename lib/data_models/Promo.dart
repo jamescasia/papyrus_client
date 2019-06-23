@@ -36,6 +36,7 @@ class Promo {
         type = json['type'],
         retailer_id = json['retailer_id'],
         expiry_date = json['expiry_date'],
+        item_name = json['item_name'],
         offer_date = json['offer_date'],
         customer_id = json['customer_id'],
         image_path = json['image_path'],

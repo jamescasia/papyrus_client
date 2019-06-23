@@ -34,6 +34,7 @@ import 'dart:io';
 import 'package:simple_gesture_detector/simple_gesture_detector.dart';
 import 'dart:core';
 import 'package:papyrus_client/helpers/CustomIcons.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 // void main() {
 //   return runApp(PapyrusCustomer());
@@ -112,8 +113,17 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int currentPage = 0;
+  int currentPage = 1;
   // var ShapeBorder s = new ShapeBorder();
+
+  @override
+    void initState() {
+      // TODO: implement initState
+
+      currentPage = 1;
+      super.initState();
+      
+    }
 
   @override
   Widget build(BuildContext context) {
@@ -821,6 +831,7 @@ class _HomeScreenBottomPartState extends State<HomeScreenBottomPart>
       length: 3,
       vsync: this,
     );
+    tabController.index = 1;
 
     tabController.addListener(_handleTabSelection);
   }
@@ -853,14 +864,10 @@ class _HomeScreenBottomPartState extends State<HomeScreenBottomPart>
                 // SizedBox(width: 30 * MediaQuery.of(context).size.width / 400),
                 DefaultTabController(
               length: 3,
-              initialIndex: 0,
+              initialIndex: 1,
               child: TabBarView(
                 controller: tabController,
-                children: <Widget>[
-                  ReceiptsTab(),
-                  PromosTab(),
-                  NewsTab()
-                ],
+                children: <Widget>[  NewsTab(),ReceiptsTab(),PromosTab(),],
               ),
             ),
             // SizedBox(width: 30 * MediaQuery.of(context).size.width / 400),
@@ -877,6 +884,7 @@ class PromosTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: sizeMulW * 35),
+      // color: Colors.red,
       child:
           ScopedModelDescendant<AppModel>(builder: (context, child, appModel) {
         return Column(
@@ -887,7 +895,7 @@ class PromosTab extends StatelessWidget {
             Row(
               children: <Widget>[
                 Text(
-                  "  Last Promos",
+                  "  Promos",
                   style: TextStyle(
                       fontSize: 26 * sizeMulW,
                       color: Colors.black.withOpacity(0.8),
@@ -907,32 +915,121 @@ class PromosTab extends StatelessWidget {
             //   height: sizeMulW * 1,
             // ),
             Container(
+                height: MediaQuery.of(context).size.height -
+                    0.942 * MediaQuery.of(context).size.width -
+                    24 * sizeMulW -
+                    (34 * sizeMulW),
+                width: MediaQuery.of(context).size.width,
+                child: (appModel.promoList.length > 0)
+                    ? CarouselSlider(
+                        items: appModel.promoList.map((f) {
+                          print("from HHHHHHHHHHHHHHHHHHHHOOOMEME");
+                          print(f.item_name);
+                          return PromoSquareCard(f.image_path, f.item_name,
+                              f.expiry_date, (f.value));
+                        }).toList(),
+                        height: 400,
+                        //  aspectRatio: 16/9,
+                        viewportFraction: 0.8,
+                        initialPage: 0,
+                        enableInfiniteScroll: false,
+                        reverse: false,
+                        autoPlay: true,
+                        autoPlayInterval: Duration(seconds: 3),
+                        autoPlayAnimationDuration: Duration(milliseconds: 800),
+                        autoPlayCurve: Curves.fastOutSlowIn,
+                        pauseAutoPlayOnTouch: Duration(seconds: 10),
+                        enlargeCenterPage: true,
+                        //  onPageChanged: callbackFunction,
+                        scrollDirection: Axis.vertical,
+                      )
+
+                    // Wrap(
+                    //   spacing: 0,
+                    //   direction: Axis.horizontal,
+                    //     children: appModel.promoList.map((f) {
+                    //       print("from HHHHHHHHHHHHHHHHHHHHOOOMEME");
+                    //       print(f.item_name);
+                    //       return PromoSquareCard(f.image_path, f.item_name,
+                    //           f.expiry_date, (f.value));
+                    //     }).toList(),
+                    //   )
+                    : SizedBox(width: 0.001)
+                // color: Colors.red,
+
+                // child: Flex(
+                //   direction: Axis.vertical,
+                //   children: (appModel.receiptsLoaded)
+                //       ? bottomChildrenReceipts(appModel, context)
+                //       : [SizedBox(width: 1)],
+                //   mainAxisSize: MainAxisSize.max,
+                //   mainAxisAlignment: (appModel.receiptsLoaded &&
+                //           appModel.receiptFiles.length != 0)
+                //       ? MainAxisAlignment.spaceEvenly
+                //       : MainAxisAlignment.end,
+                // ),
+                )
+          ],
+        );
+      }),
+    );
+  }
+}
+
+class NewsTab extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return    new Container(
+      padding: EdgeInsets.symmetric(horizontal: sizeMulW * 35),
+      child:
+          ScopedModelDescendant<AppModel>(builder: (context, child, appModel) {
+        return Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Text(
+                  "  News Feed",
+                  style: TextStyle(
+                      fontSize: 26 * sizeMulW,
+                      color: Colors.black.withOpacity(0.8),
+                      fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  width: sizeMulW * 10,
+                ),
+                Icon(
+                  FontAwesomeIcons.newspaper,
+                  size: MediaQuery.of(context).size.width * 0.062,
+                  color: Colors.green,
+                )
+              ],
+            ),
+            // SizedBox(
+            //   height: sizeMulW * 1,
+            // ),
+            Container(
+              // padding: EdgeInsets.only(bottom: 15),
               height: MediaQuery.of(context).size.height -
                   0.942 * MediaQuery.of(context).size.width -
                   24 * sizeMulW -
                   (34 * sizeMulW),
               width: MediaQuery.of(context).size.width,
-
-              child: (appModel.promoList.length>0)?Row(children: appModel.promoList.map((f){
-                  print("from HHHHHHHHHHHHHHHHHHHHOOOMEME");
-                print(f);
-                return PromoSquareCard(f.image_path ,f.expiry_date, f.expiry_date, (f.value));
-
-
-              }).toList(),):SizedBox(width:0.001)
               // color: Colors.red,
 
-              // child: Flex(
-              //   direction: Axis.vertical,
-              //   children: (appModel.receiptsLoaded)
-              //       ? bottomChildrenReceipts(appModel, context)
-              //       : [SizedBox(width: 1)],
-              //   mainAxisSize: MainAxisSize.max,
-              //   mainAxisAlignment: (appModel.receiptsLoaded &&
-              //           appModel.receiptFiles.length != 0)
-              //       ? MainAxisAlignment.spaceEvenly
-              //       : MainAxisAlignment.end,
-              // ),
+              child: Flex(
+                direction: Axis.vertical,
+                children: (appModel.receiptsLoaded)
+                    ? bottomChildrenReceipts(appModel, context)
+                    : [SizedBox(width: 1)],
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: (appModel.receiptsLoaded &&
+                        appModel.receiptFiles.length != 0)
+                    ? MainAxisAlignment.spaceEvenly
+                    : MainAxisAlignment.end,
+              ),
             )
           ],
         );
@@ -940,69 +1037,7 @@ class PromosTab extends StatelessWidget {
     );
   }
 }
-class NewsTab extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-                    padding: EdgeInsets.symmetric(horizontal: sizeMulW * 35),
-                    child: ScopedModelDescendant<AppModel>(
-                       
-                      builder: (context, child, appModel) {
-                        return Column(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                Text(
-                                  "  News Feed",
-                                  style: TextStyle(
-                                      fontSize: 26 * sizeMulW,
-                                      color: Colors.black.withOpacity(0.8),
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                SizedBox(
-                                  width: sizeMulW * 10,
-                                ),
-                                Icon(
-                                  FontAwesomeIcons.newspaper,
-                                  size: MediaQuery.of(context).size.width * 0.062,
-                                  color: Colors.green,
-                                )
-                              ],
-                            ),
-                            // SizedBox(
-                            //   height: sizeMulW * 1,
-                            // ),
-                            Container(
-                              height: MediaQuery.of(context).size.height -
-                                  0.942 * MediaQuery.of(context).size.width -
-                                  24 * sizeMulW -
-                                  (34 * sizeMulW),
-                              width: MediaQuery.of(context).size.width,
-                              // color: Colors.red,
 
-                              child: Flex(
-                                direction: Axis.vertical,
-                                children: (appModel.receiptsLoaded)
-                                    ? bottomChildrenReceipts(appModel, context)
-                                    : [SizedBox(width: 1)],
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: (appModel.receiptsLoaded &&
-                                        appModel.receiptFiles.length != 0)
-                                    ? MainAxisAlignment.spaceEvenly
-                                    : MainAxisAlignment.end,
-                              ),
-                            )
-                            
-                          ],
-                        );
-                      }
-                    ),
-                  );
-  }
-}
 class ReceiptsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -1012,7 +1047,7 @@ class ReceiptsTab extends StatelessWidget {
           ScopedModelDescendant<AppModel>(builder: (context, child, appModel) {
         return Column(
           mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Row(
@@ -1038,6 +1073,7 @@ class ReceiptsTab extends StatelessWidget {
             //   height: sizeMulW * 1,
             // ),
             Container(
+              // padding: EdgeInsets.only(bottom: 15),
               height: MediaQuery.of(context).size.height -
                   0.942 * MediaQuery.of(context).size.width -
                   24 * sizeMulW -
@@ -1194,6 +1230,12 @@ List<Widget> bottomChildrenReceipts(AppModel appModel, BuildContext context) {
     //   // );
     // }
   }
+  var a = ((MediaQuery.of(context).size.height -
+                  0.942 * MediaQuery.of(context).size.width -
+                  (34 * sizeMulW)) /
+              (81 * sizeMulW))
+          .floor() -
+      1;
 
   if (bc.length == 1) {
     bc.insert(
@@ -1204,11 +1246,12 @@ List<Widget> bottomChildrenReceipts(AppModel appModel, BuildContext context) {
           child: DottedBorder(
               color: Colors.black12,
               gap: 8 * sizeMulW,
+              padding: EdgeInsets.all(0),
               strokeWidth: 5 * sizeMulW,
               child: Container(
                   width: MediaQuery.of(context).size.width,
                   height: double.infinity,
-                  child: RaisedButton(
+                  child: OutlineButton(
                       onPressed: () {
                         Navigator.push(context,
                             CupertinoPageRoute(builder: (context) {
@@ -1217,9 +1260,9 @@ List<Widget> bottomChildrenReceipts(AppModel appModel, BuildContext context) {
                       },
                       highlightElevation: 0,
                       color: Colors.white.withOpacity(0),
-                      elevation: 0,
-                      splashColor: Colors.white.withAlpha(0),
-                      highlightColor: Colors.white.withAlpha(0),
+                      // elevation: 0,
+                      // splashColor: Colors.white.withAlpha(0),
+                      // highlightColor: Colors.white.withAlpha(0),
                       child: Center(
                           child: Column(
                         mainAxisSize: MainAxisSize.min,
@@ -1243,81 +1286,93 @@ List<Widget> bottomChildrenReceipts(AppModel appModel, BuildContext context) {
         ),
       ),
     );
+  } 
+  else if (bc.length-1 < a) {
+    for (int i = 0;  bc.length-1 < a; i++) bc.insert(bc.length-1, ReceiptCardPlaceholder());
   }
 
+  print("max is " + a.toString());
+  
   return bc;
 }
+
 class PromoSquareCard extends StatelessWidget {
-  final String imagePath, itemName, expiryDate; double  discount;
-  PromoSquareCard(this.imagePath, this.itemName, this.expiryDate, this.discount,
-      );
+  final String imagePath, itemName, expiryDate;
+  double discount;
+  PromoSquareCard(
+    this.imagePath,
+    this.itemName,
+    this.expiryDate,
+    this.discount,
+  );
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(20)),
-        child: Stack(
-          children: <Widget>[
-            Container(
-              height: 210,
-              width: 160,
-              // margin: EdgeInsets.symmetric(horizontal: 10),
-              child: Image.network(
-                imagePath,
-                fit: BoxFit.cover,
-                // width: 25,
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.5,
+      // color: Colors.red,
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: ClipRRect(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+          child: Stack(
+            children: <Widget>[
+              Container(
+                height: 210,
+                width: 160,
+                margin: EdgeInsets.symmetric(horizontal: 10),
+                child: Image.network(
+                  imagePath,
+                  fit: BoxFit.cover,
+                  // width: 25,
+                ),
               ),
-            ),
-            Positioned(
-                bottom: 0,
-                left: 0,
-                right: 0,
-                child: Container(
-                  width: double.infinity,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    
-                      gradient:  
-                      
-                      LinearGradient(
-                          begin: Alignment.bottomCenter,
-                          end: Alignment.topCenter,
-                          colors: [greeny.colors[1],greeny.colors[0],
-                      ])
-                      
-                      ),
-                )),
-            Positioned(
-              left: 10,
-              bottom: 10,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    padding:
-                        EdgeInsets.only(top: 3, bottom: 3, left: 8, right: 8),
-                    child: Text(
-                      (discount*100).toString() + " % OFF!",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
+              Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: Container(
+                    width: double.infinity,
+                    height: 60,
                     decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(30))),
-                  ),
-                  Text(
-                    itemName,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold),
-                  )
-                ],
-              ),
-            )
-          ],
+                        gradient: LinearGradient(
+                            begin: Alignment.bottomCenter,
+                            end: Alignment.topCenter,
+                            colors: [
+                          greeny.colors[1],
+                          greeny.colors[0],
+                        ])),
+                  )),
+              Positioned(
+                left: 10,
+                bottom: 10,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      padding:
+                          EdgeInsets.only(top: 3, bottom: 3, left: 8, right: 8),
+                      child: Text(
+                        (discount * 100).toString() + " % OFF!",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(30))),
+                    ),
+                    Text(
+                      itemName,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -39,14 +39,14 @@ dependencies:
   ef_qrcode: ^0.1.0 
   mlkit: ^0.9.0
   toast: ^0.1.3
-  dots_indicator: ^0.0.5+1
+  dots_indicator: ^0.0.5+1 
   file_picker: ^0.1.6
   shimmer:
   dotted_border:
   progress_indicators:
   keyboard_visibility: 
   simple_gesture_detector: ^0.1.3
-  intro_views_flutter:
+  intro_views_flutter: 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
