@@ -9,6 +9,8 @@ import 'package:shimmer/shimmer.dart';
 import 'package:papyrus_client/helpers/ScrollBehaviour.dart';
 import 'package:papyrus_client/helpers/CustomShapeClipper.dart';
 import 'package:papyrus_client/screens/ReceiptScreen.dart';
+
+import 'package:papyrus_client/data_models/Promo.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'ChartScreen.dart';
 import 'PromoScreen.dart';
@@ -931,8 +933,7 @@ class PromosTab extends StatelessWidget {
 
                           // return PromoCards(f.image_path, f.item_name,
                           //     f.expiry_date, (f.value));
-                          return PromoSquareCard(f.image_path, f.item_name,
-                              f.expiry_date, (f.value));
+                          return PromoSquareCard(f);
                         }).toList(),
                         height: 400,
                         //  aspectRatio: 16/9,
@@ -1104,6 +1105,26 @@ class ReceiptsTab extends StatelessWidget {
       }),
     );
   }
+}
+
+showPromoDialog(BuildContext context, Promo promo) {
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Center(
+          child: ClipRRect(
+            borderRadius: BorderRadius.all(Radius.circular(30)),
+                      child: Container(
+                width: MediaQuery.of(context).size.width * 0.8,
+                child:
+                    Column(
+                      children: <Widget>[
+                        Hero(tag: "Promo", child: Image.network(promo.image_path)),
+                      ],
+                    )),
+          ),
+        );
+      });
 }
 
 showChat(BuildContext context, AppModel appModel) {
@@ -1302,145 +1323,125 @@ List<Widget> bottomChildrenReceipts(AppModel appModel, BuildContext context) {
   return bc;
 }
 
-class PromoCards extends StatelessWidget {
-  final String imagePath, itemName, expiryDate;
-  double discount;
-  PromoCards(
-    this.imagePath,
-    this.itemName,
-    this.expiryDate,
-    this.discount,
-  );
-
-  @override
-  Widget build(BuildContext context) {
-    return new Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(30)),
-        boxShadow: [
-                          new BoxShadow(
-                            blurRadius: 20 * sizeMulW,
-                            color: Colors.black12,
-                            offset: new Offset(6 * sizeMulW, 6 * sizeMulW),
-                          ),
-                          new BoxShadow(
-                            blurRadius: 20 * sizeMulW,
-                            color: Colors.black12,
-                            offset: new Offset(-6 * sizeMulW, -6 * sizeMulW),
-                          ),
-                        ],
-      ),
-      child: Flex(
-        direction: Axis.vertical,
-        children: <Widget>[
-          Expanded(
-              flex: 3,
-              child: Container(child: Center(child: Image.network(imagePath)))),
-          Expanded(
-            flex: 1,
-            child: Container(
-              child: Column(
-                children: <Widget>[
-                  Text(
-                    (100*discount).floor().toString(),
-                    textScaleFactor: 1.3,
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.w600),
-                  ),
-                  Text(
-                    itemName,
-                    textScaleFactor: 1.3,
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.w600),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class PromoSquareCard extends StatelessWidget {
-  final String imagePath, itemName, expiryDate;
+  String imagePath, itemName, expiryDate;
   double discount;
-  PromoSquareCard(
-    this.imagePath,
-    this.itemName,
-    this.expiryDate,
-    this.discount,
-  );
+  Promo promo;
+  PromoSquareCard(this.promo) {
+    imagePath = promo.image_path;
+    itemName = promo.item_name;
+    expiryDate = promo.expiry_date;
+    discount = promo.value;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Container( 
       width: MediaQuery.of(context).size.width * 0.5,
-      // color: Colors.red,
+      // color: Colors.red,s
+
       child: Padding(
         padding: const EdgeInsets.all(10),
-        child: ClipRRect(
-          borderRadius: BorderRadius.all(Radius.circular(20)),
-          child: Stack(
-            children: <Widget>[
-              Container(
-                // height: 210,
-                // width: 160,
-                margin: EdgeInsets.symmetric(horizontal: 10),
-                child: Center(
-                  child: Image.network(
-                    imagePath,
-                    fit: BoxFit.cover,
-                    // width: 25,
-                  ),
+        child: RaisedButton(
+          color: Colors.white.withAlpha(0),
+          splashColor: Colors.white.withAlpha(0),
+          highlightColor: Colors.white.withAlpha(0),
+          elevation: 0,
+          highlightElevation: 0,
+          // borderSide: BorderSide(color: Colors.white.withAlpha(0),),
+          onPressed: () {
+            showPromoDialog(context, promo);
+          },
+          child: Material(
+            borderRadius:  BorderRadius.all(Radius.circular(20)),
+            elevation: 2,
+                      child: ClipRRect(
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.green[300], width: 1),
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
                 ),
-              ),
-              Positioned(
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  child: Container(
-                    width: double.infinity,
-                    height: 60,
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            begin: Alignment.bottomCenter,
-                            end: Alignment.topCenter,
-                            colors: [
-                          greeny.colors[1],
-                          greeny.colors[0],
-                        ])),
-                  )),
-              Positioned(
-                left: 10,
-                bottom: 10,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Stack(
                   children: <Widget>[
+
                     Container(
-                      padding:
-                          EdgeInsets.only(top: 3, bottom: 3, left: 8, right: 8),
-                      child: Text(
-                        ((discount * 100).floor()).toString() + " % OFF!",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                      // height: 210,
+                      // width: 160,
+                      margin: EdgeInsets.symmetric(horizontal: 10),
+                      child: Center(
+                        child: Hero(
+                          tag: "Promo",
+                          child: Image.network(
+                            imagePath,
+                            fit: BoxFit.cover,
+                            // width: 25,
+                          ),
+                        ),
                       ),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.all(Radius.circular(30))),
                     ),
-                    Text(
-                      itemName,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold),
-                    )
+                    Positioned(
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        child: Opacity(
+                          opacity: 0.8,
+                          child: Container(
+                            width: double.infinity,
+                            height: 60,
+                            decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                    begin: Alignment.bottomCenter,
+                                    end: Alignment.topCenter,
+                                    colors: [
+                                  greeny.colors[1],
+                                  greeny.colors[0],
+                                ])),
+                          ),
+                        )),
+                    Positioned(
+                      left: 10,
+                      bottom: 10,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            padding: EdgeInsets.only(
+                                top: 3, bottom: 3, left: 8, right: 8),
+                            child: Text(
+                              ((discount * 100).floor()).toString() + " % OFF!",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(30))),
+                          ),
+                          Text(
+                            itemName,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold),
+                          ),
+
+                           
+                        ],
+                      ),
+                    ), 
+                    // Container(
+                    //   child: InkWell(
+
+                    //     onTap: (){},
+                    //     highlightColor: Colors.amber,
+                    //     splashColor: Colors.red,
+                    //   ),
+                    // )
                   ],
                 ),
-              )
-            ],
+              ),
+            ),
           ),
         ),
       ),
