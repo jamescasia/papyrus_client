@@ -117,13 +117,12 @@ class _HomeScreenState extends State<HomeScreen> {
   // var ShapeBorder s = new ShapeBorder();
 
   @override
-    void initState() {
-      // TODO: implement initState
+  void initState() {
+    // TODO: implement initState
 
-      currentPage = 1;
-      super.initState();
-      
-    }
+    currentPage = 1;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -867,7 +866,11 @@ class _HomeScreenBottomPartState extends State<HomeScreenBottomPart>
               initialIndex: 1,
               child: TabBarView(
                 controller: tabController,
-                children: <Widget>[  NewsTab(),ReceiptsTab(),PromosTab(),],
+                children: <Widget>[
+                  NewsTab(),
+                  ReceiptsTab(),
+                  PromosTab(),
+                ],
               ),
             ),
             // SizedBox(width: 30 * MediaQuery.of(context).size.width / 400),
@@ -925,6 +928,9 @@ class PromosTab extends StatelessWidget {
                         items: appModel.promoList.map((f) {
                           print("from HHHHHHHHHHHHHHHHHHHHOOOMEME");
                           print(f.item_name);
+
+                          // return PromoCards(f.image_path, f.item_name,
+                          //     f.expiry_date, (f.value));
                           return PromoSquareCard(f.image_path, f.item_name,
                               f.expiry_date, (f.value));
                         }).toList(),
@@ -979,7 +985,7 @@ class PromosTab extends StatelessWidget {
 class NewsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return    new Container(
+    return new Container(
       padding: EdgeInsets.symmetric(horizontal: sizeMulW * 35),
       child:
           ScopedModelDescendant<AppModel>(builder: (context, child, appModel) {
@@ -1286,14 +1292,75 @@ List<Widget> bottomChildrenReceipts(AppModel appModel, BuildContext context) {
         ),
       ),
     );
-  } 
-  else if (bc.length-1 < a) {
-    for (int i = 0;  bc.length-1 < a; i++) bc.insert(bc.length-1, ReceiptCardPlaceholder());
+  } else if (bc.length - 1 < a) {
+    for (int i = 0; bc.length - 1 < a; i++)
+      bc.insert(bc.length - 1, ReceiptCardPlaceholder());
   }
 
   print("max is " + a.toString());
-  
+
   return bc;
+}
+
+class PromoCards extends StatelessWidget {
+  final String imagePath, itemName, expiryDate;
+  double discount;
+  PromoCards(
+    this.imagePath,
+    this.itemName,
+    this.expiryDate,
+    this.discount,
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    return new Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(30)),
+        boxShadow: [
+                          new BoxShadow(
+                            blurRadius: 20 * sizeMulW,
+                            color: Colors.black12,
+                            offset: new Offset(6 * sizeMulW, 6 * sizeMulW),
+                          ),
+                          new BoxShadow(
+                            blurRadius: 20 * sizeMulW,
+                            color: Colors.black12,
+                            offset: new Offset(-6 * sizeMulW, -6 * sizeMulW),
+                          ),
+                        ],
+      ),
+      child: Flex(
+        direction: Axis.vertical,
+        children: <Widget>[
+          Expanded(
+              flex: 3,
+              child: Container(child: Center(child: Image.network(imagePath)))),
+          Expanded(
+            flex: 1,
+            child: Container(
+              child: Column(
+                children: <Widget>[
+                  Text(
+                    (100*discount).floor().toString(),
+                    textScaleFactor: 1.3,
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.w600),
+                  ),
+                  Text(
+                    itemName,
+                    textScaleFactor: 1.3,
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.w600),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 class PromoSquareCard extends StatelessWidget {
@@ -1318,13 +1385,15 @@ class PromoSquareCard extends StatelessWidget {
           child: Stack(
             children: <Widget>[
               Container(
-                height: 210,
-                width: 160,
+                // height: 210,
+                // width: 160,
                 margin: EdgeInsets.symmetric(horizontal: 10),
-                child: Image.network(
-                  imagePath,
-                  fit: BoxFit.cover,
-                  // width: 25,
+                child: Center(
+                  child: Image.network(
+                    imagePath,
+                    fit: BoxFit.cover,
+                    // width: 25,
+                  ),
                 ),
               ),
               Positioned(
@@ -1354,7 +1423,7 @@ class PromoSquareCard extends StatelessWidget {
                       padding:
                           EdgeInsets.only(top: 3, bottom: 3, left: 8, right: 8),
                       child: Text(
-                        (discount * 100).toString() + " % OFF!",
+                        ((discount * 100).floor()).toString() + " % OFF!",
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       decoration: BoxDecoration(
