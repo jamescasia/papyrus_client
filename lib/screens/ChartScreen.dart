@@ -10,6 +10,7 @@ import 'package:papyrus_client/models/AppModel.dart';
 import 'package:papyrus_client/data_models/UserExpense.dart';
 import 'package:papyrus_client/models/ChartsScreenModel.dart';
 import 'package:simple_gesture_detector/simple_gesture_detector.dart';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -69,18 +70,13 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                     appModel.viewing_period = Period.WEEKLY;
                   else if (appModel.viewing_period == Period.WEEKLY)
                     appModel.viewing_period = Period.DAILY;
-                }
-
-               else  if (dir == SwipeDirection.right) {
+                } else if (dir == SwipeDirection.right) {
                   print("swipedrr");
                   if (appModel.viewing_period == Period.DAILY)
                     appModel.viewing_period = Period.WEEKLY;
                   else if (appModel.viewing_period == Period.WEEKLY)
                     appModel.viewing_period = Period.MONTHLY;
                 }
-
-
-
               },
               child: Container(
                 width: MediaQuery.of(context).size.width,
@@ -118,18 +114,55 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                             // top:
                                             // bottom: sizeMulW * -15,
                                             child: RotatedBox(
-                                              quarterTurns: -1,
+                                              quarterTurns:-1,
                                               child: SizedBox(
                                                   // color: Colors.black,
                                                   width: sizeMulW * 185,
                                                   height: sizeMulW * 185,
-                                                  child: GaugeChart(
-                                                    chartsModel
-                                                        .generateGaugeChartData(
-                                                            appModel
-                                                                .viewing_period),
-                                                    animate: true,
-                                                  )),
+                                                  child: (appModel.dayExpense
+                                                              .totalSpent >
+                                                          0 && appModel.viewing_period == Period.DAILY || appModel.weekExpense
+                                                              .totalSpent >
+                                                          0 && appModel.viewing_period == Period.WEEKLY ||appModel.monthExpense
+                                                              .totalSpent >
+                                                          0 && appModel.viewing_period == Period.MONTHLY)
+                                                      ? GaugeChart(
+                                                          chartsModel
+                                                              .generateGaugeChartData(
+                                                                  appModel
+                                                                      .viewing_period),
+                                                          animate: true,
+                                                        )
+                                                      : Stack(
+                                                          children: <Widget>[
+                                                            // Opacity(
+                                                            //     opacity: 0.5,
+                                                            //     child: 
+                                                                GaugeChart
+                                                                    .withSampleData()
+                                                                    
+                                                                    // ),
+                                                                    ,
+                                                            RotatedBox(
+                                                              quarterTurns: 1,
+                                                                                                                          child: Center(
+                                                                child: Column(
+                                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                                  children: <Widget>[
+                                                                    Icon(FontAwesomeIcons.frown, size: sizeMulW*33,color: Colors.grey[300],),
+                                                                    Text(
+                                                                      "NO DATA",textScaleFactor: 1.3,
+                                                                      textAlign: TextAlign.center,style: TextStyle(
+                                                                          fontWeight:
+                                                                              FontWeight
+                                                                                  .w600, color: Colors.grey[300]),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            )
+                                                          ],
+                                                        )),
                                             )),
                                         Positioned(
                                           left: sizeMulW * 20,
@@ -201,6 +234,8 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                             children: <Widget>[
                                               ConstrainedBox(
                                                 constraints: new BoxConstraints(
+                                                  
+                                                  
                                                   // minHeight: 100*sizeMulW,
                                                   minWidth: 160 * sizeMulW,
 
@@ -301,20 +336,19 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                         ],
                                                       ),
                                                       decoration: BoxDecoration(
-                                                          borderRadius: BorderRadius
-                                                              .all(Radius
-                                                                  .circular(15 *
-                                                                      sizeMulW)),
-                                                          // border: Border.all(
-                                                          //     color:
-                                                          //         Colors.white,
-                                                          //     width: MediaQuery.of(
-                                                          //                 context)
-                                                          //             .size
-                                                          //             .width *
-                                                          //         0.005)
-                                                                  
-                                                                  ),
+                                                        borderRadius: BorderRadius
+                                                            .all(Radius
+                                                                .circular(15 *
+                                                                    sizeMulW)),
+                                                        // border: Border.all(
+                                                        //     color:
+                                                        //         Colors.white,
+                                                        //     width: MediaQuery.of(
+                                                        //                 context)
+                                                        //             .size
+                                                        //             .width *
+                                                        //         0.005)
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
@@ -412,7 +446,7 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                                     .weekExpense
                                                                     .totalSpentOnFood)
                                                         .toString(),
-                                                        textScaleFactor: 1.1,
+                                                    textScaleFactor: 1.1,
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                         fontWeight:
@@ -447,7 +481,8 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                                                 .weekExpense.totalSpent))
                                                             .toStringAsFixed(
                                                                 0) +
-                                                        "%",textScaleFactor: 1.1,
+                                                        "%",
+                                                    textScaleFactor: 1.1,
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                         fontWeight:
@@ -488,7 +523,7 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                                     .weekExpense
                                                                     .totalSpentOnLeisure)
                                                         .toString(),
-                                                        textScaleFactor: 1.1,
+                                                    textScaleFactor: 1.1,
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                         fontWeight:
@@ -524,7 +559,7 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                             .toStringAsFixed(
                                                                 0) +
                                                         "%",
-                                                        textScaleFactor: 1.1,
+                                                    textScaleFactor: 1.1,
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                         fontWeight:
@@ -564,7 +599,7 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                                     .weekExpense
                                                                     .totalSpentOnMiscellaneous)
                                                         .toString(),
-                                                        textScaleFactor: 1.1,
+                                                    textScaleFactor: 1.1,
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                         fontWeight:
@@ -599,7 +634,8 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                                                 .weekExpense.totalSpent))
                                                             .toStringAsFixed(
                                                                 0) +
-                                                        "%",textScaleFactor: 1.1,
+                                                        "%",
+                                                    textScaleFactor: 1.1,
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                         fontWeight:
@@ -639,7 +675,7 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                                     .weekExpense
                                                                     .totalSpentOnTransportation)
                                                         .toString(),
-                                                        textScaleFactor: 1.1,
+                                                    textScaleFactor: 1.1,
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                         fontWeight:
@@ -674,7 +710,8 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                                                 .weekExpense.totalSpent))
                                                             .toStringAsFixed(
                                                                 0) +
-                                                        "%",textScaleFactor: 1.1,
+                                                        "%",
+                                                    textScaleFactor: 1.1,
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                         fontWeight:
@@ -715,7 +752,7 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                                     .weekExpense
                                                                     .totalSpentOnUtilities)
                                                         .toString(),
-                                                        textScaleFactor: 1.1,
+                                                    textScaleFactor: 1.1,
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                         fontWeight:
@@ -750,7 +787,8 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                                                 .weekExpense.totalSpent))
                                                             .toStringAsFixed(
                                                                 0) +
-                                                        "%",textScaleFactor: 1.1,
+                                                        "%",
+                                                    textScaleFactor: 1.1,
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                         fontWeight:
@@ -781,8 +819,7 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                   Period.WEEKLY)
                                               ? "Previous Weeks"
                                               : "Previous Months",
-
-                                              textScaleFactor: 1.6,
+                                      textScaleFactor: 1.6,
                                       style: TextStyle(
                                           // fontSize: sizeMulW * 23,
                                           fontWeight: FontWeight.w600,
@@ -827,7 +864,7 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                   Period.WEEKLY)
                                               ? "Lifetime Weekly Totals"
                                               : "Lifetime Monthly Totals",
-                                              textScaleFactor: 1.6,
+                                      textScaleFactor: 1.6,
                                       style: TextStyle(
                                           // fontSize: sizeMulW * 23,
                                           fontWeight: FontWeight.w600,

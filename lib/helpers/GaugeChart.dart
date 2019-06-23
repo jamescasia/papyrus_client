@@ -11,7 +11,33 @@ class GaugeChart extends StatelessWidget {
   GaugeChart(this.seriesList, {this.animate});
 
   /// Creates a [PieChart] with sample data and no transition.
- 
+
+  factory GaugeChart.withSampleData() {
+    return new GaugeChart(
+      _createSampleData(),
+      // Disable animations for image tests.
+      animate: false,
+    );
+  }
+
+  static List<charts.Series<GaugeSegment, String>> _createSampleData() {
+    final data = [
+      new GaugeSegment('Low', 30),
+      // new GaugeSegment('Acceptable', 10),
+      // new GaugeSegment('High', 50),
+      // new GaugeSegment('Highly Unusual', 35),
+    ];
+
+    return [
+      new charts.Series<GaugeSegment, String>(
+        id: 'Segments',
+        domainFn: (GaugeSegment segment, _) => segment.segment,
+        measureFn: (GaugeSegment segment, _) => segment.size,
+        colorFn: (GaugeSegment segment, _) => charts.Color.fromHex(code: "#dfdfdf"),
+        data: data,
+      )
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +53,8 @@ class GaugeChart extends StatelessWidget {
   }
 
   /// Create one series with sample hard coded data.
- 
-}
- 
 
- 
+}
 
 class GaugeChartLegendItem extends StatelessWidget {
   final String title;
@@ -39,34 +62,43 @@ class GaugeChartLegendItem extends StatelessWidget {
   GaugeChartLegendItem(this.title, this.color);
   @override
   Widget build(BuildContext context) {
-    return  Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Container(
-            height: sizeMulW * 20,
-            width: sizeMulW*20,
-            decoration: BoxDecoration(
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Container(
+          height: sizeMulW * 20,
+          width: sizeMulW * 20,
+          decoration: BoxDecoration(
               color: color,
-                borderRadius: BorderRadius.all(
-              Radius.circular(3000),
-              
-              // color: color,
-            )),
+              borderRadius: BorderRadius.all(
+                Radius.circular(3000),
+
+                // color: color,
+              )),
+        ),
+        SizedBox(
+          width: sizeMulW * 5,
+        ),
+        Text(
+          title,
+          overflow: TextOverflow.ellipsis,
+          textScaleFactor: 1.1,
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            // fontSize: 15 * sizeMulW,
           ),
-          SizedBox(width: sizeMulW*5,),
-          Text(
-            
-            title,
-            overflow: TextOverflow.ellipsis,
-            textScaleFactor: 1.1,
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              // fontSize: 15 * sizeMulW,
-            ),
-          )
-        ],
+        )
+      ],
       // ),
     );
   }
+}
+
+/// Sample data type.
+class GaugeSegment {
+  final String segment;
+  final int size;
+
+  GaugeSegment(this.segment, this.size);
 }
