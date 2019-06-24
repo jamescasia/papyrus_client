@@ -9,6 +9,7 @@ class Promo {
   String expiry_date;
   String item_name;
   String image_path;
+  String qrPath;
 
   bool collected;
   bool expired;

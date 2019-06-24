@@ -186,9 +186,10 @@ class AppModel extends Model {
       var d = data.value;
       print("the data" + d.toString());
 
-      d.forEach((k, value) {
+      d.forEach((k, value) async{
         Map map = jsonDecode(value);
         var promo = Promo.fromJson(map);
+        promo.qrPath = await generateQrCodeForPromo(promo.promo_code);
         
         print("expiry" + DateTime.parse(promo.expiry_date).toIso8601String());
         // print("NAAAAAAAAAAME: " + promo.item_name);
@@ -203,10 +204,12 @@ class AppModel extends Model {
       notifyListeners();
     });
 
-    promosRef.onChildAdded.listen((child) {
+    promosRef.onChildAdded.listen((child) async{
       if (!promoCodes.contains(child.snapshot.key)) {
         Map map = jsonDecode(child.snapshot.value);
         var promo = Promo.fromJson(map);
+        
+        promo.qrPath = await generateQrCodeForPromo(promo.promo_code);
 
         print("expiry" + DateTime.parse(promo.expiry_date).toIso8601String());
         if (DateTime.now().toLocal().compareTo(DateTime.parse(promo.expiry_date)) <=0) {
@@ -791,6 +794,18 @@ class AppModel extends Model {
   }
 
   void findAllReceipts() async {}
+
+  Future<String> generateQrCodeForPromo(String promoCode) async {
+    try {
+      var imageFile = await EfQrcode.generate(user.uid+":" + promoCode, "#ffffff", "#000000");
+      return imageFile.path;
+      
+    } catch (e) {
+      return "failed";
+    }
+
+
+  }
 
   void generateImage() async {
     try {

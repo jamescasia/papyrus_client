@@ -37,6 +37,7 @@ import 'package:simple_gesture_detector/simple_gesture_detector.dart';
 import 'dart:core';
 import 'package:papyrus_client/helpers/CustomIcons.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:papyrus_client/helpers/HeroDialogueRout.dart';
 
 // void main() {
 //   return runApp(PapyrusCustomer());
@@ -933,7 +934,8 @@ class PromosTab extends StatelessWidget {
 
                           // return PromoCards(f.image_path, f.item_name,
                           //     f.expiry_date, (f.value));
-                          return PromoSquareCard(f);
+                          return PromoSquareCard(
+                              f, appModel.promoList.indexOf(f));
                         }).toList(),
                         height: 400,
                         //  aspectRatio: 16/9,
@@ -1107,25 +1109,25 @@ class ReceiptsTab extends StatelessWidget {
   }
 }
 
-showPromoDialog(BuildContext context, Promo promo) {
-  showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Center(
-          child: ClipRRect(
-            borderRadius: BorderRadius.all(Radius.circular(30)),
-                      child: Container(
-                width: MediaQuery.of(context).size.width * 0.8,
-                child:
-                    Column(
-                      children: <Widget>[
-                        Hero(tag: "Promo", child: Image.network(promo.image_path)),
-                      ],
-                    )),
-          ),
-        );
-      });
-}
+// showPromoDialog(BuildContext context, Promo promo) {
+//   showDialog(
+//       context: context,
+//       builder: (BuildContext context) {
+//         return Center(
+//           child: ClipRRect(
+//             borderRadius: BorderRadius.all(Radius.circular(30)),
+//                       child: Container(
+//                 width: MediaQuery.of(context).size.width * 0.8,
+//                 child:
+//                     Column(
+//                       children: <Widget>[
+//                         Hero(tag: "Promo", child: Image.network(promo.image_path)),
+//                       ],
+//                     )),
+//           ),
+//         );
+//       });
+// }
 
 showChat(BuildContext context, AppModel appModel) {
   appModel.chatModel.init();
@@ -1327,16 +1329,17 @@ class PromoSquareCard extends StatelessWidget {
   String imagePath, itemName, expiryDate;
   double discount;
   Promo promo;
-  PromoSquareCard(this.promo) {
+  int index;
+  PromoSquareCard(this.promo, this.index) {
     imagePath = promo.image_path;
     itemName = promo.item_name;
     expiryDate = promo.expiry_date;
-    discount = promo.value;
+    discount = promo.value * 100;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container( 
+    return Container(
       width: MediaQuery.of(context).size.width * 0.5,
       // color: Colors.red,s
 
@@ -1350,12 +1353,89 @@ class PromoSquareCard extends StatelessWidget {
           highlightElevation: 0,
           // borderSide: BorderSide(color: Colors.white.withAlpha(0),),
           onPressed: () {
-            showPromoDialog(context, promo);
+            Navigator.push(
+              context,
+              new HeroDialogRoute(
+                builder: (BuildContext context) {
+                  // return Center(child:Container(
+
+                  //   width: MediaQuery.of(context).size.width*0.9,
+                  //   child: Column(children: <Widget>[
+
+                  //   ],),
+                  // ));
+                  return new Center(
+                    child: new AlertDialog(
+                      // title:
+                      content: new Container(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            
+                            Image.file(
+                              File(promo.qrPath),
+                              fit: BoxFit.cover,
+                              scale: 0.6,
+                            ),
+                            new Hero(
+                              tag: index.toString(),
+                              child: new Container(
+                                height: 110.0,
+                                width: 110.0,
+                                child: Image.network(
+                                  imagePath,
+                                  fit: BoxFit.cover,
+                                  // width: 25,
+                                ),
+                              ),
+                            ),
+                            new Text(
+                              '${discount.floor()}% off $itemName!',
+                              textScaleFactor: 1.2,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontWeight: FontWeight.w600),
+                            ),
+                            Text(
+                              "Just go to the nearest Kent's store to claim!",
+                              textAlign: TextAlign.center,
+                            ),
+                            OutlineButton(
+                              color: Colors.white,
+                              borderSide: BorderSide(color: Colors.green),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text(
+                                "AWESOME!",
+                                style: TextStyle(fontWeight: FontWeight.w500),
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(sizeMulW * 30)),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      // actions: <Widget>[
+                      //   new FlatButton(
+                      //     child: new Text('OK'),
+                      //     onPressed: Navigator
+                      //       .of(context)
+                      //       .pop,
+                      //   ),
+                      // ],
+                    ),
+                  );
+                },
+              ),
+            );
           },
+
           child: Material(
-            borderRadius:  BorderRadius.all(Radius.circular(20)),
+            borderRadius: BorderRadius.all(Radius.circular(20)),
             elevation: 2,
-                      child: ClipRRect(
+            child: ClipRRect(
               borderRadius: BorderRadius.all(Radius.circular(20)),
               child: Container(
                 decoration: BoxDecoration(
@@ -1364,14 +1444,13 @@ class PromoSquareCard extends StatelessWidget {
                 ),
                 child: Stack(
                   children: <Widget>[
-
                     Container(
                       // height: 210,
                       // width: 160,
                       margin: EdgeInsets.symmetric(horizontal: 10),
                       child: Center(
                         child: Hero(
-                          tag: "Promo",
+                          tag: index.toString(),
                           child: Image.network(
                             imagePath,
                             fit: BoxFit.cover,
@@ -1410,7 +1489,7 @@ class PromoSquareCard extends StatelessWidget {
                             padding: EdgeInsets.only(
                                 top: 3, bottom: 3, left: 8, right: 8),
                             child: Text(
-                              ((discount * 100).floor()).toString() + " % OFF!",
+                              discount.toString() + " % OFF!",
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                             decoration: BoxDecoration(
@@ -1425,11 +1504,9 @@ class PromoSquareCard extends StatelessWidget {
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold),
                           ),
-
-                           
                         ],
                       ),
-                    ), 
+                    ),
                     // Container(
                     //   child: InkWell(
 
