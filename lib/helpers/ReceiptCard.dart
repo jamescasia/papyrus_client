@@ -6,8 +6,14 @@ import 'package:papyrus_client/data_models/Receipt.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:intl/intl.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:papyrus_client/screens/GetReceiptScreen.dart';
 
+import 'package:papyrus_client/models/AppModel.dart';
 class ReceiptCardPlaceholder extends StatelessWidget {
+  AppModel appModel;
+
+  ReceiptCardPlaceholder(this.appModel);
+
   @override
   Widget build(BuildContext context) {
     return DottedBorder(
@@ -22,7 +28,16 @@ class ReceiptCardPlaceholder extends StatelessWidget {
           child: OutlineButton(
               // elevation: 0,
               color: Colors.white.withAlpha(0),
-              onPressed: () {},
+              onPressed: () {
+Navigator.push(context,
+                      CupertinoPageRoute(builder: (context) {
+                    return
+                        // EditReceiptScreen(appModel.editReceiptScreenModel)
+                        // CameraCaptureScreen()
+                        GetReceiptScreen(appModel.cameraCaptureModel);
+                  }));
+
+              },
               
               borderSide: BorderSide(color: Colors.white.withAlpha(0),),
               // highlightColor: Colors.white.withAlpha(0),
@@ -84,7 +99,7 @@ Widget ReceiptCard(BuildContext context, Receipt receipt, index) {
             Navigator.push(
                 context,
                 CupertinoPageRoute(
-                    builder: (context) => ShowReceiptScreen(receipt)));
+                    builder: (context) => ShowReceiptScreen(receipt, false)));
           },
           splashColor: Colors.amber,
           highlightColor: Colors.black.withOpacity(0.1),

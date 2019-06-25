@@ -890,7 +890,7 @@ class AppModel extends Model {
           Constant.key;
     } else if (id == 2) {
       url = Constant.base_url +
-          "everything?q=business&sources?language=en&sortBy=popularity&apiKey=" +
+          "everything?q=business&sources?language=en&sortBy=publishedAt&apiKey=" +
           Constant.key;
     } else if (id == 3) {
       url = Constant.base_url +

@@ -41,6 +41,7 @@ import 'dart:core';
 import 'package:papyrus_client/helpers/CustomIcons.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:papyrus_client/helpers/HeroDialogueRout.dart';
+import 'NewsFeedScreen.dart';
 
 // void main() {
 //   return runApp(PapyrusCustomer());
@@ -994,7 +995,7 @@ class NewsTab extends StatelessWidget {
           ScopedModelDescendant<AppModel>(builder: (context, child, appModel) {
         return Column(
           mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Row(
@@ -1216,7 +1217,7 @@ List<Widget> bottomChildrenNews(AppModel appModel, BuildContext context) {
             context,
             CupertinoPageRoute(
                 builder: (context) =>
-                    ReceiptScreen(appModel.receiptsScreenModel)));
+                    NewsFeedScreen()));
       },
       Center(
         child: Row(
@@ -1445,7 +1446,7 @@ List<Widget> bottomChildrenReceipts(AppModel appModel, BuildContext context) {
     );
   } else if (bc.length - 1 < a) {
     for (int i = 0; bc.length - 1 < a; i++)
-      bc.insert(bc.length - 1, ReceiptCardPlaceholder());
+      bc.insert(bc.length - 1, ReceiptCardPlaceholder(appModel));
   }
 
   print("max is " + a.toString());

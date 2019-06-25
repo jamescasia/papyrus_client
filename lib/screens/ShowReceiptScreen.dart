@@ -12,23 +12,25 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ShowReceiptScreen extends StatefulWidget {
   Receipt receipt;
+  bool fromEdit;
 
-  ShowReceiptScreen(this.receipt);
+  ShowReceiptScreen(this.receipt, this.fromEdit);
   @override
   _ShowReceiptScreenState createState() =>
-      new _ShowReceiptScreenState(this.receipt);
+      new _ShowReceiptScreenState(this.receipt, fromEdit);
 }
 
 class _ShowReceiptScreenState extends State<ShowReceiptScreen> {
   Receipt receipt;
+  bool fromEdit;
 
   double fabSize = (0.5 * (sizeMulW + sizeMulH)) * 74.052;
   bool checked = false;
-  _ShowReceiptScreenState(this.receipt);
+  _ShowReceiptScreenState(this.receipt, this.fromEdit);
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      floatingActionButton: AnimatedContainer(
+      floatingActionButton: (fromEdit)?AnimatedContainer(
           duration: Duration(milliseconds: 200),
           curve: Curves.decelerate,
           width: (checked) ? 0 : fabSize,
@@ -51,23 +53,25 @@ class _ShowReceiptScreenState extends State<ShowReceiptScreen> {
 
               Navigator.pop(context);
             },
-          )),
-      body: ShowReceiptScreenStack(receipt),
+          )):null,
+      body: ShowReceiptScreenStack(receipt,fromEdit),
     );
   }
 }
 
 class ShowReceiptScreenStack extends StatefulWidget {
   Receipt receipt;
-  ShowReceiptScreenStack(this.receipt);
+  bool fromEdit;
+  ShowReceiptScreenStack(this.receipt, this.fromEdit);
   @override
   _ShowReceiptScreenStackState createState() =>
-      new _ShowReceiptScreenStackState(receipt);
+      new _ShowReceiptScreenStackState(receipt, fromEdit);
 }
 
 class _ShowReceiptScreenStackState extends State<ShowReceiptScreenStack> {
   Receipt receipt;
-  _ShowReceiptScreenStackState(this.receipt);
+  bool fromEdit;
+  _ShowReceiptScreenStackState(this.receipt, this.fromEdit);
 
   @override
   Widget build(BuildContext context) {

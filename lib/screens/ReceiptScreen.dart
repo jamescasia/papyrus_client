@@ -10,6 +10,7 @@ import 'package:papyrus_client/models/AppModel.dart';
 import 'package:papyrus_client/models/ReceiptsScreenModel.dart';
 import 'package:intl/intl.dart';
 import 'dart:io';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'dart:convert';
 import 'dart:async';
 import 'package:papyrus_client/data_models/Receipt.dart';
@@ -36,7 +37,7 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold( 
+    return Scaffold(
       body: new Container(
         // color: Colors.white,
         // child: SingleChildScrollView(
@@ -99,14 +100,13 @@ class _ReceiptScreenTopPartState extends State<ReceiptScreenTopPart> {
                               left: 0,
                               top: 24,
                               child: Container(
-                                width: sizeMulW*60,
+                                width: sizeMulW * 60,
                                 child: RaisedButton(
-                                  
                                   highlightElevation: 0,
                                   color: Colors.white.withOpacity(0),
                                   elevation: 0,
                                   splashColor: Colors.white.withAlpha(0),
-                                  highlightColor: Colors.black.withOpacity(0), 
+                                  highlightColor: Colors.black.withOpacity(0),
                                   onPressed: () {
                                     Navigator.pop(context);
                                   },
@@ -118,16 +118,18 @@ class _ReceiptScreenTopPartState extends State<ReceiptScreenTopPart> {
                                     // color: Colors.red,
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: <Widget>[
                                         Image.asset(
                                           'assets/icons/3x/back.png',
-                                          height:
-                                              MediaQuery.of(context).size.width *
-                                                  0.075,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.075,
                                         ),
-                                        
                                       ],
                                     ),
                                   ),
@@ -136,7 +138,9 @@ class _ReceiptScreenTopPartState extends State<ReceiptScreenTopPart> {
                             ),
                             Positioned(
                               left: sizeMulW * 30,
-                              top: MediaQuery.of(context).size.width * 0.38*0.45,
+                              top: MediaQuery.of(context).size.width *
+                                  0.38 *
+                                  0.45,
                               child: Text("Receipts",
                                   style: TextStyle(
                                     fontSize: sizeMulW * 35,
@@ -172,8 +176,8 @@ class _ReceiptScreenTopPartState extends State<ReceiptScreenTopPart> {
                         width: MediaQuery.of(context).size.width * 0.18,
                         height: MediaQuery.of(context).size.width * 0.18,
                         child: Icon(
-                          Icons.add,
-                          size: MediaQuery.of(context).size.width * 0.1,
+                          FontAwesomeIcons.plus,
+                          size: sizeMulW * 33,
                           color: Colors.white,
                         ),
                       ),
@@ -238,7 +242,8 @@ class _ReceiptScreenBottomPartState extends State<ReceiptScreenBottomPart> {
                               : (index == appModel.receiptFiles.length - 1)
                                   ? EdgeInsets.only(
                                       top: sizeMulW * 9, bottom: sizeMulW * 50)
-                                  : EdgeInsets.symmetric(vertical: sizeMulW * 9),
+                                  : EdgeInsets.symmetric(
+                                      vertical: sizeMulW * 9),
                           child: Column(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,

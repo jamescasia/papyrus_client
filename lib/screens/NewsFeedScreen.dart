@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'HomeScreen.dart';
 import 'package:papyrus_client/helpers/ClipShadowPath.dart';
 import 'package:papyrus_client/helpers/CustomShapeClipper.dart';
-import 'package:papyrus_client/helpers/ReceiptCard.dart'; 
+import 'package:papyrus_client/helpers/ReceiptCard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:papyrus_client/models/AppModel.dart';
@@ -11,31 +11,26 @@ import 'package:intl/intl.dart';
 import 'dart:io';
 import 'dart:convert';
 import 'dart:async';
+import 'package:papyrus_client/helpers/NewsFeedCard.dart';
 import 'package:papyrus_client/data_models/Receipt.dart';
 
 class NewsFeedScreen extends StatefulWidget {
-  ReceiptsScreenModel rsModel;
-
-  NewsFeedScreen(this.rsModel);
   @override
-  _NewsFeedScreenState createState() => new _NewsFeedScreenState(rsModel);
+  _NewsFeedScreenState createState() => new _NewsFeedScreenState();
 }
 
 class _NewsFeedScreenState extends State<NewsFeedScreen> {
-  ReceiptsScreenModel rsModel;
-
-  _NewsFeedScreenState(this.rsModel);
+  _NewsFeedScreenState();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    rsModel.launch();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold( 
+    return Scaffold(
       body: new Container(
         // color: Colors.white,
         // child: SingleChildScrollView(
@@ -53,7 +48,8 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
 
 class NewsFeedScreenTopPart extends StatefulWidget {
   @override
-  _NewsFeedScreenTopPartState createState() => new _NewsFeedScreenTopPartState();
+  _NewsFeedScreenTopPartState createState() =>
+      new _NewsFeedScreenTopPartState();
 }
 
 class _NewsFeedScreenTopPartState extends State<NewsFeedScreenTopPart> {
@@ -98,14 +94,13 @@ class _NewsFeedScreenTopPartState extends State<NewsFeedScreenTopPart> {
                               left: 0,
                               top: 24,
                               child: Container(
-                                width: sizeMulW*60,
+                                width: sizeMulW * 60,
                                 child: RaisedButton(
-                                  
                                   highlightElevation: 0,
                                   color: Colors.white.withOpacity(0),
                                   elevation: 0,
                                   splashColor: Colors.white.withAlpha(0),
-                                  highlightColor: Colors.black.withOpacity(0), 
+                                  highlightColor: Colors.black.withOpacity(0),
                                   onPressed: () {
                                     Navigator.pop(context);
                                   },
@@ -117,16 +112,18 @@ class _NewsFeedScreenTopPartState extends State<NewsFeedScreenTopPart> {
                                     // color: Colors.red,
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: <Widget>[
                                         Image.asset(
                                           'assets/icons/3x/back.png',
-                                          height:
-                                              MediaQuery.of(context).size.width *
-                                                  0.075,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.075,
                                         ),
-                                        
                                       ],
                                     ),
                                   ),
@@ -135,8 +132,10 @@ class _NewsFeedScreenTopPartState extends State<NewsFeedScreenTopPart> {
                             ),
                             Positioned(
                               left: sizeMulW * 30,
-                              top: MediaQuery.of(context).size.width * 0.38*0.45,
-                              child: Text("Receipts",
+                              top: MediaQuery.of(context).size.width *
+                                  0.38 *
+                                  0.45,
+                              child: Text("News",
                                   style: TextStyle(
                                     fontSize: sizeMulW * 35,
                                     color: Colors.white,
@@ -196,72 +195,43 @@ class _NewsFeedScreenBottomPartState extends State<NewsFeedScreenBottomPart> {
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant<AppModel>(builder: (context, child, appModel) {
-      return ScopedModel<ReceiptsScreenModel>(
-          model: appModel.receiptsScreenModel,
-          child: ScopedModelDescendant<ReceiptsScreenModel>(
-              builder: (context, child, rsModel) {
-            return Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              margin: EdgeInsets.symmetric(horizontal: sizeMulW * 37),
-              child: (true)
-                  ? ListView.builder(
-                      // reverse: true,
-                      itemCount: appModel.receiptFiles.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        // var receipt = appModel.receipts[index];
-                        // DateFormat("MMM dd, yyyy")
-                        //         .format(DateTime.parse(receipt.dateTime))
-
-                        File rJSON = File(appModel.receiptFiles[index].path);
-                        Map map = jsonDecode(rJSON.readAsStringSync());
-                        var receipt = Receipt.fromJson(map);
-
-                        var dateCurr = DateFormat("MMM dd, yyyy")
-                            .format(DateTime.parse(receipt.dateTime));
-                        var datePrev = dateCurr;
-
-                        if (index >= 1) {
-                          File rJSON1 =
-                              File(appModel.receiptFiles[index - 1].path);
-                          Map map1 = jsonDecode(rJSON1.readAsStringSync());
-                          var receipt1 = Receipt.fromJson(map1);
-                          datePrev = DateFormat("MMM dd, yyyy")
-                              .format(DateTime.parse(receipt1.dateTime));
-                        }
-
-                        return Container(
-                          margin: (index == 0)
-                              ? EdgeInsets.only(
-                                  bottom: sizeMulW * 9, top: sizeMulW * 130)
-                              : (index == appModel.receiptFiles.length - 1)
-                                  ? EdgeInsets.only(
-                                      top: sizeMulW * 9, bottom: sizeMulW * 50)
-                                  : EdgeInsets.symmetric(vertical: sizeMulW * 9),
-                          child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                (dateCurr != datePrev || index == 0)
-                                    ? Padding(
-                                        padding: EdgeInsets.only(
-                                            bottom: sizeMulW * 18),
-                                        child: Text(
-                                          "    " + dateCurr.toString(),
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w600),
-                                        ))
-                                    : SizedBox(width: 1),
-                                ReceiptCard(context, receipt, index),
-                              ]),
-                        );
-                        // return Text("hello${appModel.receipts[index].items[0].name}",style: TextStyle(fontSize: 50,));
-                      },
-                    )
-                  : Center(child: CircularProgressIndicator()),
-            );
-          }));
+      return Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        margin: EdgeInsets.symmetric(
+          horizontal: sizeMulW * 37,
+        ),
+        child: (true)
+            ? ListView.builder(
+                // reverse: true,
+                itemCount: appModel.listOfNews.length,
+                itemBuilder: (BuildContext context, int index) {
+                  if (index == 0) {
+                    return Container(
+                      margin: EdgeInsets.only(
+                          top: sizeMulW * 170, bottom: sizeMulW * 9),
+                      child: NewsFeedCard(
+                          context, appModel.listOfNews[index], index),
+                    );
+                  }
+                  if (index == appModel.listOfNews.length - 1) {
+                    return Container(
+                      margin: EdgeInsets.only(
+                           bottom: sizeMulW * 50, top: sizeMulW * 9),
+                      child: NewsFeedCard(
+                          context, appModel.listOfNews[index], index),
+                    );
+                  }
+                  return Container(
+                    margin: EdgeInsets.symmetric(vertical: sizeMulW * 9),
+                    child: NewsFeedCard(
+                        context, appModel.listOfNews[index], index),
+                  );
+                  // return Text("hello${appModel.receipts[index].items[0].name}",style: TextStyle(fontSize: 50,));
+                },
+              )
+            : Center(child: CircularProgressIndicator()),
+      );
     });
   }
 }

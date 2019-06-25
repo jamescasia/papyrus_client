@@ -718,7 +718,7 @@ class _EditReceiptScreenBottomPartState
                                           CupertinoPageRoute(
                                               builder: (context) {
                                         return ShowReceiptScreen(
-                                            erModel.receipt);
+                                            erModel.receipt, true);
                                       }));
                                     }
                                   },
