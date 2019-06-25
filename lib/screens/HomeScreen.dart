@@ -73,6 +73,12 @@ LinearGradient BtnTeal = LinearGradient(
 class PapyrusCustomer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
+      statusBarColor: const Color(0xFF61C350),
+      systemNavigationBarColor: const Color(0xFF1BA977),
+      // #61C350
+    ));
+
     return ScopedModel<AppModel>(
         model: AppModel(context),
         child: MaterialApp(
@@ -141,12 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 MediaQuery.of(context).size.width) +
         0.9466 * (MediaQuery.of(context).size.width) -
         56.372;
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
-      statusBarColor: const Color(0xFF61C350),
-      systemNavigationBarColor: const Color(0xFF1BA977),
-      // #61C350
-    ));
-
+    
     return Scaffold(
       // bottomNavigationBar: CustomAppBar(),
       appBar: EmptyAppBar(),

@@ -144,7 +144,7 @@ class _GetReceiptScreenState extends State<GetReceiptScreen>
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: <Widget>[
                                         Image.asset(
-                                          'assets/icons/3x/back.png',
+                                          'assets/icons/3x/back.png',color:(currIndex == 2)?Colors.black:Colors.white,
                                           height:
                                               MediaQuery.of(context).size.width *
                                                   0.075,

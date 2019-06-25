@@ -15,6 +15,7 @@ import 'dart:io';
 import 'CameraCaptureScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'ShowReceiptScreen.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 // import ''
 // import 'dart:core';
 
@@ -174,7 +175,7 @@ class EditReceiptScreenTopPart extends StatelessWidget {
           Positioned(
             bottom: sizeMulW * 15,
             // right: 48 * sizeMulW * sizeMulW,
-            left: homeButtonDist + 40 * sizeMulW,
+            left: homeButtonDist + 30 * sizeMulW,
             child: Material(
               color: Colors.white.withOpacity(0),
               borderRadius: BorderRadius.all(Radius.circular(3000)),
@@ -184,17 +185,17 @@ class EditReceiptScreenTopPart extends StatelessWidget {
                 highlightColor: Colors.black.withOpacity(0.1),
                 borderRadius: BorderRadius.all(Radius.circular(3000)),
                 onTap: () {
-                  editReceiptScreenModel.deleteReceiptImage();
+                  // editReceiptScreenModel.deleteReceiptImage();
 
-                  Navigator.of(context).pop();
+                  // Navigator.of(context).pop();
 
                   // editReceiptScreenModel = EditReceiptScreenModel();
                   // editReceiptScreenModel.changed=!editReceiptScreenModel.changed;
                   // editReceiptScreenModel.update();
                 },
                 child: Icon(
-                  Icons.camera_alt,
-                  size: sizeMulW * 40,
+                  FontAwesomeIcons.edit,
+                  size: sizeMulW * 33,
                   color: Colors.white,
                 ),
               ),
@@ -221,8 +222,11 @@ class _EditReceiptScreenBottomPartState
   _EditReceiptScreenBottomPartState(this.editReceiptScreenModel);
   TextEditingController merchant_controller = TextEditingController();
   TextEditingController date_controller = TextEditingController();
+  TextEditingController address_controller = TextEditingController();
+
   FocusNode m_focus = FocusNode();
   FocusNode d_focus = FocusNode();
+  FocusNode a_focus = FocusNode();
   String catChoice = "Food";
   @override
   void initState() {
@@ -280,7 +284,7 @@ class _EditReceiptScreenBottomPartState
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.w900,
-                                        fontSize: sizeMulW * 14),
+                                        fontSize: sizeMulW * 16),
                                   ),
                                 ),
                                 SizedBox(height: sizeMulW * 4),
@@ -348,7 +352,7 @@ class _EditReceiptScreenBottomPartState
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.w900,
-                                        fontSize: sizeMulW * 14),
+                                        fontSize: sizeMulW * 16),
                                   ),
                                 ),
                                 SizedBox(height: sizeMulW * 4),
@@ -412,6 +416,75 @@ class _EditReceiptScreenBottomPartState
                       SizedBox(
                         height: sizeMulW * 12,
                       ),
+                      Flex(
+                        direction: Axis.horizontal,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Expanded(
+                            flex: 60,
+                            child: Container(
+                                child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              // mainAxisAlignment: MainAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Padding(
+                                  padding:
+                                      EdgeInsets.only(left: sizeMulW * 8.0),
+                                  child: Text(
+                                    "ADDRESS",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w900,
+                                        fontSize: sizeMulW * 16),
+                                  ),
+                                ),
+                                SizedBox(height: sizeMulW * 4),
+                                Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.75,
+                                  height: sizeMulW * 40,
+                                  // margin: EdgeInsets.only(right:sizeMulW*20),
+                                  padding: EdgeInsets.only(
+                                      left: sizeMulW * 15,
+                                      right: sizeMulW * 15),
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(3000)),
+                                      border: Border.all(
+                                          color: Colors.white,
+                                          width: sizeMulW * 2)),
+                                  child: Center(
+                                    child: EditableText(
+                                      inputFormatters: [
+                                        new LengthLimitingTextInputFormatter(60)
+                                      ],
+                                      autofocus: false,
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: sizeMulW * 20),
+                                      backgroundCursorColor: Colors.red,
+                                      cursorColor: Colors.pinkAccent,
+                                      focusNode: a_focus,
+                                      controller: address_controller,
+                                      onChanged: (address) {
+                                        erModel.receipt.address = address;
+
+                                        erModel.update();
+                                      },
+                                    ),
+                                  ),
+                                )
+                              ],
+                            )),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: sizeMulW * 12,
+                      ),
                       Container(
                           child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -425,7 +498,7 @@ class _EditReceiptScreenBottomPartState
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w900,
-                                  fontSize: sizeMulW * 14),
+                                  fontSize: sizeMulW * 16),
                             ),
                           ),
                           SizedBox(height: sizeMulW * 4),
@@ -642,7 +715,7 @@ class _EditReceiptScreenBottomPartState
                                         builder: (BuildContext context) {
                                           return EditItem(
                                               context,
-                                              ReceiptItem("", 0, 0,"false"),
+                                              ReceiptItem("", 0, 0, "false"),
                                               true,
                                               editReceiptScreenModel);
                                         });
@@ -683,64 +756,66 @@ class _EditReceiptScreenBottomPartState
                                   ],
                                 ),
                               ),
+                              SizedBox(
+                                height: 30 * sizeMulW,
+                              ),
                               Container(
-                                padding: EdgeInsets.only(top: sizeMulW * 40),
-                                child: InkWell(
-                                  onTap: () {
-                                    print("llength" +
-                                        erModel.receipt.items.length
-                                            .toString() +
-                                        "merchant" +
-                                        erModel.receipt.merchant +
-                                        "cat" +
-                                        erModel.receipt.category);
-                                    if (erModel.receipt.items.length == 0 ||
-                                        erModel.receipt.merchant == "" ||
-                                        erModel.receipt.category == "") {
-                                      showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return AlertDialog(
-                                                content: Text(
-                                              "Unable to proceed because some fields are missing.",
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                            ));
-                                          });
-                                    } else {
-                                      erModel.saveReceipt();
-                                      // appModel.editReceiptScreenModel =
-                                      //     EditReceiptScreenModel(appModel);
+                                width: MediaQuery.of(context).size.width*0.5,
+                                height: sizeMulW * 40,
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(3000)),
+                                    border: Border.all(
+                                        color: Colors.white,
+                                        width: sizeMulW * 2)),
+                                child: Material(
+                                  color: Colors.white.withAlpha(0), 
+                                  child: InkWell(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(3000)),
+                                    onTap: () {
+                                      print("llength" +
+                                          erModel.receipt.items.length
+                                              .toString() +
+                                          "merchant" +
+                                          erModel.receipt.merchant +
+                                          "cat" +
+                                          erModel.receipt.category);
+                                      if (erModel.receipt.items.length == 0 ||
+                                          erModel.receipt.merchant == "" ||
+                                          erModel.receipt.category == "") {
+                                        showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                  content: Text(
+                                                "Unable to proceed because some fields are missing.",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ));
+                                            });
+                                      } else {
+                                        erModel.saveReceipt();
+                                        // appModel.editReceiptScreenModel =
+                                        //     EditReceiptScreenModel(appModel);
 
-                                      Navigator.pushReplacement(context,
-                                          CupertinoPageRoute(
-                                              builder: (context) {
-                                        return ShowReceiptScreen(
-                                            erModel.receipt, true);
-                                      }));
-                                    }
-                                  },
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: <Widget>[
-                                      Text(
-                                        "CONTINUE",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 22 * sizeMulW,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      SizedBox(width: sizeMulW * 12),
-                                      Icon(Icons.chevron_right,
-                                          size: sizeMulW * 30,
-                                          color: Colors.white),
-                                    ],
+                                        Navigator.pushReplacement(context,
+                                            CupertinoPageRoute(
+                                                builder: (context) {
+                                          return ShowReceiptScreen(
+                                              erModel.receipt, true);
+                                        }));
+                                      }
+                                    },
+                                    child: Center(child: Text("CONTINUE",textScaleFactor: 1.3,style: TextStyle(
+                                      color: Colors.black, fontWeight: FontWeight.w600
+                                    ),)),
                                   ),
                                 ),
-                              )
+                              ), 
                             ],
                           )
                         ],
@@ -931,7 +1006,7 @@ class _EditItemState extends State<EditItem> {
                     style: TextStyle(
                         color: Colors.grey[800],
                         fontWeight: FontWeight.w900,
-                        fontSize: sizeMulW * 14),
+                        fontSize: sizeMulW * 16),
                   ),
                 ),
                 SizedBox(height: sizeMulW * 4),
@@ -980,9 +1055,9 @@ class _EditItemState extends State<EditItem> {
                         });
                       },
                       selectionColor: Colors.green,
+                      textScaleFactor: 1,
                       // textAlign: TextAlign.start,
-                      style: TextStyle(
-                          color: Colors.white, fontSize: sizeMulW * 17),
+                      style: TextStyle(color: Colors.white),
                       backgroundCursorColor: Colors.red,
                       cursorColor: Colors.pinkAccent,
                       focusNode: fa,
@@ -1014,7 +1089,7 @@ class _EditItemState extends State<EditItem> {
                           style: TextStyle(
                               color: Colors.grey[800],
                               fontWeight: FontWeight.w900,
-                              fontSize: sizeMulW * 14),
+                              fontSize: sizeMulW * 16),
                         ),
                       ),
                       SizedBox(height: sizeMulW * 4),
@@ -1066,9 +1141,9 @@ class _EditItemState extends State<EditItem> {
                               });
                             },
                             selectionColor: Colors.green,
+                            textScaleFactor: 1,
                             // textAlign: TextAlign.start,
-                            style: TextStyle(
-                                color: Colors.white, fontSize: sizeMulW * 17),
+                            style: TextStyle(color: Colors.white),
                             backgroundCursorColor: Colors.red,
                             cursorColor: Colors.pinkAccent,
                             focusNode: fb,
@@ -1100,7 +1175,7 @@ class _EditItemState extends State<EditItem> {
                           style: TextStyle(
                               color: Colors.grey[800],
                               fontWeight: FontWeight.w900,
-                              fontSize: sizeMulW * 14),
+                              fontSize: sizeMulW * 16),
                         ),
                       ),
                       SizedBox(height: sizeMulW * 4),
@@ -1119,6 +1194,7 @@ class _EditItemState extends State<EditItem> {
                         ),
                         child: Center(
                           child: EditableText(
+                            textScaleFactor: 1,
                             inputFormatters: [
                               new LengthLimitingTextInputFormatter(3)
                             ],
@@ -1151,8 +1227,7 @@ class _EditItemState extends State<EditItem> {
                             },
                             selectionColor: Colors.green,
                             // textAlign: TextAlign.start,
-                            style: TextStyle(
-                                color: Colors.white, fontSize: sizeMulW * 17),
+                            style: TextStyle(color: Colors.white),
                             backgroundCursorColor: Colors.red,
                             cursorColor: Colors.pinkAccent,
                             focusNode: fc,
