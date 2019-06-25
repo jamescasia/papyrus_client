@@ -1624,7 +1624,7 @@ class PromoSquareCard extends StatelessWidget {
                             padding: EdgeInsets.only(
                                 top: 3, bottom: 3, left: 8, right: 8),
                             child: Text(
-                              discount.toString() + " % OFF!",
+                              discount.toInt().toString() + " % OFF!",
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                             decoration: BoxDecoration(

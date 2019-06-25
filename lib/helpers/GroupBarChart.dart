@@ -38,8 +38,8 @@ class GroupedBarChart extends StatelessWidget {
     final tableSalesData = [
       new OrdinalSales('2014', 25),
       new OrdinalSales('2015', 50),
-      new OrdinalSales('2016', 10),
-      new OrdinalSales('2017', 20),
+      new OrdinalSales('2016', 120),
+      new OrdinalSales('2017', 80),
     ];
 
     final mobileSalesData = [
@@ -50,24 +50,31 @@ class GroupedBarChart extends StatelessWidget {
     ];
 
     return [
-      new charts.Series<OrdinalSales, String>(
-        id: 'Desktop',
+        
+
+       new charts.Series<OrdinalSales, String>(
+        id: 'Mobile',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
-        data: desktopSalesData,
+        colorFn: (OrdinalSales segment, _) => charts.Color.fromHex(code:   "#dfdfdf"),
+        data: mobileSalesData,
       ),
       new charts.Series<OrdinalSales, String>(
         id: 'Tablet',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
+        colorFn: (OrdinalSales segment, _) => charts.Color.fromHex(code:"#cfcfcf" ),
         data: tableSalesData,
       ),
       new charts.Series<OrdinalSales, String>(
-        id: 'Mobile',
+        id: 'Desktop',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
-        data: mobileSalesData,
+        colorFn: (OrdinalSales segment, _) => charts.Color.fromHex(code:"#afafaf" ),
+        data: desktopSalesData,
       ),
+    
+     
       //  new charts.Series<OrdinalSales, String>(
       //   id: 'Mobile',
       //   domainFn: (OrdinalSales sales, _) => sales.year,

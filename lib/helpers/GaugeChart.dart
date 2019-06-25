@@ -22,10 +22,10 @@ class GaugeChart extends StatelessWidget {
 
   static List<charts.Series<GaugeSegment, String>> _createSampleData() {
     final data = [
-      new GaugeSegment('Low', 30),
-      // new GaugeSegment('Acceptable', 10),
-      // new GaugeSegment('High', 50),
-      // new GaugeSegment('Highly Unusual', 35),
+      new GaugeSegment('Acceptable', 60,"#ababab"),
+      new GaugeSegment('High', 40,"#bcbcbc"),
+      new GaugeSegment('Highly Unusual', 20,"#dedede"),
+      new GaugeSegment('Low', 10, "#efefef"),
     ];
 
     return [
@@ -33,7 +33,7 @@ class GaugeChart extends StatelessWidget {
         id: 'Segments',
         domainFn: (GaugeSegment segment, _) => segment.segment,
         measureFn: (GaugeSegment segment, _) => segment.size,
-        colorFn: (GaugeSegment segment, _) => charts.Color.fromHex(code: "#dfdfdf"),
+        colorFn: (GaugeSegment segment, _) => charts.Color.fromHex(code: segment.color),
         data: data,
       )
     ];
@@ -99,6 +99,7 @@ class GaugeChartLegendItem extends StatelessWidget {
 class GaugeSegment {
   final String segment;
   final int size;
+  final String color;
 
-  GaugeSegment(this.segment, this.size);
+  GaugeSegment(this.segment, this.size, this.color);
 }

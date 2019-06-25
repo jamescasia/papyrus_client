@@ -114,18 +114,30 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                             // top:
                                             // bottom: sizeMulW * -15,
                                             child: RotatedBox(
-                                              quarterTurns:-1,
+                                              quarterTurns: -1,
                                               child: SizedBox(
                                                   // color: Colors.black,
                                                   width: sizeMulW * 185,
                                                   height: sizeMulW * 185,
-                                                  child: (appModel.dayExpense
-                                                              .totalSpent >
-                                                          0 && appModel.viewing_period == Period.DAILY || appModel.weekExpense
-                                                              .totalSpent >
-                                                          0 && appModel.viewing_period == Period.WEEKLY ||appModel.monthExpense
-                                                              .totalSpent >
-                                                          0 && appModel.viewing_period == Period.MONTHLY)
+                                                  child: (appModel
+                                                                      .dayExpense
+                                                                      .totalSpent >
+                                                                  0 &&
+                                                              appModel.viewing_period ==
+                                                                  Period
+                                                                      .DAILY ||
+                                                          appModel.weekExpense
+                                                                      .totalSpent >
+                                                                  0 &&
+                                                              appModel.viewing_period ==
+                                                                  Period
+                                                                      .WEEKLY ||
+                                                          appModel.monthExpense
+                                                                      .totalSpent >
+                                                                  0 &&
+                                                              appModel.viewing_period ==
+                                                                  Period
+                                                                      .MONTHLY)
                                                       ? GaugeChart(
                                                           chartsModel
                                                               .generateGaugeChartData(
@@ -134,28 +146,41 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                           animate: true,
                                                         )
                                                       : Stack(
-                                                          children: <Widget>[
-                                                            // Opacity(
-                                                            //     opacity: 0.5,
-                                                            //     child: 
-                                                                GaugeChart
-                                                                    .withSampleData()
-                                                                    
-                                                                    // ),
-                                                                    ,
+                                                          children: <Widget>[ 
+                                                            GaugeChart
+                                                                .withSampleData() 
+                                                            ,
                                                             RotatedBox(
                                                               quarterTurns: 1,
-                                                                                                                          child: Center(
+                                                              child: Center(
                                                                 child: Column(
-                                                                  mainAxisAlignment: MainAxisAlignment.center,
-                                                                  children: <Widget>[
-                                                                    Icon(FontAwesomeIcons.frown, size: sizeMulW*33,color: Colors.grey[300],),
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .center,
+                                                                  children: <
+                                                                      Widget>[
+                                                                    Icon(
+                                                                      FontAwesomeIcons
+                                                                          .sadCry,
+                                                                      size:
+                                                                          sizeMulW *
+                                                                              33,
+                                                                      color: Colors
+                                                                              .grey[
+                                                                          700],
+                                                                    ),
                                                                     Text(
-                                                                      "NO DATA",textScaleFactor: 1.3,
-                                                                      textAlign: TextAlign.center,style: TextStyle(
-                                                                          fontWeight:
-                                                                              FontWeight
-                                                                                  .w600, color: Colors.grey[300]),
+                                                                      "NO DATA",
+                                                                      textScaleFactor:
+                                                                          1.3,
+                                                                      textAlign:
+                                                                          TextAlign
+                                                                              .center,
+                                                                      style: TextStyle(
+                                                                          fontWeight: FontWeight
+                                                                              .w600,
+                                                                          color:
+                                                                              Colors.grey[700]),
                                                                     ),
                                                                   ],
                                                                 ),
@@ -234,8 +259,6 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                             children: <Widget>[
                                               ConstrainedBox(
                                                 constraints: new BoxConstraints(
-                                                  
-                                                  
                                                   // minHeight: 100*sizeMulW,
                                                   minWidth: 160 * sizeMulW,
 
@@ -433,18 +456,18 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                   Text(
                                                     ((appModel.viewing_period ==
                                                                 Period.DAILY)
-                                                            ? appModel
+                                                            ? addCommas(appModel
                                                                 .dayExpense
-                                                                .totalSpentOnFood
+                                                                .totalSpentOnFood.toInt() )+"${appModel.dayExpense.totalSpentOnFood%1}"
                                                             : (appModel.viewing_period ==
                                                                     Period
                                                                         .MONTHLY)
-                                                                ? appModel
-                                                                    .monthExpense
-                                                                    .totalSpentOnFood
-                                                                : appModel
-                                                                    .weekExpense
-                                                                    .totalSpentOnFood)
+                                                                ? addCommas(appModel
+                                                                .monthExpense
+                                                                .totalSpentOnFood.toInt() )+"${appModel.monthExpense.totalSpentOnFood%1}"
+                                                                : addCommas(appModel
+                                                                .weekExpense
+                                                                .totalSpentOnFood.toInt() )+"${appModel.weekExpense.totalSpentOnFood%1}")
                                                         .toString(),
                                                     textScaleFactor: 1.1,
                                                     textAlign: TextAlign.center,
@@ -510,18 +533,18 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                   Text(
                                                     ((appModel.viewing_period ==
                                                                 Period.DAILY)
-                                                            ? appModel
+                                                            ? addCommas(appModel
                                                                 .dayExpense
-                                                                .totalSpentOnLeisure
+                                                                .totalSpentOnLeisure.toInt() )+"${appModel.dayExpense.totalSpentOnLeisure%1}"
                                                             : (appModel.viewing_period ==
                                                                     Period
                                                                         .MONTHLY)
-                                                                ? appModel
-                                                                    .monthExpense
-                                                                    .totalSpentOnLeisure
-                                                                : appModel
-                                                                    .weekExpense
-                                                                    .totalSpentOnLeisure)
+                                                                ? addCommas(appModel
+                                                                .monthExpense
+                                                                .totalSpentOnLeisure.toInt() )+"${appModel.monthExpense.totalSpentOnLeisure%1}"
+                                                                : addCommas(appModel
+                                                                .weekExpense
+                                                                .totalSpentOnLeisure.toInt() )+"${appModel.weekExpense.totalSpentOnLeisure%1}")
                                                         .toString(),
                                                     textScaleFactor: 1.1,
                                                     textAlign: TextAlign.center,
@@ -571,7 +594,15 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                 ],
                                               ),
                                             ),
-                                            Tooltip(
+                                          
+                                            
+                                          ],
+                                        ),
+                                        SizedBox(height: 20*sizeMulW,),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                          children: <Widget>[
+                                              Tooltip(
                                               message: "Miscellaneous",
                                               child: Column(
                                                 children: <Widget>[
@@ -584,20 +615,20 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                     height: sizeMulW * 3,
                                                   ),
                                                   Text(
-                                                    ((appModel.viewing_period ==
+                                                     ((appModel.viewing_period ==
                                                                 Period.DAILY)
-                                                            ? appModel
+                                                            ? addCommas(appModel
                                                                 .dayExpense
-                                                                .totalSpentOnMiscellaneous
+                                                                .totalSpentOnMiscellaneous.toInt() )+"${appModel.dayExpense.totalSpentOnMiscellaneous%1}"
                                                             : (appModel.viewing_period ==
                                                                     Period
                                                                         .MONTHLY)
-                                                                ? appModel
-                                                                    .monthExpense
-                                                                    .totalSpentOnMiscellaneous
-                                                                : appModel
-                                                                    .weekExpense
-                                                                    .totalSpentOnMiscellaneous)
+                                                                ? addCommas(appModel
+                                                                .monthExpense
+                                                                .totalSpentOnMiscellaneous.toInt() )+"${appModel.monthExpense.totalSpentOnMiscellaneous%1}"
+                                                                : addCommas(appModel
+                                                                .weekExpense
+                                                                .totalSpentOnMiscellaneous.toInt() )+"${appModel.weekExpense.totalSpentOnMiscellaneous%1}")
                                                         .toString(),
                                                     textScaleFactor: 1.1,
                                                     textAlign: TextAlign.center,
@@ -662,18 +693,18 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                   Text(
                                                     ((appModel.viewing_period ==
                                                                 Period.DAILY)
-                                                            ? appModel
+                                                            ? addCommas(appModel
                                                                 .dayExpense
-                                                                .totalSpentOnTransportation
+                                                                .totalSpentOnTransportation.toInt() )+"${appModel.dayExpense.totalSpentOnTransportation%1}"
                                                             : (appModel.viewing_period ==
                                                                     Period
                                                                         .MONTHLY)
-                                                                ? appModel
-                                                                    .monthExpense
-                                                                    .totalSpentOnTransportation
-                                                                : appModel
-                                                                    .weekExpense
-                                                                    .totalSpentOnTransportation)
+                                                                ? addCommas(appModel
+                                                                .monthExpense
+                                                                .totalSpentOnTransportation.toInt() )+"${appModel.monthExpense.totalSpentOnTransportation%1}"
+                                                                : addCommas(appModel
+                                                                .weekExpense
+                                                                .totalSpentOnTransportation.toInt() )+"${appModel.weekExpense.totalSpentOnTransportation%1}")
                                                         .toString(),
                                                     textScaleFactor: 1.1,
                                                     textAlign: TextAlign.center,
@@ -737,20 +768,20 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                     height: sizeMulW * 3,
                                                   ),
                                                   Text(
-                                                    ((appModel.viewing_period ==
+                                                  ((appModel.viewing_period ==
                                                                 Period.DAILY)
-                                                            ? appModel
+                                                            ? addCommas(appModel
                                                                 .dayExpense
-                                                                .totalSpentOnUtilities
+                                                                .totalSpentOnUtilities.toInt() )+"${appModel.dayExpense.totalSpentOnUtilities%1}"
                                                             : (appModel.viewing_period ==
                                                                     Period
                                                                         .MONTHLY)
-                                                                ? appModel
-                                                                    .monthExpense
-                                                                    .totalSpentOnUtilities
-                                                                : appModel
-                                                                    .weekExpense
-                                                                    .totalSpentOnUtilities)
+                                                                ? addCommas(appModel
+                                                                .monthExpense
+                                                                .totalSpentOnUtilities.toInt() )+"${appModel.monthExpense.totalSpentOnUtilities%1}"
+                                                                : addCommas(appModel
+                                                                .weekExpense
+                                                                .totalSpentOnUtilities.toInt() )+"${appModel.weekExpense.totalSpentOnUtilities%1}")
                                                         .toString(),
                                                     textScaleFactor: 1.1,
                                                     textAlign: TextAlign.center,
@@ -800,10 +831,8 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                 ],
                                               ),
                                             ),
+
                                           ],
-                                        ),
-                                        Row(
-                                          children: <Widget>[],
                                         )
                                       ],
                                     ),
@@ -841,11 +870,51 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                               builder: (context, snapshot) {
                                                 if (snapshot.connectionState ==
                                                     ConnectionState.done) {
+
+                                                      // print(snapshot.data[0].toString()_)
+                                                  if (chartsModel.dayExpenses.length == 0 && appModel.viewing_period == Period.DAILY ||chartsModel.weekExpenses.length == 0 && appModel.viewing_period == Period.WEEKLY||chartsModel.monthExpenses.length == 0 && appModel.viewing_period == Period.MONTHLY  )
+                                                    return Stack(
+                                                      children: <Widget>[
+                                                        GroupedBarChart
+                                                            .withSampleData(),
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: <Widget>[
+                                                            Icon(
+                                                              FontAwesomeIcons
+                                                                  .sadCry,
+                                                              size:
+                                                                  sizeMulW * 33,
+                                                              color: Colors
+                                                                  .grey[700],
+                                                            ),
+                                                            Text(
+                                                              "NO DATA",
+                                                              textScaleFactor:
+                                                                  1.3,
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                              style: TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  color: Colors
+                                                                          .grey[
+                                                                      700]),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    );
                                                   return GroupedBarChart(
                                                       snapshot.data);
                                                 } else
-                                                  return SizedBox(
-                                                    width: 1,
+                                                  return Center(
+                                                    child:CircularProgressIndicator(),
                                                   );
                                               })
 
@@ -881,7 +950,50 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                   appModel.viewing_period),
                                           builder: (context, snapshot) {
                                             if (snapshot.connectionState ==
-                                                ConnectionState.done) {
+                                                ConnectionState.done) { 
+                                                  print(snapshot.data.length.toString() + "ADFAFAFA");
+
+                                                  if (chartsModel.dayExpenses.length == 0 && appModel.viewing_period == Period.DAILY ||chartsModel.weekExpenses.length == 0 && appModel.viewing_period == Period.WEEKLY||chartsModel.monthExpenses.length == 0 && appModel.viewing_period == Period.MONTHLY  )
+                                                   {
+                                                     return Stack(
+                                                      children: <Widget>[
+                                                        SimpleTimeSeriesChart
+                                                            .withSampleData(),
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: <Widget>[
+                                                            Icon(
+                                                              FontAwesomeIcons
+                                                                  .sadCry,
+                                                              size:
+                                                                  sizeMulW * 33,
+                                                              color: Colors
+                                                                  .grey[700],
+                                                            ),
+                                                            Text(
+                                                              "NO DATA",
+                                                              textScaleFactor:
+                                                                  1.3,
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                              style: TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  color: Colors
+                                                                          .grey[
+                                                                      700]),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    );
+
+                                                  }
                                               return SimpleTimeSeriesChart(
                                                   snapshot.data);
                                             } else

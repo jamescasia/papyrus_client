@@ -37,12 +37,19 @@ class SimpleTimeSeriesChart extends StatelessWidget {
       new TimeSeriesSales(new DateTime(2017, 9, 26), 25),
       new TimeSeriesSales(new DateTime(2017, 10, 3), 100),
       new TimeSeriesSales(new DateTime(2017, 10, 10), 75),
+      
+      new TimeSeriesSales(new DateTime(2017, 10, 12), 50),
+      new TimeSeriesSales(new DateTime(2017, 10, 14), 80),
+      new TimeSeriesSales(new DateTime(2017, 10, 18), 30),
+      new TimeSeriesSales(new DateTime(2017, 10, 21), 40),
+      new TimeSeriesSales(new DateTime(2017, 10, 24), 60),
+      new TimeSeriesSales(new DateTime(2017, 11, 12), 33),
     ];
 
     return [
       new charts.Series<TimeSeriesSales, DateTime>(
         id: 'Sales',
-        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        colorFn: (_, __) => charts.MaterialPalette.gray.shadeDefault,
         domainFn: (TimeSeriesSales sales, _) => sales.time,
         measureFn: (TimeSeriesSales sales, _) => sales.sales,
         data: data,

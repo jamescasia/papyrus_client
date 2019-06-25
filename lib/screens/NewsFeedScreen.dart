@@ -173,7 +173,7 @@ class _NewsFeedScreenTopPartState extends State<NewsFeedScreenTopPart> {
                         width: MediaQuery.of(context).size.width * 0.18,
                         height: MediaQuery.of(context).size.width * 0.18,
                         child: Icon(
-                          FontAwesomeIcons.syncAlt,
+                          FontAwesomeIcons.solidNewspaper,
                           size: MediaQuery.of(context).size.width * 0.07,
                           color: Colors.white,
                         ),
@@ -197,7 +197,7 @@ class NewsFeedScreenBottomPart extends StatefulWidget {
 class _NewsFeedScreenBottomPartState extends State<NewsFeedScreenBottomPart> {
   @override
   Widget build(BuildContext context) {
-    return ScopedModelDescendant<AppModel>(builder: (context, child, appModel) {
+    return ScopedModelDescendant<AppModel>(rebuildOnChange: true,builder: (context, child, appModel) {
       return Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
