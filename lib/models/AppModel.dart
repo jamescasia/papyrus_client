@@ -160,6 +160,11 @@ class AppModel extends Model {
           Map map = jsonDecode(data.value);
           var receipt = Receipt.fromJson(map);
           addReceiptandSaveToStorage(receipt);
+          // showDialog(context: context, child: null
+
+          
+          
+          // );
         }
       });
     });
