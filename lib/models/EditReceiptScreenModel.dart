@@ -108,7 +108,7 @@ class EditReceiptScreenModel extends Model {
     List<int> imageBytes = await File(filePath).readAsBytes();
     // print(imageBytes);
     String base64Image = base64Encode(imageBytes);
-   var res =  await http.post("https://api.taggun.io/api/receipt/v1/verbose/encoded", body: 
+   var res =  await http.post("https://api.taggun.io/api/receipt/v1/verbose/encoded",headers: {'apikey': '7c1afc00932f11e98bfadfb7eb1aa8b5'},body: 
     
     jsonEncode({
   "image": base64Image,
