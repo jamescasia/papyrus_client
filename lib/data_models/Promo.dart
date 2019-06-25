@@ -10,6 +10,7 @@ class Promo {
   String item_name;
   String image_path;
   String qrPath;
+  String retailer_name;
 
   bool collected;
   bool expired;
@@ -21,6 +22,7 @@ class Promo {
         "item_num": item_num,
         "type": type,
         "retailer_id": retailer_id,
+        "retailer_name": retailer_name,
         "item_name": item_name,
         "offer_date": offer_date,
         "expiry_date": expiry_date,
@@ -36,6 +38,7 @@ class Promo {
       : item_num = json["item_num"],
         type = json['type'],
         retailer_id = json['retailer_id'],
+        retailer_name= json['retailer_name'],
         expiry_date = json['expiry_date'],
         item_name = json['item_name'],
         offer_date = json['offer_date'],

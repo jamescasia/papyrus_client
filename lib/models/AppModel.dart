@@ -235,6 +235,7 @@ class AppModel extends Model {
           promoList.insert(0, promo);
           promoCodes.insert(0, child.snapshot.key);
         }
+        chatModel.replyMessage("Woot woot you got a new promo from ${promo.retailer_name}!!\n\nGet ${(promo.value*100).toInt()}% off your purchase of ${promo.item_name} at any ${promo.retailer_name} branches nationwide!! \n\nHURRY!!! This promo lasts until ${DateFormat("MM/DD/yyyy").format(DateTime.parse(promo.expiry_date))}\nPromo code: ${promo.promo_code}", "");
         notifyListeners();
       }
     });

@@ -10,6 +10,8 @@ import 'dart:math';
 import 'package:papyrus_client/data_models/DayExpense.dart';
 import 'package:papyrus_client/data_models/WeekExpense.dart';
 import 'package:papyrus_client/data_models/MonthExpense.dart';
+import 'package:papyrus_client/data_models/Promo.dart';
+import 'package:intl/intl.dart';
 
 class ChatModel extends Model {
   AppModel appModel;
@@ -139,9 +141,28 @@ class ChatModel extends Model {
       print("query");
       reply = getSpendingStatus();
       // reply = responseToChoiceMessages[1];
+    } else if (msgText.toLowerCase() == choiceMessages[3].toLowerCase() ||
+        msgText.toLowerCase().contains("concerned") ||
+        msgText.toLowerCase().contains("concern") ||
+        msgText.toLowerCase().contains("something")) {
+      reply =
+          "What is it? You can tell me and I'll promptly forward it to our specific partner merchant";
+    } else if (msgText.toLowerCase() == choiceMessages[4].toLowerCase() ||
+        msgText.toLowerCase().contains("deals") ||
+        msgText.toLowerCase().contains("promos") ||
+        msgText.toLowerCase().contains("discount")) {
+      reply =
+          "You have the following active promos: \n\n${appModel.promoList.map((f) => promoDetailsChat(f)).toList().toString().replaceAll(",", "").replaceAll("[", "").replaceAll("]", "")}";
+    } else if (msgText.toLowerCase() == choiceMessages[2].toLowerCase() ||
+        msgText.toLowerCase().contains("can i spend")) {
+          var difference = (appModel.userExpense.totalLifetimeExpenseAmount / appModel.userExpense.numberOfRecordedDays) - appModel.dayExpense.totalSpent;
+          if( difference<0) reply = "Oops you alread overspent by ${difference*-1}";
+          else 
+      reply =
+          "To not exceed your lifetime average daily spend. You can only spend ${difference} more";
     } else {
       reply =
-          "I'm not sure I understand, after all I'm still a teeny-tiny bot in this big world";
+          "I'm not sure I understand, after all I'm still a teeny-tiny bot in this big big world";
     }
 
     await Future.delayed(Duration(
@@ -156,5 +177,9 @@ class ChatModel extends Model {
     await Future.delayed(Duration(milliseconds: 40));
     scont.animateTo(0,
         duration: const Duration(milliseconds: 100), curve: Curves.easeOut);
+  }
+
+  String promoDetailsChat(Promo promo) {
+    return "Get ${(promo.value * 100).toInt()}% off your purchase of ${promo.item_name} at any ${promo.retailer_name} branch until ${DateFormat("MM/DD/yyyy").format(DateTime.parse(promo.expiry_date))}\nPromo code: ${promo.promo_code}\n\n";
   }
 }

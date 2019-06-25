@@ -352,9 +352,42 @@ class _SettingScreenBottomPartState extends State<SettingScreenBottomPart> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 30 * sizeMulW,
-                )
+                
+                Container( 
+                  height: sizeMulW * 65,
+                  child: Padding(
+                    padding: EdgeInsets.all(18.0 * sizeMulW),
+                    child: Material(
+                      color: Colors.white.withAlpha(0),
+                      child: InkWell(
+                        splashColor: Colors.white.withAlpha(0),
+                        highlightColor: Colors.white.withAlpha(0),
+                        onTap: () {
+
+                          showAboutDialog(context: context, children: [
+                            Text("NEWS API"),
+
+
+                          ]);
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              "Attributions",
+                              textScaleFactor:1 ,
+                              style: TextStyle( 
+                                  // fontSize: sizeMulW * 17,
+
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
