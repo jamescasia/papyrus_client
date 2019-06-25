@@ -20,6 +20,7 @@ import 'package:papyrus_client/helpers/LongButton.dart';
 import 'EditReceiptScreen.dart';
 import 'ShowQRScreen.dart';
 import 'ChatScreen.dart';
+import 'package:intl/intl.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:papyrus_client/models/AppModel.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -1190,6 +1191,132 @@ String decimalDigits(AppModel appModel) {
   }
 }
 
+List<Widget> bottomChildrenNews(AppModel appModel, BuildContext context) {
+
+  List<Widget> bc = [
+    LongButton(
+      greeny.colors[1],
+      333 * sizeMulW,
+      69 * sizeMulW,
+      sizeMulW * 3,
+      Colors.green,
+      greeny.colors[0],
+      sizeMulW * 9,
+      () {
+        Navigator.push(
+            context,
+            CupertinoPageRoute(
+                builder: (context) =>
+                    ReceiptScreen(appModel.receiptsScreenModel)));
+      },
+      Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              "MORE ARTICLES",
+              style: TextStyle(
+                  color: Colors.white,
+                  //
+                  fontWeight: FontWeight.w900,
+                  fontSize: sizeMulW * 20),
+            ),
+            SizedBox(
+              width: sizeMulW * 5,
+            ),
+            Icon(
+              Icons.chevron_right,
+              color: Colors.white,
+              size: sizeMulW * 35,
+            )
+          ],
+        ),
+      ),
+      // null
+    )
+  ];
+  for (File f in appModel.receiptFiles) {
+    Map map = jsonDecode(f.readAsStringSync());
+    var receipt = Receipt.fromJson(map);
+    if (appModel.receiptFiles.indexOf(f) <
+        ((MediaQuery.of(context).size.height -
+                        0.942 * MediaQuery.of(context).size.width -
+                        (34 * sizeMulW)) /
+                    (81 * sizeMulW))
+                .floor() -
+            1) {
+      bc.insert(bc.length - 1, ReceiptCard(context, receipt, 1));
+    } else
+      break;
+ 
+  }
+  var a = ((MediaQuery.of(context).size.height -
+                  0.942 * MediaQuery.of(context).size.width -
+                  (34 * sizeMulW)) /
+              (81 * sizeMulW))
+          .floor() -
+      1;
+
+  if (bc.length == 1) {
+    bc.insert(
+      0,
+      Flexible(
+        child: Container(
+          padding: EdgeInsets.all(sizeMulH * 14),
+          child: DottedBorder(
+              color: Colors.black12,
+              gap: 8 * sizeMulW,
+              padding: EdgeInsets.all(0),
+              strokeWidth: 5 * sizeMulW,
+              child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: double.infinity,
+                  child: OutlineButton(
+                      onPressed: () {
+                        Navigator.push(context,
+                            CupertinoPageRoute(builder: (context) {
+                          return GetReceiptScreen(appModel.cameraCaptureModel);
+                        }));
+                      },
+                      highlightElevation: 0,
+                      color: Colors.white.withOpacity(0),
+                      // elevation: 0,
+                      // splashColor: Colors.white.withAlpha(0),
+                      // highlightColor: Colors.white.withAlpha(0),
+                      child: Center(
+                          child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Text(
+                            "NO NEWSPAPERS\nTAP TO REFRESH",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: sizeMulW * 15),
+                          ),
+                          Icon(
+                            Icons.refresh,
+                            size: sizeMulW * 30,
+                            color: Colors.black12,
+                          ),
+                        ],
+                      ))))
+
+              // child: ,
+
+              ),
+        ),
+      ),
+    );
+  } else if (bc.length - 1 < a) {
+    for (int i = 0; bc.length - 1 < a; i++)
+      bc.insert(bc.length - 1, ReceiptCardPlaceholder());
+  }
+
+  print("max is " + a.toString());
+
+  return bc;
+
+
+}
 List<Widget> bottomChildrenReceipts(AppModel appModel, BuildContext context) {
   List<Widget> bc = [
     LongButton(
@@ -1398,6 +1525,10 @@ class PromoSquareCard extends StatelessWidget {
                             Text(
                               "Just go to the nearest Kent's store to claim!",
                               textAlign: TextAlign.center,
+                            ),
+                            Text(
+                              "Valid until  ${DateFormat("MM DD, YY").format(DateTime.parse(promo.expiry_date))}",
+                              textAlign: TextAlign.center,style: TextStyle(color: Colors.red),textScaleFactor: 0.9,
                             ),
                             OutlineButton(
                               color: Colors.white,

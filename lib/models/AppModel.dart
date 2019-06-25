@@ -6,11 +6,13 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:async';
 import 'package:firebase_database/firebase_database.dart';
 import 'EditReceiptScreenModel.dart';
+import 'package:papyrus_client/data_models/News.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:simple_permissions/simple_permissions.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'ChatModel.dart';
+import 'package:http/http.dart' as http;
 import 'CameraCaptureModel.dart';
 import 'package:ef_qrcode/ef_qrcode.dart';
 import 'package:papyrus_client/data_models/Promo.dart';
@@ -27,6 +29,9 @@ import 'package:papyrus_client/data_models/Message.dart';
 import 'package:papyrus_client/models/ChartsScreenModel.dart';
 import 'package:toast/toast.dart';
 
+import 'package:flutter/foundation.dart';
+// import 'description.dart';
+import 'dart:io';
 class AppModel extends Model {
   // User _user;
   MethodChannel platform = const MethodChannel('papyrus_client/');
@@ -35,7 +40,7 @@ class AppModel extends Model {
   bool _receiveUniquePromos;
   bool _receiveOpenToAllPromos;
   FirebaseAuth mAuth;
-  String platformVersion;
+  String platformVersion; 
   // String rootFilePath;
   bool loadedUserExpense = false;
   EditReceiptScreenModel editReceiptScreenModel;
@@ -47,6 +52,7 @@ class AppModel extends Model {
   ReceiptsScreenModel receiptsScreenModel;
   FirebaseUser user;
   Directory rootDir;
+  List<News> listOfNews;
   Directory tempDir;
   List<String> dirList;
   File userExpenseJSONFile;
@@ -59,6 +65,7 @@ class AppModel extends Model {
   File qrCodeFile;
   List<String> receiptRuids = [];
   String allMessagesFilePath;
+  bool newsLoaded = false;
   File allMessagesFile;
   AllMessages allMessages;
   String dayExpenseFilePath;
@@ -237,24 +244,7 @@ class AppModel extends Model {
     listenForPromos();
   }
 
-  void init() async {
-    // for (Permission p in perms) {
-    //   // perm_results.addEntries(p:null);
-    //   perm_results[p] = await SimplePermissions.requestPermission(p);
-    // }
-    // editReceiptScreenModel = EditReceiptScreenModel(this);
-    // cameraCaptureModel = CameraCaptureModel(this);
-    // receiveReceiptModel = ReceiveReceiptModel(this);
-    // receiptsScreenModel = ReceiptsScreenModel(this);
-    // if (user == null) return;add
-    // try {
-    //   platformVersion = await SimplePermissions.platformVersion;
-    // } catch (e) {
-    //   platformVersion = "failed to get platform version";
-    // }
-
-    // print("The permission results" + perm_results.toString());
-
+  void init() async { 
     rootDir = await getApplicationDocumentsDirectory();
     // var = await getExte
     await checkOrGenerateDirectories();
@@ -272,6 +262,7 @@ class AppModel extends Model {
     tempDir = await getTemporaryDirectory();
     generateImage();
     firebaseInit();
+    listOfNews = await fetchNews(2);
   }
 
   void reset() async {
@@ -354,14 +345,14 @@ class AppModel extends Model {
     }
   }
 
-  fromStringToEnumCategory(String cat) {
-// enum Category { LEISURE, FOOD, TRANSPORTATION, MISCELLANEOUS, UTILITIES }
-    if (cat == "LEISURE") return Category.LEISURE;
-    if (cat == "FOOD") return Category.FOOD;
-    if (cat == "TRANSPORTATION") return Category.TRANSPORTATION;
-    if (cat == "MISCELLANEOUS") return Category.MISCELLANEOUS;
-    if (cat == "UTILITIES") return Category.UTILITIES;
-  }
+//   fromStringToEnumCategory(String cat) {
+// // enum Category { LEISURE, FOOD, TRANSPORTATION, MISCELLANEOUS, UTILITIES }
+//     if (cat == "LEISURE") return Category.LEISURE;
+//     if (cat == "FOOD") return Category.FOOD;
+//     if (cat == "TRANSPORTATION") return Category.TRANSPORTATION;
+//     if (cat == "MISCELLANEOUS") return Category.MISCELLANEOUS;
+//     if (cat == "UTILITIES") return Category.UTILITIES;
+//   }
 
   void addReceiptandSaveToStorage(Receipt r) {
     String path = '${dirMap['Receipts']}/r_uid${r.time_stamp}.json';
@@ -885,18 +876,52 @@ class AppModel extends Model {
     _viewing_period = period;
     notifyListeners();
   }
+ 
+Future<List<News>> fetchNews(  id) async {
+  String url;
+  if (id == 1) {
+    url = Constant.base_url +
+        "top-headlines?country=in&category=business&apiKey=" +
+        Constant.key;
+  } else if (id == 2) {
+    url = Constant.base_url +
+        "everything?q=bitcoin&sortBy=publishedAt&apiKey=" +
+        Constant.key;
+  } else if (id == 3) {
+    url = Constant.base_url +
+        "top-headlines?sources=techcrunch&apiKey=" +
+        Constant.key;
+  } else if (id == 4) {
+    url = Constant.base_url +
+        "everything?q=apple&from=2018-07-14&to=2018-07-14&sortBy=popularity&apiKey=" +
+        Constant.key;
+  } else if (id == 5) {
+    url =
+        Constant.base_url + "everything?domains=wsj.com&apiKey=" + Constant.key;
+  }
+  final response = await http.get(url); 
+  newsLoaded = true;
+  notifyListeners();
+  return compute(parsenews, response.body);
+}
+
+List<News> parsenews(String responsebody) {
+
+  final parsed = json.decode(responsebody);
+  return (parsed["articles"] as List)
+      .map<News>((json) => new News.fromJson(json))
+      .toList();
+}
 }
 
 class User {
   String username;
   String uid;
-  FirebaseUser fbUser;
+  FirebaseUser fbUser;  
 }
 
-class UserPreferences {
-  bool receiveUniquePromos;
-  bool receiveOpenToAllPromos;
-
-  // String
-
+ 
+class Constant{
+  static String base_url ="https://newsapi.org/v2/";
+  static String key = "7f958db5acf2472d9ee099c6556d7037"; 
 }
