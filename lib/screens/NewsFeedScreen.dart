@@ -11,6 +11,8 @@ import 'package:intl/intl.dart';
 import 'dart:io';
 import 'dart:convert';
 import 'dart:async';
+import 'package:progress_indicators/progress_indicators.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:papyrus_client/helpers/NewsFeedCard.dart';
 import 'package:papyrus_client/data_models/Receipt.dart';
 
@@ -158,6 +160,7 @@ class _NewsFeedScreenTopPartState extends State<NewsFeedScreenTopPart> {
                       elevation: 5,
                       color: greeny.colors[1],
                       onPressed: () {
+                        appModel.fetchNews(2);
                         // Navigator.push(context,
                         //     CupertinoPageRoute(builder: (context) {
                         //   return
@@ -170,8 +173,8 @@ class _NewsFeedScreenTopPartState extends State<NewsFeedScreenTopPart> {
                         width: MediaQuery.of(context).size.width * 0.18,
                         height: MediaQuery.of(context).size.width * 0.18,
                         child: Icon(
-                          Icons.add,
-                          size: MediaQuery.of(context).size.width * 0.1,
+                          FontAwesomeIcons.syncAlt,
+                          size: MediaQuery.of(context).size.width * 0.07,
                           color: Colors.white,
                         ),
                       ),
@@ -201,7 +204,7 @@ class _NewsFeedScreenBottomPartState extends State<NewsFeedScreenBottomPart> {
         margin: EdgeInsets.symmetric(
           horizontal: sizeMulW * 37,
         ),
-        child: (true)
+        child: (appModel.newsLoaded)
             ? ListView.builder(
                 // reverse: true,
                 itemCount: appModel.listOfNews.length,
@@ -209,7 +212,7 @@ class _NewsFeedScreenBottomPartState extends State<NewsFeedScreenBottomPart> {
                   if (index == 0) {
                     return Container(
                       margin: EdgeInsets.only(
-                          top: sizeMulW * 170, bottom: sizeMulW * 9),
+                          top: sizeMulW * 160, bottom: sizeMulW * 9),
                       child: NewsFeedCard(
                           context, appModel.listOfNews[index], index),
                     );
@@ -230,7 +233,19 @@ class _NewsFeedScreenBottomPartState extends State<NewsFeedScreenBottomPart> {
                   // return Text("hello${appModel.receipts[index].items[0].name}",style: TextStyle(fontSize: 50,));
                 },
               )
-            : Center(child: CircularProgressIndicator()),
+            : Center(
+                            child: Column(children: <Widget>[
+                          HeartbeatProgressIndicator(
+                            child: Icon(FontAwesomeIcons.newspaper,
+                                color: Colors.grey[300], size: 30 * sizeMulW),
+                          ),
+                          SizedBox(height: sizeMulW*40),
+                          Text(
+                            "Fetching news",
+                            style: TextStyle(color: Colors.grey[700], fontWeight: FontWeight.w600),
+                            textScaleFactor: 1.1,
+                          ),
+                        ])),
       );
     });
   }

@@ -883,6 +883,8 @@ class AppModel extends Model {
   }
 
   Future<List<News>> fetchNews(id) async {
+    newsLoaded = false;
+    notifyListeners();
     String url;
     if (id == 1) {
       url = Constant.base_url +
