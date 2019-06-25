@@ -32,6 +32,7 @@ import 'package:toast/toast.dart';
 import 'package:flutter/foundation.dart';
 // import 'description.dart';
 import 'dart:io';
+
 class AppModel extends Model {
   // User _user;
   MethodChannel platform = const MethodChannel('papyrus_client/');
@@ -40,7 +41,7 @@ class AppModel extends Model {
   bool _receiveUniquePromos;
   bool _receiveOpenToAllPromos;
   FirebaseAuth mAuth;
-  String platformVersion; 
+  String platformVersion;
   // String rootFilePath;
   bool loadedUserExpense = false;
   EditReceiptScreenModel editReceiptScreenModel;
@@ -193,14 +194,17 @@ class AppModel extends Model {
       var d = data.value;
       print("the data" + d.toString());
 
-      d.forEach((k, value) async{
+      d.forEach((k, value) async {
         Map map = jsonDecode(value);
         var promo = Promo.fromJson(map);
         promo.qrPath = await generateQrCodeForPromo(promo.promo_code);
-        
+
         print("expiry" + DateTime.parse(promo.expiry_date).toIso8601String());
         // print("NAAAAAAAAAAME: " + promo.item_name);
-        if (DateTime.now().toLocal().compareTo(DateTime.parse(promo.expiry_date)) <=0  ) {
+        if (DateTime.now()
+                .toLocal()
+                .compareTo(DateTime.parse(promo.expiry_date)) <=
+            0) {
           promoList.insert(0, promo);
           promoCodes.insert(0, k.toString());
         }
@@ -211,15 +215,18 @@ class AppModel extends Model {
       notifyListeners();
     });
 
-    promosRef.onChildAdded.listen((child) async{
+    promosRef.onChildAdded.listen((child) async {
       if (!promoCodes.contains(child.snapshot.key)) {
         Map map = jsonDecode(child.snapshot.value);
         var promo = Promo.fromJson(map);
-        
+
         promo.qrPath = await generateQrCodeForPromo(promo.promo_code);
 
         print("expiry" + DateTime.parse(promo.expiry_date).toIso8601String());
-        if (DateTime.now().toLocal().compareTo(DateTime.parse(promo.expiry_date)) <=0) {
+        if (DateTime.now()
+                .toLocal()
+                .compareTo(DateTime.parse(promo.expiry_date)) <=
+            0) {
           promoList.insert(0, promo);
           promoCodes.insert(0, child.snapshot.key);
         }
@@ -244,7 +251,7 @@ class AppModel extends Model {
     listenForPromos();
   }
 
-  void init() async { 
+  void init() async {
     rootDir = await getApplicationDocumentsDirectory();
     // var = await getExte
     await checkOrGenerateDirectories();
@@ -788,14 +795,12 @@ class AppModel extends Model {
 
   Future<String> generateQrCodeForPromo(String promoCode) async {
     try {
-      var imageFile = await EfQrcode.generate(user.uid+":" + promoCode, "#ffffff", "#000000");
+      var imageFile = await EfQrcode.generate(
+          user.uid + ":" + promoCode, "#ffffff", "#000000");
       return imageFile.path;
-      
     } catch (e) {
       return "failed";
     }
-
-
   }
 
   void generateImage() async {
@@ -876,43 +881,42 @@ class AppModel extends Model {
     _viewing_period = period;
     notifyListeners();
   }
- 
-Future<List<News>> fetchNews(  id) async {
-  String url;
-  if (id == 1) {
-    url = Constant.base_url +
-        "top-headlines?country=in&category=business&apiKey=" +
-        Constant.key;
-  } else if (id == 2) {
-    url = Constant.base_url +
-        "everything?q=business&sources?language=en&sortBy=popularity&apiKey=" +
-        Constant.key;
-  } else if (id == 3) {
-    url = Constant.base_url +
-        "top-headlines?sources=techcrunch&apiKey=" +
-        Constant.key;
-  } else if (id == 4) {
-    url = Constant.base_url +
-        "everything?q=apple&from=2018-07-14&to=2018-07-14&sortBy=popularity&apiKey=" +
-        Constant.key;
-  } else if (id == 5) {
-    url =
-        Constant.base_url + "everything?domains=wsj.com&apiKey=" + Constant.key;
+
+  Future<List<News>> fetchNews(id) async {
+    String url;
+    if (id == 1) {
+      url = Constant.base_url +
+          "top-headlines?country=in&category=business&apiKey=" +
+          Constant.key;
+    } else if (id == 2) {
+      url = Constant.base_url +
+          "everything?q=business&sources?language=en&sortBy=popularity&apiKey=" +
+          Constant.key;
+    } else if (id == 3) {
+      url = Constant.base_url +
+          "top-headlines?sources=techcrunch&apiKey=" +
+          Constant.key;
+    } else if (id == 4) {
+      url = Constant.base_url +
+          "everything?q=apple&from=2018-07-14&to=2018-07-14&sortBy=popularity&apiKey=" +
+          Constant.key;
+    } else if (id == 5) {
+      url = Constant.base_url +
+          "everything?domains=wsj.com&apiKey=" +
+          Constant.key;
+    }
+    final response = await http.get(url);
+
+    var res = await compute(parsenews, response.body);
+    newsLoaded = true;
+    notifyListeners();
+    return res;
   }
-  final response = await http.get(url); 
-  notifyListeners();
-  var res =await compute(parsenews, response.body);
-  newsLoaded = true;
-  return res;
-}
-
-
 }
 
 List<News> parsenews(String responsebody) {
-
   final parsed = json.decode(responsebody);
-  
+
   // newsLoaded = true;
   return (parsed["articles"] as List)
       .map<News>((json) => new News.fromJson(json))
@@ -922,11 +926,10 @@ List<News> parsenews(String responsebody) {
 class User {
   String username;
   String uid;
-  FirebaseUser fbUser;  
+  FirebaseUser fbUser;
 }
 
- 
-class Constant{
-  static String base_url ="https://newsapi.org/v2/";
-  static String key = "7f958db5acf2472d9ee099c6556d7037"; 
+class Constant {
+  static String base_url = "https://newsapi.org/v2/";
+  static String key = "7f958db5acf2472d9ee099c6556d7037";
 }
