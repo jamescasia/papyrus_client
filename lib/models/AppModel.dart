@@ -885,7 +885,7 @@ Future<List<News>> fetchNews(  id) async {
         Constant.key;
   } else if (id == 2) {
     url = Constant.base_url +
-        "everything?q=bitcoin&sortBy=publishedAt&apiKey=" +
+        "everything?q=business&sources?language=en&sortBy=popularity&apiKey=" +
         Constant.key;
   } else if (id == 3) {
     url = Constant.base_url +
@@ -900,18 +900,23 @@ Future<List<News>> fetchNews(  id) async {
         Constant.base_url + "everything?domains=wsj.com&apiKey=" + Constant.key;
   }
   final response = await http.get(url); 
-  newsLoaded = true;
   notifyListeners();
-  return compute(parsenews, response.body);
+  var res =await compute(parsenews, response.body);
+  newsLoaded = true;
+  return res;
+}
+
+
 }
 
 List<News> parsenews(String responsebody) {
 
   final parsed = json.decode(responsebody);
+  
+  // newsLoaded = true;
   return (parsed["articles"] as List)
       .map<News>((json) => new News.fromJson(json))
       .toList();
-}
 }
 
 class User {

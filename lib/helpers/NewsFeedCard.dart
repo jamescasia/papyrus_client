@@ -48,10 +48,13 @@ Widget NewsFeedCard(BuildContext context, News news, index) {
           child: Container(
             padding: EdgeInsets.symmetric(
                 horizontal: sizeMulW * 12, vertical: sizeMulW * 4),
-            child:  Column(children: <Widget>[
-              Text(news.title, style: TextStyle(fontWeight: FontWeight.w600, color: Colors.grey[700]),textScaleFactor: 1.15,),
-              Text(news.author),
-              Text(news.publishedDate, textScaleFactor: 0.9,),
+            child:  Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+              Text(news.title, style: TextStyle(fontWeight: FontWeight.w600, color: Colors.grey[800]),textScaleFactor: 1,overflow: TextOverflow.fade,),
+              // Text(news.author),
+              Text(DateFormat('MM/dd/yyyy').format(DateTime.parse(news.publishedDate)), textScaleFactor: 0.9,style: TextStyle(color: Colors.grey[600]),),
               
             ],)
           ),

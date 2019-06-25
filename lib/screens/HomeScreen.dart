@@ -9,10 +9,12 @@ import 'package:shimmer/shimmer.dart';
 import 'package:papyrus_client/helpers/ScrollBehaviour.dart';
 import 'package:papyrus_client/helpers/CustomShapeClipper.dart';
 import 'package:papyrus_client/screens/ReceiptScreen.dart';
-
+import 'package:papyrus_client/data_models/News.dart';
+import 'package:papyrus_client/helpers/NewsFeedCard.dart';
 import 'package:papyrus_client/data_models/Promo.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'ChartScreen.dart';
+import 'package:progress_indicators/progress_indicators.dart';
 import 'PromoScreen.dart';
 import 'SettingScreen.dart';
 import 'package:papyrus_client/helpers/CustomShowDialog.dart';
@@ -896,7 +898,7 @@ class PromosTab extends StatelessWidget {
           ScopedModelDescendant<AppModel>(builder: (context, child, appModel) {
         return Column(
           mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Row(
@@ -953,31 +955,28 @@ class PromosTab extends StatelessWidget {
                         //  onPageChanged: callbackFunction,
                         scrollDirection: Axis.vertical,
                       )
-
-                    // Wrap(
-                    //   spacing: 0,
-                    //   direction: Axis.horizontal,
-                    //     children: appModel.promoList.map((f) {
-                    //       print("from HHHHHHHHHHHHHHHHHHHHOOOMEME");
-                    //       print(f.item_name);
-                    //       return PromoSquareCard(f.image_path, f.item_name,
-                    //           f.expiry_date, (f.value));
-                    //     }).toList(),
-                    //   )
-                    : SizedBox(width: 0.001)
-                // color: Colors.red,
-
-                // child: Flex(
-                //   direction: Axis.vertical,
-                //   children: (appModel.receiptsLoaded)
-                //       ? bottomChildrenReceipts(appModel, context)
-                //       : [SizedBox(width: 1)],
-                //   mainAxisSize: MainAxisSize.max,
-                //   mainAxisAlignment: (appModel.receiptsLoaded &&
-                //           appModel.receiptFiles.length != 0)
-                //       ? MainAxisAlignment.spaceEvenly
-                //       : MainAxisAlignment.end,
-                // ),
+                    : 
+                        Center(
+                            child: Container(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.max,
+                                children: <Widget>[
+                          // HeartbeatProgressIndicator(
+                          //     child: 
+                              
+                              Icon(FontAwesomeIcons.sadCry,
+                                  color: Colors.grey[300], size: 70 * sizeMulW),
+                          // ),
+                          SizedBox(height: sizeMulW*20),
+                          Text(
+                              "No Promos Found\n TT",textAlign: TextAlign.center,
+                              style: TextStyle(color: Colors.grey[700], fontWeight: FontWeight.w600),
+                              textScaleFactor: 1.4,
+                          ),
+                        ]),
+                            ))
+                       ,
                 )
           ],
         );
@@ -995,7 +994,7 @@ class NewsTab extends StatelessWidget {
           ScopedModelDescendant<AppModel>(builder: (context, child, appModel) {
         return Column(
           mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Row(
@@ -1031,14 +1030,25 @@ class NewsTab extends StatelessWidget {
 
               child: Flex(
                 direction: Axis.vertical,
-                children: (appModel.receiptsLoaded)
-                    ? bottomChildrenReceipts(appModel, context)
-                    : [SizedBox(width: 1)],
+                children: (appModel.newsLoaded)
+                    ? bottomChildrenNews(appModel, context)
+                    : [
+                        Center(
+                            child: Column(children: <Widget>[
+                          HeartbeatProgressIndicator(
+                            child: Icon(FontAwesomeIcons.newspaper,
+                                color: Colors.grey[300], size: 30 * sizeMulW),
+                          ),
+                          SizedBox(height: sizeMulW*40),
+                          Text(
+                            "Fetching news",
+                            style: TextStyle(color: Colors.grey[700], fontWeight: FontWeight.w600),
+                            textScaleFactor: 1.1,
+                          ),
+                        ]))
+                      ],
                 mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: (appModel.receiptsLoaded &&
-                        appModel.receiptFiles.length != 0)
-                    ? MainAxisAlignment.spaceEvenly
-                    : MainAxisAlignment.end,
+                mainAxisAlignment:   MainAxisAlignment.spaceEvenly 
               ),
             )
           ],
@@ -1057,7 +1067,7 @@ class ReceiptsTab extends StatelessWidget {
           ScopedModelDescendant<AppModel>(builder: (context, child, appModel) {
         return Column(
           mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Row(
@@ -1192,7 +1202,6 @@ String decimalDigits(AppModel appModel) {
 }
 
 List<Widget> bottomChildrenNews(AppModel appModel, BuildContext context) {
-
   List<Widget> bc = [
     LongButton(
       greeny.colors[1],
@@ -1214,7 +1223,7 @@ List<Widget> bottomChildrenNews(AppModel appModel, BuildContext context) {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              "MORE ARTICLES",
+              "MORE",
               style: TextStyle(
                   color: Colors.white,
                   //
@@ -1235,20 +1244,17 @@ List<Widget> bottomChildrenNews(AppModel appModel, BuildContext context) {
       // null
     )
   ];
-  for (File f in appModel.receiptFiles) {
-    Map map = jsonDecode(f.readAsStringSync());
-    var receipt = Receipt.fromJson(map);
-    if (appModel.receiptFiles.indexOf(f) <
+  for (News n in appModel.listOfNews) {
+    if (appModel.listOfNews.indexOf(n) <
         ((MediaQuery.of(context).size.height -
                         0.942 * MediaQuery.of(context).size.width -
                         (34 * sizeMulW)) /
                     (81 * sizeMulW))
                 .floor() -
             1) {
-      bc.insert(bc.length - 1, ReceiptCard(context, receipt, 1));
+      bc.insert(bc.length - 1, NewsFeedCard(context, n, 1));
     } else
       break;
- 
   }
   var a = ((MediaQuery.of(context).size.height -
                   0.942 * MediaQuery.of(context).size.width -
@@ -1306,17 +1312,12 @@ List<Widget> bottomChildrenNews(AppModel appModel, BuildContext context) {
         ),
       ),
     );
-  } else if (bc.length - 1 < a) {
-    for (int i = 0; bc.length - 1 < a; i++)
-      bc.insert(bc.length - 1, ReceiptCardPlaceholder());
   }
-
   print("max is " + a.toString());
 
   return bc;
-
-
 }
+
 List<Widget> bottomChildrenReceipts(AppModel appModel, BuildContext context) {
   List<Widget> bc = [
     LongButton(
@@ -1498,7 +1499,6 @@ class PromoSquareCard extends StatelessWidget {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
-                            
                             Image.file(
                               File(promo.qrPath),
                               fit: BoxFit.cover,
@@ -1517,7 +1517,7 @@ class PromoSquareCard extends StatelessWidget {
                               ),
                             ),
                             new Text(
-                              '${discount.floor()}% off $itemName!',
+                              '${discount.floor().toStringAsFixed(0)}% off $itemName!',
                               textScaleFactor: 1.2,
                               textAlign: TextAlign.center,
                               style: TextStyle(fontWeight: FontWeight.w600),
@@ -1527,8 +1527,10 @@ class PromoSquareCard extends StatelessWidget {
                               textAlign: TextAlign.center,
                             ),
                             Text(
-                              "Valid until  ${DateFormat("MM DD, YY").format(DateTime.parse(promo.expiry_date))}",
-                              textAlign: TextAlign.center,style: TextStyle(color: Colors.red),textScaleFactor: 0.9,
+                              "Valid until  ${DateFormat('MM/dd/yyyy').format(DateTime.parse(promo.expiry_date))}",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: Colors.red),
+                              textScaleFactor: 0.9,
                             ),
                             OutlineButton(
                               color: Colors.white,
