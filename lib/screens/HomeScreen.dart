@@ -1599,7 +1599,7 @@ class PromoSquareCard extends StatelessWidget {
                         left: 0,
                         right: 0,
                         child: Opacity(
-                          opacity: 0.8,
+                          opacity: 0.9,
                           child: Container(
                             width: double.infinity,
                             height: 60,
@@ -1611,37 +1611,66 @@ class PromoSquareCard extends StatelessWidget {
                                   greeny.colors[1],
                                   greeny.colors[0],
                                 ])),
-                          ),
-                        )),
-                    Positioned(
-                      left: 10,
-                      bottom: 10,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
+
+                                child:Padding(
+                                  padding:  EdgeInsets.only(left: 8),
+                                  child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Container(
                             padding: EdgeInsets.only(
-                                top: 3, bottom: 3, left: 8, right: 8),
+                                  top: 3, bottom: 3, left: 8, right: 8),
                             child: Text(
                               discount.toInt().toString() + " % OFF!",
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                             decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(30))),
+                                  color: Colors.white,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(30))),
                           ),
                           Text(
                             itemName,
                             style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold),
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
-                    ),
+                                ),
+                          ),
+                        )),
+                    // Positioned(
+                    //   left: 10,
+                    //   bottom: 10,
+                    //   child: Column(
+                    //     mainAxisAlignment: MainAxisAlignment.start,
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //     children: <Widget>[
+                    //       Container(
+                    //         padding: EdgeInsets.only(
+                    //             top: 3, bottom: 3, left: 8, right: 8),
+                    //         child: Text(
+                    //           discount.toInt().toString() + " % OFF!",
+                    //           style: TextStyle(fontWeight: FontWeight.bold),
+                    //         ),
+                    //         decoration: BoxDecoration(
+                    //             color: Colors.white,
+                    //             borderRadius:
+                    //                 BorderRadius.all(Radius.circular(30))),
+                    //       ),
+                    //       Text(
+                    //         itemName,
+                    //         style: TextStyle(
+                    //             color: Colors.white,
+                    //             fontSize: 18,
+                    //             fontWeight: FontWeight.bold),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                     // Container(
                     //   child: InkWell(
 

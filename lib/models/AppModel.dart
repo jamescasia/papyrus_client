@@ -162,8 +162,6 @@ class AppModel extends Model {
           addReceiptandSaveToStorage(receipt);
           // showDialog(context: context, child: null
 
-          
-          
           // );
         }
       });
@@ -234,8 +232,11 @@ class AppModel extends Model {
             0) {
           promoList.insert(0, promo);
           promoCodes.insert(0, child.snapshot.key);
+
+          chatModel.replyMessage(
+              "Woot woot you got a new promo from ${promo.retailer_name}!!\n\nGet ${(promo.value * 100).toInt()}% off your purchase of ${promo.item_name} at any ${promo.retailer_name} branches nationwide!! \n\nHURRY!!! This promo lasts until ${DateFormat("MM/DD/yyyy").format(DateTime.parse(promo.expiry_date))}\nPromo code: ${promo.promo_code}",
+              "");
         }
-        chatModel.replyMessage("Woot woot you got a new promo from ${promo.retailer_name}!!\n\nGet ${(promo.value*100).toInt()}% off your purchase of ${promo.item_name} at any ${promo.retailer_name} branches nationwide!! \n\nHURRY!!! This promo lasts until ${DateFormat("MM/DD/yyyy").format(DateTime.parse(promo.expiry_date))}\nPromo code: ${promo.promo_code}", "");
         notifyListeners();
       }
     });
@@ -898,7 +899,7 @@ class AppModel extends Model {
           Constant.key;
     } else if (id == 2) {
       url = Constant.base_url +
-          "everything?q=business&sources?language=en&sortBy=publishedAt&apiKey=" +
+          "top-headlines?country=ph&sources?language=en&sortBy=publishedAt&apiKey=" +
           Constant.key;
     } else if (id == 3) {
       url = Constant.base_url +

@@ -29,24 +29,24 @@ class GroupedBarChart extends StatelessWidget {
   /// Create series list with multiple series
   static List<charts.Series<OrdinalSales, String>> _createSampleData() {
     final desktopSalesData = [
-      new OrdinalSales('2014', 5),
-      new OrdinalSales('2015', 25),
-      new OrdinalSales('2016', 100),
-      new OrdinalSales('2017', 75),
+      new OrdinalSales('Jan', 5),
+      new OrdinalSales('Feb', 25),
+      new OrdinalSales('Mar', 100),
+      new OrdinalSales('Apr', 75),
     ];
 
     final tableSalesData = [
-      new OrdinalSales('2014', 25),
-      new OrdinalSales('2015', 50),
-      new OrdinalSales('2016', 120),
-      new OrdinalSales('2017', 80),
+      new OrdinalSales('Jan', 25),
+      new OrdinalSales('Feb', 50),
+      new OrdinalSales('Mar', 120),
+      new OrdinalSales('Apr', 80),
     ];
 
     final mobileSalesData = [
-      new OrdinalSales('2014', 10),
-      new OrdinalSales('2015', 15),
-      new OrdinalSales('2016', 50),
-      new OrdinalSales('2017', 45),
+      new OrdinalSales('Jan', 10),
+      new OrdinalSales('Feb', 15),
+      new OrdinalSales('Mar', 50),
+      new OrdinalSales('Apr', 45),
     ];
 
     return [
