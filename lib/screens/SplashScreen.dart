@@ -11,6 +11,7 @@ import 'package:flutter/services.dart';
 import 'HomeScreen.dart';
 import 'package:toast/toast.dart';
 import 'LogInScreen.dart';
+import 'OnBoardingScreen.dart';
 
 class SplashScreen extends StatelessWidget {
   @override
@@ -39,7 +40,7 @@ class SplashScreen extends StatelessWidget {
                     // Toast.show("damn user: ${appModel.user}", context, duration: Toast.LENGTH_LONG);
                     return HomeScreen();
                   } else
-                    return LogInScreen();
+                    return OnBoardingScreen();
                 } else if (snapshot.connectionState == ConnectionState.active ||
                     snapshot.connectionState == ConnectionState.waiting)
                   return SplashFrame();

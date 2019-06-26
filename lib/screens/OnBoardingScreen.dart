@@ -26,7 +26,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         pageColor: greeny.colors[1],
         // iconImageAssetPath: 'assets/air-hostess.png',
         // assets/icons/3x/burger_king.png
-        bubble: Image.asset('assets/icons/3x/burger_king.png'),
+        // bubble: Image.asset('assets/icons/3x/burger_king.png'),
         body: Text(
           'Gather all your receipts in one place and get rid of the unnecessary paper bulk',
         ),
@@ -54,7 +54,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     PageViewModel(
         pageColor: greeny.colors[0],
       // pageColor: const Color(0xFF8BC34A),
-      iconImageAssetPath: 'assets/icons/3x/burger_king.png',
+      // iconImageAssetPath: 'assets/icons/3x/burger_king.png',
       body: Text(
         "Track your expenses and save your hard-earned money",
       ),
@@ -117,7 +117,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
        
         pageColor: greeny.colors[0],
       // pageColor: const Color(0xFF8BC34A),
-      iconImageAssetPath: 'assets/icons/3x/burger_king.png',
+      // iconImageAssetPath: 'assets/icons/3x/burger_king.png',
       body: Text(
         "Instantly communicate to our partner stores through chat",
       ),
@@ -151,7 +151,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     return IntroViewsFlutter(
       pages,
       onTapDoneButton: () {
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(
             builder: (context) => LogInScreen(),
