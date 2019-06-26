@@ -175,7 +175,7 @@ class EditReceiptScreenTopPart extends StatelessWidget {
           Positioned(
             bottom: sizeMulW * 15,
             // right: 48 * sizeMulW * sizeMulW,
-            left: homeButtonDist + 30 * sizeMulW,
+            left: homeButtonDist  ,
             child: Material(
               color: Colors.white.withOpacity(0),
               borderRadius: BorderRadius.all(Radius.circular(3000)),
@@ -193,10 +193,15 @@ class EditReceiptScreenTopPart extends StatelessWidget {
                   // editReceiptScreenModel.changed=!editReceiptScreenModel.changed;
                   // editReceiptScreenModel.update();
                 },
-                child: Icon(
-                  FontAwesomeIcons.edit,
-                  size: sizeMulW * 33,
-                  color: Colors.white,
+                child: Container(
+                  
+                  width:sizeMulW  * 74.052,
+                  height: sizeMulW  * 74.052,
+                  child: Icon(
+                    FontAwesomeIcons.edit,
+                    // size: sizeMulW * 33,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),

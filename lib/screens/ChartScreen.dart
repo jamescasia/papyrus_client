@@ -458,16 +458,16 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                                 Period.DAILY)
                                                             ? addCommas(appModel
                                                                 .dayExpense
-                                                                .totalSpentOnFood.toInt() )+"${appModel.dayExpense.totalSpentOnFood%1}"
+                                                                .totalSpentOnFood.toInt() )+"${(appModel.dayExpense.totalSpentOnUtilities%1).toStringAsFixed(2)}"
                                                             : (appModel.viewing_period ==
                                                                     Period
                                                                         .MONTHLY)
                                                                 ? addCommas(appModel
                                                                 .monthExpense
-                                                                .totalSpentOnFood.toInt() )+"${appModel.monthExpense.totalSpentOnFood%1}"
+                                                                .totalSpentOnFood.toInt() )+"${(appModel.dayExpense.totalSpentOnUtilities%1).toStringAsFixed(2)}"
                                                                 : addCommas(appModel
                                                                 .weekExpense
-                                                                .totalSpentOnFood.toInt() )+"${appModel.weekExpense.totalSpentOnFood%1}")
+                                                                .totalSpentOnFood.toInt() )+"${(appModel.dayExpense.totalSpentOnUtilities%1).toStringAsFixed(2)}")
                                                         .toString(),
                                                     textScaleFactor: 1.1,
                                                     textAlign: TextAlign.center,
@@ -535,16 +535,16 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                                 Period.DAILY)
                                                             ? addCommas(appModel
                                                                 .dayExpense
-                                                                .totalSpentOnLeisure.toInt() )+"${appModel.dayExpense.totalSpentOnLeisure%1}"
+                                                                .totalSpentOnLeisure.toInt() )+"${(appModel.dayExpense.totalSpentOnUtilities%1).toStringAsFixed(2)}"
                                                             : (appModel.viewing_period ==
                                                                     Period
                                                                         .MONTHLY)
                                                                 ? addCommas(appModel
                                                                 .monthExpense
-                                                                .totalSpentOnLeisure.toInt() )+"${appModel.monthExpense.totalSpentOnLeisure%1}"
+                                                                .totalSpentOnLeisure.toInt() )+"${(appModel.dayExpense.totalSpentOnUtilities%1).toStringAsFixed(2)}"
                                                                 : addCommas(appModel
                                                                 .weekExpense
-                                                                .totalSpentOnLeisure.toInt() )+"${appModel.weekExpense.totalSpentOnLeisure%1}")
+                                                                .totalSpentOnLeisure.toInt() )+"${(appModel.dayExpense.totalSpentOnUtilities%1).toStringAsFixed(2)}")
                                                         .toString(),
                                                     textScaleFactor: 1.1,
                                                     textAlign: TextAlign.center,
@@ -619,16 +619,16 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                                 Period.DAILY)
                                                             ? addCommas(appModel
                                                                 .dayExpense
-                                                                .totalSpentOnMiscellaneous.toInt() )+"${appModel.dayExpense.totalSpentOnMiscellaneous%1}"
+                                                                .totalSpentOnMiscellaneous.toInt() )+"${(appModel.dayExpense.totalSpentOnMiscellaneous%1).toStringAsFixed(2)}"
                                                             : (appModel.viewing_period ==
                                                                     Period
                                                                         .MONTHLY)
                                                                 ? addCommas(appModel
                                                                 .monthExpense
-                                                                .totalSpentOnMiscellaneous.toInt() )+"${appModel.monthExpense.totalSpentOnMiscellaneous%1}"
+                                                                .totalSpentOnMiscellaneous.toInt() )+"${(appModel.dayExpense.totalSpentOnMiscellaneous%1).toStringAsFixed(2)}"
                                                                 : addCommas(appModel
                                                                 .weekExpense
-                                                                .totalSpentOnMiscellaneous.toInt() )+"${appModel.weekExpense.totalSpentOnMiscellaneous%1}")
+                                                                .totalSpentOnMiscellaneous.toInt() )+"${(appModel.dayExpense.totalSpentOnMiscellaneous%1).toStringAsFixed(2)}" )
                                                         .toString(),
                                                     textScaleFactor: 1.1,
                                                     textAlign: TextAlign.center,
@@ -695,16 +695,16 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                                 Period.DAILY)
                                                             ? addCommas(appModel
                                                                 .dayExpense
-                                                                .totalSpentOnTransportation.toInt() )+"${appModel.dayExpense.totalSpentOnTransportation%1}"
+                                                                .totalSpentOnTransportation.toInt() )+"${(appModel.dayExpense.totalSpentOnTransportation%1).toStringAsFixed(2)}"
                                                             : (appModel.viewing_period ==
                                                                     Period
                                                                         .MONTHLY)
                                                                 ? addCommas(appModel
                                                                 .monthExpense
-                                                                .totalSpentOnTransportation.toInt() )+"${appModel.monthExpense.totalSpentOnTransportation%1}"
+                                                                .totalSpentOnTransportation.toInt() )+"${(appModel.dayExpense.totalSpentOnTransportation%1).toStringAsFixed(2)}"
                                                                 : addCommas(appModel
                                                                 .weekExpense
-                                                                .totalSpentOnTransportation.toInt() )+"${appModel.weekExpense.totalSpentOnTransportation%1}")
+                                                                .totalSpentOnTransportation.toInt() )+"${(appModel.dayExpense.totalSpentOnTransportation%1).toStringAsFixed(2)}")
                                                         .toString(),
                                                     textScaleFactor: 1.1,
                                                     textAlign: TextAlign.center,
@@ -772,16 +772,16 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                                 Period.DAILY)
                                                             ? addCommas(appModel
                                                                 .dayExpense
-                                                                .totalSpentOnUtilities.toInt() )+"${appModel.dayExpense.totalSpentOnUtilities%1}"
+                                                                .totalSpentOnUtilities.toInt() )+"${(appModel.dayExpense.totalSpentOnUtilities%1).toStringAsFixed(2)}"
                                                             : (appModel.viewing_period ==
                                                                     Period
                                                                         .MONTHLY)
                                                                 ? addCommas(appModel
                                                                 .monthExpense
-                                                                .totalSpentOnUtilities.toInt() )+"${appModel.monthExpense.totalSpentOnUtilities%1}"
+                                                                .totalSpentOnUtilities.toInt() )+"${(appModel.dayExpense.totalSpentOnUtilities%1).toStringAsFixed(2)}"
                                                                 : addCommas(appModel
                                                                 .weekExpense
-                                                                .totalSpentOnUtilities.toInt() )+"${appModel.weekExpense.totalSpentOnUtilities%1}")
+                                                                .totalSpentOnUtilities.toInt() )+"${(appModel.dayExpense.totalSpentOnUtilities%1).toStringAsFixed(2)}")
                                                         .toString(),
                                                     textScaleFactor: 1.1,
                                                     textAlign: TextAlign.center,

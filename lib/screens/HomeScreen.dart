@@ -74,7 +74,7 @@ class PapyrusCustomer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
-      statusBarColor: const Color(0xFF61C350),
+      statusBarColor: greeny.colors[0],
       systemNavigationBarColor: const Color(0xFF1BA977),
       // #61C350
     ));
@@ -772,8 +772,8 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                   }));
                 },
                 child: Container(
-                  width: (0.5 * (sizeMulW + sizeMulH)) * 74.052,
-                  height: (0.5 * (sizeMulW + sizeMulH)) * 74.052,
+                  width:sizeMulW  * 74.052,
+                  height: sizeMulW  * 74.052,
                   child: Icon(
                     // print(size);
                     // Icons.add,

@@ -30,31 +30,33 @@ class _ShowReceiptScreenState extends State<ShowReceiptScreen> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      floatingActionButton: (fromEdit)?AnimatedContainer(
-          duration: Duration(milliseconds: 200),
-          curve: Curves.decelerate,
-          width: (checked) ? 0 : fabSize,
-          height: (checked) ? 0 : fabSize,
-          child: RawMaterialButton(
-            fillColor: greeny.colors[1],
-            shape: new CircleBorder(),
-            splashColor: Colors.lightGreen,
-            highlightColor: Colors.greenAccent,
-            elevation: 5,
-            child: new Icon(
-              Icons.check,
-              color: Colors.white,
-              size: 40 * sizeMulW,
-            ),
-            onPressed: () {
-              setState(() {
-                checked = true;
-              });
+      floatingActionButton: (fromEdit)
+          ? AnimatedContainer(
+              duration: Duration(milliseconds: 200),
+              curve: Curves.decelerate,
+              width: (checked) ? 0 : fabSize,
+              height: (checked) ? 0 : fabSize,
+              child: RawMaterialButton(
+                fillColor: greeny.colors[1],
+                shape: new CircleBorder(),
+                splashColor: Colors.lightGreen,
+                highlightColor: Colors.greenAccent,
+                elevation: 5,
+                child: new Icon(
+                  Icons.check,
+                  color: Colors.white,
+                  size: 40 * sizeMulW,
+                ),
+                onPressed: () {
+                  setState(() {
+                    checked = true;
+                  });
 
-              Navigator.pop(context);
-            },
-          )):null,
-      body: ShowReceiptScreenStack(receipt,fromEdit),
+                  Navigator.pop(context);
+                },
+              ))
+          : null,
+      body: ShowReceiptScreenStack(receipt, fromEdit),
     );
   }
 }
@@ -418,21 +420,25 @@ class _ShowReceiptScreenStackState extends State<ShowReceiptScreenStack> {
                         Positioned(
                           left: homeButtonDist + sizeMulW * 32,
                           bottom: 13,
-                          child: Icon(
-                            (receipt.category == "Leisure")
-                                ? FontAwesomeIcons.wineGlassAlt
-                                : (receipt.category == "Transportation")
-                                    ? FontAwesomeIcons.bus
-                                    : (receipt.category == "Food")
-                                        ? FontAwesomeIcons.utensils
-                                        : (receipt.category == "Utilities")
-                                            ? FontAwesomeIcons.toiletPaper
-                                            : (receipt.category ==
-                                                    "Miscellaneous")
-                                                ? FontAwesomeIcons.campground
-                                                : FontAwesomeIcons.file,
-                            size: sizeMulW * 35,
-                            color: iconColor,
+                          child: Container(
+                            width: sizeMulW * 74.052,
+                            height: sizeMulW * 74.052,
+                            child: Icon(
+                              (receipt.category == "Leisure")
+                                  ? FontAwesomeIcons.wineGlassAlt
+                                  : (receipt.category == "Transportation")
+                                      ? FontAwesomeIcons.bus
+                                      : (receipt.category == "Food")
+                                          ? FontAwesomeIcons.utensils
+                                          : (receipt.category == "Utilities")
+                                              ? FontAwesomeIcons.toiletPaper
+                                              : (receipt.category ==
+                                                      "Miscellaneous")
+                                                  ? FontAwesomeIcons.campground
+                                                  : FontAwesomeIcons.file,
+                              // size: sizeMulW * 35,
+                              color: iconColor,
+                            ),
                           ),
                           // Icon(
                           //   // Icons.image,

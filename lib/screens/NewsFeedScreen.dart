@@ -170,8 +170,8 @@ class _NewsFeedScreenTopPartState extends State<NewsFeedScreenTopPart> {
                         // }));
                       },
                       child: Container(
-                        width: MediaQuery.of(context).size.width * 0.18,
-                        height: MediaQuery.of(context).size.width * 0.18,
+                  width:sizeMulW  * 74.052,
+                  height: sizeMulW  * 74.052,
                         child: Icon(
                           FontAwesomeIcons.solidNewspaper,
                           size: MediaQuery.of(context).size.width * 0.07,
