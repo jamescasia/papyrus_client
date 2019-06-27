@@ -49,6 +49,8 @@ import 'NewsFeedScreen.dart';
 double sizeMulW = 0;
 double sizeMulH = 0;
 double recptCardHeight = 0;
+
+var globalNavKey;
 LinearGradient greeny = LinearGradient(
   begin: Alignment.topCenter,
   end: Alignment.bottomCenter,
@@ -71,8 +73,13 @@ LinearGradient BtnTeal = LinearGradient(
 );
 
 class PapyrusCustomer extends StatelessWidget {
+
+  
+  final navigatorKey = GlobalKey<NavigatorState>();
+  
   @override
   Widget build(BuildContext context) {
+    globalNavKey = navigatorKey;
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
       statusBarColor: greeny.colors[0],
       systemNavigationBarColor: const Color(0xFF1BA977),
@@ -82,6 +89,7 @@ class PapyrusCustomer extends StatelessWidget {
     return ScopedModel<AppModel>(
         model: AppModel(context),
         child: MaterialApp(
+          navigatorKey: navigatorKey,
           builder: (context, child) {
             return ScrollConfiguration(
               behavior: CustomScrollBehaviour(),
@@ -1524,36 +1532,9 @@ List<Widget> bottomChildrenReceipts(AppModel appModel, BuildContext context) {
 
   return bc;
 }
+promoPopUp(BuildContext context,int index, Promo promo, String itemName, double discount, String imagePath ){
 
-class PromoSquareCard extends StatelessWidget {
-  String imagePath, itemName, expiryDate;
-  double discount;
-  Promo promo;
-  int index;
-  PromoSquareCard(this.promo, this.index) {
-    imagePath = promo.image_path;
-    itemName = promo.item_name;
-    expiryDate = promo.expiry_date;
-    discount = promo.value * 100;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.5,
-      // color: Colors.red,s
-
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: RaisedButton(
-          color: Colors.white.withAlpha(0),
-          splashColor: Colors.white.withAlpha(0),
-          highlightColor: Colors.white.withAlpha(0),
-          elevation: 0,
-          highlightElevation: 0,
-          // borderSide: BorderSide(color: Colors.white.withAlpha(0),),
-          onPressed: () {
-            Navigator.push(
+   Navigator.push(
               context,
               new HeroDialogRoute(
                 builder: (BuildContext context) {
@@ -1635,6 +1616,37 @@ class PromoSquareCard extends StatelessWidget {
                 },
               ),
             );
+}
+class PromoSquareCard extends StatelessWidget {
+  String imagePath, itemName, expiryDate;
+  double discount;
+  Promo promo;
+  int index;
+  PromoSquareCard(this.promo, this.index) {
+    imagePath = promo.image_path;
+    itemName = promo.item_name;
+    expiryDate = promo.expiry_date;
+    discount = promo.value * 100;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.5,
+      // color: Colors.red,s
+
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: RaisedButton(
+          color: Colors.white.withAlpha(0),
+          splashColor: Colors.white.withAlpha(0),
+          highlightColor: Colors.white.withAlpha(0),
+          elevation: 0,
+          highlightElevation: 0,
+          // borderSide: BorderSide(color: Colors.white.withAlpha(0),),
+          onPressed: () {
+            promoPopUp(context, index, promo, itemName, discount, imagePath);
+           
           },
 
           child: Material(

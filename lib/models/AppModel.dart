@@ -12,13 +12,18 @@ import 'package:simple_permissions/simple_permissions.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'ChatModel.dart';
+import 'package:papyrus_client/screens/ShowReceiptScreen.dart';
 import 'package:http/http.dart' as http;
 import 'CameraCaptureModel.dart';
 import 'package:ef_qrcode/ef_qrcode.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+// import 'ale';
+import 'package:papyrus_client/screens/HomeScreen.dart';
 import 'package:papyrus_client/data_models/Promo.dart';
 import 'ReceiveReceiptModel.dart';
 import 'ReceiptsScreenModel.dart';
 import 'package:papyrus_client/data_models/Receipt.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'dart:convert';
 import 'package:papyrus_client/data_models/UserExpense.dart';
@@ -160,9 +165,48 @@ class AppModel extends Model {
           Map map = jsonDecode(data.value);
           var receipt = Receipt.fromJson(map);
           addReceiptandSaveToStorage(receipt);
-          // showDialog(context: context, child: null
+          BuildContext popupContext = globalNavKey.currentState.overlay.context;
 
-          // );
+          Alert(
+            context: popupContext,
+            type: AlertType.success,
+            style: AlertStyle(
+              titleStyle: TextStyle(fontWeight: FontWeight.w600),
+
+              // descStyle: TextStyle(
+              //   // fontWeight: FontWeight.w600
+              // )
+            ),
+
+            title: "Received Receipt",
+            // desc: "View Receipt",
+            buttons: [
+              DialogButton(
+                child: Text(
+                  "VIEW",
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+                onPressed: () {
+                  Navigator.pop(popupContext);
+
+                  Navigator.push(
+                      popupContext,
+                      CupertinoPageRoute(
+                          builder: (context) =>
+                              ShowReceiptScreen(receipt, false)));
+                },
+                width: 120,
+              ),
+              DialogButton(
+                child: Text(
+                  "OK",
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+                onPressed: () => Navigator.pop(popupContext),
+                width: 120,
+              )
+            ],
+          ).show();
         }
       });
     });
@@ -205,9 +249,10 @@ class AppModel extends Model {
         print("expiry" + DateTime.parse(promo.expiry_date).toIso8601String());
         // print("NAAAAAAAAAAME: " + promo.item_name);
         if (DateTime.now()
-                .toLocal()
-                .compareTo(DateTime.parse(promo.expiry_date)) <=
-            0) {
+                    .toLocal()
+                    .compareTo(DateTime.parse(promo.expiry_date)) <=
+                0 &&
+            !promo.collected) {
           promoList.insert(0, promo);
           promoCodes.insert(0, k.toString());
         }
@@ -227,9 +272,10 @@ class AppModel extends Model {
 
         print("expiry" + DateTime.parse(promo.expiry_date).toIso8601String());
         if (DateTime.now()
-                .toLocal()
-                .compareTo(DateTime.parse(promo.expiry_date)) <=
-            0) {
+                    .toLocal()
+                    .compareTo(DateTime.parse(promo.expiry_date)) <=
+                0 &&
+            !promo.collected) {
           promoList.insert(0, promo);
           promoCodes.insert(0, child.snapshot.key);
 
@@ -237,7 +283,44 @@ class AppModel extends Model {
               "Woot woot you got a new promo from ${promo.retailer_name}!!\n\nGet ${(promo.value * 100).toInt()}% off your purchase of ${promo.item_name} at any ${promo.retailer_name} branches nationwide!! \n\nHURRY!!! This promo lasts until ${DateFormat("MM/DD/yyyy").format(DateTime.parse(promo.expiry_date))}\nPromo code: ${promo.promo_code}",
               "");
 
-              
+          BuildContext popupContext = globalNavKey.currentState.overlay.context;
+
+          Alert(
+            context: popupContext,
+            type: AlertType.success,
+            style: AlertStyle(
+              titleStyle: TextStyle(fontWeight: FontWeight.w600),
+
+              // descStyle: TextStyle(
+              //   // fontWeight: FontWeight.w600
+              // )
+            ),
+
+            title: "Received New Promo!",
+            // desc: "View Receipt",
+            buttons: [
+              DialogButton(
+                child: Text(
+                  "VIEW",
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+                onPressed: () {
+                  Navigator.pop(popupContext);
+                  promoPopUp(popupContext, 999, promo, promo.item_name,
+                      promo.value * 100, promo.image_path);
+                },
+                width: 120,
+              ),
+              DialogButton(
+                child: Text(
+                  "OK",
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+                onPressed: () => Navigator.pop(popupContext),
+                width: 120,
+              )
+            ],
+          ).show();
         }
         notifyListeners();
       }
