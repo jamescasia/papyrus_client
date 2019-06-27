@@ -193,7 +193,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   @override
   Widget build(BuildContext context) {
     return IntroViewsFlutter(
-      pages,
+      pages, 
       onTapDoneButton: () {
         Navigator.pushReplacement(
           context,
