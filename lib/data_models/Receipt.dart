@@ -122,8 +122,8 @@ class Receipt {
 class ReceiptItem {
   String item_num;
   String _name;
-  int _qty;
-  double _price;
+  int _qty = 1;
+  double _price =1.0;
   double _total;
   ReceiptItem(this._name, this._qty, this._price, this.item_num) {
     // print('what'+name);

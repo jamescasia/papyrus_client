@@ -737,9 +737,8 @@ class _EditReceiptScreenBottomPartState
                                   clipBehavior: Clip.none,
                                   onPressed: () {
                                     showDialog(
-                                      barrierDismissible: false,
+                                        barrierDismissible: false,
                                         context: context,
-                                        
                                         builder: (BuildContext context) {
                                           return EditItem(
                                               context,
@@ -962,7 +961,7 @@ class ReceiptItemLine extends StatelessWidget {
                 onTap: () {
                   // _showDialog(context, receiptItem, false);
                   showDialog(
-                    barrierDismissible: false,
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return EditItem(context, receiptItem, false,
@@ -1019,9 +1018,12 @@ class _EditItemState extends State<EditItem> {
   @override
   void initState() {
     super.initState();
-    name_controller.text = (receiptItem.name!="")?receiptItem.name:"";
-    qty_controller.text = (receiptItem.qty.toString()!="")? receiptItem.qty.toString():"1";
-    price_controller.text = (receiptItem.price.toString()!="")? receiptItem.price.toString():"1.0";
+    name_controller.text = (receiptItem.name != "") ? receiptItem.name : "";
+    qty_controller.text =
+        (receiptItem.qty.toString() != "") ? receiptItem.qty.toString() : "1";
+    price_controller.text = (receiptItem.price.toString() != "")
+        ? receiptItem.price.toString()
+        : "1.0";
   }
 
   @override
@@ -1034,13 +1036,21 @@ class _EditItemState extends State<EditItem> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Text((add)?"Add item":"Edit item",textScaleFactor: 1.1,style: TextStyle(fontWeight: FontWeight.bold),),
+            Text(
+              (add) ? "Add item" : "Edit item",
+              textScaleFactor: 1.3,
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              height: 4,
+            ),
             TextField(
               textInputAction: TextInputAction.next,
               onSubmitted: (a) {
                 FocusScope.of(context).requestFocus(f_price);
               },
-              style: TextStyle(fontSize: 19),
+              // style: TextStyle(fontSize: 19),
+
               decoration: InputDecoration(
                   disabledBorder: OutlineInputBorder(),
                   // filled: isEmailValid,
@@ -1057,22 +1067,14 @@ class _EditItemState extends State<EditItem> {
               onChanged: (text) {
                 setState(() {
                   nameValid = name_controller.text.length >= 3;
-                  // if (qty_controller.text == "") {
-                  //   receiptItem.qty = 0;
-                  //   qty_controller.text = "0";
-                  // }
-                  // if (price_controller.text == "") {
-                  //   receiptItem.price = 0.0;
-                  //   price_controller.text = "0.0";
-                  // }
-                  receiptItem.name = name_controller.text;
-                  receiptItem.qty = (qty_controller.text != "")
-                      ? int.parse(qty_controller.text)
-                      : 1;
-                  receiptItem.price = (price_controller.text.length > 0)
-                      ? double.parse(price_controller.text)
-                      : 1.0;
-                  receiptItem.total = receiptItem.qty * receiptItem.price;
+                  if (nameValid) receiptItem.name = name_controller.text;
+                  // receiptItem.qty = (qty_controller.text != "")
+                  //     ? int.parse(qty_controller.text)
+                  //     : 1;
+                  // receiptItem.price = (price_controller.text.length > 0)
+                  //     ? double.parse(price_controller.text)
+                  //     : 1.0;
+                  // receiptItem.total = receiptItem.qty * receiptItem.price;
 
                   // editReceiptScreenModel.update();
                 });
@@ -1081,500 +1083,123 @@ class _EditItemState extends State<EditItem> {
               focusNode: f_name,
               controller: name_controller,
             ),
+            SizedBox(
+              height: 14,
+            ),
+            TextField(
+              keyboardType: TextInputType.number,
+              textInputAction: TextInputAction.next,
+              onSubmitted: (a) {
+                FocusScope.of(context).requestFocus(f_qty);
+              },
+              // style: TextStyle(fontSize: 19),
+              decoration: InputDecoration(
+                  disabledBorder: OutlineInputBorder(),
+                  // filled: isEmailValid,
+                  fillColor: Color(0xffBFFF00),
+                  labelText: "price",
+                  errorText:
+                      priceValid ? null : "Price must be greater than zero",
+                  border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                      borderRadius: BorderRadius.all(Radius.circular(30)))),
+              inputFormatters: [new LengthLimitingTextInputFormatter(7),
+                                       WhitelistingTextInputFormatter.digitsOnly],
+              autocorrect: false,
+              autofocus: false,
+              onEditingComplete: ( ) {
+               try {
+                    qtyValid = (isNumeric(qty_controller.text))
+                        ? int.tryParse(qty_controller.text) > 0
+                        : false;
+                    priceValid = (isNumeric(price_controller.text))
+                        ? double.tryParse(price_controller.text) > 0
+                        : false;
+                    if (qtyValid) {
+                      print("valid" + qtyValid.toString());
+                      receiptItem.qty = int.parse(qty_controller.text);
+                    }
 
-            // Column(
-            //   crossAxisAlignment: CrossAxisAlignment.start,
-            //   mainAxisSize: MainAxisSize.max,
-            //   children: <Widget>[
-            //     Padding(
-            //       padding: EdgeInsets.only(left: sizeMulW * 4.0),
-            //       child: Text(
-            //         "Name",
-            //         textScaleFactor: 1.1,
-            //         style: TextStyle(
-            //           color: Colors.grey[800],
-            //           fontWeight: FontWeight.w900,
-            //           // fontSize: sizeMulW * 16
-            //         ),
-            //       ),
-            //     ),
-            //     SizedBox(height: sizeMulW * 4),
-            //     Container(
-            //       // width: sizeMulW * 130,
-            //       // color: Colors.green,
-            //       height: 50,
-            //       padding: EdgeInsets.symmetric(horizontal: sizeMulW * 15),
-            //       decoration: BoxDecoration(
-            //         color: Colors.green,
-            //         borderRadius: BorderRadius.all(Radius.circular(3000)),
-            //         // border: Border.all(
-            //         //     color: Colors.white,
-            //         //     width: sizeMulW * 2)
-            //       ),
-            //       child: Center(
-            //         child: EditableText(
-            //           inputFormatters: [
-            //             new LengthLimitingTextInputFormatter(25)
-            //           ],
-            //           autocorrect: false,
-            //           autofocus: false,
-            //           onChanged: (text) {
-            //             setState(() {
-            //               if (qty_controller.text == "") {
-            //                 receiptItem.qty = 0;
-            //                 qty_controller.text = "0";
-            //               }
-            //               if (price_controller.text == "") {
-            //                 receiptItem.price = 0.0;
-            //                 price_controller.text = "0.0";
-            //               }
-            //               receiptItem.name = name_controller.text;
-            //               receiptItem.qty = (qty_controller.text != "")
-            //                   ? int.parse(qty_controller.text)
-            //                   : 0;
-            //               receiptItem.price = (price_controller.text.length > 0)
-            //                   ? double.parse(price_controller.text)
-            //                   : 0.0;
-            //               receiptItem.total =
-            //                   receiptItem.qty * receiptItem.price;
+                    receiptItem.name = name_controller.text;
 
-            //               editReceiptScreenModel.update();
-            //             });
-            //           },
-            //           selectionColor: Colors.green,
-            //           textScaleFactor: 1.3,
-            //           // textAlign: TextAlign.start,
-            //           style: TextStyle(color: Colors.white),
-            //           backgroundCursorColor: Colors.red,
-            //           cursorColor: Colors.pinkAccent,
-            //           focusNode: f_name,
-            //           controller: name_controller,
-            //           onSelectionChanged: (a, b) {
-            //             // f_name.unfocus();
-            //             // f_name.consumeKeyboardToken();
-            //             // f_name.dispose();
-            //           },
-            //         ),
-            //       ),
-            //     )
-            //   ],
-            // ),
-            Flex(
-              mainAxisSize: MainAxisSize.max,
-              direction: Axis.horizontal,
-              children: <Widget>[
-                Expanded(
-                  flex: 6,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.max,
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.only(left: sizeMulW * 8.0),
-                        child: Text(
-                          "Price",
-                          style: TextStyle(
-                              color: Colors.grey[800],
-                              fontWeight: FontWeight.w900,
-                              fontSize: sizeMulW * 16),
-                        ),
-                      ),
-                      SizedBox(height: sizeMulW * 4),
-                      Container(
-                        // width: sizeMulW * 130,
-                        // color: Colors.green,
-                        // height: sizeMulW * 35,
-                        padding:
-                            EdgeInsets.symmetric(horizontal: sizeMulW * 15),
-                        decoration: BoxDecoration(
-                          // color: Colors.green,
-                          borderRadius: BorderRadius.all(Radius.circular(3000)),
-                          // border: Border.all(
-                          //     color: Colors.white,
-                          //     width: sizeMulW * 2)
-                        ),
-                        child: Center(
-                          child: TextField(
-                            
-                            
-                            keyboardType: TextInputType.number ,
-                            textInputAction: TextInputAction.next,
-                            onSubmitted: (a) {
-                              FocusScope.of(context).requestFocus(f_qty);
-                            },
-                            style: TextStyle(fontSize: 19),
-                            decoration: InputDecoration(
-                                disabledBorder: OutlineInputBorder(),
-                                // filled: isEmailValid,
-                                fillColor: Color(0xffBFFF00),
-                                labelText: "price",
-                                errorText: priceValid
-                                    ? null
-                                    : "Price must be greater than zero",
-                                border: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.white),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(30)))),
-                            inputFormatters: [
-                              new LengthLimitingTextInputFormatter(25)
-                            ],
-                            autocorrect: false,
-                            autofocus: false,
-                            onChanged: (text) {
-                              setState(() {
-                                // if (qty_controller.text == "") {
-                                //   receiptItem.qty = 0;
-                                //   qty_controller.text = "0";
-                                // }
-                                // if (price_controller.text == "") {
-                                //   receiptItem.price = 0.0;
-                                //   price_controller.text = "0.0";
-                                // } 
-                                priceValid  = double.parse(text)>0;
- 
-                                receiptItem.name = name_controller.text;
-                                receiptItem.qty = (qty_controller.text != "")
-                                    ? int.parse(qty_controller.text)
-                                    : 1;
-                                receiptItem.price =
-                                    (price_controller.text.length > 0)
-                                        ? double.parse(price_controller.text)
-                                        : 1.0;
-                                receiptItem.total =
-                                    receiptItem.qty * receiptItem.price;
+                    if (priceValid) {
+                      receiptItem.price = double.parse(price_controller.text);
+                    }
 
-                                editReceiptScreenModel.update();
-                              });
-                            },
-                            cursorColor: Colors.pinkAccent,
-                            focusNode: f_price,
-                            controller: price_controller,
-                          ),
-
-                          // EditableText(
-                          //   inputFormatters: [
-                          //     new LengthLimitingTextInputFormatter(9)
-                          //   ],
-                          //   keyboardType: TextInputType.number(),
-
-                          //   // inputType
-                          //   onChanged: (text) {
-                          //     setState(() {
-                          //       if (qty_controller.text == "") {
-                          //         receiptItem.qty = 0;
-                          //         qty_controller.text = "0";
-                          //       }
-                          //       if (price_controller.text == "") {
-                          //         receiptItem.price = 0.0;
-                          //         price_controller.text = "0.0";
-                          //       }
-                          //       receiptItem.name = name_controller.text;
-                          //       receiptItem.qty = (qty_controller.text != "")
-                          //           ? int.parse(qty_controller.text)
-                          //           : 0;
-                          //       receiptItem.price =
-                          //           (price_controller.text.length > 0)
-                          //               ? double.parse(price_controller.text)
-                          //               : 0.0;
-                          //       receiptItem.total =
-                          //           receiptItem.qty * receiptItem.price;
-
-                          //       editReceiptScreenModel.update();
-                          //     });
-                          //   },
-                          //   selectionColor: Colors.green,
-                          //   textScaleFactor: 1,
-                          //   // textAlign: TextAlign.start,
-                          //   style: TextStyle(color: Colors.white),
-                          //   backgroundCursorColor: Colors.red,
-                          //   cursorColor: Colors.pinkAccent,
-                          //   focusNode: f_price,
-                          //   controller: price_controller,
-                          //   onSelectionChanged: (a, b) {
-                          //     // f_price.unfocus();
-                          //     // f_price.consumeKeyboardToken();
-                          //     // f_price.dispose();
-                          //   },
-                          // ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                // SizedBox(
-                //   width: sizeMulW * 10,
-                // ),
-                // Expanded(
-                //   flex: 3,
-                //   // child: Column(
-                //   //   crossAxisAlignment: CrossAxisAlignment.start,
-                //   //   mainAxisSize: MainAxisSize.max,
-                //   //   children: <Widget>[
-                //   //     Padding(
-                //   //       padding: EdgeInsets.only(left: sizeMulW * 8.0),
-                //   //       child: Text(
-                //   //         "Qty",
-                //   //         style: TextStyle(
-                //   //             color: Colors.grey[800],
-                //   //             fontWeight: FontWeight.w900,
-                //   //             fontSize: sizeMulW * 16),
-                //   //       ),
-                //   //     ),
-                //   //     SizedBox(height: sizeMulW * 4),
-                //   //     Container(
-                //   //       // width: sizeMulW * 130,
-                //   //       // color: Colors.green,
-                //   //       // height: sizeMulW * 35,
-                //   //       padding:
-                //   //           EdgeInsets.symmetric(horizontal: sizeMulW * 15),
-                //   //       decoration: BoxDecoration(
-                //   //         color: Colors.green,
-                //   //         borderRadius: BorderRadius.all(Radius.circular(3000)),
-                //   //         // border: Border.all(
-                //   //         //     color: Colors.white,
-                //   //         //     width: sizeMulW * 2)
-                //   //       ),
-                //   //       child: Center(
-                //   //         child:
-
-                //   //         TextField(
-                            
-                            
-                //   //           keyboardType: TextInputType.number,
-                //   //           textInputAction: TextInputAction.done,
-                //   //           // onSubmitted: (a) {
-                //   //           //   FocusScope.of(context).requestFocus(f_qty);
-                //   //           // },
-                //   //           style: TextStyle(fontSize: 19),
-                //   //           decoration: InputDecoration(
-                //   //               disabledBorder: OutlineInputBorder(),
-                //   //               // filled: isEmailValid,
-                //   //               fillColor: Color(0xffBFFF00),
-                //   //               labelText: "qty",
-                //   //               errorText: qtyValid
-                //   //                   ? null
-                //   //                   : "Qty must be greater than zero",
-                //   //               border: OutlineInputBorder(
-                //   //                   borderSide: BorderSide(color: Colors.white),
-                //   //                   borderRadius:
-                //   //                       BorderRadius.all(Radius.circular(30)))),
-                //   //           inputFormatters: [
-                //   //             new LengthLimitingTextInputFormatter(25)
-                //   //           ],
-                //   //           autocorrect: false,
-                //   //           autofocus: false,
-                //   //           onChanged: (text) {
-                //   //             setState(() {
-                //   //               // if (qty_controller.text == "") {
-                //   //               //   receiptItem.qty = 0;
-                //   //               //   qty_controller.text = "0";
-                //   //               // }
-                //   //               // if (price_controller.text == "") {
-                //   //               //   receiptItem.price = 0.0;
-                //   //               //   price_controller.text = "0.0";
-                //   //               // } 
-                //   //               qtyValid  = int.parse(text)>0;
- 
-                //   //               receiptItem.name = name_controller.text;
-                //   //               receiptItem.qty = (qty_controller.text != "")
-                //   //                   ? int.parse(qty_controller.text)
-                //   //                   : 1;
-                //   //               receiptItem.price =
-                //   //                   (price_controller.text.length > 0)
-                //   //                       ? double.parse(price_controller.text)
-                //   //                       : 1.0;
-                //   //               receiptItem.total =
-                //   //                   receiptItem.qty * receiptItem.price;
-
-                //   //               editReceiptScreenModel.update();
-                //   //             });
-                //   //           },
-                //   //           cursorColor: Colors.pinkAccent,
-                //   //           focusNode: f_qty,
-                //   //           controller: qty_controller,
-                //   //         ),
-                          
-                          
-                //   //         //  EditableText(
-                //   //         //   textScaleFactor: 1,
-                //   //         //   inputFormatters: [
-                //   //         //     new LengthLimitingTextInputFormatter(3)
-                //   //         //   ],
-                //   //         //   keyboardType: TextInputType.number(),
-                //   //         //   onChanged: (text) {
-                //   //         //     setState(() {
-                //   //         //       if (qty_controller.text == "") {
-                //   //         //         receiptItem.qty = 0;
-                //   //         //         qty_controller.text = "0";
-                //   //         //       }
-                //   //         //       if (price_controller.text == "") {
-                //   //         //         receiptItem.price = 0.0;
-                //   //         //         price_controller.text = "0.0";
-                //   //         //       }
-                //   //         //       receiptItem.name = name_controller.text;
-                //   //         //       receiptItem.qty = (qty_controller.text != "")
-                //   //         //           ? int.parse(qty_controller.text)
-                //   //         //           : 0;
-                //   //         //       receiptItem.price =
-                //   //         //           (price_controller.text.length > 0)
-                //   //         //               ? double.parse(price_controller.text)
-                //   //         //               : 0.0;
-                //   //         //       receiptItem.total =
-                //   //         //           receiptItem.qty * receiptItem.price;
-
-                //   //         //       editReceiptScreenModel.update();
-                //   //         //     });
-                //   //         //   },
-                //   //         //   selectionColor: Colors.green,
-                //   //         //   // textAlign: TextAlign.start,
-                //   //         //   style: TextStyle(color: Colors.white),
-                //   //         //   backgroundCursorColor: Colors.red,
-                //   //         //   cursorColor: Colors.pinkAccent,
-                //   //         //   focusNode: f_qty,
-                //   //         //   controller: qty_controller,
-                //   //         // ),
-                //   //       ),
-                //   //     )
-                //   //   ],
-                //   // ),
-                // ),
-              ],
+                    if (qtyValid && priceValid) {
+                      receiptItem.total = receiptItem.qty * receiptItem.price;
+                      editReceiptScreenModel.update();
+                    }
+                  
+                } catch (e) {}
+                
+              },
+              cursorColor: Colors.pinkAccent,
+              focusNode: f_price,
+              controller: price_controller,
             ),
             SizedBox(
-              height: sizeMulW * 8,
+              height: 24,
             ),
+            TextField(
+              keyboardType: TextInputType.number,
+              textInputAction: TextInputAction.done,
+              // onSubmitted: (a) {
+              //   FocusScope.of(context).requestFocus(f_qty);
+              // },
+              // style: TextStyle(fontSize: 19),
+              decoration: InputDecoration(
+                  disabledBorder: OutlineInputBorder(),
+                  // filled: isEmailValid,
+                  fillColor: Color(0xffBFFF00),
+                  labelText: "qty",
+                  errorText: qtyValid ? null : "Qty must be greater than zero",
+                  border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                      borderRadius: BorderRadius.all(Radius.circular(30)))),
+              inputFormatters: [new LengthLimitingTextInputFormatter(3), 
+                                       WhitelistingTextInputFormatter.digitsOnly],
+              autocorrect: false,
+              autofocus: false,
+              onEditingComplete: () {
+                // print("Nuuumeriiccc" + isNumeric(qty_c))
+                try {
+                  setState(() {
 
-             Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.max,
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.only(left: sizeMulW * 8.0),
-                        child: Text(
-                          "Qty",
-                          style: TextStyle(
-                              color: Colors.grey[800],
-                              fontWeight: FontWeight.w900,
-                              fontSize: sizeMulW * 16),
-                        ),
-                      ),
-                      SizedBox(height: sizeMulW * 4),
-                      Container(
-                        // width: sizeMulW * 130,
-                        // color: Colors.green,
-                        // height: sizeMulW * 35,
-                        padding:
-                            EdgeInsets.symmetric(horizontal: sizeMulW * 15),
-                        decoration: BoxDecoration(
-                          // color: Colors.green,
-                          borderRadius: BorderRadius.all(Radius.circular(3000)),
-                          // border: Border.all(
-                          //     color: Colors.white,
-                          //     width: sizeMulW * 2)
-                        ),
-                        child: Center(
-                          child:
+                    // qtyValid =
 
-                          TextField(
-                            
-                            
-                            keyboardType: TextInputType.number,
-                            textInputAction: TextInputAction.done,
-                            // onSubmitted: (a) {
-                            //   FocusScope.of(context).requestFocus(f_qty);
-                            // },
-                            style: TextStyle(fontSize: 19),
-                            decoration: InputDecoration(
-                                disabledBorder: OutlineInputBorder(),
-                                // filled: isEmailValid,
-                                fillColor: Color(0xffBFFF00),
-                                labelText: "qty",
-                                errorText: qtyValid
-                                    ? null
-                                    : "Qty must be greater than zero",
-                                border: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.white),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(30)))),
-                            inputFormatters: [
-                              new LengthLimitingTextInputFormatter(25)
-                            ],
-                            autocorrect: false,
-                            autofocus: false,
-                            onChanged: (text) {
-                              setState(() {
-                                // if (qty_controller.text == "") {
-                                //   receiptItem.qty = 0;
-                                //   qty_controller.text = "0";
-                                // }
-                                // if (price_controller.text == "") {
-                                //   receiptItem.price = 0.0;
-                                //   price_controller.text = "0.0";
-                                // } 
-                                qtyValid  = int.parse(text)>0;
- 
-                                receiptItem.name = name_controller.text;
-                                receiptItem.qty = (qty_controller.text != "")
-                                    ? int.parse(qty_controller.text)
-                                    : 1;
-                                receiptItem.price =
-                                    (price_controller.text.length > 0)
-                                        ? double.parse(price_controller.text)
-                                        : 1.0;
-                                receiptItem.total =
-                                    receiptItem.qty * receiptItem.price;
 
-                                editReceiptScreenModel.update();
-                              });
-                            },
-                            cursorColor: Colors.pinkAccent,
-                            focusNode: f_qty,
-                            controller: qty_controller,
-                          ),
-                          
-                          
-                          //  EditableText(
-                          //   textScaleFactor: 1,
-                          //   inputFormatters: [
-                          //     new LengthLimitingTextInputFormatter(3)
-                          //   ],
-                          //   keyboardType: TextInputType.number(),
-                          //   onChanged: (text) {
-                          //     setState(() {
-                          //       if (qty_controller.text == "") {
-                          //         receiptItem.qty = 0;
-                          //         qty_controller.text = "0";
-                          //       }
-                          //       if (price_controller.text == "") {
-                          //         receiptItem.price = 0.0;
-                          //         price_controller.text = "0.0";
-                          //       }
-                          //       receiptItem.name = name_controller.text;
-                          //       receiptItem.qty = (qty_controller.text != "")
-                          //           ? int.parse(qty_controller.text)
-                          //           : 0;
-                          //       receiptItem.price =
-                          //           (price_controller.text.length > 0)
-                          //               ? double.parse(price_controller.text)
-                          //               : 0.0;
-                          //       receiptItem.total =
-                          //           receiptItem.qty * receiptItem.price;
+                    qtyValid = (isNumeric(qty_controller.text))
+                        ? int.tryParse(qty_controller.text) > 0
+                        : false;
+                    priceValid = (isNumeric(price_controller.text))
+                        ? double.tryParse(price_controller.text) > 0
+                        : false;
+                    if (qtyValid) {
+                      print("valid" + qtyValid.toString());
+                      receiptItem.qty = int.parse(qty_controller.text);
+                    }
 
-                          //       editReceiptScreenModel.update();
-                          //     });
-                          //   },
-                          //   selectionColor: Colors.green,
-                          //   // textAlign: TextAlign.start,
-                          //   style: TextStyle(color: Colors.white),
-                          //   backgroundCursorColor: Colors.red,
-                          //   cursorColor: Colors.pinkAccent,
-                          //   focusNode: f_qty,
-                          //   controller: qty_controller,
-                          // ),
-                        ),
-                      )
-                    ],
-                  ),
+                    receiptItem.name = name_controller.text;
+
+                    if (priceValid) {
+                      receiptItem.price = double.parse(price_controller.text);
+                    }
+
+                    if (qtyValid && priceValid) {
+                      receiptItem.total = receiptItem.qty * receiptItem.price;
+                      editReceiptScreenModel.update();
+                    }
+                  });
+                } catch (e) {}
+              },
+              cursorColor: Colors.pinkAccent,
+              focusNode: f_qty,
+              controller: qty_controller,
+            ),
+            SizedBox(
+              height: 14,
+            ),
             Flex(
               direction: Axis.horizontal,
               mainAxisSize: MainAxisSize.max,
@@ -1584,9 +1209,10 @@ class _EditItemState extends State<EditItem> {
                 Expanded(
                   flex: 1,
                   child: Text("Total: ",
+                      textScaleFactor: 1,
                       style: TextStyle(
                         color: Colors.grey[800],
-                        fontSize: sizeMulW * 18,
+                        // fontSize: sizeMulW * 18,
                         fontWeight: FontWeight.bold,
                       )),
                 ),
@@ -1716,4 +1342,23 @@ class _EditItemState extends State<EditItem> {
       ),
     );
   }
+}
+
+bool isNumeric(String s) {
+  if (s == null||s =="") {
+    return false;
+  }
+  return double.parse(s, (e) => null) != null;
+}
+
+
+String numberValidator(String value) {
+  if(value == null) {
+    return null;
+  }
+  final n = num.tryParse(value);
+  if(n == null) {
+    return '"$value" is not a valid number';
+  }
+  return null;
 }

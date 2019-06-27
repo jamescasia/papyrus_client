@@ -1589,7 +1589,7 @@ class PromoSquareCard extends StatelessWidget {
                               style: TextStyle(fontWeight: FontWeight.w600),
                             ),
                             Text(
-                              "Just go to the nearest Kent's store to claim!",
+                              "Just go to the nearest ${promo.retailer_name} to claim!",
                               textAlign: TextAlign.center,
                             ),
                             Text(
