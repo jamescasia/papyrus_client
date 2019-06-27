@@ -13,13 +13,35 @@ import 'package:keyboard_visibility/keyboard_visibility.dart';
 import 'package:toast/toast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'OnBoardingScreen.dart';
+
+
 class LogInScreen extends StatefulWidget {
   @override
   _LogInScreenState createState() => new _LogInScreenState();
 }
 
 // var sizeMulW;
+
+
 class _LogInScreenState extends State<LogInScreen> {
+
+  @override
+    void initState() {
+      // TODO: implement initState
+
+
+      super.initState();
+
+            // Navigator.pushReplacement(context,
+            //                                   CupertinoPageRoute(
+            //                                       builder: (context) {
+            //                                 // isLoading = false;
+            //                                 return OnBoardingScreen();
+            //                               }));
+      
+
+
+    }
   @override
   Widget build(BuildContext context) {
     sizeMulW = MediaQuery.of(context).size.width / 411.4;
@@ -472,7 +494,7 @@ class _LogInScreenStackState extends State<LogInScreenStack> {
                   child: InkWell(
                     onTap: () {
 
-                        Navigator.push(context,
+                        Navigator.pushReplacement(context,
                                               CupertinoPageRoute(
                                                   builder: (context) {
                                             isLoading = false;

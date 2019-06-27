@@ -196,8 +196,10 @@ class _CameraCaptureScreenState extends State<CameraCaptureScreen> {
                                       child: Container(
                                           width: sizeMulW * 74.052,
                                           height: sizeMulW * 74.052,
+                                          decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(3000)), 
+                                              color: Colors.amber,),
                                           child: Icon(FontAwesomeIcons.camera,
-                                              color: Colors.green,
+                                          color: Colors.green,
                                               size: 30 * sizeMulW)),
                                     ),
                                   ),

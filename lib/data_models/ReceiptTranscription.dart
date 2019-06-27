@@ -3,6 +3,9 @@ class ReceiptTranscription {
   double taxAmount;
   double date;
   List amounts;
+  String merchantAddress;
+  
+
 
 
 

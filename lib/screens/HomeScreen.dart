@@ -1280,6 +1280,8 @@ List<Widget> bottomChildrenNews(AppModel appModel, BuildContext context) {
                   width: MediaQuery.of(context).size.width,
                   height: double.infinity,
                   child: OutlineButton(
+                    disabledBorderColor:  Colors.white.withAlpha(0),
+                    borderSide: BorderSide(color: Colors.white.withAlpha(0), width: 0.001),
                       onPressed: () {
                         Navigator.push(context,
                             CupertinoPageRoute(builder: (context) {
@@ -1411,6 +1413,7 @@ List<Widget> bottomChildrenReceipts(AppModel appModel, BuildContext context) {
                   width: MediaQuery.of(context).size.width,
                   height: double.infinity,
                   child: OutlineButton(
+                    borderSide: BorderSide(color:Colors.white.withAlpha(0)),
                       onPressed: () {
                         Navigator.push(context,
                             CupertinoPageRoute(builder: (context) {

@@ -35,6 +35,9 @@ class _GetReceiptScreenState extends State<GetReceiptScreen>
       vsync: this,
     );
 
+    tabController.index = 2;
+    currIndex = 2;
+
     tabController.addListener(_handleTabSelection);
   }
 
@@ -59,7 +62,7 @@ class _GetReceiptScreenState extends State<GetReceiptScreen>
         // stream: null,
         builder: (context, child, appModel) {
       return DefaultTabController(
-        initialIndex: 0,
+        initialIndex: 2,
         length: 3,
         child: Scaffold(
           backgroundColor: Colors.green,

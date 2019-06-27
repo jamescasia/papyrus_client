@@ -172,40 +172,46 @@ class EditReceiptScreenTopPart extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(
-            bottom: sizeMulW * 15,
-            // right: 48 * sizeMulW * sizeMulW,
-            left: homeButtonDist  ,
-            child: Material(
-              color: Colors.white.withOpacity(0),
-              borderRadius: BorderRadius.all(Radius.circular(3000)),
-              child: InkWell(
-                radius: sizeMulW * 24,
-                splashColor: Colors.white.withAlpha(0),
-                highlightColor: Colors.black.withOpacity(0.1),
-                borderRadius: BorderRadius.all(Radius.circular(3000)),
-                onTap: () {
-                  // editReceiptScreenModel.deleteReceiptImage();
+          // Positioned(
+          //   bottom: sizeMulW * 15,
+          //   // right: 48 * sizeMulW * sizeMulW,
+          //   left: homeButtonDist  ,
+          //   child: Material(
+          //     color: Colors.white.withOpacity(0),
+          //     borderRadius: BorderRadius.all(Radius.circular(3000)),
+          //     child: InkWell(
+          //       radius: sizeMulW * 24,
+          //       splashColor: Colors.white.withAlpha(0),
+          //       highlightColor: Colors.black.withOpacity(0.1),
+          //       borderRadius: BorderRadius.all(Radius.circular(3000)),
+          //       onTap: () {
+          //         // editReceiptScreenModel.deleteReceiptImage();
 
-                  // Navigator.of(context).pop();
+          //         // Navigator.of(context).pop();
 
-                  // editReceiptScreenModel = EditReceiptScreenModel();
-                  // editReceiptScreenModel.changed=!editReceiptScreenModel.changed;
-                  // editReceiptScreenModel.update();
-                },
-                child: Container(
+          //         // editReceiptScreenModel = EditReceiptScreenModel();
+          //         // editReceiptScreenModel.changed=!editReceiptScreenModel.changed;
+          //         // editReceiptScreenModel.update();
+          //       },
+          //       child: Container(
+          //         color: Colors.red,
                   
-                  width:sizeMulW  * 74.052,
-                  height: sizeMulW  * 74.052,
-                  child: Icon(
-                    FontAwesomeIcons.edit,
-                    // size: sizeMulW * 33,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-          )
+          //         width:sizeMulW  * 74.052,
+          //         height: sizeMulW  * 74.052,
+          //         child: Center(
+          //           child: FittedBox(
+          //                                 child: Icon(
+          //               FontAwesomeIcons.edit,
+                        
+          //               // size: sizeMulW * 33,
+          //               color: Colors.white,
+          //             ),
+          //           ),
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // )
         ],
       );
     }));
@@ -401,6 +407,12 @@ class _EditReceiptScreenBottomPartState
                                             backgroundCursorColor: Colors.red,
                                             cursorColor: Colors.pinkAccent,
                                             focusNode: d_focus,
+                                            onChanged: (a){
+                                              date_controller.text = a;
+                                              erModel.update();
+
+
+                                            },
                                             onSubmitted: (a) {
                                               date_controller.text = a;
                                               // d_focus.
@@ -1053,9 +1065,7 @@ class _EditItemState extends State<EditItem> {
                               : 0.0;
                           receiptItem.total =
                               receiptItem.qty * receiptItem.price;
-
-                          editReceiptScreenModel.changed =
-                              !editReceiptScreenModel.changed;
+ 
                           editReceiptScreenModel.update();
                         });
                       },
@@ -1139,9 +1149,7 @@ class _EditItemState extends State<EditItem> {
                                         : 0.0;
                                 receiptItem.total =
                                     receiptItem.qty * receiptItem.price;
-
-                                editReceiptScreenModel.changed =
-                                    !editReceiptScreenModel.changed;
+ 
                                 editReceiptScreenModel.update();
                               });
                             },
@@ -1224,9 +1232,7 @@ class _EditItemState extends State<EditItem> {
                                         : 0.0;
                                 receiptItem.total =
                                     receiptItem.qty * receiptItem.price;
-
-                                editReceiptScreenModel.changed =
-                                    !editReceiptScreenModel.changed;
+ 
                                 editReceiptScreenModel.update();
                               });
                             },
@@ -1331,12 +1337,15 @@ class _EditItemState extends State<EditItem> {
                           editReceiptScreenModel.update();
                           print("added");
                         }
+
+                        editReceiptScreenModel.update();
                         Navigator.pop(context);
 
-                        print("WTF" +
-                            editReceiptScreenModel.receipt.items[0].name +
-                            editReceiptScreenModel.receipt.items[0].total
-                                .toString());
+
+                        // print("WTF" +
+                        //     editReceiptScreenModel.receipt.items[0].name +
+                        //     editReceiptScreenModel.receipt.items[0].total
+                        //         .toString());
 
                         Scaffold.of(ctx).showSnackBar(SnackBar(
                           content: Row(
@@ -1364,7 +1373,9 @@ class _EditItemState extends State<EditItem> {
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ]),
-                        ));
+                        )
+                        
+                        );
                       }
                     },
                     child: Container(

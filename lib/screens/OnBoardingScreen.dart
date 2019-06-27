@@ -22,6 +22,11 @@ class OnBoardingScreen extends StatefulWidget {
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
   final pages = [
     PageViewModel(
+
+      // textStyle:   TextStyle(
+      //             fontWeight: FontWeight.w600,
+      //             color: Colors.white,
+      //             fontSize: sizeMulW * 35),
         // pageColor: const Color(0xFF03A9F4),
         pageColor: greeny.colors[1],
         // iconImageAssetPath: 'assets/air-hostess.png',
@@ -30,118 +35,157 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         body: Text(
           'Gather all your receipts in one place and get rid of the unnecessary paper bulk',
         ),
-        title: Container(height: 0,width: 100,color: Colors.red,),
-       
+        title: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            Text(
+                  'Digital Receipts',
+                  // style: TextStyle(
+                  //     fontWeight: FontWeight.w600,
+                  //     color: Colors.white,
+                  //     fontSize: sizeMulW * 35),
+                ),
+          ],
+        ), 
         mainImage: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Text(
-                'Digital Receipts' ,
-              style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white, fontSize: sizeMulW*35),
-                 
-              ),
+            // Text(
+            //   'Digital Receipts',
+            //   style: TextStyle(
+            //       fontWeight: FontWeight.w600,
+            //       color: Colors.white,
+            //       fontSize: sizeMulW * 35),
+            // ),
             Image.asset(
               'assets/icons/3x/digital_receipts.png',
-              
+
               // fit: BoxFit.fitHeight,
               height: 240.0,
               width: 240.0,
               alignment: Alignment.center,
             ),
-            SizedBox(height: 0.01,),
+            SizedBox(
+              height: 0.01,
+            ),
           ],
         )),
     PageViewModel(
-        pageColor: greeny.colors[0],
+      pageColor: greeny.colors[0],
       // pageColor: const Color(0xFF8BC34A),
       // iconImageAssetPath: 'assets/icons/3x/burger_king.png',
       body: Text(
         "Track your expenses and save your hard-earned money",
       ),
-      title: SizedBox(width:0.1),
-      
-        mainImage: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      title: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
             Text(
-                'Track Expenses' ,
-              style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white, fontSize: sizeMulW*35),
-                 
-              ),
-            Image.asset(
-              'assets/icons/3x/track.png',
-              
-              // fit: BoxFit.fitHeight,
-              height: 220.0,
-              width: 220.0,
-              alignment: Alignment.center,
-            ),
-            SizedBox(height: 0.01,),
+                  'Track Expenses',
+                  // style: TextStyle(
+                  //     fontWeight: FontWeight.w600,
+                  //     color: Colors.white,
+                  //     fontSize: sizeMulW * 35),
+                ),
           ],
         ),
+
+      mainImage: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          
+          Image.asset(
+            'assets/icons/3x/track.png',
+
+            // fit: BoxFit.fitHeight,
+            height: 220.0,
+            width: 220.0,
+            alignment: Alignment.center,
+          ),
+          SizedBox(
+            height: 0.01,
+          ),
+        ],
+      ),
       // textStyle: TextStyle(fontFamily: 'MyFont', color: Colors.white),
     ),
     PageViewModel(
-      
-        pageColor: greeny.colors[1],
+      pageColor: greeny.colors[1],
       // pageColor: const Color(0xFF607D8B),
       // iconImageAssetPath: 'assets/icons/3x/burger_king.png',
       body: Text(
         'Receive promos from partner stores tailored to your liking',
       ),
-     
-      title: SizedBox(width:0.1),
-     
-        mainImage: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+      title: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
             Text(
-                'Great Deals' ,
-              style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white, fontSize: sizeMulW*35),
-                 
-              ),
-            Image.asset(
-              'assets/icons/3x/deals.png',
-              
-              // fit: BoxFit.fitHeight,
-              height: 240.0,
-              width: 240.0,
-              alignment: Alignment.center,
-            ),
-            SizedBox(height: 0.01,),
+                  'Great Deals',
+                  // style: TextStyle(
+                  //     fontWeight: FontWeight.w600,
+                  //     color: Colors.white,
+                  //     fontSize: sizeMulW * 35),
+                ),
           ],
         ),
+
+      mainImage: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+         
+          Image.asset(
+            'assets/icons/3x/deals.png',
+
+            // fit: BoxFit.fitHeight,
+            height: 240.0,
+            width: 240.0,
+            alignment: Alignment.center,
+          ),
+          SizedBox(
+            height: 0.01,
+          ),
+        ],
+      ),
       // textStyle: TextStyle(fontFamily: 'MyFont', color: Colors.white),
     ),
-     PageViewModel(
-       
-        pageColor: greeny.colors[0],
+    PageViewModel(
+      pageColor: greeny.colors[0],
       // pageColor: const Color(0xFF8BC34A),
       // iconImageAssetPath: 'assets/icons/3x/burger_king.png',
       body: Text(
         "Instantly communicate to our partner stores through chat",
       ),
-      
-      title: SizedBox(width:0.1),
-      
-        mainImage: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+      title:  Column(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
             Text(
-                'Communicate' ,
-              style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white, fontSize: sizeMulW*35),
-                 
-              ),
-            Image.asset(
-              'assets/icons/3x/telephone.png',
-              // fit: BoxFit.fitHeight,
-              height: 240.0,
-              width: 240.0,
-              alignment: Alignment.center,
-            ),
-            SizedBox(height: 0.01,),
+                  'Communicate',
+                  // style: TextStyle(
+                  //     fontWeight: FontWeight.w600,
+                  //     color: Colors.white,
+                  //     fontSize: sizeMulW * 35),
+                ),
           ],
         ),
+
+      mainImage: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+        
+          Image.asset(
+            'assets/icons/3x/telephone.png',
+            // fit: BoxFit.fitHeight,
+            height: 240.0,
+            width: 240.0,
+            alignment: Alignment.center,
+          ),
+          SizedBox(
+            height: 0.01,
+          ),
+        ],
+      ),
       // textStyle: TextStyle(fontFamily: 'MyFont', color: Colors.white),
     ),
   ];

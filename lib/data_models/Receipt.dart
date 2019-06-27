@@ -71,6 +71,7 @@ class Receipt {
     print("displaying" + _items.length.toString());
     _items.map((i) {
       // print("item: "+i.name +" " + i.price.toString() + " " + i.total.toString());
+      _total += i.total;
     });
   }
 
