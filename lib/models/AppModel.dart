@@ -88,6 +88,7 @@ class AppModel extends Model {
   MonthExpense monthExpense;
   FirebaseDatabase database;
   DatabaseReference userRef;
+  DatabaseReference allUsersRef;
   DatabaseReference receiptsRef;
   DatabaseReference promosRef;
   DatabaseReference messagesFromAdminRef;
@@ -326,8 +327,6 @@ class AppModel extends Model {
         promoCodes.remove(child.snapshot.key);
         promoList.removeAt(index);
 
-        
-
         notifyListeners();
       }
     });
@@ -338,11 +337,25 @@ class AppModel extends Model {
   void firebaseInit() {
     print("inited");
     database = FirebaseDatabase.instance;
+
+    allUsersRef = database.reference().child('private/accounts/users');
+    allReceiptsRef = database.reference().child('private/receipts');
+    allUsersRef.onChildAdded.listen((child) {
+      if (child.snapshot.key == user.uid) {
+        userRef =
+            database.reference().child('private/accounts/users/${user.uid}');
+        promosRef = userRef.child('promos');
+        messagesFromAdminRef = userRef.child('messages');
+        receiptsRef = userRef.child("receipts");
+        
+    listenForReceipts();
+    listenForPromos();
+        // firebaseInit();
+      }
+    });
     userRef = database.reference().child('private/accounts/users/${user.uid}');
-    print(user.uid + "could be wrong? no");
     promosRef = userRef.child('promos');
     messagesFromAdminRef = userRef.child('messages');
-    allReceiptsRef = database.reference().child('private/receipts');
     receiptsRef = userRef.child("receipts");
 
     listenForReceipts();
@@ -350,7 +363,6 @@ class AppModel extends Model {
   }
 
   void init() async {
-    
     promoCodes = [];
     promoList = [];
     rootDir = await getApplicationDocumentsDirectory();
