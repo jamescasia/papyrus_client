@@ -194,6 +194,14 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   Widget build(BuildContext context) {
     return IntroViewsFlutter(
       pages, 
+      onTapSkipButton: () {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => LogInScreen(),
+          ), //MaterialPageRoute
+        );
+      },
       onTapDoneButton: () {
         Navigator.pushReplacement(
           context,
