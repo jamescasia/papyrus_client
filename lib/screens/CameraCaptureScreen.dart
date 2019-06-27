@@ -199,7 +199,7 @@ class _CameraCaptureScreenState extends State<CameraCaptureScreen> {
                                           decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(3000)), 
                                               color: Colors.amber,),
                                           child: Icon(FontAwesomeIcons.camera,
-                                          color: Colors.green,
+                                          color: Colors.white,
                                               size: 30 * sizeMulW)),
                                     ),
                                   ),

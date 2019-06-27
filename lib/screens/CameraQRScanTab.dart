@@ -233,7 +233,7 @@ class _CameraQRScanTabState extends State<CameraQRScanTab> {
                                           decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(3000)), 
                                           color: Colors.amber,),
                                           child: Icon(FontAwesomeIcons.expand,
-                                              color: Colors.green,
+                                              color: Colors.white,
                                               size: 35 * sizeMulW)),
                                     ),
                                   ),
