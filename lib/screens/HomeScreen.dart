@@ -317,7 +317,9 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                                   color: Colors.white.withAlpha(0),
                                   elevation: 0,
                                   disabledColor: Colors.white.withAlpha(0),
+                                  highlightColor: Colors.white.withAlpha(0),
                                   disabledElevation: 0,
+                                  highlightElevation: 0,
                                   splashColor: Colors.white.withAlpha(0),
                                   child: Text("", style: TextStyle(fontSize: 40),),
 
@@ -383,7 +385,9 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                                   color: Colors.white.withAlpha(0),
                                   elevation: 0,
                                   disabledColor: Colors.white.withAlpha(0),
+                                  highlightColor: Colors.white.withAlpha(0),
                                   disabledElevation: 0,
+                                  highlightElevation: 0,
                                   splashColor: Colors.white.withAlpha(0),
 
                                   onPressed: (){
@@ -438,10 +442,12 @@ class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
                                   
                                   
                                   child: Text("", style: TextStyle(fontSize: 40),),
-                                  color: Colors.white.withAlpha(0),
+                                 color: Colors.white.withAlpha(0),
                                   elevation: 0,
                                   disabledColor: Colors.white.withAlpha(0),
+                                  highlightColor: Colors.white.withAlpha(0),
                                   disabledElevation: 0,
+                                  highlightElevation: 0,
                                   splashColor: Colors.white.withAlpha(0),
 
                                   onPressed: (){

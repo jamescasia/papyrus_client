@@ -146,10 +146,9 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                           animate: true,
                                                         )
                                                       : Stack(
-                                                          children: <Widget>[ 
+                                                          children: <Widget>[
                                                             GaugeChart
-                                                                .withSampleData() 
-                                                            ,
+                                                                .withSampleData(),
                                                             RotatedBox(
                                                               quarterTurns: 1,
                                                               child: Center(
@@ -457,17 +456,23 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                     ((appModel.viewing_period ==
                                                                 Period.DAILY)
                                                             ? addCommas(appModel
-                                                                .dayExpense
-                                                                .totalSpentOnFood.toInt() )+"${(appModel.dayExpense.totalSpentOnUtilities%1).toStringAsFixed(2)}"
+                                                                    .dayExpense
+                                                                    .totalSpentOnFood
+                                                                    .toInt()) +
+                                                                "${(appModel.dayExpense.totalSpentOnUtilities % 1).toStringAsFixed(2)}"
                                                             : (appModel.viewing_period ==
                                                                     Period
                                                                         .MONTHLY)
                                                                 ? addCommas(appModel
-                                                                .monthExpense
-                                                                .totalSpentOnFood.toInt() )+"${(appModel.dayExpense.totalSpentOnUtilities%1).toStringAsFixed(2)}"
+                                                                        .monthExpense
+                                                                        .totalSpentOnFood
+                                                                        .toInt()) +
+                                                                    "${(appModel.dayExpense.totalSpentOnUtilities % 1).toStringAsFixed(2)}"
                                                                 : addCommas(appModel
-                                                                .weekExpense
-                                                                .totalSpentOnFood.toInt() )+"${(appModel.dayExpense.totalSpentOnUtilities%1).toStringAsFixed(2)}")
+                                                                        .weekExpense
+                                                                        .totalSpentOnFood
+                                                                        .toInt()) +
+                                                                    "${(appModel.dayExpense.totalSpentOnUtilities % 1).toStringAsFixed(2)}")
                                                         .toString(),
                                                     textScaleFactor: 1.1,
                                                     textAlign: TextAlign.center,
@@ -534,17 +539,23 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                     ((appModel.viewing_period ==
                                                                 Period.DAILY)
                                                             ? addCommas(appModel
-                                                                .dayExpense
-                                                                .totalSpentOnLeisure.toInt() )+"${(appModel.dayExpense.totalSpentOnUtilities%1).toStringAsFixed(2)}"
+                                                                    .dayExpense
+                                                                    .totalSpentOnLeisure
+                                                                    .toInt()) +
+                                                                "${(appModel.dayExpense.totalSpentOnUtilities % 1).toStringAsFixed(2)}"
                                                             : (appModel.viewing_period ==
                                                                     Period
                                                                         .MONTHLY)
                                                                 ? addCommas(appModel
-                                                                .monthExpense
-                                                                .totalSpentOnLeisure.toInt() )+"${(appModel.dayExpense.totalSpentOnUtilities%1).toStringAsFixed(2)}"
+                                                                        .monthExpense
+                                                                        .totalSpentOnLeisure
+                                                                        .toInt()) +
+                                                                    "${(appModel.dayExpense.totalSpentOnUtilities % 1).toStringAsFixed(2)}"
                                                                 : addCommas(appModel
-                                                                .weekExpense
-                                                                .totalSpentOnLeisure.toInt() )+"${(appModel.dayExpense.totalSpentOnUtilities%1).toStringAsFixed(2)}")
+                                                                        .weekExpense
+                                                                        .totalSpentOnLeisure
+                                                                        .toInt()) +
+                                                                    "${(appModel.dayExpense.totalSpentOnUtilities % 1).toStringAsFixed(2)}")
                                                         .toString(),
                                                     textScaleFactor: 1.1,
                                                     textAlign: TextAlign.center,
@@ -594,15 +605,16 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                 ],
                                               ),
                                             ),
-                                          
-                                            
                                           ],
                                         ),
-                                        SizedBox(height: 20*sizeMulW,),
+                                        SizedBox(
+                                          height: 20 * sizeMulW,
+                                        ),
                                         Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
                                           children: <Widget>[
-                                              Tooltip(
+                                            Tooltip(
                                               message: "Miscellaneous",
                                               child: Column(
                                                 children: <Widget>[
@@ -615,20 +627,26 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                     height: sizeMulW * 3,
                                                   ),
                                                   Text(
-                                                     ((appModel.viewing_period ==
+                                                    ((appModel.viewing_period ==
                                                                 Period.DAILY)
                                                             ? addCommas(appModel
-                                                                .dayExpense
-                                                                .totalSpentOnMiscellaneous.toInt() )+"${(appModel.dayExpense.totalSpentOnMiscellaneous%1).toStringAsFixed(2)}"
+                                                                    .dayExpense
+                                                                    .totalSpentOnMiscellaneous
+                                                                    .toInt()) +
+                                                                "${(appModel.dayExpense.totalSpentOnMiscellaneous % 1).toStringAsFixed(2)}"
                                                             : (appModel.viewing_period ==
                                                                     Period
                                                                         .MONTHLY)
                                                                 ? addCommas(appModel
-                                                                .monthExpense
-                                                                .totalSpentOnMiscellaneous.toInt() )+"${(appModel.dayExpense.totalSpentOnMiscellaneous%1).toStringAsFixed(2)}"
+                                                                        .monthExpense
+                                                                        .totalSpentOnMiscellaneous
+                                                                        .toInt()) +
+                                                                    "${(appModel.dayExpense.totalSpentOnMiscellaneous % 1).toStringAsFixed(2)}"
                                                                 : addCommas(appModel
-                                                                .weekExpense
-                                                                .totalSpentOnMiscellaneous.toInt() )+"${(appModel.dayExpense.totalSpentOnMiscellaneous%1).toStringAsFixed(2)}" )
+                                                                        .weekExpense
+                                                                        .totalSpentOnMiscellaneous
+                                                                        .toInt()) +
+                                                                    "${(appModel.dayExpense.totalSpentOnMiscellaneous % 1).toStringAsFixed(2)}")
                                                         .toString(),
                                                     textScaleFactor: 1.1,
                                                     textAlign: TextAlign.center,
@@ -694,17 +712,23 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                     ((appModel.viewing_period ==
                                                                 Period.DAILY)
                                                             ? addCommas(appModel
-                                                                .dayExpense
-                                                                .totalSpentOnTransportation.toInt() )+"${(appModel.dayExpense.totalSpentOnTransportation%1).toStringAsFixed(2)}"
+                                                                    .dayExpense
+                                                                    .totalSpentOnTransportation
+                                                                    .toInt()) +
+                                                                "${(appModel.dayExpense.totalSpentOnTransportation % 1).toStringAsFixed(2)}"
                                                             : (appModel.viewing_period ==
                                                                     Period
                                                                         .MONTHLY)
                                                                 ? addCommas(appModel
-                                                                .monthExpense
-                                                                .totalSpentOnTransportation.toInt() )+"${(appModel.dayExpense.totalSpentOnTransportation%1).toStringAsFixed(2)}"
+                                                                        .monthExpense
+                                                                        .totalSpentOnTransportation
+                                                                        .toInt()) +
+                                                                    "${(appModel.dayExpense.totalSpentOnTransportation % 1).toStringAsFixed(2)}"
                                                                 : addCommas(appModel
-                                                                .weekExpense
-                                                                .totalSpentOnTransportation.toInt() )+"${(appModel.dayExpense.totalSpentOnTransportation%1).toStringAsFixed(2)}")
+                                                                        .weekExpense
+                                                                        .totalSpentOnTransportation
+                                                                        .toInt()) +
+                                                                    "${(appModel.dayExpense.totalSpentOnTransportation % 1).toStringAsFixed(2)}")
                                                         .toString(),
                                                     textScaleFactor: 1.1,
                                                     textAlign: TextAlign.center,
@@ -768,20 +792,26 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                     height: sizeMulW * 3,
                                                   ),
                                                   Text(
-                                                  ((appModel.viewing_period ==
+                                                    ((appModel.viewing_period ==
                                                                 Period.DAILY)
                                                             ? addCommas(appModel
-                                                                .dayExpense
-                                                                .totalSpentOnUtilities.toInt() )+"${(appModel.dayExpense.totalSpentOnUtilities%1).toStringAsFixed(2)}"
+                                                                    .dayExpense
+                                                                    .totalSpentOnUtilities
+                                                                    .toInt()) +
+                                                                "${(appModel.dayExpense.totalSpentOnUtilities % 1).toStringAsFixed(2)}"
                                                             : (appModel.viewing_period ==
                                                                     Period
                                                                         .MONTHLY)
                                                                 ? addCommas(appModel
-                                                                .monthExpense
-                                                                .totalSpentOnUtilities.toInt() )+"${(appModel.dayExpense.totalSpentOnUtilities%1).toStringAsFixed(2)}"
+                                                                        .monthExpense
+                                                                        .totalSpentOnUtilities
+                                                                        .toInt()) +
+                                                                    "${(appModel.dayExpense.totalSpentOnUtilities % 1).toStringAsFixed(2)}"
                                                                 : addCommas(appModel
-                                                                .weekExpense
-                                                                .totalSpentOnUtilities.toInt() )+"${(appModel.dayExpense.totalSpentOnUtilities%1).toStringAsFixed(2)}")
+                                                                        .weekExpense
+                                                                        .totalSpentOnUtilities
+                                                                        .toInt()) +
+                                                                    "${(appModel.dayExpense.totalSpentOnUtilities % 1).toStringAsFixed(2)}")
                                                         .toString(),
                                                     textScaleFactor: 1.1,
                                                     textAlign: TextAlign.center,
@@ -831,7 +861,6 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                 ],
                                               ),
                                             ),
-
                                           ],
                                         )
                                       ],
@@ -870,15 +899,30 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                               builder: (context, snapshot) {
                                                 if (snapshot.connectionState ==
                                                     ConnectionState.done) {
-
-                                                      // print(snapshot.data[0].toString()_)
-                                                  if (chartsModel.dayExpenses.length == 0 && appModel.viewing_period == Period.DAILY ||chartsModel.weekExpenses.length == 0 && appModel.viewing_period == Period.WEEKLY||chartsModel.monthExpenses.length == 0 && appModel.viewing_period == Period.MONTHLY  )
+                                                  // print(snapshot.data[0].toString()_)
+                                                  if (chartsModel.dayExpenses
+                                                                  .length ==
+                                                              0 &&
+                                                          appModel.viewing_period ==
+                                                              Period.DAILY ||
+                                                      chartsModel.weekExpenses
+                                                                  .length ==
+                                                              0 &&
+                                                          appModel.viewing_period ==
+                                                              Period.WEEKLY ||
+                                                      chartsModel.monthExpenses
+                                                                  .length ==
+                                                              0 &&
+                                                          appModel.viewing_period ==
+                                                              Period.MONTHLY)
                                                     return Stack(
                                                       children: <Widget>[
                                                         GroupedBarChart
                                                             .withSampleData(),
                                                         Column(
-                                                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .stretch,
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
                                                                   .center,
@@ -914,7 +958,8 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                       snapshot.data);
                                                 } else
                                                   return Center(
-                                                    child:CircularProgressIndicator(),
+                                                    child:
+                                                        CircularProgressIndicator(),
                                                   );
                                               })
 
@@ -950,50 +995,62 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                   appModel.viewing_period),
                                           builder: (context, snapshot) {
                                             if (snapshot.connectionState ==
-                                                ConnectionState.done) { 
-                                                  print(snapshot.data.length.toString() + "ADFAFAFA");
+                                                ConnectionState.done) {
+                                              print(snapshot.data.length
+                                                      .toString() +
+                                                  "ADFAFAFA");
 
-                                                  if (chartsModel.dayExpenses.length == 0 && appModel.viewing_period == Period.DAILY ||chartsModel.weekExpenses.length == 0 && appModel.viewing_period == Period.WEEKLY||chartsModel.monthExpenses.length == 0 && appModel.viewing_period == Period.MONTHLY  )
-                                                   {
-                                                     return Stack(
+                                              if (chartsModel.dayExpenses
+                                                              .length ==
+                                                          0 &&
+                                                      appModel.viewing_period ==
+                                                          Period.DAILY ||
+                                                  chartsModel.weekExpenses
+                                                              .length ==
+                                                          0 &&
+                                                      appModel.viewing_period ==
+                                                          Period.WEEKLY ||
+                                                  chartsModel.monthExpenses
+                                                              .length ==
+                                                          0 &&
+                                                      appModel.viewing_period ==
+                                                          Period.MONTHLY) {
+                                                return Stack(
+                                                  children: <Widget>[
+                                                    SimpleTimeSeriesChart
+                                                        .withSampleData(),
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .stretch,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
                                                       children: <Widget>[
-                                                        SimpleTimeSeriesChart
-                                                            .withSampleData(),
-                                                        Column(
-                                                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: <Widget>[
-                                                            Icon(
-                                                              FontAwesomeIcons
-                                                                  .sadCry,
-                                                              size:
-                                                                  sizeMulW * 33,
+                                                        Icon(
+                                                          FontAwesomeIcons
+                                                              .sadCry,
+                                                          size: sizeMulW * 33,
+                                                          color:
+                                                              Colors.grey[700],
+                                                        ),
+                                                        Text(
+                                                          "NO DATA",
+                                                          textScaleFactor: 1.3,
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
                                                               color: Colors
-                                                                  .grey[700],
-                                                            ),
-                                                            Text(
-                                                              "NO DATA",
-                                                              textScaleFactor:
-                                                                  1.3,
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .center,
-                                                              style: TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                  color: Colors
-                                                                          .grey[
-                                                                      700]),
-                                                            ),
-                                                          ],
+                                                                  .grey[700]),
                                                         ),
                                                       ],
-                                                    );
-
-                                                  }
+                                                    ),
+                                                  ],
+                                                );
+                                              }
                                               return SimpleTimeSeriesChart(
                                                   snapshot.data);
                                             } else
@@ -1087,206 +1144,288 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                   0.91 *
                                                   0.09,
                                               child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          mainAxisSize: MainAxisSize.max,
-                          children: <Widget>[
-                            // SizedBox(
-                            //   width: MediaQuery.of(context).size.width * 0.05,
-                            // ),
-                            // SizedBox(
-                            //   width: 20.57 * sizeMulW,
-                            // ),
-                            Stack(
-                              children: <Widget>[
-                                Container(
-                                  // width: sizeMulW * 130,
-                                  // height: sizeMulH * 30,
-                                  child: Center(
-                                    child: InkWell(
-                                      
-                                      // highlightElevation: 0,
-                                      // color: Colors.white.withOpacity(0),
-                                      // elevation: 0,
-                                      splashColor: Colors.white.withAlpha(0),
-                                      highlightColor: Colors.black.withOpacity(0),
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceEvenly,
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: <Widget>[
+                                                  // SizedBox(
+                                                  //   width: MediaQuery.of(context).size.width * 0.05,
+                                                  // ),
+                                                  // SizedBox(
+                                                  //   width: 20.57 * sizeMulW,
+                                                  // ),
+                                                  Stack(
+                                                    children: <Widget>[
+                                                      Container(
+                                                        // width: sizeMulW * 130,
+                                                        // height: sizeMulH * 30,
+                                                        child: Center(
+                                                          child: InkWell(
+                                                            // highlightElevation: 0,
+                                                            // color: Colors.white.withOpacity(0),
+                                                            // elevation: 0,
+                                                            splashColor: Colors
+                                                                .white
+                                                                .withAlpha(0),
+                                                            highlightColor:
+                                                                Colors.black
+                                                                    .withOpacity(
+                                                                        0),
 
-                                      onTap: () {
-                                        // appModel.viewing_period = Period.MONTHLY;
-                                      },
-                                      child: Container(
-                                        // margin: EdgeInsets.all((sizeMulH*15)),
-                                        // color: Colors.white,
-                                        // width: sizeMulW*20,
-                                        // height: sizeMulH*0.2,
-                                        padding: (appModel.viewing_period ==
-                                                Period.MONTHLY)
-                                            ? EdgeInsets.symmetric(
-                                                vertical: sizeMulW * 2,
-                                                horizontal: sizeMulW * 8)
-                                            : null,
-                                        decoration: (appModel.viewing_period ==
-                                                Period.MONTHLY)
-                                            ? BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius: BorderRadius.circular(
-                                                    sizeMulW * 300))
-                                            : null,
+                                                            onTap: () {
+                                                              // appModel.viewing_period = Period.MONTHLY;
+                                                            },
+                                                            child: Container(
+                                                              // margin: EdgeInsets.all((sizeMulH*15)),
+                                                              // color: Colors.white,
+                                                              // width: sizeMulW*20,
+                                                              // height: sizeMulH*0.2,
+                                                              padding: (appModel
+                                                                          .viewing_period ==
+                                                                      Period
+                                                                          .MONTHLY)
+                                                                  ? EdgeInsets.symmetric(
+                                                                      vertical:
+                                                                          sizeMulW *
+                                                                              2,
+                                                                      horizontal:
+                                                                          sizeMulW *
+                                                                              8)
+                                                                  : null,
+                                                              decoration: (appModel
+                                                                          .viewing_period ==
+                                                                      Period
+                                                                          .MONTHLY)
+                                                                  ? BoxDecoration(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(sizeMulW *
+                                                                              300))
+                                                                  : null,
 
-                                        child: Text("MONTHLY",
-                                            style: (appModel.viewing_period ==
-                                                    Period.MONTHLY)
-                                                ? headerStyleSelected
-                                                : headerStyle),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                RaisedButton(
-                                  
-                                  
-                                  child: Text("", style: TextStyle(fontSize: 40),),
-                                  color: Colors.white.withAlpha(0),
-                                  elevation: 0,
-                                  disabledColor: Colors.white.withAlpha(0),
-                                  disabledElevation: 0,
-                                  splashColor: Colors.white.withAlpha(0),
+                                                              child: Text(
+                                                                  "MONTHLY",
+                                                                  style: (appModel
+                                                                              .viewing_period ==
+                                                                          Period
+                                                                              .MONTHLY)
+                                                                      ? headerStyleSelected
+                                                                      : headerStyle),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      RaisedButton(
+                                                        child: Text(
+                                                          "",
+                                                          style: TextStyle(
+                                                              fontSize: 40),
+                                                        ),
+                                                        color: Colors.white
+                                                            .withAlpha(0),
+                                                        elevation: 0,
+                                                        disabledColor: Colors
+                                                            .white
+                                                            .withAlpha(0),
+                                                        highlightColor: Colors
+                                                            .white
+                                                            .withAlpha(0),
+                                                        disabledElevation: 0,
+                                                        highlightElevation: 0,
+                                                        splashColor: Colors
+                                                            .white
+                                                            .withAlpha(0),
+                                                        onPressed: () {
+                                                          appModel.viewing_period =
+                                                              Period.MONTHLY;
+                                                        },
+                                                      )
+                                                    ],
+                                                  ),
+                                                  Stack(
+                                                    children: <Widget>[
+                                                      Container(
+                                                        // width: sizeMulW * 130,
+                                                        // height: sizeMulH * 30,
+                                                        child: Center(
+                                                          child: InkWell(
+                                                            splashColor: Colors
+                                                                .white
+                                                                .withAlpha(0),
+                                                            // elevation: 0,
+                                                            // color: Colors.white.withAlpha(0),
+                                                            // highlightElevation: 0,
+                                                            highlightColor:
+                                                                Colors.black
+                                                                    .withOpacity(
+                                                                        0),
+                                                            onTap: () {
+                                                              appModel.viewing_period =
+                                                                  Period.WEEKLY;
 
-                                  onPressed: (){
-                                    
-                                        appModel.viewing_period = Period.MONTHLY;
-
-                                  },
-                                )
-                              ],
-                            ),
-                            Stack(
-                              children: <Widget>[
-                                Container(
-                                  // width: sizeMulW * 130,
-                                  // height: sizeMulH * 30,
-                                  child: Center(
-                                    child: InkWell(
-                                      splashColor: Colors.white.withAlpha(0),
-                                      // elevation: 0,
-                                      // color: Colors.white.withAlpha(0),
-                                      // highlightElevation: 0,
-                                      highlightColor: Colors.black.withOpacity(0),
-                                      onTap: () {
-                                        appModel.viewing_period = Period.WEEKLY;
-
-                                        // Navigator.push(
-                                        //     context,
-                                        //     CupertinoPageRoute(
-                                        //         builder: (context) =>
-                                        //             ReceiveReceiptScreen(
-                                        //                 appModel.receiveReceiptModel)));
-                                      },
-                                      child: Container(
-                                        padding: (appModel.viewing_period ==
-                                                Period.WEEKLY)
-                                            ? EdgeInsets.symmetric(
-                                                vertical: sizeMulW * 2,
-                                                horizontal: sizeMulW * 8)
-                                            : null,
-                                        decoration: (appModel.viewing_period ==
-                                                Period.WEEKLY)
-                                            ? BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius: BorderRadius.circular(
-                                                    sizeMulW * 300))
-                                            : null,
-                                        child: Text(
-                                          "WEEKLY",
-                                          style: (appModel.viewing_period ==
-                                                  Period.WEEKLY)
-                                              ? headerStyleSelected
-                                              : headerStyle,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                   RaisedButton(
-                                  
-                                  child: Text("", style: TextStyle(fontSize: 40),),
-                                  
-                                  color: Colors.white.withAlpha(0),
-                                  elevation: 0,
-                                  disabledColor: Colors.white.withAlpha(0),
-                                  disabledElevation: 0,
-                                  splashColor: Colors.white.withAlpha(0),
-
-                                  onPressed: (){
-                                    
-                                        appModel.viewing_period = Period.WEEKLY;
-
-                                  },
-                                )
-                              ],
-                            ),
-                            Stack(
-                              children: <Widget>[
-                                Container(
-                                  // width: sizeMulW * 110,
-                                  // height: sizeMulH * 30,
-                                  child: Center(
-                                    child: InkWell(
-                                      splashColor: Colors.white.withAlpha(0),
-                                      // elevation: 0,
-                                      // highlightElevation: 0,
-                                      // color: Colors.white.withAlpha(0),
-                                      highlightColor: Colors.black.withOpacity(0),
-                                      onTap: () {
-                                        appModel.viewing_period = Period.DAILY;
-                                      },
-                                      child: Container(
-                                        padding: (appModel.viewing_period ==
-                                                Period.DAILY)
-                                            ? EdgeInsets.symmetric(
-                                                vertical: sizeMulW * 2,
-                                                horizontal: sizeMulW * 8)
-                                            : null,
-                                        decoration: (appModel.viewing_period ==
-                                                Period.DAILY)
-                                            ? BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius: BorderRadius.circular(
-                                                    sizeMulW * 300))
-                                            : null,
-                                        child: Text(
-                                          "DAILY",
-                                          style: (appModel.viewing_period ==
-                                                  Period.DAILY)
-                                              ? headerStyleSelected
-                                              : headerStyle,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                   RaisedButton(
-                                  
-                                  
-                                  child: Text("", style: TextStyle(fontSize: 40),),
-                                  color: Colors.white.withAlpha(0),
-                                  elevation: 0,
-                                  disabledColor: Colors.white.withAlpha(0),
-                                  disabledElevation: 0,
-                                  splashColor: Colors.white.withAlpha(0),
-
-                                  onPressed: (){
-                                    
-                                        appModel.viewing_period = Period.DAILY;
-
-                                  },
-                                )
-                              ],
-                            ),
-                            // SizedBox(
-                            //   width: MediaQuery.of(context).size.width * 0.05,
-                            // ),
-                          ],
-                        ),
+                                                              // Navigator.push(
+                                                              //     context,
+                                                              //     CupertinoPageRoute(
+                                                              //         builder: (context) =>
+                                                              //             ReceiveReceiptScreen(
+                                                              //                 appModel.receiveReceiptModel)));
+                                                            },
+                                                            child: Container(
+                                                              padding: (appModel
+                                                                          .viewing_period ==
+                                                                      Period
+                                                                          .WEEKLY)
+                                                                  ? EdgeInsets.symmetric(
+                                                                      vertical:
+                                                                          sizeMulW *
+                                                                              2,
+                                                                      horizontal:
+                                                                          sizeMulW *
+                                                                              8)
+                                                                  : null,
+                                                              decoration: (appModel
+                                                                          .viewing_period ==
+                                                                      Period
+                                                                          .WEEKLY)
+                                                                  ? BoxDecoration(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(sizeMulW *
+                                                                              300))
+                                                                  : null,
+                                                              child: Text(
+                                                                "WEEKLY",
+                                                                style: (appModel
+                                                                            .viewing_period ==
+                                                                        Period
+                                                                            .WEEKLY)
+                                                                    ? headerStyleSelected
+                                                                    : headerStyle,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      RaisedButton(
+                                                        child: Text(
+                                                          "",
+                                                          style: TextStyle(
+                                                              fontSize: 40),
+                                                        ),
+                                                        color: Colors.white
+                                                            .withAlpha(0),
+                                                        elevation: 0,
+                                                        disabledColor: Colors
+                                                            .white
+                                                            .withAlpha(0),
+                                                        highlightColor: Colors
+                                                            .white
+                                                            .withAlpha(0),
+                                                        disabledElevation: 0,
+                                                        highlightElevation: 0,
+                                                        splashColor: Colors
+                                                            .white
+                                                            .withAlpha(0),
+                                                        onPressed: () {
+                                                          appModel.viewing_period =
+                                                              Period.WEEKLY;
+                                                        },
+                                                      )
+                                                    ],
+                                                  ),
+                                                  Stack(
+                                                    children: <Widget>[
+                                                      Container(
+                                                        // width: sizeMulW * 110,
+                                                        // height: sizeMulH * 30,
+                                                        child: Center(
+                                                          child: InkWell(
+                                                            splashColor: Colors
+                                                                .white
+                                                                .withAlpha(0),
+                                                            // elevation: 0,
+                                                            // highlightElevation: 0,
+                                                            // color: Colors.white.withAlpha(0),
+                                                            highlightColor:
+                                                                Colors.black
+                                                                    .withOpacity(
+                                                                        0),
+                                                            onTap: () {
+                                                              appModel.viewing_period =
+                                                                  Period.DAILY;
+                                                            },
+                                                            child: Container(
+                                                              padding: (appModel
+                                                                          .viewing_period ==
+                                                                      Period
+                                                                          .DAILY)
+                                                                  ? EdgeInsets.symmetric(
+                                                                      vertical:
+                                                                          sizeMulW *
+                                                                              2,
+                                                                      horizontal:
+                                                                          sizeMulW *
+                                                                              8)
+                                                                  : null,
+                                                              decoration: (appModel
+                                                                          .viewing_period ==
+                                                                      Period
+                                                                          .DAILY)
+                                                                  ? BoxDecoration(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(sizeMulW *
+                                                                              300))
+                                                                  : null,
+                                                              child: Text(
+                                                                "DAILY",
+                                                                style: (appModel
+                                                                            .viewing_period ==
+                                                                        Period
+                                                                            .DAILY)
+                                                                    ? headerStyleSelected
+                                                                    : headerStyle,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      RaisedButton(
+                                                        child: Text(
+                                                          "",
+                                                          style: TextStyle(
+                                                              fontSize: 40),
+                                                        ),
+                                                        color: Colors.white
+                                                            .withAlpha(0),
+                                                        elevation: 0,
+                                                        disabledColor: Colors
+                                                            .white
+                                                            .withAlpha(0),
+                                                        highlightColor: Colors
+                                                            .white
+                                                            .withAlpha(0),
+                                                        disabledElevation: 0,
+                                                        highlightElevation: 0,
+                                                        splashColor: Colors
+                                                            .white
+                                                            .withAlpha(0),
+                                                        onPressed: () {
+                                                          appModel.viewing_period =
+                                                              Period.DAILY;
+                                                        },
+                                                      )
+                                                    ],
+                                                  ),
+                                                  // SizedBox(
+                                                  //   width: MediaQuery.of(context).size.width * 0.05,
+                                                  // ),
+                                                ],
+                                              ),
                                             ),
                                             Positioned(
                                               left: sizeMulW * 30,
