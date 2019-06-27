@@ -156,7 +156,30 @@ class AppModel extends Model {
     //
   }
 
-  listenForReceipts() {
+  listenForReceipts() async {
+    await receiptsRef.once().then((data) {
+      var d = data.value;
+      print("the data" + d.toString());
+
+      d.forEach((k, value) {
+        var found = false;
+
+        for (FileSystemEntity rFile in receiptFiles) {
+          found = receiptRuids.contains(k.toString());
+          if (found) break;
+        }
+
+        if (!found) {
+          String ruid = k.toString();
+          allReceiptsRef.child(ruid).once().then((data) {
+            Map map = jsonDecode(data.value);
+            var receipt = Receipt.fromJson(map);
+            addReceiptandSaveToStorage(receipt);
+          });
+        }
+      });
+    });
+
     receiptsRef.onChildAdded.listen((child) {
       print("someoned added receipts");
       String ruid = child.snapshot.key;
@@ -165,21 +188,15 @@ class AppModel extends Model {
           Map map = jsonDecode(data.value);
           var receipt = Receipt.fromJson(map);
           addReceiptandSaveToStorage(receipt);
-          BuildContext popupContext = globalNavKey.currentState.overlay.context;
 
+          BuildContext popupContext = globalNavKey.currentState.overlay.context;
           Alert(
             context: popupContext,
             type: AlertType.success,
             style: AlertStyle(
               titleStyle: TextStyle(fontWeight: FontWeight.w600),
-
-              // descStyle: TextStyle(
-              //   // fontWeight: FontWeight.w600
-              // )
             ),
-
             title: "Received Receipt",
-            // desc: "View Receipt",
             buttons: [
               DialogButton(
                 child: Text(
@@ -210,34 +227,11 @@ class AppModel extends Model {
         }
       });
     });
-
-    receiptsRef.once().then((data) {
-      var d = data.value;
-      print("the data" + d.toString());
-
-      d.forEach((k, value) {
-        var found = false;
-
-        for (FileSystemEntity rFile in receiptFiles) {
-          found = receiptRuids.contains(k.toString());
-          if (found) break;
-        }
-
-        if (!found) {
-          String ruid = k.toString();
-          allReceiptsRef.child(ruid).once().then((data) {
-            Map map = jsonDecode(data.value);
-            var receipt = Receipt.fromJson(map);
-            addReceiptandSaveToStorage(receipt);
-          });
-        }
-      });
-    });
   }
 
-  listenForPromos() {
+  listenForPromos() async {
     print("PRdsfffffffffffffffffffffffffffffffOMOOOS");
-    promosRef.once().then((data) {
+    await promosRef.once().then((data) {
       var d = data.value;
       print("the data" + d.toString());
 
@@ -325,6 +319,18 @@ class AppModel extends Model {
         notifyListeners();
       }
     });
+    promosRef.onChildRemoved.listen((child) async {
+      if (promoCodes.contains(child.snapshot.key)) {
+        int index = promoCodes.indexOf(child.snapshot.key);
+
+        promoCodes.remove(child.snapshot.key);
+        promoList.removeAt(index);
+
+        
+
+        notifyListeners();
+      }
+    });
 
     print(promoList);
   }
@@ -344,6 +350,9 @@ class AppModel extends Model {
   }
 
   void init() async {
+    
+    promoCodes = [];
+    promoList = [];
     rootDir = await getApplicationDocumentsDirectory();
     // var = await getExte
     await checkOrGenerateDirectories();
