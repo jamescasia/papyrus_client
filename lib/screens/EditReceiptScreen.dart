@@ -1107,6 +1107,7 @@ class _EditItemState extends State<EditItem> {
                                        WhitelistingTextInputFormatter.digitsOnly],
               autocorrect: false,
               autofocus: false,
+              
               onEditingComplete: ( ) {
                try {
                     qtyValid = (isNumeric(qty_controller.text))
@@ -1220,7 +1221,7 @@ class _EditItemState extends State<EditItem> {
                 //   width: sizeMulW * 27,
                 // ),
                 Text(
-                    "${(double.parse(price_controller.text) * int.parse(qty_controller.text)).toStringAsFixed(2)}",
+                    "${(   (receiptItem.price) *  (receiptItem.qty)).toStringAsFixed(2)}",
                     overflow: TextOverflow.fade,
                     textAlign: TextAlign.left,
                     style: TextStyle(
