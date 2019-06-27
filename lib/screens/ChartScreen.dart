@@ -1087,197 +1087,206 @@ class _ChartScreenStackState extends State<ChartScreenStack> {
                                                   0.91 *
                                                   0.09,
                                               child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceEvenly,
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: <Widget>[
-                                                  // SizedBox(
-                                                  //   width: MediaQuery.of(context).size.width * 0.05,
-                                                  // ),
-                                                  // SizedBox(
-                                                  //   width: 20.57 * sizeMulW,
-                                                  // ),
-                                                  Container(
-                                                    // width: sizeMulW * 130,
-                                                    // height: sizeMulH * 30,
-                                                    child: Center(
-                                                      child: InkWell(
-                                                        // highlightElevation: 0,
-                                                        // color: Colors.white.withOpacity(0),
-                                                        // elevation: 0,
-                                                        splashColor: Colors
-                                                            .white
-                                                            .withAlpha(0),
-                                                        highlightColor: Colors
-                                                            .black
-                                                            .withOpacity(0),
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisSize: MainAxisSize.max,
+                          children: <Widget>[
+                            // SizedBox(
+                            //   width: MediaQuery.of(context).size.width * 0.05,
+                            // ),
+                            // SizedBox(
+                            //   width: 20.57 * sizeMulW,
+                            // ),
+                            Stack(
+                              children: <Widget>[
+                                Container(
+                                  // width: sizeMulW * 130,
+                                  // height: sizeMulH * 30,
+                                  child: Center(
+                                    child: InkWell(
+                                      
+                                      // highlightElevation: 0,
+                                      // color: Colors.white.withOpacity(0),
+                                      // elevation: 0,
+                                      splashColor: Colors.white.withAlpha(0),
+                                      highlightColor: Colors.black.withOpacity(0),
 
-                                                        onTap: () {
-                                                          appModel.viewing_period =
-                                                              Period.MONTHLY;
-                                                        },
-                                                        child: Container(
-                                                          // margin: EdgeInsets.all((sizeMulH*15)),
-                                                          // color: Colors.white,
-                                                          // width: sizeMulW*20,
-                                                          // height: sizeMulH*0.2,
-                                                          padding: (appModel
-                                                                      .viewing_period ==
-                                                                  Period
-                                                                      .MONTHLY)
-                                                              ? EdgeInsets.symmetric(
-                                                                  vertical:
-                                                                      sizeMulW *
-                                                                          2,
-                                                                  horizontal:
-                                                                      sizeMulW *
-                                                                          8)
-                                                              : null,
-                                                          decoration: (appModel
-                                                                      .viewing_period ==
-                                                                  Period
-                                                                      .MONTHLY)
-                                                              ? BoxDecoration(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  borderRadius:
-                                                                      BorderRadius.circular(
-                                                                          sizeMulW *
-                                                                              300))
-                                                              : null,
+                                      onTap: () {
+                                        // appModel.viewing_period = Period.MONTHLY;
+                                      },
+                                      child: Container(
+                                        // margin: EdgeInsets.all((sizeMulH*15)),
+                                        // color: Colors.white,
+                                        // width: sizeMulW*20,
+                                        // height: sizeMulH*0.2,
+                                        padding: (appModel.viewing_period ==
+                                                Period.MONTHLY)
+                                            ? EdgeInsets.symmetric(
+                                                vertical: sizeMulW * 2,
+                                                horizontal: sizeMulW * 8)
+                                            : null,
+                                        decoration: (appModel.viewing_period ==
+                                                Period.MONTHLY)
+                                            ? BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius: BorderRadius.circular(
+                                                    sizeMulW * 300))
+                                            : null,
 
-                                                          child: Text("MONTHLY",
-                                                              style: (appModel
-                                                                          .viewing_period ==
-                                                                      Period
-                                                                          .MONTHLY)
-                                                                  ? headerStyleSelected
-                                                                  : headerStyle),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                    // width: sizeMulW * 130,
-                                                    // height: sizeMulH * 30,
-                                                    child: Center(
-                                                      child: InkWell(
-                                                        splashColor: Colors
-                                                            .white
-                                                            .withAlpha(0),
-                                                        // elevation: 0,
-                                                        // color: Colors.white.withAlpha(0),
-                                                        // highlightElevation: 0,
-                                                        highlightColor: Colors
-                                                            .black
-                                                            .withOpacity(0),
-                                                        onTap: () {
-                                                          appModel.viewing_period =
-                                                              Period.WEEKLY;
+                                        child: Text("MONTHLY",
+                                            style: (appModel.viewing_period ==
+                                                    Period.MONTHLY)
+                                                ? headerStyleSelected
+                                                : headerStyle),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                RaisedButton(
+                                  
+                                  
+                                  child: Text("", style: TextStyle(fontSize: 40),),
+                                  color: Colors.white.withAlpha(0),
+                                  elevation: 0,
+                                  disabledColor: Colors.white.withAlpha(0),
+                                  disabledElevation: 0,
+                                  splashColor: Colors.white.withAlpha(0),
 
-                                                          // Navigator.push(
-                                                          //     context,
-                                                          //     CupertinoPageRoute(
-                                                          //         builder: (context) =>
-                                                          //             ReceiveReceiptScreen(
-                                                          //                 appModel.receiveReceiptModel)));
-                                                        },
-                                                        child: Container(
-                                                          padding: (appModel
-                                                                      .viewing_period ==
-                                                                  Period.WEEKLY)
-                                                              ? EdgeInsets.symmetric(
-                                                                  vertical:
-                                                                      sizeMulW *
-                                                                          2,
-                                                                  horizontal:
-                                                                      sizeMulW *
-                                                                          8)
-                                                              : null,
-                                                          decoration: (appModel
-                                                                      .viewing_period ==
-                                                                  Period.WEEKLY)
-                                                              ? BoxDecoration(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  borderRadius:
-                                                                      BorderRadius.circular(
-                                                                          sizeMulW *
-                                                                              300))
-                                                              : null,
-                                                          child: Text(
-                                                            "WEEKLY",
-                                                            style: (appModel
-                                                                        .viewing_period ==
-                                                                    Period
-                                                                        .WEEKLY)
-                                                                ? headerStyleSelected
-                                                                : headerStyle,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                    // width: sizeMulW * 110,
-                                                    // height: sizeMulH * 30,
-                                                    child: Center(
-                                                      child: InkWell(
-                                                        splashColor: Colors
-                                                            .white
-                                                            .withAlpha(0),
-                                                        // elevation: 0,
-                                                        // highlightElevation: 0,
-                                                        // color: Colors.white.withAlpha(0),
-                                                        highlightColor: Colors
-                                                            .black
-                                                            .withOpacity(0),
-                                                        onTap: () {
-                                                          appModel.viewing_period =
-                                                              Period.DAILY;
-                                                        },
-                                                        child: Container(
-                                                          padding: (appModel
-                                                                      .viewing_period ==
-                                                                  Period.DAILY)
-                                                              ? EdgeInsets.symmetric(
-                                                                  vertical:
-                                                                      sizeMulW *
-                                                                          2,
-                                                                  horizontal:
-                                                                      sizeMulW *
-                                                                          8)
-                                                              : null,
-                                                          decoration: (appModel
-                                                                      .viewing_period ==
-                                                                  Period.DAILY)
-                                                              ? BoxDecoration(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  borderRadius:
-                                                                      BorderRadius.circular(
-                                                                          sizeMulW *
-                                                                              300))
-                                                              : null,
-                                                          child: Text(
-                                                            "DAILY",
-                                                            style: (appModel
-                                                                        .viewing_period ==
-                                                                    Period
-                                                                        .DAILY)
-                                                                ? headerStyleSelected
-                                                                : headerStyle,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  // SizedBox(
-                                                  //   width: MediaQuery.of(context).size.width * 0.05,
-                                                  // ),
-                                                ],
-                                              ),
+                                  onPressed: (){
+                                    
+                                        appModel.viewing_period = Period.MONTHLY;
+
+                                  },
+                                )
+                              ],
+                            ),
+                            Stack(
+                              children: <Widget>[
+                                Container(
+                                  // width: sizeMulW * 130,
+                                  // height: sizeMulH * 30,
+                                  child: Center(
+                                    child: InkWell(
+                                      splashColor: Colors.white.withAlpha(0),
+                                      // elevation: 0,
+                                      // color: Colors.white.withAlpha(0),
+                                      // highlightElevation: 0,
+                                      highlightColor: Colors.black.withOpacity(0),
+                                      onTap: () {
+                                        appModel.viewing_period = Period.WEEKLY;
+
+                                        // Navigator.push(
+                                        //     context,
+                                        //     CupertinoPageRoute(
+                                        //         builder: (context) =>
+                                        //             ReceiveReceiptScreen(
+                                        //                 appModel.receiveReceiptModel)));
+                                      },
+                                      child: Container(
+                                        padding: (appModel.viewing_period ==
+                                                Period.WEEKLY)
+                                            ? EdgeInsets.symmetric(
+                                                vertical: sizeMulW * 2,
+                                                horizontal: sizeMulW * 8)
+                                            : null,
+                                        decoration: (appModel.viewing_period ==
+                                                Period.WEEKLY)
+                                            ? BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius: BorderRadius.circular(
+                                                    sizeMulW * 300))
+                                            : null,
+                                        child: Text(
+                                          "WEEKLY",
+                                          style: (appModel.viewing_period ==
+                                                  Period.WEEKLY)
+                                              ? headerStyleSelected
+                                              : headerStyle,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                   RaisedButton(
+                                  
+                                  child: Text("", style: TextStyle(fontSize: 40),),
+                                  
+                                  color: Colors.white.withAlpha(0),
+                                  elevation: 0,
+                                  disabledColor: Colors.white.withAlpha(0),
+                                  disabledElevation: 0,
+                                  splashColor: Colors.white.withAlpha(0),
+
+                                  onPressed: (){
+                                    
+                                        appModel.viewing_period = Period.WEEKLY;
+
+                                  },
+                                )
+                              ],
+                            ),
+                            Stack(
+                              children: <Widget>[
+                                Container(
+                                  // width: sizeMulW * 110,
+                                  // height: sizeMulH * 30,
+                                  child: Center(
+                                    child: InkWell(
+                                      splashColor: Colors.white.withAlpha(0),
+                                      // elevation: 0,
+                                      // highlightElevation: 0,
+                                      // color: Colors.white.withAlpha(0),
+                                      highlightColor: Colors.black.withOpacity(0),
+                                      onTap: () {
+                                        appModel.viewing_period = Period.DAILY;
+                                      },
+                                      child: Container(
+                                        padding: (appModel.viewing_period ==
+                                                Period.DAILY)
+                                            ? EdgeInsets.symmetric(
+                                                vertical: sizeMulW * 2,
+                                                horizontal: sizeMulW * 8)
+                                            : null,
+                                        decoration: (appModel.viewing_period ==
+                                                Period.DAILY)
+                                            ? BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius: BorderRadius.circular(
+                                                    sizeMulW * 300))
+                                            : null,
+                                        child: Text(
+                                          "DAILY",
+                                          style: (appModel.viewing_period ==
+                                                  Period.DAILY)
+                                              ? headerStyleSelected
+                                              : headerStyle,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                   RaisedButton(
+                                  
+                                  
+                                  child: Text("", style: TextStyle(fontSize: 40),),
+                                  color: Colors.white.withAlpha(0),
+                                  elevation: 0,
+                                  disabledColor: Colors.white.withAlpha(0),
+                                  disabledElevation: 0,
+                                  splashColor: Colors.white.withAlpha(0),
+
+                                  onPressed: (){
+                                    
+                                        appModel.viewing_period = Period.DAILY;
+
+                                  },
+                                )
+                              ],
+                            ),
+                            // SizedBox(
+                            //   width: MediaQuery.of(context).size.width * 0.05,
+                            // ),
+                          ],
+                        ),
                                             ),
                                             Positioned(
                                               left: sizeMulW * 30,
