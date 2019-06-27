@@ -11,6 +11,7 @@ import 'package:papyrus_client/helpers/CustomShapeClipper.dart';
 import 'package:papyrus_client/screens/ReceiptScreen.dart';
 import 'package:papyrus_client/data_models/News.dart';
 import 'package:papyrus_client/helpers/NewsFeedCard.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:papyrus_client/data_models/Promo.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'ChartScreen.dart';
@@ -1562,11 +1563,19 @@ promoPopUp(BuildContext context,int index, Promo promo, String itemName, double 
                               child: new Container(
                                 height: 110.0,
                                 width: 110.0,
-                                child: Image.network(
-                                  imagePath,
-                                  fit: BoxFit.cover,
-                                  // width: 25,
-                                ),
+                                child:
+
+                                Image(image: new CachedNetworkImageProvider(imagePath), 
+                                  fit: BoxFit.cover,),
+                                
+                                
+                                //  Image.network(
+                                //   imagePath,
+                                //   fit: BoxFit.cover,
+                                //   // width: 25,
+                                // ),
+
+                                
                               ),
                             ),
                             new Text(
@@ -1668,11 +1677,14 @@ class PromoSquareCard extends StatelessWidget {
                       child: Center(
                         child: Hero(
                           tag: index.toString(),
-                          child: Image.network(
-                            imagePath,
-                            fit: BoxFit.cover,
-                            // width: 25,
-                          ),
+                          child: 
+                          Image(image: new CachedNetworkImageProvider(imagePath), fit: BoxFit.cover,),
+                          
+                          // Image.network(
+                          //   imagePath,
+                          //   fit: BoxFit.cover,
+                          //   // width: 25,
+                          // ),
                         ),
                       ),
                     ),

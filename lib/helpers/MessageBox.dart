@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:papyrus_client/screens/HomeScreen.dart';
 import 'package:intl/intl.dart';
 import 'package:papyrus_client/data_models/Message.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class MessageBox extends StatelessWidget {
 
@@ -52,7 +53,7 @@ class MessageBox extends StatelessWidget {
                   
                   (!msg.iAmTheSender && msg.imagePath != "")
                       ? Image(
-                          image: NetworkImage(msg.imagePath),
+                          image: new CachedNetworkImageProvider(msg.imagePath),
                         )
                       : SizedBox(height: 0.001),
                 ],
